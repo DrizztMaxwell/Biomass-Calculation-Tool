@@ -53,11 +53,13 @@ class ContainerWidget:
         )
 
     @staticmethod
-    def create_column(widgets, alignment=None, spacing=10):
+    def create_column(widgets, alignment=None, spacing=10, horizontal_alignment=None, expand=False):
         return ft.Column(
             controls=widgets,
             alignment=alignment,
-            spacing=spacing
+            spacing=spacing,
+            horizontal_alignment=horizontal_alignment,
+            expand=expand
         )
 
     @staticmethod

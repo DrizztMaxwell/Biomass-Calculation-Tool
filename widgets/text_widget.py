@@ -1,3 +1,4 @@
+#text_widget
 import flet as ft
 
 class TextWidget:

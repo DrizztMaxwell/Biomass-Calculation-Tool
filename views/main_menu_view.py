@@ -49,6 +49,7 @@ def get_main_menu_view(on_import_dataset_click, on_view_species_click, on_calcul
         ],
         alignment=ft.MainAxisAlignment.CENTER,
         spacing=25
+        
     )
 
     return layout
