@@ -25,5 +25,9 @@ def csv_to_json(csv_file):
     # Store data via DataManager
     manager = DataManager()
     manager.set_all(data)
+    manager.save()
+    
+    # Merge parameters automatically
+    manager.add_parameters()
 
     print(f"✅ Imported {len(data)} entries from {csv_file} into localDataset.json")
