@@ -6,10 +6,10 @@ from controller import results_menu  # Keep this import!
 
 # Map checkbox keys to calculation functions and output fields
 CALCULATION_MAP = {
-    "wood":    ("bio_wood", calculate_wood, "wood1", "wood2"),
-    "bark":    ("bio_bark", calculate_bark, "bark1", "bark2"),
-    "foilage": ("bio_foilage", calculate_foilage, "foilage1", "foilage2"),
-    "branches":("bio_branches", calculate_branches, "branches1", "branches2")
+    "wood":    ("bio_wood", calculate_wood, "bwood1", "bwood2"),
+    "bark":    ("bio_bark", calculate_bark, "bbark1", "bbark2"),
+    "foilage": ("bio_foilage", calculate_foilage, "bfoilage1", "bfoilage2"),
+    "branches":("bio_branches", calculate_branches, "bbranches1", "bbranches2")
 }
 
 def show_calculate_biomass_page(page: ft.Page, main_menu_callback):
