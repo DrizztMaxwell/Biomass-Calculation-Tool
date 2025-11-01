@@ -5,7 +5,7 @@ import widgets.text_widget as text_widget
 import widgets.container_widget as container_widget
 import widgets.button_widget as button_widget
 
-def get_species_view(data, on_back_click, page: ft.Page):
+def get_species_view(data, page: ft.Page):
     title = text_widget.TextWidget.create_title_text("Species Data", size=20)
 
     headers = [
@@ -36,12 +36,8 @@ def get_species_view(data, on_back_click, page: ft.Page):
         border_radius=5
     )
 
-    back_btn = button_widget.ButtonWidget.create_button(
-        "Back to Main Menu", on_click=on_back_click
-    )
-
     layout = container_widget.ContainerWidget.create_column(
-        widgets=[title, table_header, scroll_container, back_btn],
+        widgets=[title, table_header, scroll_container],
         alignment=ft.MainAxisAlignment.START,
         spacing=10
     )

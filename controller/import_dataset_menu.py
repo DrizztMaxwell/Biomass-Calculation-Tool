@@ -1,16 +1,8 @@
-#import_dataset_menu
 import flet as ft
 from views.import_dataset_view import get_import_dataset_view
 from data.import_dataset_helper import csv_to_json
 
-
-def show_import_dataset_page(page: ft.Page, main_menu_callback):
-    """
-    Shows the Import Dataset menu as a full page.
-    `main_menu_callback` is used to return to the main menu.
-    """
-
-    # FilePicker setup
+def show_import_dataset_page(container: ft.Column, page: ft.Page):
     file_picker = ft.FilePicker()
 
     def on_file_picked(e: ft.FilePickerResultEvent):
@@ -20,28 +12,19 @@ def show_import_dataset_page(page: ft.Page, main_menu_callback):
             page.snack_bar = ft.SnackBar(ft.Text(f"✅ Imported from {file_path}"))
         else:
             page.snack_bar = ft.SnackBar(ft.Text("❌ No file selected"))
-
         page.snack_bar.open = True
         page.update()
 
     file_picker.on_result = on_file_picked
-    page.overlay.append(file_picker)
+    page.overlay.append(file_picker)  # attach to page, not container
 
-    # Back button handler
-    def on_back_click(e):
-        page.clean()
-        main_menu_callback(page)
-
-    # Get the view layout
     layout = get_import_dataset_view(
         on_choose_file_click=lambda e: file_picker.pick_files(
             allow_multiple=False,
             allowed_extensions=["csv", "tsv"]
         ),
-        on_back_click=on_back_click
     )
 
-    # Clear page and display layout
-    page.clean()
-    page.add(layout)
+    container.controls.clear()
+    container.controls.append(layout)
     page.update()

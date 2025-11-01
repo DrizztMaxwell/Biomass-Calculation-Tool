@@ -5,7 +5,7 @@ import widgets.container_widget as container_widget
 import widgets.button_widget as button_widget
 import widgets.input_widget as input_widget
 
-def get_import_dataset_view(on_choose_file_click, on_back_click):
+def get_import_dataset_view(on_choose_file_click):
     """
     Returns the layout for the Import Dataset menu with a back button.
     """
@@ -23,21 +23,12 @@ def get_import_dataset_view(on_choose_file_click, on_back_click):
         width=220
     )
 
-    # Back button using button_widget
-    back_button = button_widget.ButtonWidget.create_button(
-        "Back",
-        on_click=on_back_click,
-        color="#888888",
-        width=220
-    )
-
     # Layout using container_widget for consistent structure
     layout = container_widget.ContainerWidget.create_column(
         widgets=[
             title,
             instructions,
-            choose_file_button,
-            back_button
+            choose_file_button
         ],
         alignment=ft.MainAxisAlignment.CENTER,
         spacing=20

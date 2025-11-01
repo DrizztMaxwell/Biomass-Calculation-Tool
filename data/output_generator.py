@@ -1,3 +1,4 @@
+#output_generator.py
 import csv
 import flet as ft
 from data.data_manager import DataManager

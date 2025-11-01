@@ -4,7 +4,7 @@ import widgets.text_widget as text_widget
 import widgets.container_widget as container_widget
 import widgets.button_widget as button_widget
 
-def get_results_view(data, on_back_click, on_generate_plot_click, on_generate_outputfile_click):
+def get_results_view(data, on_generate_plot_click, on_generate_outputfile_click):
     """
     Returns a layout for displaying biomass calculation results.
     `data` should be a list of dicts with the biomass and other relevant fields.
@@ -35,7 +35,7 @@ def get_results_view(data, on_back_click, on_generate_plot_click, on_generate_ou
 
     # Table rows
     table_rows = []
-    for entry in data[:10]:  # Limit to first 10 rows
+    for entry in data[:5]:  # Limit to first 10 rows
         row = ft.Row(
             [
                 container_widget.ContainerWidget.create_generic_card(
@@ -51,13 +51,12 @@ def get_results_view(data, on_back_click, on_generate_plot_click, on_generate_ou
         table_rows.append(row)
 
     # Buttons using button_widget
-    back_btn = button_widget.ButtonWidget.create_button("Back to Main Menu", on_click=on_back_click)
     generate_plot_btn = button_widget.ButtonWidget.create_button("Generate Plot", on_click=on_generate_plot_click)
     generate_output_btn = button_widget.ButtonWidget.create_button("Generate Output File", on_click=on_generate_outputfile_click)
 
     # Full layout
     layout = ft.Column(
-        controls=[title, table_header, *table_rows, generate_plot_btn, generate_output_btn, back_btn],
+        controls=[title, table_header, *table_rows, generate_plot_btn, generate_output_btn],
         spacing=10,
         alignment=ft.MainAxisAlignment.START
     )

@@ -5,7 +5,7 @@ import widgets.container_widget as container_widget
 import widgets.button_widget as button_widget
 import widgets.input_widget as input_widget
 
-def get_calculate_biomass_menu_view(on_run_click, on_back_click):
+def get_calculate_biomass_menu_view(on_run_click):
     """
     Returns the layout for the Calculate Biomass menu with checkboxes and action buttons.
     """
@@ -24,7 +24,6 @@ def get_calculate_biomass_menu_view(on_run_click, on_back_click):
 
     # Buttons using button_widget
     run_btn = button_widget.ButtonWidget.create_button("Run Calculations", on_click=on_run_click, width=220)
-    back_btn = button_widget.ButtonWidget.create_button("Back", on_click=on_back_click, color="#888888", width=220)
 
     # Use container_widget for layout consistency
     layout = container_widget.ContainerWidget.create_column(
@@ -32,8 +31,7 @@ def get_calculate_biomass_menu_view(on_run_click, on_back_click):
             title,
             instructions,
             *checkboxes,
-            run_btn,
-            back_btn
+            run_btn
         ],
         alignment=ft.MainAxisAlignment.CENTER,
         spacing=15
