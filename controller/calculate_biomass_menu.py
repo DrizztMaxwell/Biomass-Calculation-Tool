@@ -1,4 +1,4 @@
-# controller/calculate_biomass_menu.py
+#calculate_biomass_Menu
 import flet as ft
 from data.data_manager import DataManager
 from data.calculate_biomass_helper import (
@@ -23,58 +23,74 @@ def show_calculate_biomass_page(container: ft.Column, page: ft.Page):
             ft.alert("Please select an equation type before running calculations.")
             return
 
+        # Gather user-selected components
+        selected_components = {
+            "wood": wood_checkbox.value,
+            "bark": bark_checkbox.value,
+            "foliage": foliage_checkbox.value,
+            "branches": branches_checkbox.value,
+        }
+
+        if not any(selected_components.values()):
+            ft.alert("Please select at least one biomass component to calculate.")
+            return
+
         use_height_eq = equation_radio.value == "dbh_height"
         data = manager.get_all()
         results = []
 
         for i, entry in enumerate(data):
             updated_values = {}
-            dbh = float(entry.get("DBH", 0))
-            httot = float(entry.get("HtTot", 1))  # Only used for height-based equations
+            dbh = entry.get("DBH", 0)      # do NOT wrap in float()
+            httot = entry.get("HtTot", 1)  # do NOT wrap in float()
 
             # --- Wood ---
-            if use_height_eq:
-                val1 = float(entry.get("bhwood1", 1))
-                val2 = float(entry.get("bhwood2", 1))
-                val3 = float(entry.get("bhwood3", 1))
-                updated_values["bio_wood"] = calculate_wood_height(val1, dbh, val2, httot, val3)
-            else:
-                val1 = float(entry.get("bwood1", 1))
-                val2 = float(entry.get("bwood2", 1))
-                updated_values["bio_wood"] = calculate_wood(val1, dbh, val2)
+            if selected_components["wood"]:
+                if use_height_eq:
+                    val1 = entry.get("bhwood1", 1)
+                    val2 = entry.get("bhwood2", 1)
+                    val3 = entry.get("bhwood3", 1)
+                    updated_values["bio_wood"] = calculate_wood_height(val1, dbh, val2, httot, val3)
+                else:
+                    val1 = entry.get("bwood1", 1)
+                    val2 = entry.get("bwood2", 1)
+                    updated_values["bio_wood"] = calculate_wood(val1, dbh, val2)
 
             # --- Bark ---
-            if use_height_eq:
-                val1 = float(entry.get("bhbark1", 1))
-                val2 = float(entry.get("bhbark2", 1))
-                val3 = float(entry.get("bhbark3", 1))
-                updated_values["bio_bark"] = calculate_bark_height(val1, dbh, val2, httot, val3)
-            else:
-                val1 = float(entry.get("bbark1", 1))
-                val2 = float(entry.get("bbark2", 1))
-                updated_values["bio_bark"] = calculate_bark(val1, dbh, val2)
+            if selected_components["bark"]:
+                if use_height_eq:
+                    val1 = entry.get("bhbark1", 1)
+                    val2 = entry.get("bhbark2", 1)
+                    val3 = entry.get("bhbark3", 1)
+                    updated_values["bio_bark"] = calculate_bark_height(val1, dbh, val2, httot, val3)
+                else:
+                    val1 = entry.get("bbark1", 1)
+                    val2 = entry.get("bbark2", 1)
+                    updated_values["bio_bark"] = calculate_bark(val1, dbh, val2)
 
             # --- Foliage ---
-            if use_height_eq:
-                val1 = float(entry.get("bhfoliage1", 1))
-                val2 = float(entry.get("bhfoliage2", 1))
-                val3 = float(entry.get("bhfoliage3", 1))
-                updated_values["bio_foliage"] = calculate_foliage_height(val1, dbh, val2, httot, val3)
-            else:
-                val1 = float(entry.get("bfoliage1", 1))
-                val2 = float(entry.get("bfoliage2", 1))
-                updated_values["bio_foliage"] = calculate_foliage(val1, dbh, val2)
+            if selected_components["foliage"]:
+                if use_height_eq:
+                    val1 = entry.get("bhfoliage1", 1)
+                    val2 = entry.get("bhfoliage2", 1)
+                    val3 = entry.get("bhfoliage3", 1)
+                    updated_values["bio_foliage"] = calculate_foliage_height(val1, dbh, val2, httot, val3)
+                else:
+                    val1 = entry.get("bfoliage1", 1)
+                    val2 = entry.get("bfoliage2", 1)
+                    updated_values["bio_foliage"] = calculate_foliage(val1, dbh, val2)
 
             # --- Branches ---
-            if use_height_eq:
-                val1 = float(entry.get("bhbranches1", 1))
-                val2 = float(entry.get("bhbranches2", 1))
-                val3 = float(entry.get("bhbranches3", 1))
-                updated_values["bio_branches"] = calculate_branches_height(val1, dbh, val2, httot, val3)
-            else:
-                val1 = float(entry.get("bbranches1", 1))
-                val2 = float(entry.get("bbranches2", 1))
-                updated_values["bio_branches"] = calculate_branches(val1, dbh, val2)
+            if selected_components["branches"]:
+                if use_height_eq:
+                    val1 = entry.get("bhbranches1", 1)
+                    val2 = entry.get("bhbranches2", 1)
+                    val3 = entry.get("bhbranches3", 1)
+                    updated_values["bio_branches"] = calculate_branches_height(val1, dbh, val2, httot, val3)
+                else:
+                    val1 = entry.get("bbranches1", 1)
+                    val2 = entry.get("bbranches2", 1)
+                    updated_values["bio_branches"] = calculate_branches(val1, dbh, val2)
 
             # Merge results
             merged_entry = {**entry, **updated_values}
@@ -86,12 +102,14 @@ def show_calculate_biomass_page(container: ft.Column, page: ft.Page):
         manager.save()
 
         print(f"✅ Generated {len(results)} result entries")
-        results_menu.show_results_page(container, page, results)
+        results_menu.show_results_page(container, page, results, selected_components)
 
-    # Create layout and single global radio group for equation selection
-    layout, equation_radio = get_calculate_biomass_menu_view(on_run_click=on_run_click)
+    # --- Get UI layout and controls from view ---
+    layout, equation_radio, wood_checkbox, bark_checkbox, foliage_checkbox, branches_checkbox = \
+        get_calculate_biomass_menu_view(on_run_click=on_run_click)
 
+    # --- Display the layout ---
     container.controls.clear()
     container.controls.append(layout)
     page.update()
-    print("📋 Biomass calculation menu loaded.")
+    print("📋 Biomass calculation menu loaded with component selection.")

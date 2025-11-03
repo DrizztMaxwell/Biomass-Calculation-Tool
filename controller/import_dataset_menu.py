@@ -1,9 +1,9 @@
-#import_dataset_menu
+# import_dataset_menu.py
 import flet as ft
 from views.import_dataset_view import get_import_dataset_view
 from data.import_dataset_helper import csv_to_json
 
-def show_import_dataset_page(container: ft.Column, page: ft.Page):
+def show_import_dataset_page(container: ft.Column, page: ft.Page, on_dataset_imported=None):
     file_picker = ft.FilePicker()
 
     def on_file_picked(e: ft.FilePickerResultEvent):
@@ -11,10 +11,15 @@ def show_import_dataset_page(container: ft.Column, page: ft.Page):
             file_path = e.files[0].path
             csv_to_json(file_path)
             page.snack_bar = ft.SnackBar(ft.Text(f"✅ Imported from {file_path}"))
+            page.snack_bar.open = True
+            page.update()
+            # Call callback if provided
+            if on_dataset_imported:
+                on_dataset_imported()
         else:
             page.snack_bar = ft.SnackBar(ft.Text("❌ No file selected"))
-        page.snack_bar.open = True
-        page.update()
+            page.snack_bar.open = True
+            page.update()
 
     file_picker.on_result = on_file_picked
     page.overlay.append(file_picker)  # attach to page, not container

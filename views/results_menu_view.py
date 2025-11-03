@@ -1,25 +1,19 @@
-# results_menu_view.py
+#results_menu_view
 import flet as ft
 import widgets.text_widget as text_widget
 import widgets.container_widget as container_widget
 import widgets.button_widget as button_widget
 
-def get_results_view(data, on_generate_plot_click, on_generate_outputfile_click):
+def get_results_view(data, headers, on_generate_plot_click, on_generate_outputfile_click):
     """
     Returns a layout for displaying biomass calculation results.
-    `data` should be a list of dicts with the biomass and other relevant fields.
+    Only shows the columns passed in `headers`.
     """
 
     # Title using TextWidget
     title = text_widget.TextWidget.create_title_text("Biomass Calculation Results", size=20)
 
-    # Define headers
-    headers = [
-        "SpecCode", "SpecCommon",
-        "DBH", "bio_wood", "bio_bark", "bio_foilage", "bio_branches"
-    ]
-
-    # Table header row using container_widget
+    # --- Table Header ---
     table_header = ft.Row(
         [
             container_widget.ContainerWidget.create_generic_card(
@@ -33,9 +27,9 @@ def get_results_view(data, on_generate_plot_click, on_generate_outputfile_click)
         spacing=5
     )
 
-    # Table rows
+    # --- Table Rows (limit preview to 10 rows for performance) ---
     table_rows = []
-    for entry in data[:5]:  # Limit to first 10 rows
+    for entry in data[:7]:
         row = ft.Row(
             [
                 container_widget.ContainerWidget.create_generic_card(
@@ -50,15 +44,32 @@ def get_results_view(data, on_generate_plot_click, on_generate_outputfile_click)
         )
         table_rows.append(row)
 
-    # Buttons using button_widget
-    generate_plot_btn = button_widget.ButtonWidget.create_button("Generate Plot", on_click=on_generate_plot_click)
-    generate_output_btn = button_widget.ButtonWidget.create_button("Generate Output File", on_click=on_generate_outputfile_click)
+    # --- Action Buttons ---
+    generate_plot_btn = button_widget.ButtonWidget.create_button(
+        "Generate Plot",
+        on_click=on_generate_plot_click
+    )
+    generate_output_btn = button_widget.ButtonWidget.create_button(
+        "Generate Output File",
+        on_click=on_generate_outputfile_click
+    )
 
-    # Full layout
+    # --- Scrollable Layout ---
+    scrollable_table = ft.Column(
+        controls=[table_header, *table_rows],
+        spacing=5,
+        scroll=ft.ScrollMode.AUTO
+    )
+
     layout = ft.Column(
-        controls=[title, table_header, *table_rows, generate_plot_btn, generate_output_btn],
+        controls=[
+            title,
+            scrollable_table,
+            ft.Row([generate_plot_btn, generate_output_btn], spacing=10)
+        ],
         spacing=10,
-        alignment=ft.MainAxisAlignment.START
+        alignment=ft.MainAxisAlignment.START,
+        expand=True
     )
 
     return layout

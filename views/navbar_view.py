@@ -3,12 +3,14 @@ import flet as ft
 from widgets.button_widget import ButtonWidget
 from widgets.container_widget import ContainerWidget
 from widgets.text_widget import TextWidget
+from data.data_manager import DataManager
 
 def get_navbar(
     on_home_click,
     on_import_dataset_click,
     on_view_species_click,
-    on_calculate_biomass_click
+    on_calculate_biomass_click,
+    dataset_status_text  # <- pass a Text widget reference
 ):
     """
     Returns a vertical navigation bar with buttons for each section.
@@ -26,7 +28,16 @@ def get_navbar(
 
     # Vertical column layout
     navbar_column = ContainerWidget.create_column(
-        widgets=[logo, ft.Divider(), home_btn, import_btn, species_btn, biomass_btn],
+        widgets=[
+            logo,
+            ft.Divider(),
+            home_btn,
+            import_btn,
+            species_btn,
+            biomass_btn,
+            ft.Column(expand=True),  # <- acts as a spacer
+            dataset_status_text
+        ],
         spacing=15,
         alignment=ft.MainAxisAlignment.START,
         horizontal_alignment=ft.CrossAxisAlignment.CENTER,
