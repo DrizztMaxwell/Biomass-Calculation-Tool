@@ -18,9 +18,9 @@ def main(page: ft.Page):
         manager.clear()
 
     page.on_close = cleanup
-
+    
     # Show EULA first, then main menu
-    show_eula_page(page, show_main_menu_page)
+    # show_eula_page(page, show_main_menu_page)
 
 
 if __name__ == "__main__":
