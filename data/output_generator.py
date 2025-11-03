@@ -31,7 +31,7 @@ def generate_csv_output(page: ft.Page):
 def _on_saved(e: ft.FilePickerResultEvent, page: ft.Page, data):
     path = e.path
     if path:
-        headers = ["SpecCommon", "PlotName", "DBH", "HtTot", "bio_wood", "bio_bark", "bio_foliage", "bio_branches"]
+        headers = ["SpecCode", "SpecCommon", "PlotName", "DBH", "HtTot", "bio_wood", "bio_bark", "bio_foliage", "bio_branches"]
         try:
             with open(path, "w", newline="", encoding="utf-8") as f:
                 writer = csv.DictWriter(f, fieldnames=headers)
