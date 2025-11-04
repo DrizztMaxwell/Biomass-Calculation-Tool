@@ -31,15 +31,13 @@ def get_loading_view(title_text="Loading Species Data"):
 
 
 def get_species_view(data, page: ft.Page, progress_text=None, progress_bar=None):
-    """
-    Build the species table. If progress_text and progress_bar are provided,
-    updates them while loading.
-    """
     headers = [
         "SpecCode", "PlotName", "PlotKey", "FieldSeasonYear", "StandOriginCode",
         "TreeStatusCode", "TreeNum", "DBH", "HtTot", "SpecAbbrev",
         "SpecCommon"
     ]
+
+    title = text_widget.TextWidget.create_title_text("Species Data", size=20)
 
     table_header = ft.Row(
         [ft.Container(ft.Text(h, weight="bold"), expand=True) for h in headers],
@@ -61,7 +59,16 @@ def get_species_view(data, page: ft.Page, progress_text=None, progress_bar=None)
         border_radius=5
     )
 
-    # Load entries in batches to update progress
+    # ---- Prepare layout first ----
+    layout = container_widget.ContainerWidget.create_column(
+        widgets=[title, progress_text, progress_bar, table_header, scroll_container],
+        alignment=ft.MainAxisAlignment.START,
+        spacing=10
+    )
+
+    page.update()
+
+    # ---- Load in visible batches ----
     batch_size = 50
     total_entries = len(data)
     loaded_count = 0
@@ -84,15 +91,12 @@ def get_species_view(data, page: ft.Page, progress_text=None, progress_bar=None)
             progress_text.value = f"Loading: {int(progress*100)}%"
             page.update()
 
-        # tiny delay so UI can render progress bar
-        time.sleep(0.01)
+        time.sleep(0.01)  # allow UI to render
 
-    # Return full table layout
-    layout = container_widget.ContainerWidget.create_column(
-        widgets=[text_widget.TextWidget.create_title_text("Species Data", size=20),
-                 table_header, scroll_container],
-        alignment=ft.MainAxisAlignment.START,
-        spacing=10
-    )
+    # Once fully loaded, remove the progress bar cleanly
+    layout.controls.remove(progress_text)
+    layout.controls.remove(progress_bar)
+    page.update()
 
     return layout
+
