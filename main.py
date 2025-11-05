@@ -3,7 +3,7 @@ import flet as ft
 from controller.eula_menu import show_eula_page
 from controller.main_menu import show_main_menu_page
 from data.data_manager import DataManager
-from views import SideNavBar_View
+from views.SideNavBar_View import SideNavBar_View
 # from views.SideNavBar_View import main
 def main(page: ft.Page):
     """
@@ -21,7 +21,7 @@ def main(page: ft.Page):
     page.on_close = cleanup
     
 
-    app = SideNavBar_View.BiomassCalculatorApp()
+    app = SideNavBar_View()
     app.main(page)
     # Show EULA first, then main menu
     show_eula_page(page, app)
