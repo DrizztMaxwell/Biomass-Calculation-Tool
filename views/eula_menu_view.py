@@ -114,18 +114,16 @@ def get_eula_view(on_agree, on_disagree):
     # --- ENHANCED BUTTONS FOR BETTER LOOK ---
     # Assuming create_button is flexible, we pass styling arguments for a FilledButton look
     agree_btn = button_widget.ButtonWidget.create_button(
-        label="I Agree", 
+        label="Agree", 
         on_click=on_agree,
-
         # Modern filled/elevated style
     )
     
     disagree_btn = button_widget.ButtonWidget.create_button(
-        label="I Disagree", 
+        label="Disagree", 
         on_click=on_disagree,
-        color=CUSTOM_BLACK,
+        color=ft.Colors.RED_400,
         # Modern outlined style for contrast
-
     )
 
     btn_row = ft.Row(
@@ -185,15 +183,10 @@ def get_eula_view(on_agree, on_disagree):
         expand=True # Ensures the card takes up available space
     )
 
-    # Wrap in a gradient background container
+    # CHANGED: Removed gradient, set to white background
     return ft.Container(
         content=layout,
-        gradient=ft.LinearGradient(
-            begin=ft.alignment.top_center,
-            end=ft.alignment.bottom_center,
-            colors=[ft.Colors.with_opacity(0.1, CUSTOM_GREEN), ft.Colors.GREY_100] 
-        ),
-        padding=ft.padding.all(10),
+        bgcolor=ft.Colors.WHITE,  # Changed from gradient to solid white
         expand=True
     )
 
@@ -244,13 +237,9 @@ def get_exit_view():
         expand=True
     )
 
-    # Add background styling
+    # CHANGED: Removed gradient, set to white background
     return ft.Container(
         content=layout,
-        gradient=ft.LinearGradient(
-            begin=ft.alignment.top_center,
-            end=ft.alignment.bottom_center,
-            colors=[ft.Colors.RED_50, ft.Colors.GREY_100] 
-        ),
+        bgcolor=ft.Colors.WHITE,  # Changed from gradient to solid white
         expand=True
     )

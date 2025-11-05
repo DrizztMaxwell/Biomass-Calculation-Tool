@@ -20,11 +20,8 @@ def main(page: ft.Page):
 
     page.on_close = cleanup
     
-
-    app = SideNavBar_View()
-    app.main(page)
-    # Show EULA first, then main menu
-    show_eula_page(page, app)
+    # Display the EULA first then proceed with the app
+    show_eula_page(page)
 
 
 
