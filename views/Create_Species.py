@@ -1,10 +1,10 @@
 import flet as ft
-from Widgets.Create_Label_With_Icon import Create_Label_With_Icon
+from widgets.Create_Label_With_Icon import Create_Label_With_Icon
 from utils.TitleTextWidget import TitleTextWidget
 from utils.DescriptionText import DescriptionText
 from data.components_data_2 import COMPONENTS_DATA_2
 from controller.Create_Species_Controller import Create_Species_Controller
-from Widgets.Select_Components_Widget import Select_Components_Widget
+from widgets.Select_Components_Widget import Select_Components_Widget
 
 # 2. Main Form Control Class (No ft.UserControl inheritance)
 class AddSpeciesForm:

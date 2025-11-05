@@ -31,6 +31,6 @@ def show_import_dataset_page(container: ft.Column, page: ft.Page, on_dataset_imp
         ),
     )
 
-    container.controls.clear()
-    container.controls.append(layout)
-    page.update()
+    # container.controls.clear()
+    # container.controls.append(layout)
+    # page.update()

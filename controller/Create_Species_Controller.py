@@ -3,7 +3,7 @@ import flet as ft
 from data.components_data import COMPONENTS_DATA 
 # Note: The original file did not include the import for the Controller used inside.
 # We will define the ComponentCardController here, or assume it's imported if in a separate file.
-
+from model.Create_Species_Model import Create_Species_Model
 class ComponentCardController:
     """
     Manages the state and update logic for a single species component card.
@@ -44,7 +44,7 @@ class Create_Species_Controller:
     def __init__(self):
         # Component Data Model
         self._components_data = [item.copy() for item in COMPONENTS_DATA]
-        
+       
         # Initial State (Model)
         self.selected_components = [item["title"] for item in self._components_data if item["title"]]
         
@@ -120,16 +120,18 @@ class Create_Species_Controller:
         
     def _is_form_valid(self) -> bool:
         """Checks if all required fields are valid."""
-        
-        # 1. Check Species Code
-        if not self.species_code_control or not self.species_code_control.value.strip():
-            if self.species_code_control:
-                self.species_code_control.error_text = "Species Code is required."
-                self.species_code_control.update()
-            return False
+        self.model = Create_Species_Model(self.species_code_control)
+        self.model.set_species_code_control( self.species_code_control.value)
+
+        is_species_code_control_value = self.model.is_species_control_valid()
+
+        if is_species_code_control_value == False:
+            print("FALSING")
+            self.model.get_species_code_control().error_text = "Species Code is invalid."
+            self.model.get_species_code_control().update()
         else:
-            self.species_code_control.error_text = None
-            self.species_code_control.update()
+            self.model.get_species_code_control().error_text = None
+            self.model.get_species_code_control().update()
 
         # 2. Check all parameter inputs
         is_valid = True
@@ -201,10 +203,11 @@ class Create_Species_Controller:
 
     def _open_modal(self, e: ft.ControlEvent):
         """Opens the modal dialog."""
+        page = ft.Page()
         modal = self.create_modal()
-        e.page.dialog = modal
-        e.page.dialog.open = True
-        e.page.update()
+        page.dialog = modal
+        page.dialog.open = True
+        page.update()
         
     def _close_modal(self, e: ft.ControlEvent):
         """Closes the modal dialog."""
@@ -224,12 +227,14 @@ class Create_Species_Controller:
 
     def handle_submit(self, e: ft.ControlEvent):
         """Main button click handler - validates form and opens modal."""
-        if self._is_form_valid():
-            self._open_modal(e)
-        else:
-            e.page.snack_bar = ft.SnackBar(
-                ft.Text("Please correct the errors in the form before submitting.", color=ft.Colors.WHITE),
-                bgcolor=ft.Colors.RED_600
-            )
-            e.page.snack_bar.open = True
-            e.page.update()
+        try:
+            if self._is_form_valid():
+                self._open_modal(e)
+            else:
+                e.page.open (ft.SnackBar(
+                    ft.Text("Please correct the errors in the form before submitting.", color=ft.Colors.BLACK),
+                    bgcolor=ft.Colors.RED_600
+                ))
+                e.page.update()
+        except:
+            print("Error")

@@ -1,7 +1,7 @@
 # controller/SideNavbar_Controller.py
 import flet as ft
 from model.SideNavbar_Model import SideNavbar_Model
-from view.SideNavbar_View import SideNavbar_View
+# from view.SideNavbar_View import Sid
 
 class SideNavbar_Controller:
     """Controller class for the Sidebar Navigation component."""

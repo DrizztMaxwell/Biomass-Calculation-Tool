@@ -1,7 +1,7 @@
 import flet as ft
 from views.eula_menu_view import get_eula_view, get_exit_view
 from controller.main_menu import show_main_menu_page
-
+from views.SideNavBar_View import BiomassCalculatorApp
 def show_eula_page(page: ft.Page, show_main_menu_page):
     """
     Display the EULA/disclaimer page with Agree/Disagree options.
@@ -9,7 +9,12 @@ def show_eula_page(page: ft.Page, show_main_menu_page):
 
     def on_agree(e):
         page.clean()
-        show_main_menu_page(page)
+        # show_main_menu_page(page)
+
+        # BiomassCalculatorApp instance is passed in show_eula_page
+
+        app = BiomassCalculatorApp()
+        app.main(page)
 
     def on_disagree(e):
         page.clean()

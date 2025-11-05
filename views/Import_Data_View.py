@@ -1,23 +1,30 @@
 import flet as ft
 
+from controller.import_dataset_menu import show_import_dataset_page
+
 # Standalone function to handle the button click and page updates
 def handle_import_click(e, title):
     """
     Handles the click event for the Import buttons, showing a SnackBar message.
     """
     print(f"Importing {title}...")
+
+    # import from appropriate module (placeholder)
+
+    show_import_dataset_page()
+
     
-    # Access the page object via the event (e.page) to update UI elements
-    e.page.snack_bar = ft.SnackBar(
-        content=ft.Row([
-            ft.Icon(ft.Icons.CHECK_CIRCLE_OUTLINED, color=ft.Colors.WHITE),
-            ft.Text(f"Initializing {title} import...", weight=ft.FontWeight.BOLD),
-        ]),
-        bgcolor=ft.Colors.GREEN_600,
-        duration=2000
-    )
-    e.page.snack_bar.open = True
-    e.page.update()
+    # # Access the page object via the event (e.page) to update UI elements
+    # e.page.snack_bar = ft.SnackBar(
+    #     content=ft.Row([
+    #         ft.Icon(ft.Icons.CHECK_CIRCLE_OUTLINED, color=ft.Colors.WHITE),
+    #         ft.Text(f"Initializing {title} import...", weight=ft.FontWeight.BOLD),
+    #     ]),
+    #     bgcolor=ft.Colors.GREEN_600,
+    #     duration=2000
+    # )
+    # e.page.snack_bar.open = True
+    # e.page.update()
 
 def handle_begin_click(e):
     """
@@ -232,7 +239,7 @@ class ImportDataComponents:
             spacing=0
         )
 
-        # Enhanced outer container with gradient background
+        # Enhanced outer container with gradient background - NOW CENTERED
         main_layout = ft.Container(
             content=main_content,
             padding=ft.padding.symmetric(vertical=50, horizontal=40),
@@ -248,9 +255,18 @@ class ImportDataComponents:
                 offset=ft.Offset(0, 20),
             ),
             border=ft.border.all(1, ft.Colors.GREY_200),
+            # Center the container both horizontally and vertically
+            alignment=ft.alignment.center,
         )
-        return main_layout
-
+    
+        # Wrap in a container that centers both horizontally and vertically
+        centered_layout = ft.Container(
+            content=main_layout,
+            expand=True,  # Take up all available space
+            alignment=ft.alignment.center,  # Center the content
+        )
+    
+        return centered_layout
 
 def main(page: ft.Page):
     """
