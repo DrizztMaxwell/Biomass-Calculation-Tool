@@ -27,7 +27,7 @@ class About_Dialog_View():
                 ft.Row([
                     ft.Container(
                         content=ft.Icon(ft.Icons.INFO_ROUNDED, color="#34D399", size=32),
-                        padding=ft.padding.all(14),
+                        padding=ft.padding.all(0),
                         bgcolor=ft.Colors.with_opacity(0.15, "#34D399"),
                         border_radius=ft.border_radius.all(16),
                         shadow=ft.BoxShadow(
@@ -46,7 +46,7 @@ class About_Dialog_View():
                             font_family="Poppins-Medium"
                         ),
                         ft.Text(
-                            "Biomass Calculator v1.0", 
+                            "Biomass Calculator", 
                             size=15, 
                             color=ft.Colors.with_opacity(0.7, ft.Colors.WHITE),
                             font_family="Poppins-Regular"
@@ -81,8 +81,8 @@ class About_Dialog_View():
             [
                 # Introduction
                 ft.Text(
-                    "This tool provides a reliable way to estimate the aboveground biomass of Canadian tree species by applying the national biomass equations developed by Lambert et al (2005). "
-                    "These equations were designed to support carbon accounting and forest management by converting standard forest inventory measurements into biomass estimates.",
+                    "This tool provides a reliable way to estimate the aboveground biomass of Canadian tree species by applying the national biomass equations developed by Lambert et al. (2005)."
+                    "These equations were designed to support carbon accounting and forest management by converting standard forest inventory measurements into biomass estimates. The tool calculates biomass for individual tree components—wood, bark, branches, and foliage—and ensures that the sum of these components equals the total aboveground biomass. It uses species-specific allometric models based on diameter at breast height (DBH) and, when available, tree height, offering two levels of precision:",
                     size=14,
                     color=ft.Colors.GREY_800,
                     text_align=ft.TextAlign.JUSTIFY
@@ -91,24 +91,32 @@ class About_Dialog_View():
                 ft.Divider(height=30, color=ft.Colors.GREY_200),
             
                 # Precision levels section
-                ft.Text(
-                    "Calculation Methodology",
+                # ft.Text(
+                #     "Calculation Methodology",
+                #     size=16,
+                #     weight=ft.FontWeight.BOLD,
+                #     color=ft.Colors.GREY_900
+                # ),
+                # ft.Text(
+                #     "The tool calculates biomass for individual tree components—wood, bark, branches, and foliage—and ensures that the sum equals total aboveground biomass. "
+                #     "It uses species-specific allometric models offering two precision levels:",
+                #     size=14,
+                #     color=ft.Colors.GREY_700,
+                #     text_align=ft.TextAlign.JUSTIFY
+                # ),
+            
+
+             ft.Text(
+                    "Precision Types",
                     size=16,
                     weight=ft.FontWeight.BOLD,
                     color=ft.Colors.GREY_900
                 ),
-                ft.Text(
-                    "The tool calculates biomass for individual tree components—wood, bark, branches, and foliage—and ensures that the sum equals total aboveground biomass. "
-                    "It uses species-specific allometric models offering two precision levels:",
-                    size=14,
-                    color=ft.Colors.GREY_700,
-                    text_align=ft.TextAlign.JUSTIFY
-                ),
             
                 ft.Container(
                     content=ft.Column([
-                        self._create_icon_with_text(ft.Icons.STRAIGHTEN, "DBH-based equations for basic estimation", "#10B981"),
-                        self._create_icon_with_text(ft.Icons.HEIGHT, "DBH + height-based equations for improved accuracy", "#3B82F6"),
+                        self._create_icon_with_text(ft.Icons.STRAIGHTEN, "DBH-based equations for situations where height data are unavailable.", "#10B981"),
+                        self._create_icon_with_text(ft.Icons.HEIGHT, "DBH + height-based equations for improved accuracy when both measurements are provided.", "#3B82F6"),
                     ], spacing=6),
                     padding=ft.padding.only(left=15, top=15, bottom=15, right=15),
                     bgcolor=ft.Colors.GREY_50,
@@ -128,9 +136,9 @@ class About_Dialog_View():
             
                 ft.Container(
                     content=ft.Column([
-                        self._create_icon_with_text(ft.Icons.PARK, "Covers 33 Canadian tree species with grouped equations", "#8B5CF6"),
-                        self._create_icon_with_text(ft.Icons.ANALYTICS, "Outputs for carbon budget estimation and ecological modeling", "#F59E0B"),
-                        self._create_icon_with_text(ft.Icons.SCIENCE, "Scientifically robust biomass estimates across Canada", "#EF4444"),
+                        self._create_icon_with_text(ft.Icons.PARK, "Covers 33 Canadian tree species, plus grouped equations for hardwoods, softwoods, and all species combined.", "#8B5CF6"),
+                        self._create_icon_with_text(ft.Icons.ANALYTICS, "Provides outputs suitable for forest carbon budget estimation, ecological modeling, and operational planning.", "#F59E0B"),
+                       
                     ], spacing=6),
                     padding=ft.padding.only(left=15, top=15, bottom=15, right=15),
                     bgcolor=ft.Colors.GREY_50,
@@ -165,48 +173,48 @@ class About_Dialog_View():
                 # Additional content to demonstrate scrolling
                 ft.Divider(height=30, color=ft.Colors.GREY_200),
             
-                ft.Text(
-                    "Technical Details",
-                    size=16,
-                    weight=ft.FontWeight.BOLD,
-                    color=ft.Colors.GREY_900
-                ),
+                # ft.Text(
+                #     "Technical Details",
+                #     size=16,
+                #     weight=ft.FontWeight.BOLD,
+                #     color=ft.Colors.GREY_900
+                # ),
             
-                ft.Container(
-                    content=ft.Column([
-                        self._create_icon_with_text(ft.Icons.CODE, "Built with modern Python and Flet framework", "#06B6D4"),
-                        self._create_icon_with_text(ft.Icons.DATASET, "Uses validated scientific equations and coefficients", "#84CC16"),
-                        self._create_icon_with_text(ft.Icons.SECURITY, "Ensures data integrity and calculation accuracy", "#DC2626"),
-                        self._create_icon_with_text(ft.Icons.ACCESSIBILITY, "User-friendly interface for both technical and non-technical users", "#7C3AED"),
-                        self._create_icon_with_text(ft.Icons.UPLOAD_FILE, "Supports multiple input formats and export capabilities", "#F97316"),
-                    ], spacing=6),
-                    padding=ft.padding.only(left=15, top=15, bottom=15, right=15),
-                    bgcolor=ft.Colors.GREY_50,
-                    border_radius=ft.border_radius.all(10),
-                    margin=ft.margin.symmetric(vertical=12)
-                ),
+                # ft.Container(
+                #     content=ft.Column([
+                #         self._create_icon_with_text(ft.Icons.CODE, "Built with modern Python and Flet framework", "#06B6D4"),
+                #         self._create_icon_with_text(ft.Icons.DATASET, "Uses validated scientific equations and coefficients", "#84CC16"),
+                #         self._create_icon_with_text(ft.Icons.SECURITY, "Ensures data integrity and calculation accuracy", "#DC2626"),
+                #         self._create_icon_with_text(ft.Icons.ACCESSIBILITY, "User-friendly interface for both technical and non-technical users", "#7C3AED"),
+                #         self._create_icon_with_text(ft.Icons.UPLOAD_FILE, "Supports multiple input formats and export capabilities", "#F97316"),
+                #     ], spacing=6),
+                #     padding=ft.padding.only(left=15, top=15, bottom=15, right=15),
+                #     bgcolor=ft.Colors.GREY_50,
+                #     border_radius=ft.border_radius.all(10),
+                #     margin=ft.margin.symmetric(vertical=12)
+                # ),
 
-                ft.Divider(height=30, color=ft.Colors.GREY_200),
+                # ft.Divider(height=30, color=ft.Colors.GREY_200),
             
-                ft.Text(
-                    "Future Enhancements",
-                    size=16,
-                    weight=ft.FontWeight.BOLD,
-                    color=ft.Colors.GREY_900
-                ),
+                # ft.Text(
+                #     "Future Enhancements",
+                #     size=16,
+                #     weight=ft.FontWeight.BOLD,
+                #     color=ft.Colors.GREY_900
+                # ),
             
-                ft.Container(
-                    content=ft.Column([
-                        self._create_icon_with_text(ft.Icons.TRENDING_UP, "Additional species and regional variations", "#10B981"),
-                        self._create_icon_with_text(ft.Icons.CLOUD_UPLOAD, "Cloud-based calculations and data storage", "#3B82F6"),
-                        self._create_icon_with_text(ft.Icons.SHARE, "Collaborative features and sharing capabilities", "#8B5CF6"),
-                        self._create_icon_with_text(ft.Icons.AUTO_GRAPH, "Advanced visualization and reporting tools", "#F59E0B"),
-                    ], spacing=6),
-                    padding=ft.padding.only(left=15, top=15, bottom=15, right=15),
-                    bgcolor=ft.Colors.GREY_50,
-                    border_radius=ft.border_radius.all(10),
-                    margin=ft.margin.symmetric(vertical=12)
-                ),
+                # ft.Container(
+                #     content=ft.Column([
+                #         self._create_icon_with_text(ft.Icons.TRENDING_UP, "Additional species and regional variations", "#10B981"),
+                #         self._create_icon_with_text(ft.Icons.CLOUD_UPLOAD, "Cloud-based calculations and data storage", "#3B82F6"),
+                #         self._create_icon_with_text(ft.Icons.SHARE, "Collaborative features and sharing capabilities", "#8B5CF6"),
+                #         self._create_icon_with_text(ft.Icons.AUTO_GRAPH, "Advanced visualization and reporting tools", "#F59E0B"),
+                #     ], spacing=6),
+                #     padding=ft.padding.only(left=15, top=15, bottom=15, right=15),
+                #     bgcolor=ft.Colors.GREY_50,
+                #     border_radius=ft.border_radius.all(10),
+                #     margin=ft.margin.symmetric(vertical=12)
+                # ),
             ], 
             spacing=0,
             scroll=ft.ScrollMode.ADAPTIVE,
@@ -223,15 +231,16 @@ class About_Dialog_View():
 
     def display_about_dialog(self):
         return ft.AlertDialog(
-            modal=True,
+            # modal=True,
             bgcolor="white",
             content=ft.Column(
                 [
                     self._display_about_dialog_header(),
                     ft.Container(
+                        padding=40,
                         content=self._display_about_section_content(),
-                        height=400,
-                        padding=ft.padding.all(25),
+                        expand=True
+                        # padding=ft.padding.all(25),
                     ),
                 ],
                 spacing=0,

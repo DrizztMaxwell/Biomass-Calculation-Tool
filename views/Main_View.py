@@ -87,6 +87,7 @@ class Main_View:
             components_card_row=self.component_cards_row,
             selected_card_component=self.selected_components_text,
             components_data=COMPONENTS_DATA  # Pass the data
+            
         )
     def build(self) -> ft.Column:
         """Build the main view layout."""

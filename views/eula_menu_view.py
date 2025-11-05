@@ -94,24 +94,21 @@ def get_eula_view(on_agree, on_disagree):
         "Use of this tool is governed by the terms and conditions set out below and implies acceptance of these terms.",
         ft.Icons.DESCRIPTION
     )
-    acceptance_section = create_section(
-        "Acceptance of Terms",
-        "By clicking 'Agree', you acknowledge that you have read, understood, and agree to be bound by all terms and conditions outlined in this agreement.",
-        ft.Icons.CHECK_CIRCLE_OUTLINE
-    )
+    
     disclaimer_section = create_section(
         "Important Disclaimers",
-        "This tool is made available by MNR as a public service on an \"as is, with all defects\" and \"as available\" basis, "
-        "without any warranties, representations or conditions of any kind, express or implied, arising by law or otherwise.\n\n"
-        "MNR specifically disclaims any implied warranties or conditions of merchantable quality, fitness for a particular purpose, "
-        "non-infringement of third-party rights, or those arising by law or by usage of trade or course of dealing.\n\n"
-        "Use of this tool is at the user's sole risk and the entire risk as to the results from, and performance of, this tool is assumed by the user.\n\n"
-        "Under no circumstances will His Majesty the King in Right of Ontario or the members of the Executive Council and their "
-        "employees, agents and independent contractors have any responsibility or liability for any loss, damage or injury whatsoever...",
+        """
+This tool is made available by MNR as a public service on an “as is, with all defects” and “as available” basis, without any warranties, representations or conditions of any kind, express or implied, arising by law or otherwise, including, without limitation, that the user’s use of this tool will be uninterrupted, that the operation of this tool will be error free, or that this tool will be meet the user’s requirements.\n\n MNR specifically disclaims any implied warranties or conditions of merchantable quality, fitness for a particular purpose, non-infringement of third-party rights, or those arising by law or by usage of trade or course of dealing.\n\n Use of this tool is at the user's sole risk and the entire risk as to the results from, and performance of, this tool is assumed by the user.\n\n Under no circumstances will His Majesty the King in Right of Ontario or the members of the Executive Council and their employees, agents and independent contractors have any responsibility or liability for any loss, damage or injury whatsoever, regardless of cause, arising from access to, use of, inability to use, failure of, any errors or omissions in, or reliance on this tool (including, without limitation, direct, indirect, special, incidental, consequential, punitive, exemplary or other damages, and including, without limitation, any loss of profit, costs, expenses, harm to business or reputation, business interruption, loss of information or programs or data, loss of savings, loss of revenue, loss of goodwill, loss of tangible or intangible property, legal fees or legal costs, wasted management or office time or damages of any kind whatsoever), whether based in contract, tort, negligence or on any other legal basis, arising out of or in connection with the use of this tool, even if the Government of Ontario has been specifically advised of the possibility of such loss, damage or injury or if such loss, damage or injury was foreseeable.
+""",
         ft.Icons.WARNING_AMBER
     )
 
-    # --- ENHANCED BUTTONS FOR BETTER LOOK ---
+    acceptance_section = create_section(
+            "Acceptance of Terms",
+            "By clicking 'Agree', you acknowledge that you have read, understood, and agree to be bound by all terms and conditions outlined in this agreement.",
+            ft.Icons.CHECK_CIRCLE_OUTLINE
+        )
+        # --- ENHANCED BUTTONS FOR BETTER LOOK ---
     # Assuming create_button is flexible, we pass styling arguments for a FilledButton look
     agree_btn = button_widget.ButtonWidget.create_button(
         label="Agree", 

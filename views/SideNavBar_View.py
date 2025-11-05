@@ -375,7 +375,7 @@ class SideNavBar_View:
                     # Ensure alignment is correct for collapsed mode
                     ft.Container(
                         content=about_btn,
-                        width=self.SIDEBAR_EXPANDED_WIDTH - 20 if is_expanded else self.SIDEBAR_COLLAPSED_WIDTH,
+                        # width=self.SIDEBAR_EXPANDED_WIDTH - 20 if is_expanded else self.SIDEBAR_COLLAPSED_WIDTH,
                         alignment=ft.alignment.center
                     )
                 ],

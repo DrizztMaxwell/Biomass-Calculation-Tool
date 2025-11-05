@@ -24,7 +24,7 @@ class AddSpeciesForm:
         self.parameters_section = None
         
         # Track current equation type
-        self.current_equation_type = "DRH-based [Default]"
+        self.current_equation_type = "DBH-based [Default]"
         
         # Store references for dialog
         self.page_ref = None
@@ -71,10 +71,10 @@ class AddSpeciesForm:
         # Equation Type Dropdown Control
         equation_type_control = ft.Dropdown(
             options=[
-                ft.dropdown.Option("DRH-based [Default]"),
-                ft.dropdown.Option("Height-based"),
+                ft.dropdown.Option("DBH-based [Default]"),
+                ft.dropdown.Option("DBH + Height-based"),
             ],
-            value="DRH-based [Default]",
+            value="DBH-based [Default]",
             content_padding=ft.padding.only(left=8, right=8),
             border_radius=5,
             on_change=self._on_equation_type_change  # Add change handler
@@ -99,6 +99,7 @@ class AddSpeciesForm:
         self.current_equation_type = e.control.value
         # Update parameters based on current selection
         selected_components = self._get_current_selected_components()
+        self.selected_components = selected_components
         self.update_parameters_visibility(selected_components)
     
     def _get_current_selected_components(self):
@@ -272,9 +273,9 @@ class AddSpeciesForm:
 
     def _create_parameters_section(self):
         """Creates the parameter input fields section."""
-        
+        self.no_parameters = ft.Text("No Components selected.")
         parameters_header = ft.Row([
-            ft.Text("Parameters", size=16, weight=ft.FontWeight.BOLD),
+            TitleTextWidget("Parameters"),
             ft.Icon(ft.Icons.SETTINGS)
         ], spacing=5)
 
@@ -315,7 +316,7 @@ class AddSpeciesForm:
                 "Stem": [stem_b1, stem_b2],
                 "Total": [total_b1, total_b2]
             },
-            "Height-based": {
+            "DBH + Height-based": {
                 "Wood": [wood_b1, wood_b2, wood_b3],
                 "Bark": [bark_b1, bark_b2, bark_b3],
                 "Branch": [branch_b1, branch_b2, branch_b3],
@@ -326,11 +327,14 @@ class AddSpeciesForm:
             }
         }
 
-        # Initially hide all parameters
+        # Initially hide all parameters and show "no parameters" message
         for equation_type in self.param_controls.values():
             for component_params in equation_type.values():
                 for param in component_params:
                     param.visible = False
+
+        # Initially show "no parameters" message
+        self.no_parameters.visible = True
 
         # Create parameter rows with more spacing
         parameters_row1 = ft.Row(
@@ -400,6 +404,11 @@ class AddSpeciesForm:
             controls=[
                 parameters_header,
                 ft.Container(height=15),  # Extra space
+
+                # Fixed ternary operator - show "no parameters" text when no components selected
+                self.no_parameters,
+
+                ft.Container(height=15),  # Extra space
                 parameters_row1,
                 ft.Container(height=10),  # Extra space between rows
                 parameters_row2,
@@ -416,15 +425,15 @@ class AddSpeciesForm:
             ],
             spacing=5
         )
-
     def update_parameters_visibility(self, selected_components):
         """Update parameter visibility based on selected components and equation type."""
         print(f"Updating parameters for: {selected_components} with equation: {self.current_equation_type}")
         
         # Determine which equation type to use
-        equation_key = "DBH-based" if "DRH-based" in self.current_equation_type else "Height-based"
+        equation_key = "DBH-based" if "DBH-based" in self.current_equation_type else "DBH + Height-based"
         
         # Hide all parameters first
+        any_visible = False
         for equation_type in self.param_controls.values():
             for component_params in equation_type.values():
                 for param in component_params:
@@ -435,10 +444,16 @@ class AddSpeciesForm:
             if component in self.param_controls[equation_key]:
                 for param in self.param_controls[equation_key][component]:
                     param.visible = True
+                    any_visible = True
+        
+        # Update "no parameters" text visibility
+        # Show the text only if NO parameters are visible (no components selected)
+        self.no_parameters.visible = not any_visible
         
         # Update the UI
         if self.parameters_section:
             self.parameters_section.update()
+
 
     def _show_confirmation_dialog(self, e, page:ft.Page):
         """Show confirmation dialog with preview of selected items"""
@@ -594,7 +609,8 @@ class AddSpeciesForm:
                             components_data=COMPONENTS_DATA_2, # Pass the data,
                             displayButton=False,
                             displayShadow=False,
-                            on_selection_change=self.on_component_selection_change  # Add callback
+                            on_selection_change=self.on_component_selection_change,  # Add callback
+                            is_alternate_card=True
                         ),
                         
                         ft.Divider(height=30, color=ft.Colors.TRANSPARENT),  # More space

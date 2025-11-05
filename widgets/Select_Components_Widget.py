@@ -9,7 +9,8 @@ def Select_Components_Widget(
     components_data=None,
     displayButton=True,
     displayShadow=True,
-    on_selection_change=None  # Add callback parameter
+    on_selection_change=None,  # Add callback parameter,
+    is_alternate_card = False
 ):
     # Default components data if none provided
     if components_data is None:
@@ -211,7 +212,8 @@ def Select_Components_Widget(
     return ft.Container(
         expand=True,  # Expand to fill parent container
         bgcolor="white",
-        padding=20,
+        padding=0 if is_alternate_card else 20,
+  margin=0 if is_alternate_card else 30,
         border_radius=10,
         shadow=shadow,  # Use conditional shadow
         alignment=ft.alignment.top_left,  # Align content to top-left
