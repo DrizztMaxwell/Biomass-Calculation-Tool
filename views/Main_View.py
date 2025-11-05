@@ -1,10 +1,10 @@
 import flet as ft
 
-from utils.Equation_Card_Description_Text import Equation_Card_Description_Text
-from utils.Equation_Card_Formula_Text import Equation_Card_Formula_Text
-from utils.Equation_Card_Title_Text import Equation_Card_Title_Text
-from utils.TitleTextWidget import TitleTextWidget
-from utils.DescriptionText import DescriptionText
+from widgets.Equation_Card_Description_Text import Equation_Card_Description_Text
+from widgets.Equation_Card_Formula_Text import Equation_Card_Formula_Text
+from widgets.Equation_Card_Title_Text import Equation_Card_Title_Text
+from widgets.TitleTextWidget import TitleTextWidget
+from widgets.DescriptionText import DescriptionText
 from widgets.Select_Components_Widget import Select_Components_Widget
 from widgets.Equation_Type_Card import Equation_Type_Card
 from data.components_data import COMPONENTS_DATA
