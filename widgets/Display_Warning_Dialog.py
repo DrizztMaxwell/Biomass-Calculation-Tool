@@ -38,13 +38,12 @@ class Display_Warning_Dialog:
             # Determine the colors for DBH and Height based on nan_columns (same as before)
             dbh_color = ft.Colors.RED_600 if 'DBH' in error_data['nan_columns'] else ft.Colors.GREY_800
             height_color = ft.Colors.RED_600 if 'Height' in error_data['nan_columns'] else ft.Colors.GREY_800
-            species_color = ft.Colors.RED_600 if 'Species' in error_data['nan_columns'] else ft.Colors.GREY_800
+            species_color = ft.Colors.RED_600 if 'SpecCode' in error_data['nan_columns'] else ft.Colors.GREY_800
             plot_color = ft.Colors.RED_600 if 'Plot' in error_data['nan_columns'] else ft.Colors.GREY_800
-            tree_color = ft.Colors.RED_600 if 'Tree' in error_data['nan_columns'] else ft.Colors.GREY_800
-            subplot_color = ft.Colors.RED_600 if 'SubPlot' in error_data['nan_columns'] else ft.Colors.GREY_800
+            tree_color = ft.Colors.RED_600 if 'Tree Number' in error_data['nan_columns'] else ft.Colors.GREY_800
             year_color = ft.Colors.RED_600 if 'Year' in error_data['nan_columns'] else ft.Colors.GREY_800
             origin_color = ft.Colors.RED_600 if 'Origin' in error_data['nan_columns'] else ft.Colors.GREY_800
-            tree_status_color = ft.Colors.RED_600 if 'TreeStatus' in error_data['nan_columns'] else ft.Colors.GREY_800
+            tree_status_color = ft.Colors.RED_600 if 'Tree Status' in error_data['nan_columns'] else ft.Colors.GREY_800
             
 
             # Create a card for each error
@@ -68,12 +67,11 @@ class Display_Warning_Dialog:
                         
                         # Additional row data
                         create_detail_row("Plot", error_data['row_data']['Plot'], plot_color),
-                        create_detail_row("SubPlot", error_data['row_data']['SubPlot'], subplot_color),
                         create_detail_row("Year", error_data['row_data']['Year'], year_color),
                         create_detail_row("Origin", error_data['row_data']['Origin'], origin_color),
-                        create_detail_row("TreeStatus", error_data['row_data']['TreeStatus'], tree_status_color),
-                        create_detail_row("Species", error_data['row_data']['Species'], species_color),
-                        create_detail_row("Tree", error_data['row_data']['Tree'], tree_color),
+                        create_detail_row("Tree Status", error_data['row_data']['Tree Status'], tree_status_color),
+                        create_detail_row("SpecCode", error_data['row_data']['SpecCode'], species_color),
+                        create_detail_row("Tree Number", error_data['row_data']['Tree Number'], tree_color),
                         create_detail_row("DBH", error_data['row_data']['DBH'], dbh_color),
                         create_detail_row("Height", error_data['row_data']['Height'], height_color),
                         
@@ -122,14 +120,11 @@ class Display_Warning_Dialog:
             dbh_color = ft.Colors.RED_600 if 'DBH' in error_data['nan_columns'] else ft.Colors.GREY_800
             height_color = ft.Colors.RED_600 if 'Height' in error_data['nan_columns'] else ft.Colors.GREY_800
             plot_color = ft.Colors.RED_600 if 'Plot' in error_data['nan_columns'] else ft.Colors.GREY_800
-            subplot_color = ft.Colors.RED_600 if 'SubPlot' in error_data['nan_columns'] else ft.Colors.GREY_800
-            species_color = ft.Colors.RED_600 if 'Species' in error_data['nan_columns'] else ft.Colors.GREY_800
+            species_color = ft.Colors.RED_600 if 'SpecCode' in error_data['nan_columns'] else ft.Colors.GREY_800
             year_color = ft.Colors.RED_600 if 'Year' in error_data['nan_columns'] else ft.Colors.GREY_800
-            tree_status_color = ft.Colors.RED_600 if 'TreeStatus' in error_data['nan_columns'] else ft.Colors.GREY_800
+            tree_status_color = ft.Colors.RED_600 if 'Tree Status' in error_data['nan_columns'] else ft.Colors.GREY_800
             origin_color = ft.Colors.RED_600 if 'Origin' in error_data['nan_columns'] else ft.Colors.GREY_800
-            tree_color = ft.Colors.RED_600 if 'Tree' in error_data['nan_columns'] else ft.Colors.GREY_800
-            
-            
+            tree_color = ft.Colors.RED_600 if 'Tree Number' in error_data['nan_columns'] else ft.Colors.GREY_800
 
             # Create a card for each error
             error_card = ft.Container(
@@ -150,12 +145,11 @@ class Display_Warning_Dialog:
                         
                         #Plot Subplot Year Origin TreeStatus Species Tree DBH Height
                         create_detail_row("Plot", error_data['row_data']['Plot'], plot_color),
-                        create_detail_row("SubPlot", error_data['row_data']['SubPlot'], subplot_color),
                         create_detail_row("Year", error_data['row_data']['Year'], year_color),
                         create_detail_row("Origin", error_data['row_data']['Origin'], origin_color),
-                        create_detail_row("TreeStatus", error_data['row_data']['TreeStatus'], tree_status_color),
-                        create_detail_row("Species", error_data['row_data']['Species'], species_color),
-                        create_detail_row("Tree", error_data['row_data']['Tree'], tree_color ),
+                        create_detail_row("Tree Status", error_data['row_data']['Tree Status'], tree_status_color),
+                        create_detail_row("SpecCode", error_data['row_data']['SpecCode'], species_color),
+                        create_detail_row("Tree Number", error_data['row_data']['Tree Number'], tree_color ),
                         create_detail_row("DBH", error_data['row_data']['DBH'], dbh_color),
                         create_detail_row("Height", error_data['row_data']['Height'], height_color),
                         
@@ -532,12 +526,11 @@ class Display_Warning_Dialog:
                                     ft.Column(
                                         controls=[
                                             ft.Text("Plot:", color=ft.Colors.GREY_600, size=12),
-                                            ft.Text("SubPlot:", color=ft.Colors.GREY_600, size=12),
                                             ft.Text("Year:", color=ft.Colors.GREY_600, size=12),
                                             ft.Text("Origin:", color=ft.Colors.GREY_600, size=12),
                                             ft.Text("Tree Status:", color=ft.Colors.GREY_600, size=12),
-                                            ft.Text("Species:", color=ft.Colors.GREY_600, size=12),
-                                            ft.Text("Tree:", color=ft.Colors.GREY_600, size=12),
+                                            ft.Text("SpecCode:", color=ft.Colors.GREY_600, size=12),
+                                            ft.Text("Tree Number:", color=ft.Colors.GREY_600, size=12),
                                             ft.Text("DBH:", color=ft.Colors.GREY_600, size=12),
                                             ft.Text("Height:", color=ft.Colors.GREY_600, size=12),
                                         ],
@@ -546,12 +539,11 @@ class Display_Warning_Dialog:
                                     ft.Column(
                                         controls=[
                                             format_value("Plot", row_data["Plot"]),
-                                            format_value("SubPlot", row_data["SubPlot"]),
                                             format_value("Year", row_data["Year"]),
                                             format_value("Origin", row_data["Origin"]),
-                                            format_value("TreeStatus", row_data["TreeStatus"]),
-                                            format_value("Species", row_data["Species"]),
-                                            format_value("Tree", row_data["Tree"]),
+                                            format_value("Tree Status", row_data["Tree Status"]),
+                                            format_value("SpecCode", row_data["SpecCode"]),
+                                            format_value("Tree Number", row_data["Tree Number"]),
                                             format_value("DBH", row_data["DBH"]),
                                             format_value("Height", row_data["Height"]),
                                         ],
@@ -622,8 +614,8 @@ class Display_Warning_Dialog:
                                 controls=[
                                     ft.Column(
                                         controls=[
-                                            ft.Text("Species:", color=ft.Colors.GREY_600, size=12),
-                                            ft.Text("Tree:", color=ft.Colors.GREY_600, size=12),
+                                            ft.Text("SpecCode:", color=ft.Colors.GREY_600, size=12),
+                                            ft.Text("Tree Number:", color=ft.Colors.GREY_600, size=12),
                                             ft.Text("DBH:", color=ft.Colors.GREY_600, size=12),
                                             ft.Text("Height:", color=ft.Colors.GREY_600, size=12),
                                         ],
@@ -631,8 +623,8 @@ class Display_Warning_Dialog:
                                     ),
                                     ft.Column(
                                         controls=[
-                                            format_value("Species", row_data["Species"]),
-                                            format_value("Tree", row_data["Tree"]),
+                                            format_value("SpecCode", row_data["SpecCode"]),
+                                            format_value("Tree Number", row_data["Tree Number"]),
                                             format_value("DBH", row_data["DBH"]),
                                             format_value("Height", row_data["Height"]),
                                         ],

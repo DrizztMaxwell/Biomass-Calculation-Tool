@@ -17,6 +17,7 @@ def validate_tree_dbh_and_height_values(data_frame: pd.DataFrame, dbh_min: float
     error_messages = []
 
     for index, row in data_frame.iterrows():
+        # print(f"Validating row {index}: {row["Plot"]}")
         dbh_value = row['DBH']
         height_value = row['Height']
         dbh_invalid = False

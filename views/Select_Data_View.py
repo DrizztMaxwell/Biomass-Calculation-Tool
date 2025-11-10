@@ -38,21 +38,23 @@ class Select_Data_View:
                     raise Exception("Error reading file.")
                 # print(dataframe)
                 
-                dataframe = set_first_row_as_header(data_frame=dataframe)
+                # dataframe = set_first_row_as_header(data_frame=dataframe)
                 dataframe = convert_columns_to_specific_types(data_frame=dataframe)
                 print(f"DONE CONVERTINT")
                 
                 nan_detected, error_count, error_messages = check_dataframe_for_nan_values(data_frame=dataframe) 
+                print("Its for validation1 ")
+                
                 error_message_for_out_of_bounds_dbh_or_height_value = validate_tree_dbh_and_height_values(dataframe)
-                print("Its for validation ")
+                print("Its for validation2 ")
                 print(error_message_for_out_of_bounds_dbh_or_height_value)
                 self.error_messages = error_messages
-                print(f"ERROR MESSAGES: {error_messages}")
+                # print(f"ERROR MESSAGES: {error_messages}")
                 if error_messages:
                     print("Befin SHOW DIALOG ALERT DIALOG")
                     show_warning_dialog = Display_Warning_Dialog(self.page, self.error_messages, error_message_for_out_of_bounds_dbh_or_height_value).build()
                     self.page.open(show_warning_dialog)
-                
+                print("YOLO")
                 # error_message = validate_tree_dbh_and_height_values(data_frame=dataframe)
                 
                 
