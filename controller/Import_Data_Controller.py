@@ -4,7 +4,7 @@ Handles user interactions and coordinates between Model and View.
 """
 import flet as ft
 from views.import_dataset_view import get_import_dataset_view
-from views.Import_Data_View import ImportDataView
+from views.Select_Data_View import ImportDataView
 # from model import AppState
 
 class ImportDataController:

@@ -27,7 +27,7 @@ class DataManager:
                     self._data = json.load(f)
             except json.JSONDecodeError:
                 print("⚠️ Corrupted localstorage.json — resetting.")
-                self._data = []
+                self._data = [] 
         else:
             self._data = []
 

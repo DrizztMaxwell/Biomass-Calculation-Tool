@@ -6,15 +6,15 @@ def Display_Exit_Dialog(yes_clicked: callable, no_clicked: callable) -> ft.Alert
     title=ft.Row(
         controls=[
             ft.Icon(ft.Icons.WARNING_AMBER_ROUNDED, color=ft.Colors.AMBER, size=24),
-            ft.Text(" Confirm Exit", size=18, weight=ft.FontWeight.BOLD),
+            ft.Text("Confirm Exit", size=18, weight=ft.FontWeight.BOLD),
         ]
     ),
     content=ft.Container(
         content=ft.Text(
             "You're about to close the application. Are you sure you want to exit the application?",
-            size=14,
+            size=16,
         ),
-        padding=ft.padding.only(top=10),
+        # padding=ft.padding.only(top=10),
     ),
     actions=[
         ft.OutlinedButton(

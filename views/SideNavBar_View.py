@@ -1,13 +1,13 @@
 import os
 import sys
 import flet as ft
-from views import Import_Data_View
+from views import Select_Data_View
 from views.Main_View import Main_View
 from model.Main_Model import Main_Model
 from views.Create_Species import AddSpeciesForm
 from controller.Create_Species_Controller import Create_Species_Controller
 from controller.Main_Controller import Main_Controller
-from views.Import_Data_View import ImportDataComponents
+from views.Select_Data_View import Select_Data_View
 from views.About_Dialog_View import About_Dialog_View
 from widgets.Display_Nav_Item import Display_Nav_Item
 from widgets.Display_Version_Number import Display_Version_Number
@@ -102,7 +102,7 @@ class SideNavBar_View:
         elif page_name == "select_data":
             # Render Re-Import Dataset page (placeholder)
             self.main_content_area.controls.append(
-            ImportDataComponents.create_main_layout()
+            Select_Data_View(self.page).create_main_layout()
             )
         # elif page_name == "exit_application":
             

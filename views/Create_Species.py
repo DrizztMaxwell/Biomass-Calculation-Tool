@@ -602,7 +602,7 @@ class AddSpeciesForm:
                         ft.Divider(height=30, color=ft.Colors.TRANSPARENT),  # More space
                         
                         Select_Components_Widget(
-                            title=TitleTextWidget("Select Component"),
+                            title=TitleTextWidget("Select Tree Component"),
                             description_text=DescriptionText("Select tree components for biomass calculation"),
                             components_card_row=self.component_cards_row,
                             selected_card_component=self.selected_components_text,
@@ -619,7 +619,7 @@ class AddSpeciesForm:
                         self._create_submit_button(page=page),
                         ft.Container(height=20)  # Extra space at bottom
                     ],
-                    scroll=ft.ScrollMode.AUTO,  # Enable scrolling
+                    scroll=ft.ScrollMode.AUTO,
                 ),
                 margin=30,
                 padding=40,

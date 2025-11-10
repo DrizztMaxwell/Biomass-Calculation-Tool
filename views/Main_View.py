@@ -82,7 +82,7 @@ class Main_View:
         """Create the components selection section."""
         
         return Select_Components_Widget(
-            title=TitleTextWidget("Select Component"),
+            title=TitleTextWidget("Select Tree Component"),
             description_text=DescriptionText("Select tree components for biomass calculation"),
             components_card_row=self.component_cards_row,
             selected_card_component=self.selected_components_text,
