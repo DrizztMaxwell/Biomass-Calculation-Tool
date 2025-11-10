@@ -16,10 +16,24 @@ def validate_tree_dbh_and_height_values(data_frame: pd.DataFrame, dbh_min: float
     """
     error_messages = []
 
+    # Create lowercase mapping for case-insensitive column access
+    column_mapping = {col.lower(): col for col in data_frame.columns}
+    
+    # Check if required columns exist (case-insensitive)
+    required_lower = ['dbh', 'height']
+    missing_columns = [col for col in required_lower if col not in column_mapping]
+    
+    if missing_columns:
+        print(f"Warning: Missing required columns: {missing_columns}")
+        return error_messages
+
     for index, row in data_frame.iterrows():
-        # print(f"Validating row {index}: {row["Plot"]}")
-        dbh_value = row['DBH']
-        height_value = row['Height']
+        # Get values using case-insensitive mapping
+        dbh_col = column_mapping['dbh']
+        height_col = column_mapping['height']
+        
+        dbh_value = row[dbh_col]
+        height_value = row[height_col]
         dbh_invalid = False
         height_invalid = False
 
@@ -37,18 +51,18 @@ def validate_tree_dbh_and_height_values(data_frame: pd.DataFrame, dbh_min: float
             # Convert row to dictionary (removes pandas metadata)
             row_data = row.to_dict()
             
-            # Determine which columns are invalid
+            # Determine which columns are invalid (using original column names)
             invalid_columns = []
             if dbh_invalid:
-                invalid_columns.append('DBH')
+                invalid_columns.append(dbh_col)  # Use original column name
             if height_invalid:
-                invalid_columns.append('Height')
+                invalid_columns.append(height_col)  # Use original column name
             
             # Create structured error message
             error_msg = {
                 'index': index,
                 'row_data': row_data,
-                'nan_columns': invalid_columns  # Using same key name for consistency
+                'nan_columns': invalid_columns
             }
             
             error_messages.append(error_msg)

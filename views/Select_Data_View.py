@@ -3,7 +3,10 @@ import flet as ft
 import pandas as pd
 
 from controller.import_dataset_menu import show_import_dataset_page
+from helper_functions import do_mandatory_columns_exist
+from helper_functions.convert_columns_to_lowercase import convert_columns_to_lowercase
 from widgets.Display_Warning_Dialog import Display_Warning_Dialog
+from widgets.Error_Alert_Import_Data_Dialog import Error_Alert_Import_Data_Dialog
 from widgets.Import_Option_card import Import_Option_Card
 from helper_functions.print_file_content import print_file_content
 from helper_functions.convert_text_file_into_dataframe import convert_text_file_into_dataframe
@@ -11,6 +14,7 @@ from helper_functions.set_first_row_as_header import set_first_row_as_header
 from helper_functions.convert_columns_to_specific_types import convert_columns_to_specific_types
 from helper_functions.validate_tree_dbh_and_height_values import validate_tree_dbh_and_height_values
 from helper_functions.check_dataframe_for_nan_values import check_dataframe_for_nan_values
+from helper_functions.do_mandatory_columns_exist import do_mandatory_columns_exist
 
 
 class Select_Data_View:
@@ -24,7 +28,7 @@ class Select_Data_View:
         
         self.selected_file = None
         
-    def on_file_selected(self, e: ft.FilePickerResultEvent):
+    async def on_file_selected(self, e: ft.FilePickerResultEvent):
         """Callback when a file is selected"""
         try:
             
@@ -37,11 +41,15 @@ class Select_Data_View:
                 if dataframe is None:
                     raise Exception("Error reading file.")
                 # print(dataframe)
+                do_mandatory_columns_exist(data_frame=dataframe)
+                print(f"DONE MANDATORY CHECK")
                 
                 # dataframe = set_first_row_as_header(data_frame=dataframe)
                 dataframe = convert_columns_to_specific_types(data_frame=dataframe)
                 print(f"DONE CONVERTINT")
-                
+                dataframe = convert_columns_to_lowercase(data_frame=dataframe)
+                print(f"DONE CONVERTINT TO LOWERCASE")
+                print(dataframe)
                 nan_detected, error_count, error_messages = check_dataframe_for_nan_values(data_frame=dataframe) 
                 print("Its for validation1 ")
                 
@@ -67,6 +75,7 @@ class Select_Data_View:
         except Exception as e:
             print("Error:S")
             print(e)
+            self.page.open(Error_Alert_Import_Data_Dialog(page=self.page).show())
             return
        
     def open_file_dialog(self):

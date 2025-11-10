@@ -13,6 +13,10 @@ class Display_Warning_Dialog:
         self.error_message_for_out_of_bounds_dbh_or_height_value = error_message_for_out_of_bounds_dbh_or_height_value
         print(self.error_message_for_out_of_bounds_dbh_or_height_value)
         
+    def _convert_row_data_to_lowercase(self, row_data):
+        """Convert all keys in row_data to lowercase for case-insensitive access"""
+        return {str(key).lower(): value for key, value in row_data.items()}
+        
     def display_error_card_for_tree_measurements_information(self):
         issue_counter = 0
         error_cards = []
@@ -35,16 +39,21 @@ class Display_Warning_Dialog:
             print(f"Row data: {error_data['row_data']}")
             print(f"NaN columns: {error_data['nan_columns']}")
             
-            # Determine the colors for DBH and Height based on nan_columns (same as before)
-            dbh_color = ft.Colors.RED_600 if 'DBH' in error_data['nan_columns'] else ft.Colors.GREY_800
-            height_color = ft.Colors.RED_600 if 'Height' in error_data['nan_columns'] else ft.Colors.GREY_800
-            species_color = ft.Colors.RED_600 if 'SpecCode' in error_data['nan_columns'] else ft.Colors.GREY_800
-            plot_color = ft.Colors.RED_600 if 'Plot' in error_data['nan_columns'] else ft.Colors.GREY_800
-            tree_color = ft.Colors.RED_600 if 'Tree Number' in error_data['nan_columns'] else ft.Colors.GREY_800
-            year_color = ft.Colors.RED_600 if 'Year' in error_data['nan_columns'] else ft.Colors.GREY_800
-            origin_color = ft.Colors.RED_600 if 'Origin' in error_data['nan_columns'] else ft.Colors.GREY_800
-            tree_status_color = ft.Colors.RED_600 if 'Tree Status' in error_data['nan_columns'] else ft.Colors.GREY_800
+            # Convert row data keys to lowercase
+            row_data_lower = self._convert_row_data_to_lowercase(error_data['row_data'])
             
+            # Convert nan_columns to lowercase for case-insensitive comparison
+            nan_columns_lower = [col.lower() for col in error_data['nan_columns']]
+            
+            # Determine the colors for DBH and Height based on nan_columns (case-insensitive)
+            dbh_color = ft.Colors.RED_600 if 'dbh' in nan_columns_lower else ft.Colors.GREY_800
+            height_color = ft.Colors.RED_600 if 'height' in nan_columns_lower else ft.Colors.GREY_800
+            species_color = ft.Colors.RED_600 if 'speccode' in nan_columns_lower else ft.Colors.GREY_800
+            plot_color = ft.Colors.RED_600 if 'plot' in nan_columns_lower else ft.Colors.GREY_800
+            tree_color = ft.Colors.RED_600 if 'tree number' in nan_columns_lower else ft.Colors.GREY_800
+            year_color = ft.Colors.RED_600 if 'year' in nan_columns_lower else ft.Colors.GREY_800
+            origin_color = ft.Colors.RED_600 if 'origin' in nan_columns_lower else ft.Colors.GREY_800
+            tree_status_color = ft.Colors.RED_600 if 'tree status' in nan_columns_lower else ft.Colors.GREY_800
 
             # Create a card for each error
             error_card = ft.Container(
@@ -63,18 +72,15 @@ class Display_Warning_Dialog:
                         # Row information (using the helper function)
                         create_detail_row("Row Index", error_data['index'] + 1),
                         
-                     
-                        
-                        # Additional row data
-                        create_detail_row("Plot", error_data['row_data']['Plot'], plot_color),
-                        create_detail_row("Year", error_data['row_data']['Year'], year_color),
-                        create_detail_row("Origin", error_data['row_data']['Origin'], origin_color),
-                        create_detail_row("Tree Status", error_data['row_data']['Tree Status'], tree_status_color),
-                        create_detail_row("SpecCode", error_data['row_data']['SpecCode'], species_color),
-                        create_detail_row("Tree Number", error_data['row_data']['Tree Number'], tree_color),
-                        create_detail_row("DBH", error_data['row_data']['DBH'], dbh_color),
-                        create_detail_row("Height", error_data['row_data']['Height'], height_color),
-                        
+                        # Additional row data (using lowercase keys)
+                        create_detail_row("Plot", row_data_lower['plot'], plot_color),
+                        create_detail_row("Year", row_data_lower['year'], year_color),
+                        create_detail_row("Origin", row_data_lower['origin'], origin_color),
+                        create_detail_row("Tree Status", row_data_lower['tree status'], tree_status_color),
+                        create_detail_row("SpecCode", row_data_lower['speccode'], species_color),
+                        create_detail_row("Tree Number", row_data_lower['tree number'], tree_color),
+                        create_detail_row("DBH", row_data_lower['dbh'], dbh_color),
+                        create_detail_row("Height", row_data_lower['height'], height_color),
                     ]
                 )
             )
@@ -116,15 +122,21 @@ class Display_Warning_Dialog:
             print(f"Row data: {error_data['row_data']}")
             print(f"NaN columns: {error_data['nan_columns']}")
             
-            # Determine the colors for DBH and Height based on nan_columns (same as before)
-            dbh_color = ft.Colors.RED_600 if 'DBH' in error_data['nan_columns'] else ft.Colors.GREY_800
-            height_color = ft.Colors.RED_600 if 'Height' in error_data['nan_columns'] else ft.Colors.GREY_800
-            plot_color = ft.Colors.RED_600 if 'Plot' in error_data['nan_columns'] else ft.Colors.GREY_800
-            species_color = ft.Colors.RED_600 if 'SpecCode' in error_data['nan_columns'] else ft.Colors.GREY_800
-            year_color = ft.Colors.RED_600 if 'Year' in error_data['nan_columns'] else ft.Colors.GREY_800
-            tree_status_color = ft.Colors.RED_600 if 'Tree Status' in error_data['nan_columns'] else ft.Colors.GREY_800
-            origin_color = ft.Colors.RED_600 if 'Origin' in error_data['nan_columns'] else ft.Colors.GREY_800
-            tree_color = ft.Colors.RED_600 if 'Tree Number' in error_data['nan_columns'] else ft.Colors.GREY_800
+            # Convert row data keys to lowercase
+            row_data_lower = self._convert_row_data_to_lowercase(error_data['row_data'])
+            
+            # Convert nan_columns to lowercase for case-insensitive comparison
+            nan_columns_lower = [col.lower() for col in error_data['nan_columns']]
+            
+            # Determine the colors for DBH and Height based on nan_columns (case-insensitive)
+            dbh_color = ft.Colors.RED_600 if 'dbh' in nan_columns_lower else ft.Colors.GREY_800
+            height_color = ft.Colors.RED_600 if 'height' in nan_columns_lower else ft.Colors.GREY_800
+            plot_color = ft.Colors.RED_600 if 'plot' in nan_columns_lower else ft.Colors.GREY_800
+            species_color = ft.Colors.RED_600 if 'speccode' in nan_columns_lower else ft.Colors.GREY_800
+            year_color = ft.Colors.RED_600 if 'year' in nan_columns_lower else ft.Colors.GREY_800
+            tree_status_color = ft.Colors.RED_600 if 'tree status' in nan_columns_lower else ft.Colors.GREY_800
+            origin_color = ft.Colors.RED_600 if 'origin' in nan_columns_lower else ft.Colors.GREY_800
+            tree_color = ft.Colors.RED_600 if 'tree number' in nan_columns_lower else ft.Colors.GREY_800
 
             # Create a card for each error
             error_card = ft.Container(
@@ -143,18 +155,15 @@ class Display_Warning_Dialog:
                         # Row information (using the helper function)
                         create_detail_row("Row Index", error_data['index'] + 1),
                         
-                        #Plot Subplot Year Origin TreeStatus Species Tree DBH Height
-                        create_detail_row("Plot", error_data['row_data']['Plot'], plot_color),
-                        create_detail_row("Year", error_data['row_data']['Year'], year_color),
-                        create_detail_row("Origin", error_data['row_data']['Origin'], origin_color),
-                        create_detail_row("Tree Status", error_data['row_data']['Tree Status'], tree_status_color),
-                        create_detail_row("SpecCode", error_data['row_data']['SpecCode'], species_color),
-                        create_detail_row("Tree Number", error_data['row_data']['Tree Number'], tree_color ),
-                        create_detail_row("DBH", error_data['row_data']['DBH'], dbh_color),
-                        create_detail_row("Height", error_data['row_data']['Height'], height_color),
-                        
-
-                    
+                        #Plot Subplot Year Origin TreeStatus Species Tree DBH Height (using lowercase keys)
+                        create_detail_row("Plot", row_data_lower['plot'], plot_color),
+                        create_detail_row("Year", row_data_lower['year'], year_color),
+                        create_detail_row("Origin", row_data_lower['origin'], origin_color),
+                        create_detail_row("Tree Status", row_data_lower['tree status'], tree_status_color),
+                        create_detail_row("SpecCode", row_data_lower['speccode'], species_color),
+                        create_detail_row("Tree Number", row_data_lower['tree number'], tree_color),
+                        create_detail_row("DBH", row_data_lower['dbh'], dbh_color),
+                        create_detail_row("Height", row_data_lower['height'], height_color),
                     ]
                 )
             )
@@ -179,13 +188,7 @@ class Display_Warning_Dialog:
     def build(self):
         """Build a stunning warning dialog with modern aesthetics and toggle buttons"""
         
-        # Create section buttons
-        # section_buttons = Create_Section_Buttons("Validation Errors", "Tree Measurements Error", lambda: self._switch_view("all"), lambda: self._switch_view("tree_measurements"))
-    
         header = Warning_Dialog_Header( self.error_messages, self.error_message_for_out_of_bounds_dbh_or_height_value)        
-        # Section header for errors
-        # errors_header = Warning_Dialog_Display_Errors_Header()
-        
         # Create scrollable content for error messages
         self.error_content = ft.ListView(
             expand=True,
@@ -237,13 +240,6 @@ class Display_Warning_Dialog:
         main_content = ft.Column(
             controls=[
                 header,
-              
-                # ft.Container(
-                #     content=self.error_content,
-                #     expand=2,  # Give error content more space
-                #     bgcolor=ft.Colors.GREY_50,
-                #     border_radius=12,
-                # ),
                 ft.Container(
                     content=tabs_section,
                     expand=1,  # Give tabs less space
@@ -324,11 +320,9 @@ class Display_Warning_Dialog:
         
         # Update button states by rebuilding the dialog
         if self.dialog:
-            # self.dialog.open = False
             print("OPENING")
             
             self.page.open(self.build())
-            # self.dialog.open = True
             self.page.update()
     
     def _update_error_display(self):
@@ -431,9 +425,12 @@ class Display_Warning_Dialog:
             nan_columns = error_msg["nan_columns"]
             row_data = error_msg["row_data"]
             
-            # Check if this is a tree measurement error (DBH or Height related)
+            # Convert nan_columns to lowercase for case-insensitive comparison
+            nan_columns_lower = [col.lower() for col in nan_columns]
+            
+            # Check if this is a tree measurement error (DBH or Height related) - case insensitive
             is_tree_measurement_error = (
-                any(col in ['DBH', 'Height'] for col in nan_columns) or  # Missing DBH/Height
+                any(col in ['dbh', 'height'] for col in nan_columns_lower) or  # Missing DBH/Height
                 self._is_invalid_tree_measurement(row_data)  # Invalid DBH/Height values
             )
             
@@ -445,8 +442,11 @@ class Display_Warning_Dialog:
     def _is_invalid_tree_measurement(self, row_data):
         """Check if DBH or Height values are outside valid ranges"""
         try:
-            dbh = row_data.get('DBH')
-            height = row_data.get('Height')
+            # Convert row data to lowercase for case-insensitive access
+            row_data_lower = self._convert_row_data_to_lowercase(row_data)
+            
+            dbh = row_data_lower.get('dbh')
+            height = row_data_lower.get('height')
             
             # Check if values are outside typical tree measurement ranges
             if dbh is not None and not pd.isna(dbh):
@@ -467,6 +467,9 @@ class Display_Warning_Dialog:
         row_data = error_msg["row_data"]
         nan_columns = error_msg["nan_columns"]
         
+        # Convert row data to lowercase for case-insensitive access
+        row_data_lower = self._convert_row_data_to_lowercase(row_data)
+        
         # Handle NaN values by converting to "MISSING" display
         def format_value(key, value):
             if pd.isna(value) or value is None:
@@ -475,7 +478,7 @@ class Display_Warning_Dialog:
                 return ft.Text(str(value), color=ft.Colors.GREY_800, size=12)
             
         
-        return self._create_full_display(index, row_data, nan_columns, format_value)
+        return self._create_full_display(index, row_data_lower, nan_columns, format_value)
 
     def _parse_error_message_for_out_of_bounds_dbh_or_height_value(self):
         print(self.error_message_for_out_of_bounds_dbh_or_height_value[0]["index"])
@@ -484,7 +487,7 @@ class Display_Warning_Dialog:
         
         
     
-    def _create_full_display(self, index, row_data, nan_columns, format_value):
+    def _create_full_display(self, index, row_data_lower, nan_columns, format_value):
         """Create full error display with all columns"""
         return ft.Column(
             controls=[
@@ -514,7 +517,7 @@ class Display_Warning_Dialog:
                     border=ft.border.all(1, ft.Colors.BLUE_200),
                 ),
                 
-                # Data display
+                # Data display (using lowercase keys)
                 ft.Container(
                     expand=True,
                     bgcolor=ft.Colors.WHITE,
@@ -538,14 +541,14 @@ class Display_Warning_Dialog:
                                     ),
                                     ft.Column(
                                         controls=[
-                                            format_value("Plot", row_data["Plot"]),
-                                            format_value("Year", row_data["Year"]),
-                                            format_value("Origin", row_data["Origin"]),
-                                            format_value("Tree Status", row_data["Tree Status"]),
-                                            format_value("SpecCode", row_data["SpecCode"]),
-                                            format_value("Tree Number", row_data["Tree Number"]),
-                                            format_value("DBH", row_data["DBH"]),
-                                            format_value("Height", row_data["Height"]),
+                                            format_value("Plot", row_data_lower['plot']),
+                                            format_value("Year", row_data_lower['year']),
+                                            format_value("Origin", row_data_lower['origin']),
+                                            format_value("Tree Status", row_data_lower['tree status']),
+                                            format_value("SpecCode", row_data_lower['speccode']),
+                                            format_value("Tree Number", row_data_lower['tree number']),
+                                            format_value("DBH", row_data_lower['dbh']),
+                                            format_value("Height", row_data_lower['height']),
                                         ],
                                         spacing=8,
                                     ),
@@ -573,7 +576,8 @@ class Display_Warning_Dialog:
                 )              
             ]
         )
-    def _create_tree_measurement_display(self, index, row_data, nan_columns, format_value):
+    
+    def _create_tree_measurement_display(self, index, row_data_lower, nan_columns, format_value):
         """Create focused display for tree measurement errors"""
         return ft.Column(
             controls=[
@@ -603,7 +607,7 @@ class Display_Warning_Dialog:
                     border=ft.border.all(1, ft.Colors.GREEN_200),
                 ),
                 
-                # Focused tree measurement data
+                # Focused tree measurement data (using lowercase keys)
                 ft.Container(
                     expand=True,
                     bgcolor=ft.Colors.WHITE,
@@ -623,10 +627,10 @@ class Display_Warning_Dialog:
                                     ),
                                     ft.Column(
                                         controls=[
-                                            format_value("SpecCode", row_data["SpecCode"]),
-                                            format_value("Tree Number", row_data["Tree Number"]),
-                                            format_value("DBH", row_data["DBH"]),
-                                            format_value("Height", row_data["Height"]),
+                                            format_value("SpecCode", row_data_lower['speccode']),
+                                            format_value("Tree Number", row_data_lower['tree number']),
+                                            format_value("DBH", row_data_lower['dbh']),
+                                            format_value("Height", row_data_lower['height']),
                                         ],
                                         spacing=8,
                                     ),
