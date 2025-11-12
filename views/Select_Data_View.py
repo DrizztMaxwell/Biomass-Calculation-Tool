@@ -1,3 +1,4 @@
+import json
 from tkinter import filedialog
 import flet as ft
 import pandas as pd
@@ -43,7 +44,7 @@ class Select_Data_View:
                 # print(dataframe)
                 do_mandatory_columns_exist(data_frame=dataframe)
                 print(f"DONE MANDATORY CHECK")
-                
+                original_dataframe = dataframe.copy()
                 # dataframe = set_first_row_as_header(data_frame=dataframe)
                 dataframe = convert_columns_to_specific_types(data_frame=dataframe)
                 print(f"DONE CONVERTINT")
@@ -63,6 +64,16 @@ class Select_Data_View:
                     show_warning_dialog = Display_Warning_Dialog(self.page, self.error_messages, error_message_for_out_of_bounds_dbh_or_height_value).build()
                     self.page.open(show_warning_dialog)
                 print("YOLO")
+                print("File processed successfully.")
+                json_data = original_dataframe.to_json(orient='records')
+                with open('storage/localstorage.json', 'w') as json_file:
+                    json_file.write(json_data)
+                #pretty print JSON data
+                print(json.dumps(json.loads(json_data), indent=4))
+                print("Successfully saved to localstorage.json")
+                
+                # Now load it into the local storage
+                
                 # error_message = validate_tree_dbh_and_height_values(data_frame=dataframe)
                 
                 

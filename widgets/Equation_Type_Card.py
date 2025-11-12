@@ -12,7 +12,7 @@ def Equation_Type_Card(main_text_column, desc_widget, radio_value):
             border=ft.border.all(1, ft.Colors.BLUE_GREY_100),
             bgcolor=ft.Colors.WHITE,
             content=ft.Row([
-                ft.Radio(value=radio_value,  active_color="#047648",), # Radio on the left
+                ft.Radio(value=radio_value,  active_color="#047648", ), # Radio on the left
                 ft.Column([
                     main_text_column, # Stacked Title and Formula
                     desc_widget

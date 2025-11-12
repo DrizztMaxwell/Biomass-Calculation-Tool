@@ -177,27 +177,7 @@ def Select_Components_Widget(
             content=selected_card_component
         )
     ]
-
-    # Conditionally add Calculate Button
-    if displayButton:
-        controls.append(
-            ft.Row(
-                controls=[
-                    ft.ElevatedButton(
-                        text="Calculate Biomass",
-                        icon=ft.Icons.CALCULATE,
-                        bgcolor="#28A745",
-                        color="#FFFFFF",
-                        style=ft.ButtonStyle(
-                            shape=ft.RoundedRectangleBorder(radius=ft.border_radius.all(10)),
-                            padding=ft.padding.symmetric(horizontal=20, vertical=10)
-                        ),
-                        on_click=lambda e: print(f"Calculate button clicked! Selected Components: {[comp['title'] for comp in components_data if comp['is_selected']]}")
-                    )
-                ],
-                alignment=ft.MainAxisAlignment.START,  # Left align the button
-            )
-        )
+   
 
     # Conditionally set shadow based on displayShadow parameter
     shadow = None

@@ -1,6 +1,8 @@
 [
     {
         "SpecCommon": "Alpine fir",
+        "SpeciesCode": "",
+
         "bwood1": 0.0528,
         "bwood2": 2.4309,
         "bbark1": 0.0108,
@@ -298,6 +300,7 @@
     },
     {
         "SpecCommon": "Grey birch",
+        "SpeciesCode": "",
        
 
         "bwood1": 0.072,
@@ -323,6 +326,7 @@
     },
     {
         "SpecCommon": "Hickory",
+        "SpeciesCode": "",
 
         "bwood1": 0.2116,
         "bwood2": 2.2013,
@@ -347,6 +351,8 @@
     },
     {
         "SpecCommon": "Hop-hornbeam",
+        "SpeciesCode": "",
+
         "bwood1": 0.1929,
         "bwood2": 1.9672,
         "bbark1": 0.0671,
@@ -420,6 +426,8 @@
     },
     {
         "SpecCommon": "Lodgepole pine",
+        "SpeciesCode": "",
+
         "bwood1": 0.0475,
         "bwood2": 2.5437,
         "bbark1": 0.0186,
@@ -818,6 +826,8 @@
     },
     {
         "SpecCommon": "Hardwood",
+        "SpeciesCode": "",
+
         "bwood1": 0.0871,
         "bwood2": 2.3702,
         "bbark1": 0.0241,
@@ -841,6 +851,8 @@
     },
     {
         "SpecCommon": "Softwood",
+        "SpeciesCode": "",
+
         "bwood1": 0.0648,
         "bwood2": 2.3927,
         "bbark1": 0.0162,
@@ -864,6 +876,7 @@
     },
     {
         "SpecCommon": "All",
+        "SpeciesCode": "",
         "bwood1": 0.0787,
         "bwood2": 2.3702,
         "bbark1": 0.0185,
