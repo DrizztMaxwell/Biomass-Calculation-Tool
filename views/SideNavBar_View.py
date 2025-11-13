@@ -1,6 +1,7 @@
 import os
 import sys
 import flet as ft
+from controller.Select_Data_Controller import Select_Data_Controller
 from views import Select_Data_View
 from views.Main_View import Main_View
 from model.Main_Model import Main_Model
@@ -100,9 +101,13 @@ class SideNavBar_View:
                 )
             )
         elif page_name == "select_data":
+            controller = Select_Data_Controller(self.page)
+       
+            
             # Render Re-Import Dataset page (placeholder)
             self.main_content_area.controls.append(
-            Select_Data_View(self.page).create_main_layout()
+                
+            controller.build()
             )
         # elif page_name == "exit_application":
             
