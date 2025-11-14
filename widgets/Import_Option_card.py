@@ -1,6 +1,6 @@
 import flet as ft
 
-def Import_Option_Card(icon_name: ft.Icon, title: str, subtitle:str, color: ft.Color, handle_on_click)-> ft.Container:
+def Import_Option_Card(icon_name: ft.Icon, title: str, subtitle:str, color: ft.Colors, handle_on_click)-> ft.Container:
         return ft.Container(
             width=300,
             height=400,

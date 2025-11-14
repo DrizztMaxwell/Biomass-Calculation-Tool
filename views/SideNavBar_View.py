@@ -36,36 +36,41 @@ class SideNavBar_View:
         self.sidebar = None
         self.sidebar_content = None
         self.main_content_area = None
+        self.data_imported = False  # Track if data has been imported successfully
       
-        
         # Initialize controllers and forms
         self.main_controller = Main_Controller(Main_Model(), Main_View())
         self.create_species_controller = Create_Species_Controller()
         self.add_species_form = AddSpeciesForm(self.create_species_controller)
+        self.is_data_imported = False
 
-    def show_about_dialog(self,e):
+    def set_data_imported(self, imported: bool):
+        """Set the data imported status and update the UI"""
+        self.data_imported = imported
+        if self.page:
+            # Rebuild sidebar controls to reflect new enabled/disabled state
+            self.sidebar_content.controls = self._build_sidebar_controls(
+                self.is_expanded_state['value'], None
+            )
+            self.page.update()
+
+    def show_about_dialog(self, e):
         about_dialog = About_Dialog_View(self.page)
         about_dialog.open_dialog()
         
     def _exit_application_direct(self):
         """Exit application without any UI interactions that could cause recursion."""
         print("Exiting application...")
-
         exit_dialog = Display_Exit_Dialog(self.yes_clicked, self.no_clicked)
         self.exit_dialog = exit_dialog
         self.page.open(exit_dialog)
-        # Close window directly without page.update()
-        # self.page.window.destroy()
 
-
-    def yes_clicked(self,e):
+    def yes_clicked(self, e):
         self.page.window.destroy()
 
-    # Handle the "No" button click - close the dialog
-    def no_clicked(self,e):
+    def no_clicked(self, e):
         self.page.dialog = self.exit_dialog
         self.page.close(self.exit_dialog)
-
 
     def navigate_to_page(self, page_name: str):
         """Navigate to the specified page and update the UI."""
@@ -75,6 +80,7 @@ class SideNavBar_View:
         
         # Clear the main content area
         self.main_content_area.controls.clear()
+        
         if page_name == "exit_application":
             self._exit_application_direct()
             return
@@ -101,31 +107,17 @@ class SideNavBar_View:
                 )
             )
         elif page_name == "select_data":
-            controller = Select_Data_Controller(self.page)
-       
-            
-            # Render Re-Import Dataset page (placeholder)
-            self.main_content_area.controls.append(
-                
-            controller.build()
-            )
-        # elif page_name == "exit_application":
-            
-
-           
-        #     # self.page.window.destroy()
-        #     # # Add an alert giving option Yes or No
-        #     # return # <--- THIS IS THE KEY FIX
-            
-        #     #
+            # Pass the set_data_imported callback to the controller
+            controller = Select_Data_Controller(self.page, self.set_data_imported)
+            self.main_content_area.controls.append(controller.build())
         
         # Update the sidebar to reflect active state
-        self.sidebar_content.controls = self._build_sidebar_controls(self.is_expanded_state['value'], None)
+        self.sidebar_content.controls = self._build_sidebar_controls(
+            self.is_expanded_state['value'], None
+        )
         
         # Update the page
         self.page.update()
-    
-
 
     def toggle_sidebar(self, e):
         """Toggle the sidebar state and update the UI."""
@@ -167,8 +159,6 @@ class SideNavBar_View:
                 # Icon stand-in for the Biomass Calculator logo
                 ft.Icon(ft.Icons.FOREST, color=self.PRIMARY_COLOR, size=30),
                 ft.Text("Biomass Calculator", color=ft.Colors.WHITE, size=16, weight=ft.FontWeight.BOLD, visible=is_expanded),
-                
-
             ],
             spacing=10,
             alignment=ft.MainAxisAlignment.START if is_expanded else ft.MainAxisAlignment.CENTER,
@@ -179,10 +169,8 @@ class SideNavBar_View:
             content=ft.Column(
                 [
                     toggle_row,  # Hamburger icon (top)
-                    
                     logo_title_row,  # Logo/Title (middle)
                     Display_Version_Number(is_expanded=is_expanded),
-                    
                     ft.Divider(color=ft.Colors.WHITE24, height=1)  # Divider (bottom)
                 ],
                 tight=True,
@@ -195,46 +183,60 @@ class SideNavBar_View:
         """Builds all navigation items and footer buttons."""
         
         def create__nav_items():
-            return [
+            nav_items = [
                 Display_Nav_Item(
                     ft.Icons.RESTART_ALT, 
                     "Select Data", 
                     is_expanded,
                     is_active=(self.active__nav_item == "select_data"),
-
-                    on_click=lambda e: self.navigate_to_page("select_data")
-                 
+                    on_click=lambda e: self.navigate_to_page("select_data"),
+                    # Select Data is always enabled
+                    enabled=True
                 ),
                 Display_Nav_Item(
                     ft.Icons.CALCULATE, 
                     "Calculate Biomass", 
                     is_expanded, 
                     is_active=(self.active__nav_item == "calculate_biomass"),
-                    on_click=lambda e: self.navigate_to_page("calculate_biomass")
-                )
-            ,
-               Display_Nav_Item(ft.Icons.ADD_CIRCLE_OUTLINE, 
+                    on_click=lambda e: self.navigate_to_page("calculate_biomass"),
+                    # Disabled until data is imported
+                    enabled=self.data_imported
+                ),
+                Display_Nav_Item(
+                    ft.Icons.ADD_CIRCLE_OUTLINE, 
                     "Create Species", 
                     is_expanded,
                     is_active=(self.active__nav_item == "create_species"),
-                    on_click=lambda e: self.navigate_to_page("create_species"))
-,
+                    on_click=lambda e: self.navigate_to_page("create_species"),
+                    # Disabled until data is imported
+                    enabled=self.data_imported
+                ),
                 Display_Nav_Item(
                     ft.Icons.SETTINGS, 
                     "Settings", 
                     is_expanded,
                     is_active=(self.active__nav_item == "settings"),
-                    on_click=lambda e: self.navigate_to_page("settings")
+                    on_click=lambda e: self.navigate_to_page("settings"),
+                    # Disabled until data is imported
+                    enabled=self.data_imported
                 ),
-               
                 Display_Nav_Item(
                     ft.Icons.EXIT_TO_APP, 
                     "Exit Application", 
                     is_expanded,
                     is_active=(self.active__nav_item == "exit_application"),
-                    on_click=lambda e: self.navigate_to_page("exit_application")
+                    on_click=lambda e: self.navigate_to_page("exit_application"),
+                    # Exit is always enabled
+                    enabled=True
                 ),
             ]
+            
+            # Add tooltips for disabled items explaining why they're disabled
+            # for item in nav_items:
+            #     if not item.enabled and item.text != "Select Data" and item.text != "Exit Application":
+            #         item.tooltip = "Please import data first to enable this feature"
+            
+            return nav_items
         
         def create_footer_buttons():
             # About Button
@@ -275,8 +277,6 @@ class SideNavBar_View:
             ft.Container(expand=True),
             ft.Container(content=create_footer_buttons(), padding=ft.padding.only(bottom=20, left=10, right=10))
         ]
-
-    
 
     def main(self, page: ft.Page):
         """Main application entry point"""
@@ -337,8 +337,7 @@ class SideNavBar_View:
                 tight=True
             )
         )
-           # Set initial page to Calculate Biomass
+        
+        # Set initial page to Select Data
         self.active__nav_item = "select_data"
         self.navigate_to_page("select_data")
-
-       
