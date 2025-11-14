@@ -2,18 +2,7 @@ import pandas as pd
 
 
 def do_mandatory_columns_exist(data_frame: pd.DataFrame) -> bool:
-    """
-    Validate that all required columns are present in the DataFrame.
-    
-    Args:
-        data_frame: pandas DataFrame to validate
-        
-    Returns:
-        bool: True if all required columns are present
-        
-    Raises:
-        ValueError: If any required columns are missing
-    """
+   
     required_columns = ['plot', 'year', 'origin', 'tree status', 'tree number', 'dbh', 'height', 'speccode']
     
     # Get the actual column names from the DataFrame (in lowercase for case-insensitive comparison)

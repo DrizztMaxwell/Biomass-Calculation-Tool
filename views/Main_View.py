@@ -111,15 +111,15 @@ class Main_View:
     
         try:
             local_storage_json = pd.read_json("storage/localstorage.json")
-            biomass_results_json = pd.read_json("storage/biomass_results.json") if os.path.exists("storage/biomass_results.json") else pd.DataFrame()
             print("Dataframe loaded from localstorage.json:")
             # now load treeparameters.json and for each row in df, lookup the species code in treeparameters.json and print the parameters
             df_tree_params = pd.read_json("data/treeparameters.json")
             print("Tree parameters loaded from treeparameters.json:")
-            print(df_tree_params.head())
+            #column names in json make it lowercase for easier lookup temporarily
             
-            
-            
+            df_tree_params.columns = [col.lower() for col in df_tree_params.columns]
+            local_storage_json.columns = [col.lower() for col in local_storage_json.columns]
+
             # now do the lookup and if found then based on components selected and equation type, calculate biomass
             for index, row in local_storage_json.iterrows():
                 spec_code = row.get('SpecCode', None)
@@ -302,119 +302,7 @@ class Main_View:
 
                 print("Data successfully written to output.txt")
                             
-                            # Add similar blocks for other component combinations as needed
-                        
-                    
-                    # params_row = df_tree_params[df_tree_params['SpeciesCode'] == spec_code]
-                    # print(df_tree_params["SpeciesCode"])
-                    # if
-    #                 if self.equation_type == "DBH-based":
-    # # Convert to set for easier comparison
-    #                     selected_components_set = set(selected_components)
-                        
-    #                     if selected_components_set == {"Wood"}:
-    #                         # Wood only
-    #                         params_row = params_row[['bwood1', 'bwood2']]
-    #                         y_wood = bwood1 * (dbh ** bwood2)
-                            
-    #                     elif selected_components_set == {"Bark"}:
-    #                         # Bark only
-    #                         params_row = params_row[['bbark1', 'bbark2']]
-                            
-    #                     elif selected_components_set == {"Foliage"}:
-    #                         # Foliage only
-    #                         params_row = params_row[['bfoliage1', 'bfoliage2']]
-                            
-    #                     elif selected_components_set == {"Wood", "Bark"}:
-    #                         # Wood + Bark
-    #                         params_row = params_row[['bwood1', 'bwood2', 'bbark1', 'bbark2']]
-                            
-    #                     elif selected_components_set == {"Wood", "Foliage"}:
-    #                         # Wood + Foliage
-    #                         params_row = params_row[['bwood1', 'bwood2', 'bfoliage1', 'bfoliage2']]
-                            
-    #                     elif selected_components_set == {"Bark", "Foliage"}:
-    #                         # Bark + Foliage
-    #                         params_row = params_row[['bbark1', 'bbark2', 'bfoliage1', 'bfoliage2']]
-                            
-    #                     elif selected_components_set == {"Wood", "Bark", "Foliage"}:
-    #                         # All three components
-    #                         params_row = params_row[['bwood1', 'bwood2', 'bbark1', 'bbark2', 'bfoliage1', 'bfoliage2']]
-                            
-    #                     else:
-    #                         # Default case or single component not covered above
-    #                         print(f"Warning: Unhandled component combination: {selected_components}")
-    #                         # You might want to handle this case appropriately
-                                            
-
-    #                     #formula is B = b₁ × DBHᵇ²
-    #                     dbh = row.get('DBH', 0)
-    #                     if not pd.isna(dbh) and not params_row.empty:
-    #                         b1 = params_row.iloc[0].get('bwood1', 0) if 'bwood1' in params_row.columns else 0
-    #                         b2 = params_row.iloc[0].get('bwood2', 0) if 'bwood2' in params_row.columns else 0
-    #                         biomass = b1 * (dbh ** b2)
-    #                         print(f"Row {index} - Species Code: {spec_code}, Calculated Biomass: {biomass}")
-    #                         # depending on the components selected add a column to df
-    #                         df.at[index, 'Calculated_Biomass'] = biomass
-    #                         df.at[index, 'Component_Selected'] = ', '.join(selected_components)
-    #                         #output to file
-                           
-    #                         # from local storage append the calculated biomass and name it for example if wood selected then add column Wood(Kg)
-    #                         if "Wood" in selected_components:
-    #                             df.at[index, 'Wood(Kg)'] = biomass
-    #                         if "Bark" in selected_components:
-    #                             df.at[index, 'Bark(Kg)'] = biomass
-    #                         if "Foliage" in selected_components:
-    #                             df.at[index, 'Foliage(Kg)'] = biomass
-                            
-    #                         # Save updated dataframe to a new json file
-    #                         df.to_json("storage/biomass_results.json", orient='records')
-    #                         print("Biomass results saved to biomass_results.json")
-                            
-    #                 elif self.equation_type == "DBH + Height-based":
-    #                     # Udo the same as above but with height included
-    #                     print("DBH + Height-based equation selected. (Functionality to be implemented)")
-    #                     # Placeholder for future implementation
-    #                     # You would implement the biomass calculation
-    #                     dbh = row.get('DBH', 0)
-    #                     height = row.get('Height', 0)
-    #                     if not pd.isna(dbh) and not pd.isna(height) and not params_row.empty:
-    #                         # use bhwood1, bhwood2, bhwood3 for calculation depending on components selected
-    #                         # make it 0 for now
-    #                         biomass = 0
-    #                         print(f"Row {index} - Species Code: {spec_code}, Calculated Biomass: {biomass}")
-    #                         df.at[index, 'Calculated_Biomass'] = biomass
-    #                         df.at[index, 'Component_Selected'] = ', '.join(selected_components)
-                            
-    #                         if "Wood" in selected_components:
-    #                             df.at[index, 'Wood(Kg)'] = biomass
-    #                         if "Bark" in selected_components:
-    #                             df.at[index, 'Bark(Kg)'] = biomass
-    #                         if "Foliage" in selected_components:
-    #                             df.at[index, 'Foliage(Kg)'] = biomass
-    #                         #apply formula B = b₁ × DBHᵇ² × Heightᵇ³
-    #                         dbh_param = params.get("dbh", 0)
-    #                         height_param = params.get("height", 0)
-    #                         if dbh_param and height_param:
-    #                             biomass = dbh_param * (dbh ** 2) * (height ** 3)
-    #                             print(f"Row {index} - Species Code: {spec_code}, Calculated Biomass: {biomass}")
-    #                             df.at[index, 'Calculated_Biomass'] = biomass
-    #                             df.at[index, 'Component_Selected'] = ', '.join(selected_components)
-                            
-
-    #                         # Save updated dataframe to a new json file
-                            
-                            
-
-                    
-                    
-    #                 if not params_row.empty:
-    #                     params = params_row.iloc[0].to_dict()
-    #                     print(f"Row {index} - Species Code: {spec_code}, Parameters: {params}")
-    #                 else:
-    #                     print(f"Row {index} - Species Code: {spec_code} not found in tree parameters.")
-    #             else:
-    #                 print(f"Row {index} - No Species Code provided.")
+  
             
         except Exception as e:
             print(f"Error loading dataframe: {e}")

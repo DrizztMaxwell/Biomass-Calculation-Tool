@@ -2,6 +2,7 @@
 from helper_functions.convert_columns_to_specific_types import convert_columns_to_specific_types
 from helper_functions.convert_text_file_into_dataframe import convert_text_file_into_dataframe
 from views.Select_Data_View import Select_Data_View
+from widgets.Display_Error_Dialog import Display_Error_Dialog
 from widgets.Display_Warning_Dialog import Display_Warning_Dialog
 from controller.import_dataset_menu import show_import_dataset_page
 from helper_functions import do_mandatory_columns_exist
@@ -39,7 +40,7 @@ class Select_Data_Controller:
                 dataframe = convert_text_file_into_dataframe(selected_file_path=self.selected_file_path)
                 print(dataframe)
                 if dataframe is None:
-                    raise Exception("Error reading file.")
+                    raise Exception("Error reading file. Text Input File may be empty.")
                 # print(dataframe)
                 do_mandatory_columns_exist(data_frame=dataframe)
                 print(f"DONE MANDATORY CHECK")
@@ -55,37 +56,33 @@ class Select_Data_Controller:
                 
                 error_message_for_out_of_bounds_dbh_or_height_value = validate_tree_dbh_and_height_values(dataframe)
                 print("Its for validation2 ")
-                print(error_message_for_out_of_bounds_dbh_or_height_value)
+
                 self.error_messages = error_messages
-                # print(f"ERROR MESSAGES: {error_messages}")
+              
                 if error_messages:
-                    print("Befin SHOW DIALOG ALERT DIALOG")
                     show_warning_dialog = Display_Warning_Dialog(self.page, self.error_messages, error_message_for_out_of_bounds_dbh_or_height_value).build()
                     self.page.open(show_warning_dialog)
-                print("YOLO")
+                    
+               
                 print("File processed successfully.")
                 json_data = original_dataframe.to_json(orient='records')
                 with open('storage/localstorage.json', 'w') as json_file:
                     json_file.write(json_data)
-                #pretty print JSON data
-                print(json.dumps(json.loads(json_data), indent=4))
-                print("Successfully saved to localstorage.json")
-                
-                # Now load it into the local storage
-                
-                # error_message = validate_tree_dbh_and_height_values(data_frame=dataframe)
-                
-                
-                
-                
+       
             else:
                 print("File selection cancelled")
                 self.selected_file_path = None
 
+        except ValueError as ve:
+            print("Value Error:")
+            print(ve)
+            self.page.open(Error_Alert_Import_Data_Dialog(page=self.page, error_message=str(ve)).show())
+            return
         except Exception as e:
-            print("Error:S")
+            print("Error in select data controller:")
+            self.page.open(Display_Error_Dialog(page=self.page, description=str(e)).show())
             print(e)
-            self.page.open(Error_Alert_Import_Data_Dialog(page=self.page).show())
+           
             return
        
     def open_file_dialog(self):
@@ -101,9 +98,8 @@ class Select_Data_Controller:
     def on_import_text_file_click(self,e):
         print("Clicked")
         # print(self.open_file_dialog())
-        file = self.open_file_dialog()
+        self.open_file_dialog()
      
-        return None
     
     def on_import_from_database_click(self,e):
         pass # --> Next Semester :)

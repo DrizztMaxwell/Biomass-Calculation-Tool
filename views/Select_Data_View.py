@@ -9,22 +9,13 @@ class Select_Data_View:
 
     def __init__(self, controller):
         self.controller = controller
-        # self.page = page
-        # self.file_picker = ft.FilePicker(on_result=self.controller.on_file_selected)
-        # self.page.overlay.append(self.file_picker)
-        # self.selected_file_path = None
-        # self.error_messages = None
         
-        # self.selected_file = None
-        
-    
-
     def create_main_layout(self):
-        # Main content container
         main_content = self._create_main_content()
 
-        # Enhanced outer container with gradient background - NOW CENTERED
-        main_layout = ft.Container(
+        main_layout = ft.Container(expand=True, alignment=ft.alignment.center,
+                                   
+                                 content=  ft.Container(
             content=main_content,
             padding=ft.padding.symmetric(vertical=50, horizontal=40),
             margin=ft.margin.all(30),
@@ -42,16 +33,10 @@ class Select_Data_View:
             # Center the container both horizontally and vertically
             alignment=ft.alignment.center,
         )
-    
-        # Wrap in a container that centers both horizontally and vertically
-        centered_layout = ft.Container(
-            content=main_layout,
-            expand=True,  # Take up all available space
-            alignment=ft.alignment.center,  # Center the content
         )
     
-        return centered_layout
-
+        return main_layout
+    
     def _create_main_content(self):
         return ft.Column(
             [
