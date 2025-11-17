@@ -10,7 +10,7 @@ def show_eula_page(page: ft.Page):
     def on_agree(e):
         page.clean()
         # show_main_menu_page(page)
-        app = SideNavBar_View()
+        app = SideNavBar_View(page)
         app.main(page)
         
         

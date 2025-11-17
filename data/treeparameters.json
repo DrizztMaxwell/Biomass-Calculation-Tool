@@ -22,7 +22,7 @@
         "bhbranches3": -1.1588,
         "bhfoliage1": 0.0551,
         "bhfoliage2": 1.7585,
-        "bhfoliage3": "-"
+        "bhfoliage3": 0
     },
     {
         "SpecCommon": "Balsam fir",
@@ -96,7 +96,7 @@
         "bhbranches3": 0.8588,
         "bhfoliage1": 0.0147,
         "bhfoliage2": 1.83,
-        "bhfoliage3": "-"
+        "bhfoliage3": 0.0
     },
     {
         "SpecCommon": "Beech",
@@ -118,10 +118,10 @@
         "bhbark3": 0.677,
         "bhbranches1": 0.0355,
         "bhbranches2": 2.3749,
-        "bhbranches3": "-",
+        "bhbranches3": 0.0,
         "bhfoliage1": 0.0452,
         "bhfoliage2": 1.5567,
-        "bhfoliage3": "-"
+        "bhfoliage3": 0
     },
     {
         "SpecCommon": "Black ash",
@@ -240,10 +240,10 @@
         "bhwood3": 0.7054,
         "bhbark1": 0.0283,
         "bhbark2": 1.7079,
-        "bhbark3": "-",
+        "bhbark3": 0.0,
         "bhbranches1": 0.0219,
         "bhbranches2": 2.3585,
-        "bhbranches3": "-",
+        "bhbranches3": 0.0,
         "bhfoliage1": 0.2575,
         "bhfoliage2": 2.5136,
         "bhfoliage3": -1.5565
@@ -344,10 +344,10 @@
         "bhbark3": 1.1324,
         "bhbranches1": 0.005,
         "bhbranches2": 3.0463,
-        "bhbranches3": "-",
+        "bhbranches3": 0.0,
         "bhfoliage1": 0.0121,
         "bhfoliage2": 2.0865,
-        "bhfoliage3": "-"
+        "bhfoliage3": 0.0
     },
     {
         "SpecCommon": "Hop-hornbeam",
@@ -372,7 +372,7 @@
         "bhbranches3": 1.7769,
         "bhfoliage1": 0.0247,
         "bhfoliage2": 2.0056,
-        "bhfoliage3": "-"
+        "bhfoliage3": 0.0
     },
     {
         "SpecCommon": "Jack pine",
@@ -397,7 +397,7 @@
         "bhbranches3": -0.9816,
         "bhfoliage1": 0.0325,
         "bhfoliage2": 1.7879,
-        "bhfoliage3": "-"
+        "bhfoliage3": 0.0
     },
     {
         "SpecCommon": "Largetooth aspen",
@@ -416,7 +416,7 @@
         "bhwood3": 0.9516,
         "bhbark1": 0.024,
         "bhbark2": 2.3055,
-        "bhbark3": "-",
+        "bhbark3": 0.0,
         "bhbranches1": 0.0131,
         "bhbranches2": 3.1274,
         "bhbranches3": -0.8379,
@@ -469,10 +469,10 @@
         "bhbark3": 0.8963,
         "bhbranches1": 0.0176,
         "bhbranches2": 2.3313,
-        "bhbranches3": "-",
+        "bhbranches3": 0.0,
         "bhfoliage1": 0.0761,
         "bhfoliage2": 1.3077,
-        "bhfoliage3": "-"
+        "bhfoliage3": 0.0
     },
     {
         "SpecCommon": "Red maple",
@@ -491,13 +491,13 @@
         "bhwood3": 0.7485,
         "bhbark1": 0.0283,
         "bhbark2": 2.0907,
-        "bhbark3": "-",
+        "bhbark3": 0.0,
         "bhbranches1": 0.0225,
         "bhbranches2": 2.4106,
-        "bhbranches3": "-",
+        "bhbranches3": 0.0,
         "bhfoliage1": 0.0571,
         "bhfoliage2": 1.4898,
-        "bhfoliage3": "-"
+        "bhfoliage3": 0.0
     },
     {
         "SpecCommon": "Red oak",
@@ -522,7 +522,7 @@
         "bhbranches3": 0.3153,
         "bhfoliage1": 0.0582,
         "bhfoliage2": 1.5438,
-        "bhfoliage3": "-"
+        "bhfoliage3": 0.0
     },
     {
         "SpecCommon": "Red pine",
@@ -566,13 +566,13 @@
         "bhwood3": 1.4065,
         "bhbark1": 0.0274,
         "bhbark2": 2.0188,
-        "bhbark3": "-",
+        "bhbark3": 0.0,
         "bhbranches1": 0.0005,
         "bhbranches2": 3.3136,
-        "bhbranches3": "-",
+        "bhbranches3": 0.0,
         "bhfoliage1": 0.0106,
         "bhfoliage2": 2.2709,
-        "bhfoliage3": "-"
+        "bhfoliage3": 0.0
     },
     {
         "SpecCommon": "Silver maple",
@@ -672,7 +672,7 @@
         "bhbranches3": -0.6221,
         "bhfoliage1": 0.027,
         "bhfoliage2": 1.6183,
-        "bhfoliage3": "-"
+        "bhfoliage3": 0.0
     },
     {
         "SpecCommon": "White ash",
@@ -694,7 +694,7 @@
         "bhbark3": 0.7893,
         "bhbranches1": 0.0354,
         "bhbranches2": 2.3046,
-        "bhbranches3": "-",
+        "bhbranches3": 0.0,
         "bhfoliage1": 0.0195,
         "bhfoliage2": 1.0509,
         "bhfoliage3": 0.7836
@@ -741,13 +741,13 @@
         "bhwood3": 0.6488,
         "bhbark1": 0.0078,
         "bhbark2": 2.454,
-        "bhbark3": "-",
+        "bhbark3": 0.0,
         "bhbranches1": 0.0393,
         "bhbranches2": 2.188,
-        "bhbranches3": "-",
+        "bhbranches3": 0.0,
         "bhfoliage1": 0.0516,
         "bhfoliage2": 1.4511,
-        "bhfoliage3": "-"
+        "bhfoliage3": 0.0
     },
     {
         "SpecCommon": "White oak",
@@ -819,10 +819,10 @@
         "bhbark3": 0.5371,
         "bhbranches1": 0.0325,
         "bhbranches2": 2.3851,
-        "bhbranches3": "-",
+        "bhbranches3": 0,
         "bhfoliage1": 0.1683,
         "bhfoliage2": 1.2764,
-        "bhfoliage3": "-"
+        "bhfoliage3": 0
     },
     {
         "SpecCommon": "Hardwood",
@@ -898,4 +898,5 @@
         "bhfoliage2": 2.2864,
         "bhfoliage3": -1.1203
     }
+    
 ]

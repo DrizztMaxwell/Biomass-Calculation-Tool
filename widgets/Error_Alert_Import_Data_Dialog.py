@@ -4,15 +4,14 @@ class Error_Alert_Import_Data_Dialog:
     """
     Simple error alert dialog for missing fields in import data.
     """
-    def __init__(self, page: ft.Page = None):
+    def __init__(self, error_message, page: ft.Page = None):
+        self.error_message = error_message
         self.page = page
 
     def show(self):
         """
         Display error alert dialog for missing fields.
         """
-        required_fields = "'Plot', 'Year', 'Origin', 'Tree Status', 'Tree Number', 'SpecCode', 'DBH', 'Height'"
-        
         self.error_dialog = ft.AlertDialog(
             modal=True,
             title=ft.Text("Error: Fields not found.", color=ft.Colors.RED_700),
@@ -23,14 +22,14 @@ class Error_Alert_Import_Data_Dialog:
                         size=14,
                     ),
                     ft.Text(
-                        required_fields,
+                        self.error_message,
                         size=14,
                         weight=ft.FontWeight.W_500,
                         selectable=True,
                         color=ft.Colors.BLUE_800
                     ),
                     ft.Text(
-                        "It can be case insensitive in text file.",
+                        "The required column names can be case insensitive in text file.",
                         size=14,
                         italic=True
                     )

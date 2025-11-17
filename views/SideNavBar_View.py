@@ -3,11 +3,11 @@ import sys
 import flet as ft
 from controller.Select_Data_Controller import Select_Data_Controller
 from views import Select_Data_View
-from views.Main_View import Main_View
-from model.Main_Model import Main_Model
+from views.Calculate_Biomass_View import  Calculate_Biomass_View
+from model.Calculate_Biomass_Model import Calculate_Biomass_Model
 from views.Create_Species import AddSpeciesForm
 from controller.Create_Species_Controller import Create_Species_Controller
-from controller.Main_Controller import Main_Controller
+from controller.Calculate_Biomass_Controller import Calculate_Biomass_Controller
 from views.Select_Data_View import Select_Data_View
 from views.About_Dialog_View import About_Dialog_View
 from widgets.Display_Nav_Item import Display_Nav_Item
@@ -26,11 +26,12 @@ class SideNavBar_View:
     ACCENT_ABOUT = "#8B5CF6"  # Purple for the About button
     ACTIVE_ITEM_BG = ft.Colors.with_opacity(0.1, ft.Colors.WHITE)  # Subtle highlight for active item
 
-    def __init__(self):
+    def __init__(self, page: ft.Page):
+        self.page = page
         self._initialise()
 
     def _initialise(self):
-        self.page = None
+      
         self.is_expanded_state = {'value': True}  # Initialize as True (expanded)
         self.active__nav_item = None
         self.sidebar = None
@@ -38,8 +39,13 @@ class SideNavBar_View:
         self.main_content_area = None
         self.data_imported = False  # Track if data has been imported successfully
       
-        # Initialize controllers and forms
-        self.main_controller = Main_Controller(Main_Model(), Main_View())
+        # Initialize controllers and forms - FIXED: Initialize Main_Controller properly
+        self.main_model = Calculate_Biomass_Model()
+        self.main_view = Calculate_Biomass_View(None, page = self.page)  # Pass None initially, set controller later
+        self.main_controller = Calculate_Biomass_Controller(self.main_model, self.main_view)
+        # Now set the controller reference in the view
+        self.main_view.controller = self.main_controller
+        
         self.create_species_controller = Create_Species_Controller()
         self.add_species_form = AddSpeciesForm(self.create_species_controller)
         self.is_data_imported = False
@@ -230,11 +236,6 @@ class SideNavBar_View:
                     enabled=True
                 ),
             ]
-            
-            # Add tooltips for disabled items explaining why they're disabled
-            # for item in nav_items:
-            #     if not item.enabled and item.text != "Select Data" and item.text != "Exit Application":
-            #         item.tooltip = "Please import data first to enable this feature"
             
             return nav_items
         
