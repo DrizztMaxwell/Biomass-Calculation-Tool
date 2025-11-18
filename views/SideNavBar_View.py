@@ -21,8 +21,8 @@ class SideNavbar_View:
     SIDEBAR_BACKGROUND = "#1B2433"  # Dark background color from the image
     SIDEBAR_EXPANDED_WIDTH = 250
     SIDEBAR_COLLAPSED_WIDTH = 80
-    PRIMARY_COLOR = "#34D399"  # A bright, light green
-    ACCENT_DISCLAIMER = "#34D399"  # Bright green for the Disclaimer button
+    PRIMARY_COLOR = ft.Colors.GREEN_500  # A bright, light green
+    ACCENT_DISCLAIMER = ft.Colors.GREEN_700  # Bright green for the Disclaimer button
     ACCENT_ABOUT = "#8B5CF6"  # Purple for the About button
     ACTIVE_ITEM_BG = ft.Colors.with_opacity(0.1, ft.Colors.WHITE)  # Subtle highlight for active item
 
@@ -314,12 +314,7 @@ class SideNavbar_View:
             expand=True
         )
 
-        # Set fonts
-        self.page.fonts = {
-            "Poppins-Medium": "./assets/fonts/poppins/Poppins-Medium.ttf",
-            "Poppins-Regular": "./assets/fonts/poppins/Poppins-Regular.ttf" 
-        }
-
+       
       
         # Set initial page to Select Data
         self.active__nav_item = "select_data"

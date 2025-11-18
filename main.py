@@ -12,6 +12,12 @@ def _screen_configuration(page:ft.Page):
     page.window_height = 800
     page.window_width = 1200
     page.padding = 0
+     # Set fonts
+    page.fonts = {
+            "Poppins-Medium": "./assets/fonts/poppins/Poppins-Medium.ttf",
+            "Poppins-Regular": "./assets/fonts/poppins/Poppins-Regular.ttf" 
+        }
+
 
 # from views.SideNavBar_View import main
 def main(page: ft.Page):
@@ -45,10 +51,6 @@ def main(page: ft.Page):
             
             eula_controller.get_exit_view()
             page.update()
-
-
-    
-    
     
     eula_view = EULA_View(page=page, controller=None)
     eula_controller = EULA_Controller(page=page, view=eula_view)
@@ -59,7 +61,6 @@ def main(page: ft.Page):
     
     # Build and show EULA page
     eula_controller.build()
-    
     
 
 

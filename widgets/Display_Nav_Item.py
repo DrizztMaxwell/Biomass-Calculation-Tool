@@ -1,6 +1,6 @@
 import flet as ft
 
-def Display_Nav_Item(icon: str, text: str, is_expanded: bool, is_active: bool = False, on_click=None, bgcolor="#34D399", SIDEBAR_COLLAPSED_WIDTH=80, enabled: bool = True) -> ft.Container:
+def Display_Nav_Item(icon: str, text: str, is_expanded: bool, is_active: bool = False, on_click=None, bgcolor=ft.Colors.GREEN_500, SIDEBAR_COLLAPSED_WIDTH=80, enabled: bool = True) -> ft.Container:
     """Creates a custom, responsive navigation item."""
     print(f"Nav Item: {text}, Active: {is_active}, Enabled: {enabled}")
     
