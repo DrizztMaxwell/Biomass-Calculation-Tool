@@ -1,11 +1,22 @@
 # main.py
 import flet as ft
-from controller.eula_menu import show_eula_page
-from controller.main_menu import show_main_menu_page
 from data.data_manager import DataManager
-from views.SideNavBar_View import SideNavBar_View
+from controller.EULA_Controller import EULA_Controller
+from views.EULA_View import EULA_View
+from views.SideNavbar_View import SideNavbar_View
+from controller.SideNavbar_Controller import SideNavbar_Controller
+
+def _screen_configuration(page:ft.Page):
+    page.title = "Biomass Calculator"
+    page.bgcolor = ft.Colors.WHITE
+    page.window_height = 800
+    page.window_width = 1200
+    page.padding = 0
+
 # from views.SideNavBar_View import main
 def main(page: ft.Page):
+    _screen_configuration(page)
+    
     """
     Entry point for the app.
     """
@@ -20,11 +31,36 @@ def main(page: ft.Page):
 
     page.on_close = cleanup
     
-    # Display the EULA first then proceed with the app
-    show_eula_page(page)
+    
+    def handle_eula_result(agreed):
+        """Handle the EULA agreement result"""
+        if agreed:
+            print("✅ User agreed to EULA - proceeding with application")
+            page.clean()
+            SideNavbar_Controller(SideNavbar_View(page)).build()
+            page.update()
+        else:
+            print("❌ User rejected EULA - application cannot proceed")
+            page.clean()
+            
+            eula_controller.get_exit_view()
+            page.update()
 
 
-
+    
+    
+    
+    eula_view = EULA_View(page=page, controller=None)
+    eula_controller = EULA_Controller(page=page, view=eula_view)
+    eula_view.controller = eula_controller
+    
+    # Set the callback to handle the EULA result
+    eula_controller.set_callback(handle_eula_result)
+    
+    # Build and show EULA page
+    eula_controller.build()
+    
+    
 
 
 if __name__ == "__main__":

@@ -1,20 +1,19 @@
 # controller/SideNavbar_Controller.py
 import flet as ft
 from model.SideNavbar_Model import SideNavbar_Model
+from views.SideNavbar_View import SideNavbar_View
 # from view.SideNavbar_View import Sid
 
 class SideNavbar_Controller:
     """Controller class for the Sidebar Navigation component."""
     
-    def __init__(self, main_controller=None):
-        self.model = SideNavbar_Model()
-        self.view = SideNavbar_View(self)
-        self.main_controller = main_controller  # Reference to main controller for navigation
+    def __init__(self, view:SideNavbar_View):
+        # self.model = SideNavbar_Model()
+        self.view = view
         self.page = None
         
-    def build(self, page):
+    def build(self):
         """Build the sidebar component."""
-        self.page = page
         return self.view.build()
     
     def toggle_sidebar(self, e):

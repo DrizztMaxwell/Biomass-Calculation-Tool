@@ -14,7 +14,7 @@ from widgets.Display_Nav_Item import Display_Nav_Item
 from widgets.Display_Version_Number import Display_Version_Number
 from widgets.Display_Exit_Dialog import Display_Exit_Dialog
 
-class SideNavBar_View:
+class SideNavbar_View:
     """Main application class for the Biomass Calculator"""
     
     # --- Configuration Constants ---
@@ -279,16 +279,11 @@ class SideNavBar_View:
             ft.Container(content=create_footer_buttons(), padding=ft.padding.only(bottom=20, left=10, right=10))
         ]
 
-    def main(self, page: ft.Page):
-        """Main application entry point"""
-        self.page = page
+    def build(self):
+        """Build and return the main application layout"""
         
         # Set up the page appearance
-        page.title = "Biomass Calculator"
-        page.bgcolor = ft.Colors.WHITE
-        page.window_height = 800
-        page.window_width = 1200
-        page.padding = 0
+        
 
         # Initialize the sidebar content as expanded
         self.sidebar_content = ft.Column(
@@ -320,14 +315,17 @@ class SideNavBar_View:
         )
 
         # Set fonts
-        page.fonts = {
+        self.page.fonts = {
             "Poppins-Medium": "./assets/fonts/poppins/Poppins-Medium.ttf",
             "Poppins-Regular": "./assets/fonts/poppins/Poppins-Regular.ttf" 
         }
 
-        # --- Final Layout ---
-        page.add(
-            ft.Row(
+      
+        # Set initial page to Select Data
+        self.active__nav_item = "select_data"
+        self.navigate_to_page("select_data")
+        
+        self.page.add(ft.Row(
                 [
                     self.sidebar,
                     ft.VerticalDivider(width=1, color=ft.Colors.BLACK12),
@@ -338,7 +336,3 @@ class SideNavBar_View:
                 tight=True
             )
         )
-        
-        # Set initial page to Select Data
-        self.active__nav_item = "select_data"
-        self.navigate_to_page("select_data")
