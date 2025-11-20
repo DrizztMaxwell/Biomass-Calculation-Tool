@@ -2,6 +2,7 @@ import pandas as pd
 
 
 def do_mandatory_columns_exist(data_frame: pd.DataFrame) -> bool:
+    print(data_frame.columns)
    
     required_columns = ['plot', 'year', 'origin', 'tree status', 'tree number', 'dbh', 'height', 'speccode']
     

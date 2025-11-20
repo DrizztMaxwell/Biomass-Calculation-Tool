@@ -57,8 +57,8 @@ class Calculate_Biomass_Controller:
                 continue # Skip rows without species code
                 
             species_params = self._get_species_parameters(tree_params, species_code)
-            print("Species Code parmas printing")
-            print(species_params)
+            # print("Species Code parmas printing")
+            # print(species_params)
             if species_params:
                 self._calculate_row_biomass(local_data, index, row, species_params)
 

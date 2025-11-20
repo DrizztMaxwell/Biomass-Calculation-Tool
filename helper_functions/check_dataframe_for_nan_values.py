@@ -1,6 +1,6 @@
 
 import pandas as pd
-
+import numpy as np
 def check_dataframe_for_nan_values(data_frame: pd.DataFrame) -> tuple:
     """
     Check for NaN values in a DataFrame and generate error reports.
@@ -11,30 +11,31 @@ def check_dataframe_for_nan_values(data_frame: pd.DataFrame) -> tuple:
     Returns:
         tuple: (nan_detected, error_count, error_messages)
     """
-    nan_detected = False
-    error_count = 0
+   # Check for any NaN values in the entire dataframe
+    nan_detected = data_frame.isna().any().any()
+    
+    if not nan_detected:
+        return False, 0, []
+    
+    # Find rows with NaN values (vectorized - much faster)
+    nan_rows = data_frame.isna().any(axis=1)
+    error_count = nan_rows.sum()
+    
+    # Get indices of rows with NaN
+    nan_indices = nan_rows[nan_rows].index.tolist()
+    
+    # Generate error messages efficiently
     error_messages = []
-
-    for index, row in data_frame.iterrows():
-        nan_columns = [data_frame.columns[col_idx] for col_idx, value in enumerate(row) if pd.isna(value)]
-
-        if nan_columns:
-            nan_detected = True
-            error_count += 1
-            
-            # Extract clean row data without pandas metadata
-            row_data_clean = {}
-            for col_name, value in row.items():
-                row_data_clean[col_name] = value
-            
-            error_msg = {
-                "index": index,
-                "row_data": row_data_clean,  # Clean dictionary instead of pandas Series
-                "nan_columns": nan_columns
-            }
-            
-            # Optional: Print formatted error message
-            print(f"NaN found at row {index}, columns: {nan_columns}")
-            error_messages.append(error_msg)
-
+    for idx in nan_indices:
+        nan_columns = data_frame.columns[data_frame.loc[idx].isna()].tolist()
+        row_data_clean = data_frame.loc[idx].replace({np.nan: None}).to_dict()
+        
+        error_msg = {
+            "index": idx,
+            "row_data": row_data_clean,
+            "nan_columns": nan_columns
+        }
+        error_messages.append(error_msg)
+    
+    print(f"Found {error_count} rows with NaN values")
     return nan_detected, error_count, error_messages

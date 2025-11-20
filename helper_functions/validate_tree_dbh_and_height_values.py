@@ -1,71 +1,61 @@
 import pandas as pd
+import numpy as np
 
 def validate_tree_dbh_and_height_values(data_frame: pd.DataFrame, dbh_min: float = 2.5, dbh_max: float = 100, height_min: float = 1.3, height_max: float = 50):
     """
-    Validate DBH and Height values against acceptable ranges and return errors in structured format.
-    
-    Args:
-        data_frame: pandas DataFrame to validate
-        dbh_min: Minimum valid DBH value
-        dbh_max: Maximum valid DBH value  
-        height_min: Minimum valid Height value
-        height_max: Maximum valid Height value
-        
-    Returns:
-        list: Error messages in structured format [{'index': int, 'row_data': dict, 'nan_columns': list}]
+    Vectorized validation for DBH and Height values - MUCH faster than iterrows().
     """
-    error_messages = []
-
     # Create lowercase mapping for case-insensitive column access
     column_mapping = {col.lower(): col for col in data_frame.columns}
     
-    # Check if required columns exist (case-insensitive)
+    # Check if required columns exist
     required_lower = ['dbh', 'height']
     missing_columns = [col for col in required_lower if col not in column_mapping]
     
     if missing_columns:
         print(f"Warning: Missing required columns: {missing_columns}")
-        return error_messages
+        return []
 
-    for index, row in data_frame.iterrows():
-        # Get values using case-insensitive mapping
-        dbh_col = column_mapping['dbh']
-        height_col = column_mapping['height']
+    # Get original column names
+    dbh_col = column_mapping['dbh']
+    height_col = column_mapping['height']
+    
+    # Vectorized validation (much faster than iterrows)
+    dbh_values = data_frame[dbh_col]
+    height_values = data_frame[height_col]
+    
+    # Create boolean masks for invalid values
+    dbh_invalid_mask = (~dbh_values.isna()) & ((dbh_values < dbh_min) | (dbh_values >= dbh_max))
+    height_invalid_mask = (~height_values.isna()) & ((height_values < height_min) | (height_values > height_max))
+    
+    # Combine masks to find rows with any invalid values
+    invalid_rows_mask = dbh_invalid_mask | height_invalid_mask
+    
+    if not invalid_rows_mask.any():
+        print("✓ No DBH/Height validation errors found")
+        return []
+    
+    # Get indices of invalid rows
+    invalid_indices = invalid_rows_mask[invalid_rows_mask].index
+    
+    # Generate error messages efficiently
+    error_messages = []
+    for idx in invalid_indices:
+        invalid_columns = []
+        if dbh_invalid_mask.loc[idx]:
+            invalid_columns.append(dbh_col)
+        if height_invalid_mask.loc[idx]:
+            invalid_columns.append(height_col)
         
-        dbh_value = row[dbh_col]
-        height_value = row[height_col]
-        dbh_invalid = False
-        height_invalid = False
-
-        # Validate DBH range
-        if not pd.isna(dbh_value):
-            if dbh_value < dbh_min or dbh_value >= dbh_max:
-                dbh_invalid = True
-
-        # Validate Height range
-        if not pd.isna(height_value):
-            if height_value < height_min or height_value > height_max:
-                height_invalid = True
-
-        if dbh_invalid or height_invalid:
-            # Convert row to dictionary (removes pandas metadata)
-            row_data = row.to_dict()
-            
-            # Determine which columns are invalid (using original column names)
-            invalid_columns = []
-            if dbh_invalid:
-                invalid_columns.append(dbh_col)  # Use original column name
-            if height_invalid:
-                invalid_columns.append(height_col)  # Use original column name
-            
-            # Create structured error message
-            error_msg = {
-                'index': index,
-                'row_data': row_data,
-                'nan_columns': invalid_columns
-            }
-            
-            error_messages.append(error_msg)
+        # Convert only the problematic row to dict (more efficient)
+        row_data = data_frame.loc[idx].to_dict()
+        
+        error_msg = {
+            'index': idx,
+            'row_data': row_data,
+            'nan_columns': invalid_columns
+        }
+        error_messages.append(error_msg)
     
     print(f"Found {len(error_messages)} DBH/Height validation errors")
     return error_messages

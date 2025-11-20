@@ -5,6 +5,7 @@ import os
 from widgets.Equation_Card_Description_Text import Equation_Card_Description_Text
 from widgets.Equation_Card_Formula_Text import Equation_Card_Formula_Text
 from widgets.Equation_Card_Title_Text import Equation_Card_Title_Text
+from widgets.Loading_Spinner_Widget import Loading_Spinner_Widget
 from widgets.TitleTextWidget import TitleTextWidget
 from widgets.DescriptionText import DescriptionText
 from widgets.Select_Components_Widget import Select_Components_Widget
@@ -193,10 +194,12 @@ class Calculate_Biomass_View:
             # User cancelled the save dialog
             print("Export cancelled by user")
         
-    def on_calculate_biomass_click(self, e):
+    async def on_calculate_biomass_click(self, e):
         """Handle calculate biomass button click - delegate to controller."""
         print("Calculate biomass button clicked")
-        
+        loading_spinner = Loading_Spinner_Widget(self.page)
+        loading_spinner.show_dialog()
+               
         # Disable button and change appearance
         self.calculate_biomass_button.is_disabled = True
         e.control.bgcolor = "#CCCCCC"
@@ -207,7 +210,12 @@ class Calculate_Biomass_View:
         print(f"Button disabled: {self.is_button_disabled}")
        
         # Call controller method
+        await loading_spinner.simulate_progressive_loading(0.0, 0.2, 0.1, "Beginning Calculation...")
+        
         self.controller.calculate_biomass()
+        await loading_spinner.simulate_progressive_loading(1.0, 0.2, 0.1, "Completed...")
+        loading_spinner.hide()
+        
         
         # Show results table immediately
         self._show_results_table()

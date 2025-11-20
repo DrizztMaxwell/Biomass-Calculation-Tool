@@ -27,6 +27,6 @@ class Calculate_Biomass_Button:
             on_click=self._handle_click
         )
     
-    def _handle_click(self, e):
+    async def _handle_click(self, e):
         if self.on_click_callback and not self.is_disabled:
-            self.on_click_callback(e)
+            await self.on_click_callback(e)

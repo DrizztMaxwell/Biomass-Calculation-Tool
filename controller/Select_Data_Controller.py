@@ -46,38 +46,37 @@ class Select_Data_Controller:
                 dataframe = convert_text_file_into_dataframe(selected_file_path=self.selected_file_path)
                 if dataframe is None:
                     raise Exception("Error reading file. Text Input File may be empty.")
-                await asyncio.sleep(1)
-                print("DataFrame loaded:")
-                print(dataframe)
+                # await asyncio.sleep(1)
+                # print("DataFrame loaded:")
+                # print(dataframe)
                 await loading_spinner.simulate_progressive_loading(0.2, 0.4, 0.1, "Beginning mandatory column checking...")
-                # Check mandatory columns
+                # # Check mandatory columns
                 do_mandatory_columns_exist(data_frame=dataframe)
-                print("Mandatory columns check passed")
+                # print("Mandatory columns check passed")
                 
                 original_dataframe = dataframe.copy()
                 
-                # Process dataframe
+                # # Process dataframe
                 dataframe = convert_columns_to_specific_types(data_frame=dataframe)
-                print("Column type conversion completed")
+                # print("Column type conversion completed")
                 
                 dataframe = convert_columns_to_lowercase(data_frame=dataframe)
-                print("Column lowercase conversion completed")
+                # print("Column lowercase conversion completed")
                 
-                print("Processed DataFrame:")
-                print(dataframe)
+                # print("Processed DataFrame:")
+                # print(dataframe)
                 
-                # Validate data
+                # # Validate data
                 nan_detected, error_count, error_messages = check_dataframe_for_nan_values(data_frame=dataframe)
-                print("NaN validation completed")
+                # print("NaN validation completed")
                 
                 error_message_for_out_of_bounds_dbh_or_height_value = validate_tree_dbh_and_height_values(dataframe)
                 
-                print("DBH and height validation completed")
+                # print("DBH and height validation completed")
                 await loading_spinner.simulate_progressive_loading(0.4, 0.8, 0.1, "DBH and Height validation completed...")
 
                 self.error_messages = error_messages
-                await loading_spinner.simulate_progressive_loading(0.8, 1.0, 0.1, "Completed successfully...")
-                loading_spinner.hide()
+               
                 # Show warnings if any
                 if error_messages or error_message_for_out_of_bounds_dbh_or_height_value:
                     show_warning_dialog = Display_Warning_Dialog(
@@ -85,6 +84,7 @@ class Select_Data_Controller:
                         self.error_messages, 
                         error_message_for_out_of_bounds_dbh_or_height_value
                     ).build()
+                    
                     self.page.open(show_warning_dialog)
                     
                 # Save data to local storage
@@ -98,7 +98,8 @@ class Select_Data_Controller:
                 if self.data_imported_callback:
                     
                     self.data_imported_callback(True)  # Call the callback to enable sidebar buttons
-                
+                await loading_spinner.simulate_progressive_loading(0.8, 1.0, 0.1, "Completed successfully...")
+                loading_spinner.hide()
                 self.page.update()
                 return
                 
