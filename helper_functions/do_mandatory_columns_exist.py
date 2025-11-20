@@ -18,5 +18,5 @@ def do_mandatory_columns_exist(data_frame: pd.DataFrame) -> bool:
         error_message += f"Available columns: {list(data_frame.columns)}"
         raise ValueError(error_message)
     
-    print(f"✓ All required columns are present: {required_columns}")
+    # print(f"✓ All required columns are present: {required_columns}")
     return True

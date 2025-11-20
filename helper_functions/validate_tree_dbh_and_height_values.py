@@ -13,7 +13,7 @@ def validate_tree_dbh_and_height_values(data_frame: pd.DataFrame, dbh_min: float
     missing_columns = [col for col in required_lower if col not in column_mapping]
     
     if missing_columns:
-        print(f"Warning: Missing required columns: {missing_columns}")
+        # print(f"Warning: Missing required columns: {missing_columns}")
         return []
 
     # Get original column names
@@ -32,7 +32,7 @@ def validate_tree_dbh_and_height_values(data_frame: pd.DataFrame, dbh_min: float
     invalid_rows_mask = dbh_invalid_mask | height_invalid_mask
     
     if not invalid_rows_mask.any():
-        print("✓ No DBH/Height validation errors found")
+        # print("✓ No DBH/Height validation errors found")
         return []
     
     # Get indices of invalid rows
@@ -57,5 +57,5 @@ def validate_tree_dbh_and_height_values(data_frame: pd.DataFrame, dbh_min: float
         }
         error_messages.append(error_msg)
     
-    print(f"Found {len(error_messages)} DBH/Height validation errors")
+    # print(f"Found {len(error_messages)} DBH/Height validation errors")
     return error_messages

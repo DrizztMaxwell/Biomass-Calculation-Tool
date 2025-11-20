@@ -11,7 +11,7 @@ class Display_Warning_Dialog:
         self.page = page
         self.current_view = "all"  # "all" or "tree_measurements"
         self.error_message_for_out_of_bounds_dbh_or_height_value = error_message_for_out_of_bounds_dbh_or_height_value
-        print(self.error_message_for_out_of_bounds_dbh_or_height_value)
+        # print(self.error_message_for_out_of_bounds_dbh_or_height_value)
         
     def _convert_row_data_to_lowercase(self, row_data):
         """Convert all keys in row_data to lowercase for case-insensitive access"""
@@ -35,9 +35,9 @@ class Display_Warning_Dialog:
 
         # Loop through all error messages
         for error_data in self.error_message_for_out_of_bounds_dbh_or_height_value:
-            print(f"Index: {error_data['index']}")
-            print(f"Row data: {error_data['row_data']}")
-            print(f"NaN columns: {error_data['nan_columns']}")
+            # print(f"Index: {error_data['index']}")
+            # print(f"Row data: {error_data['row_data']}")
+            # print(f"NaN columns: {error_data['nan_columns']}")
             
             # Convert row data keys to lowercase
             row_data_lower = self._convert_row_data_to_lowercase(error_data['row_data'])
@@ -118,9 +118,9 @@ class Display_Warning_Dialog:
 
         # Loop through all error messages
         for error_data in self.error_messages:
-            print(f"Index: {error_data['index']}")
-            print(f"Row data: {error_data['row_data']}")
-            print(f"NaN columns: {error_data['nan_columns']}")
+            # print(f"Index: {error_data['index']}")
+            # print(f"Row data: {error_data['row_data']}")
+            # print(f"NaN columns: {error_data['nan_columns']}")
             
             # Convert row data keys to lowercase
             row_data_lower = self._convert_row_data_to_lowercase(error_data['row_data'])
@@ -316,11 +316,11 @@ class Display_Warning_Dialog:
     def _switch_view(self,view_type):
         """Switch between different error views"""
         self.current_view = view_type
-        print("OPOPOPO")
+        # print("OPOPOPO")
         
         # Update button states by rebuilding the dialog
         if self.dialog:
-            print("OPENING")
+            # print("OPENING")
             
             self.page.open(self.build())
             self.page.update()
@@ -480,10 +480,10 @@ class Display_Warning_Dialog:
         
         return self._create_full_display(index, row_data_lower, nan_columns, format_value)
 
-    def _parse_error_message_for_out_of_bounds_dbh_or_height_value(self):
-        print(self.error_message_for_out_of_bounds_dbh_or_height_value[0]["index"])
-        print(self.error_message_for_out_of_bounds_dbh_or_height_value[0]["row_data"])
-        print(self.error_message_for_out_of_bounds_dbh_or_height_value[0]["nan_columns"])
+    
+        # print(self.error_message_for_out_of_bounds_dbh_or_height_value[0]["index"])
+        # print(self.error_message_for_out_of_bounds_dbh_or_height_value[0]["row_data"])
+        # print(self.error_message_for_out_of_bounds_dbh_or_height_value[0]["nan_columns"])
         
         
     
@@ -669,8 +669,15 @@ class Display_Warning_Dialog:
     
     def close_dialog(self, e):
         """Close the dialog"""
+        self.error_messages = ""
+        self.error_content = ""
         self.dialog.open = False
+        
         self.page.update()
+        self.__del__()
+
+    def __del__(self):
+        print(f"Instance of display warning dialog destroyed (garbage collected).")
 
 # Quick usage function
 def show_warning_dialog(page: ft.Page, error_messages: list):

@@ -32,6 +32,12 @@ class Select_Data_Controller:
         self.data_imported_callback = data_imported_callback  # Fixed parameter name
         self.is_data_imported = False  # Track internal state
 
+        self.show_warning_dialog = Display_Warning_Dialog(
+                        self.page, 
+                        "", 
+                        ""
+                    )
+
     async def on_file_selected(self, e: ft.FilePickerResultEvent):
         """Callback when a file is selected"""
         try:
@@ -79,13 +85,11 @@ class Select_Data_Controller:
                
                 # Show warnings if any
                 if error_messages or error_message_for_out_of_bounds_dbh_or_height_value:
-                    show_warning_dialog = Display_Warning_Dialog(
-                        self.page, 
-                        self.error_messages, 
-                        error_message_for_out_of_bounds_dbh_or_height_value
-                    ).build()
+                    self.show_warning_dialog.error_messages = self.error_messages
+                    self.show_warning_dialog.error_message_for_out_of_bounds_dbh_or_height_value = error_message_for_out_of_bounds_dbh_or_height_value
+                   
                     
-                    self.page.open(show_warning_dialog)
+                    self.page.open(self.show_warning_dialog.build())
                     
                 # Save data to local storage
                 print("File processed successfully. Saving to local storage...")
@@ -99,8 +103,8 @@ class Select_Data_Controller:
                     
                     self.data_imported_callback(True)  # Call the callback to enable sidebar buttons
                 await loading_spinner.simulate_progressive_loading(0.8, 1.0, 0.1, "Completed successfully...")
-                loading_spinner.hide()
-                self.page.update()
+                loading_spinner.hide()  
+                # self.page.update()
                 return
                 
             else:

@@ -9,7 +9,7 @@ def convert_columns_to_specific_types(data_frame: pd.DataFrame) -> pd.DataFrame:
         # Create mapping from lowercase to original column names
         col_mapping = {str(col).lower(): col for col in data_frame.columns}
         
-        print("Starting data type conversion...")
+        # print("Starting data type conversion...")
         
         # Track conversion results
         conversion_results = {}
@@ -57,12 +57,12 @@ def convert_columns_to_specific_types(data_frame: pd.DataFrame) -> pd.DataFrame:
             after_dtype = data_frame[original_col].dtype
             conversion_results[original_col] = f"{before_dtype} → {after_dtype}"
         
-        # Print conversion summary
-        print("\n" + "="*50)
-        print("DATA TYPE CONVERSION SUMMARY")
-        print("="*50)
-        for col, conversion in conversion_results.items():
-            print(f"✓ {col:15} : {conversion}")
+        # # Print conversion summary
+        # print("\n" + "="*50)
+        # print("DATA TYPE CONVERSION SUMMARY")
+        # print("="*50)
+        # for col, conversion in conversion_results.items():
+        #     print(f"✓ {col:15} : {conversion}")
         
         return data_frame
         
