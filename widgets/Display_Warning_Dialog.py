@@ -1,710 +1,575 @@
 import flet as ft
+import numpy as np
 import pandas as pd
-from widgets.Create_Section_Buttons import Create_Section_Buttons
-from widgets.Warning_Dialog_Display_Errors_Header import Warning_Dialog_Display_Errors_Header
 from widgets.Warning_Dialog_Header import Warning_Dialog_Header
 
 class Display_Warning_Dialog:
+    """Utility class to build and return a complex warning Container that mimics a modal dialog."""
+
     def __init__(self, page: ft.Page, error_messages, error_message_for_out_of_bounds_dbh_or_height_value):
         self.error_messages = error_messages
-        self.dialog = None
+        print("ERORR")
+        print(error_messages)
+        self.dialog = None 
         self.page = page
-        self.current_view = "all"  # "all" or "tree_measurements"
         self.error_message_for_out_of_bounds_dbh_or_height_value = error_message_for_out_of_bounds_dbh_or_height_value
-        # print(self.error_message_for_out_of_bounds_dbh_or_height_value)
+        self.current_page_validation = 0
+        self.current_page_measurement = 0
+        self.rows_per_page = 20
+        
+        # Store references to the tab containers so we can update them
+        self.validation_tab_container = None
+        self.measurement_tab_container = None
+        self.tabs_control = None
+        
+    def close_dialog(self, e):
+        """Removes the custom container from the page to dismiss the 'modal' effect."""
+        if self.dialog and self.dialog in self.page.overlay:
+            self.page.overlay.remove(self.dialog)
+            self.page.update()
         
     def _convert_row_data_to_lowercase(self, row_data):
         """Convert all keys in row_data to lowercase for case-insensitive access"""
         return {str(key).lower(): value for key, value in row_data.items()}
         
-    def display_error_card_for_tree_measurements_information(self):
-        issue_counter = 0
-        error_cards = []
+    # NOTE: _create_table_header is no longer used, as the header is defined by ft.DataTable's 'columns'
+    # def _create_table_header(self, is_tree_measurement_tab: bool):
+    #     ... (Removed) ...
+    
+    def _create_table_row(self, error_data, is_tree_measurement_tab: bool):
+        """Create a table row for an error entry with improved styling"""
+        row_data_lower = self._convert_row_data_to_lowercase(error_data['row_data'])
+        print(row_data_lower)
+        nan_columns_lower = [col.lower() for col in error_data.get('nan_columns', [])]
         
-        # Helper function to create a bold label + value row
-        def create_detail_row(label, value, value_color=ft.Colors.GREY_800):
-            return ft.Row(
-                spacing=4,
-                controls=[
-                    # Bold Label
-                    ft.Text(f"{label}:", size=12, weight=ft.FontWeight.BOLD, color=ft.Colors.GREY_800),
-                    # Regular Value (with optional conditional color)
-                    ft.Text(f"{value}", size=12, color=value_color),
-                ]
-            )
-
-        # Loop through all error messages
-        for error_data in self.error_message_for_out_of_bounds_dbh_or_height_value:
-            # print(f"Index: {error_data['index']}")
-            # print(f"Row data: {error_data['row_data']}")
-            # print(f"NaN columns: {error_data['nan_columns']}")
+        # Helper function to create styled text cells with better visual hierarchy
+        def create_cell(value, is_error=False):
             
-            # Convert row data keys to lowercase
-            row_data_lower = self._convert_row_data_to_lowercase(error_data['row_data'])
+            if value is None or (isinstance(value, float) and np.isnan(value)):
+                # Check for Python None or numpy.nan (float('nan'))
+                display_value = "ERROR"  # Display 'MISSING' for None/NaN
+                is_error = True  # Treat 'MISSING' as an error for visual emphasis
+            else:
+                display_value = str(value) 
             
-            # Convert nan_columns to lowercase for case-insensitive comparison
-            nan_columns_lower = [col.lower() for col in error_data['nan_columns']]
-            
-            # Determine the colors for DBH and Height based on nan_columns (case-insensitive)
-            dbh_color = ft.Colors.RED_600 if 'dbh' in nan_columns_lower else ft.Colors.GREY_800
-            height_color = ft.Colors.RED_600 if 'height' in nan_columns_lower else ft.Colors.GREY_800
-            species_color = ft.Colors.RED_600 if 'speccode' in nan_columns_lower else ft.Colors.GREY_800
-            plot_color = ft.Colors.RED_600 if 'plot' in nan_columns_lower else ft.Colors.GREY_800
-            tree_color = ft.Colors.RED_600 if 'tree number' in nan_columns_lower else ft.Colors.GREY_800
-            year_color = ft.Colors.RED_600 if 'year' in nan_columns_lower else ft.Colors.GREY_800
-            origin_color = ft.Colors.RED_600 if 'origin' in nan_columns_lower else ft.Colors.GREY_800
-            tree_status_color = ft.Colors.RED_600 if 'tree status' in nan_columns_lower else ft.Colors.GREY_800
-
-            # Create a card for each error
-            error_card = ft.Container(
-                bgcolor=ft.Colors.WHITE,
-                padding=20,
-                margin=ft.margin.only(bottom=15),
-                border=ft.border.all(1, ft.Colors.GREY_300),
-                border_radius=12,
-                content=ft.Column(
-                    spacing=8,
-                    controls=[
-                        # Issue header
-                        ft.Text(f"Issue #{issue_counter + 1}", size=16, weight=ft.FontWeight.BOLD, color=ft.Colors.GREY_800),
-                        ft.Text("The following tree measurement values are out of bounds:", size=12, color=ft.Colors.GREY_600),
-                        
-                        # Row information (using the helper function)
-                        create_detail_row("Row Index", error_data['index'] + 1),
-                        
-                        # Additional row data (using lowercase keys)
-                        create_detail_row("Plot", row_data_lower['plot'], plot_color),
-                        create_detail_row("Year", row_data_lower['year'], year_color),
-                        create_detail_row("Origin", row_data_lower['origin'], origin_color),
-                        create_detail_row("Tree Status", row_data_lower['tree status'], tree_status_color),
-                        create_detail_row("SpecCode", row_data_lower['speccode'], species_color),
-                        create_detail_row("Tree Number", row_data_lower['tree number'], tree_color),
-                        create_detail_row("DBH", row_data_lower['dbh'], dbh_color),
-                        create_detail_row("Height", row_data_lower['height'], height_color),
-                    ]
+            return ft.DataCell(
+                ft.Container(
+                    content=ft.Text(
+                        display_value,
+                        size=12,
+                        # Use RED_600 if the column was flagged in nan_columns_lower OR if the value is MISSING
+                        color=ft.Colors.RED_600 if is_error else ft.Colors.GREY_800,
+                        weight=ft.FontWeight.W_500 if is_error else ft.FontWeight.NORMAL,
+                    ),
+                    padding=ft.padding.symmetric(horizontal=8, vertical=6),
                 )
             )
-            
-            error_cards.append(error_card)
-            issue_counter += 1
         
-        # Return a scrollable container with all error cards
+        # Common cells for both tabs - Plot, Year, SpecCode, Tree Number, DBH, Height
+        cells = [
+            # Row Index - Note: We do NOT want to check for None/NaN for the index
+            create_cell(error_data['index'] + 1, is_error=False), 
+            create_cell(row_data_lower.get('plot', None), 'plot' in nan_columns_lower),
+            create_cell(row_data_lower.get('year', None), 'year' in nan_columns_lower),
+            create_cell(row_data_lower.get('speccode', None), 'speccode' in nan_columns_lower),
+            create_cell(row_data_lower.get('tree number', None), 'tree number' in nan_columns_lower),
+            create_cell(row_data_lower.get('dbh', None), 'dbh' in nan_columns_lower),
+            create_cell(row_data_lower.get('height', None), 'height' in nan_columns_lower),
+        ]
+        
+        if is_tree_measurement_tab:
+            # For tree measurement errors, add Issue cell
+            dbh_value = row_data_lower.get('dbh')
+            height_value = row_data_lower.get('height')
+            
+            # Determine the issue
+            issues = []
+            
+            # Check for missing values first
+            if dbh_value is None or (isinstance(dbh_value, float) and np.isnan(dbh_value)):
+                issues.append("Missing DBH")
+            else:
+                try:
+                    dbh_float = float(dbh_value)
+                    if dbh_float < 2.5 or dbh_float > 100.0:
+                        issues.append("DBH out of bounds")
+                except (ValueError, TypeError):
+                    issues.append("Invalid DBH format")
+
+            if height_value is None or (isinstance(height_value, float) and np.isnan(height_value)):
+                issues.append("Missing Height")
+            else:
+                try:
+                    height_float = float(height_value)
+                    if height_float < 1.3 or height_float > 50.0:
+                        issues.append("Height out of bounds")
+                except (ValueError, TypeError):
+                    issues.append("Invalid Height format")
+
+            
+            issue_text = ", ".join(issues) if issues else "Measurement error"
+            cells.append(ft.DataCell(
+                ft.Container(
+                    content=ft.Text(issue_text, size=12, color=ft.Colors.RED_600, weight=ft.FontWeight.W_500),
+                    padding=ft.padding.symmetric(horizontal=8, vertical=6),
+                    bgcolor=ft.Colors.RED_50 if issues else ft.Colors.TRANSPARENT,
+                    border_radius=4,
+                )
+            ))
+        
+        # Add alternating row colors for better readability
+        row_color = ft.Colors.WHITE 
+        return ft.DataRow(
+            color=row_color,
+            cells=cells
+        )
+    def _get_paginated_data(self, error_list, current_page):
+        """Get the current page's data and pagination info"""
+        total_rows = len(error_list)
+        total_pages = max(1, (total_rows + self.rows_per_page - 1) // self.rows_per_page)  # Ceiling division
+        
+        start_idx = current_page * self.rows_per_page
+        end_idx = min(start_idx + self.rows_per_page, total_rows)
+        
+        paginated_data = error_list[start_idx:end_idx]
+        
+        return paginated_data, total_rows, total_pages, current_page + 1
+    
+    def _create_pagination_controls(self, total_pages, current_page, on_previous, on_next):
+        """Create pagination controls with page info and navigation buttons"""
         return ft.Container(
-            expand=True,
-            content=ft.ListView(
-                controls=error_cards,
-                spacing=10,
-                padding=20,
-                auto_scroll=False,
-            )
+            content=ft.Row(
+                [
+                    # Page info
+                    ft.Text(
+                        f"Page {current_page} of {total_pages}",
+                        size=12,
+                        color=ft.Colors.GREY_600,
+                        weight=ft.FontWeight.W_500,
+                    ),
+                    
+                    # Spacer
+                    ft.Container(expand=True),
+                    
+                    # Navigation buttons
+                    ft.OutlinedButton(
+                        content=ft.Row(
+                            [
+                                ft.Icon(ft.Icons.ARROW_BACK, size=16),
+                                ft.Text("Previous", size=12),
+                            ],
+                            spacing=8,
+                        ),
+                        on_click=on_previous,
+                        style=ft.ButtonStyle(
+                            padding=ft.padding.symmetric(horizontal=16, vertical=8),
+                        ),
+                        disabled=current_page <= 1,
+                    ),
+                    
+                    ft.OutlinedButton(
+                        content=ft.Row(
+                            [
+                                ft.Text("Next", size=12),
+                                ft.Icon(ft.Icons.ARROW_FORWARD, size=16),
+                            ],
+                            spacing=8,
+                        ),
+                        on_click=on_next,
+                        style=ft.ButtonStyle(
+                            padding=ft.padding.symmetric(horizontal=16, vertical=8),
+                        ),
+                        disabled=current_page >= total_pages,
+                    ),
+                ],
+                alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
+                vertical_alignment=ft.CrossAxisAlignment.CENTER,
+            ),
+            padding=ft.padding.symmetric(vertical=12, horizontal=16),
+            bgcolor=ft.Colors.GREY_50,
+            border_radius=8,
         )
         
+    def _create_error_table(self, error_list, is_tree_measurement_tab: bool, page_type: str):
+        """
+        Create a table view for errors with pagination and horizontal scrolling.
+        """
+        if not error_list:
+            return ft.Container(
+                content=ft.Column(
+                    [
+                        ft.Icon(ft.Icons.CHECK_CIRCLE_OUTLINED, size=48, color=ft.Colors.GREEN_400),
+                        ft.Text("No errors found", size=18, color=ft.Colors.GREY_600, weight=ft.FontWeight.W_500),
+                    ],
+                    horizontal_alignment=ft.CrossAxisAlignment.CENTER,
+                    spacing=16,
+                ),
+                padding=40,
+                alignment=ft.alignment.center,
+                expand=True,
+            )
+        
+        # Get current page based on page_type
+        if page_type == "validation":
+            current_page = self.current_page_validation
+        else:
+            current_page = self.current_page_measurement
+            
+        # Get paginated data
+        paginated_data, total_rows, total_pages, current_page_display = self._get_paginated_data(
+            error_list, current_page
+        )
+        
+        # Create callback functions for pagination
+        def go_previous(e):
+            if page_type == "validation":
+                if self.current_page_validation > 0:
+                    self.current_page_validation -= 1
+            else:
+                if self.current_page_measurement > 0:
+                    self.current_page_measurement -= 1
+            self._refresh_current_tab()
+        
+        def go_next(e):
+            if page_type == "validation":
+                if self.current_page_validation < total_pages - 1:
+                    self.current_page_validation += 1
+            else:
+                if self.current_page_measurement < total_pages - 1:
+                    self.current_page_measurement += 1
+            self._refresh_current_tab()
+        
+        # ONLY populate data rows
+        table_rows = [] 
+        for error_data in paginated_data:
+            table_rows.append(self._create_table_row(error_data, is_tree_measurement_tab))
+        
+        # Create table columns - same for both tabs except for Issue column
+        columns = [
+            ft.DataColumn(ft.Text("Row", weight=ft.FontWeight.BOLD, size=13, color=ft.Colors.WHITE)), # Added White color
+            ft.DataColumn(ft.Text("Plot", weight=ft.FontWeight.BOLD, size=13, color=ft.Colors.WHITE)), # Added White color
+            ft.DataColumn(ft.Text("Year", weight=ft.FontWeight.BOLD, size=13, color=ft.Colors.WHITE)), # Added White color
+            ft.DataColumn(ft.Text("SpecCode", weight=ft.FontWeight.BOLD, size=13, color=ft.Colors.WHITE)), # Added White color
+            ft.DataColumn(ft.Text("Tree Number", weight=ft.FontWeight.BOLD, size=13, color=ft.Colors.WHITE)), # Added White color
+            ft.DataColumn(ft.Text("DBH", weight=ft.FontWeight.BOLD, size=13, color=ft.Colors.WHITE)), # Added White color
+            ft.DataColumn(ft.Text("Height", weight=ft.FontWeight.BOLD, size=13, color=ft.Colors.WHITE)), # Added White color
+        ]
+        
+        if is_tree_measurement_tab:
+            columns.append(ft.DataColumn(ft.Text("Issue", weight=ft.FontWeight.BOLD, size=13, color=ft.Colors.WHITE))) # Added White color
+        
+        # Create a horizontally scrollable table that expands to fill available space
+        table_container = ft.Container(
+            content=ft.Row(
+                controls=[
+                    ft.DataTable(
+                        columns=columns,
+                        rows=table_rows,
+                        vertical_lines=ft.BorderSide(1, ft.Colors.GREY_300),
+                        horizontal_lines=ft.BorderSide(1, ft.Colors.GREY_200),
+                        heading_row_height=45,
+                        data_row_min_height=42,
+                        data_row_max_height=42,
+                        column_spacing=12,
+                        divider_thickness=1,
+                        heading_row_color=ft.Colors.GREEN_700,
+                        sort_column_index=0,
+                        show_checkbox_column=False,
+                        expand=True,  # Make DataTable expand
+                    )
+                ],
+                scroll=ft.ScrollMode.ADAPTIVE,
+                expand=True,  # Make Row expand
+            ),
+            margin=ft.margin.symmetric(horizontal=8),
+            expand=True,  # Make Container expand
+        )
+        
+        return ft.Container(
+            expand=True,  # Expand to fill available space
+            content=ft.Column(
+                controls=[
+                    # Results count
+                    ft.Container(
+                        content=ft.Text(
+                            f"Showing {len(paginated_data)} of {total_rows} errors",
+                            size=12,
+                            color=ft.Colors.GREY_600,
+                            weight=ft.FontWeight.W_500,
+                        ),
+                        # ADDED PADDING HERE:
+                        padding=ft.padding.symmetric(horizontal=16, vertical=8),
+                        alignment=ft.alignment.center_left,
+                    ),
+                    
+                    # Table with horizontal scrolling - expanded
+                    ft.Container(
+                        content=table_container,
+                        expand=True,  # Expand to fill available space
+                        border=ft.border.all(1, ft.Colors.GREY_300),
+                        border_radius=8,
+                    ),
+                    
+                    # Pagination controls
+                    self._create_pagination_controls(total_pages, current_page_display, go_previous, go_next),
+                ],
+                expand=True,  # Expand to fill available space
+                spacing=8,
+            ),
+            # ADDED PADDING HERE:
+            padding=ft.padding.all(8),
+        )
+
+    def _refresh_current_tab(self):
+        """Refresh only the currently visible tab"""
+        if not self.tabs_control:
+            return
+            
+        current_tab_index = self.tabs_control.selected_index
+        
+        if current_tab_index == 0:  # Validation Errors tab
+            # Rebuild validation tab content
+            new_validation_content = self._create_error_table(
+                self.error_messages, 
+                is_tree_measurement_tab=False,
+                page_type="validation"
+            )
+            self.tabs_control.tabs[0].content = ft.Container(
+                content=new_validation_content,
+                # REMOVED INNER PADDING HERE to let the _create_error_table container manage it.
+                expand=True,  # Make container expand
+            )
+        else:  # Tree Measurement Errors tab
+            # Rebuild measurement tab content
+            new_measurement_content = self._create_error_table(
+                self.error_message_for_out_of_bounds_dbh_or_height_value, 
+                is_tree_measurement_tab=True,
+                page_type="measurement"
+            )
+            
+            measurement_column = ft.Column(
+                controls=[
+                    # Informational banner
+                    ft.Container(
+                        padding=ft.padding.all(16),
+                        # ADJUSTED MARGIN HERE:
+                        margin=ft.margin.only(bottom=8, left=8, right=8),
+                        bgcolor=ft.Colors.BLUE_50,
+                        border_radius=12,
+                        border=ft.border.all(1, ft.Colors.BLUE_200),
+                        content=ft.Row(
+                            controls=[
+                                ft.Icon(ft.Icons.INFO_OUTLINED, color=ft.Colors.BLUE_600, size=20),
+                                ft.Text(
+                                    "Height must be (1.3 ≤ x ≤ 50.0), DBH must be (2.5 ≤ x ≤ 100.0)", 
+                                    size=14, 
+                                    weight=ft.FontWeight.W_500, 
+                                    color=ft.Colors.BLUE_800
+                                ),
+                            ],
+                            spacing=12,
+                        ),
+                    ),
+                    # Table content
+                    ft.Container(
+                        content=new_measurement_content,
+                        expand=True,  # Expand to fill available space
+                        # REMOVED INNER PADDING/MARGIN HERE to let _create_error_table manage it
+                    )
+                ],
+                expand=True,  # Expand to fill available space
+                spacing=0,
+            )
+            
+            self.tabs_control.tabs[1].content = measurement_column
+        
+        self.page.update()
+
+    def display_error_card_for_tree_measurements_information(self):
+        """Displays errors for out-of-bounds DBH/Height values in table format."""
+        return self._create_error_table(
+            self.error_message_for_out_of_bounds_dbh_or_height_value, 
+            is_tree_measurement_tab=True,
+            page_type="measurement"
+        )
         
     def display_error_card_for_validation_information(self):
-        issue_counter = 0
-        error_cards = []
+        """Displays general validation errors in table format."""
+        return self._create_error_table(
+            self.error_messages, 
+            is_tree_measurement_tab=False,
+            page_type="validation"
+        )
         
-        # Helper function to create a bold label + value row
-        def create_detail_row(label, value, value_color=ft.Colors.GREY_800):
-            return ft.Row(
-                spacing=4,
-                controls=[
-                    # Bold Label
-                    ft.Text(f"{label}:", size=12, weight=ft.FontWeight.BOLD, color=ft.Colors.GREY_800),
-                    # Regular Value (with optional conditional color)
-                    ft.Text(f"{value}", size=12, color=value_color),
-                ]
-            )
+    def __del__(self):
+        pass  
+        
+    def show_dialog(self):
+        """
+        Builds and returns a centered, blackened-out Container to mimic a modal dialog.
+        The calling function must add this container to page.controls.
+        """
+        
+        # Reset pagination when showing dialog
+        self.current_page_validation = 0
+        self.current_page_measurement = 0
+        
+        # Determine the initial tab index
+        initial_tab_index = 0
+        if len(self.error_message_for_out_of_bounds_dbh_or_height_value) > 0 and \
+           (len(self.error_messages) == 0 or len(self.error_message_for_out_of_bounds_dbh_or_height_value) > len(self.error_messages)):
+            initial_tab_index = 1
+            
+        header = Warning_Dialog_Header(self.error_messages, self.error_message_for_out_of_bounds_dbh_or_height_value) 
+        
+        # --- Content inside the central panel ---
+        
+        # 1. Validation Tab Content
+        validation_tab_content = ft.Container(
+            content=self.display_error_card_for_validation_information(),
+            # ADDED PADDING around the validation table content:
+            padding=ft.padding.all(16), 
+            expand=True,
+        )
 
-        # Loop through all error messages
-        for error_data in self.error_messages:
-            # print(f"Index: {error_data['index']}")
-            # print(f"Row data: {error_data['row_data']}")
-            # print(f"NaN columns: {error_data['nan_columns']}")
-            
-            # Convert row data keys to lowercase
-            row_data_lower = self._convert_row_data_to_lowercase(error_data['row_data'])
-            
-            # Convert nan_columns to lowercase for case-insensitive comparison
-            nan_columns_lower = [col.lower() for col in error_data['nan_columns']]
-            
-            # Determine the colors for DBH and Height based on nan_columns (case-insensitive)
-            dbh_color = ft.Colors.RED_600 if 'dbh' in nan_columns_lower else ft.Colors.GREY_800
-            height_color = ft.Colors.RED_600 if 'height' in nan_columns_lower else ft.Colors.GREY_800
-            plot_color = ft.Colors.RED_600 if 'plot' in nan_columns_lower else ft.Colors.GREY_800
-            species_color = ft.Colors.RED_600 if 'speccode' in nan_columns_lower else ft.Colors.GREY_800
-            year_color = ft.Colors.RED_600 if 'year' in nan_columns_lower else ft.Colors.GREY_800
-            tree_status_color = ft.Colors.RED_600 if 'tree status' in nan_columns_lower else ft.Colors.GREY_800
-            origin_color = ft.Colors.RED_600 if 'origin' in nan_columns_lower else ft.Colors.GREY_800
-            tree_color = ft.Colors.RED_600 if 'tree number' in nan_columns_lower else ft.Colors.GREY_800
-
-            # Create a card for each error
-            error_card = ft.Container(
-                bgcolor=ft.Colors.WHITE,
-                padding=20,
-                margin=ft.margin.only(bottom=15),
-                border=ft.border.all(1, ft.Colors.GREY_300),
-                border_radius=12,
-                content=ft.Column(
-                    spacing=8,
-                    controls=[
-                        # Issue header
-                        ft.Text(f"Issue #{issue_counter + 1}", size=16, weight=ft.FontWeight.BOLD, color=ft.Colors.GREY_800),
-                        ft.Text("The following tree measurement values are out of bounds:", size=12, color=ft.Colors.GREY_600),
-                        
-                        # Row information (using the helper function)
-                        create_detail_row("Row Index", error_data['index'] + 1),
-                        
-                        #Plot Subplot Year Origin TreeStatus Species Tree DBH Height (using lowercase keys)
-                        create_detail_row("Plot", row_data_lower['plot'], plot_color),
-                        create_detail_row("Year", row_data_lower['year'], year_color),
-                        create_detail_row("Origin", row_data_lower['origin'], origin_color),
-                        create_detail_row("Tree Status", row_data_lower['tree status'], tree_status_color),
-                        create_detail_row("SpecCode", row_data_lower['speccode'], species_color),
-                        create_detail_row("Tree Number", row_data_lower['tree number'], tree_color),
-                        create_detail_row("DBH", row_data_lower['dbh'], dbh_color),
-                        create_detail_row("Height", row_data_lower['height'], height_color),
-                    ]
+        # 2. Measurement Tab Content (Complex Column)
+        measurement_tab_content_column = ft.Column(
+            controls=[
+                # Informational banner
+                ft.Container(
+                    padding=ft.padding.all(16),
+                    # ADDED MARGIN HERE to separate from tab edges:
+                    margin=ft.margin.only(top=16, left=16, right=16, bottom=8),
+                    bgcolor=ft.Colors.BLUE_50,
+                    border_radius=12,
+                    border=ft.border.all(1, ft.Colors.BLUE_200),
+                    content=ft.Row(
+                        controls=[
+                            ft.Icon(ft.Icons.INFO_OUTLINED, color=ft.Colors.BLUE_600, size=20),
+                            ft.Text(
+                                "Height must be (1.3 ≤ x ≤ 50.0), DBH must be (2.5 ≤ x ≤ 100.0)", 
+                                size=14, 
+                                weight=ft.FontWeight.W_500, 
+                                color=ft.Colors.BLUE_800
+                            ),
+                        ],
+                        spacing=12,
+                    ),
+                ),
+                # Table content
+                ft.Container(
+                    content=self.display_error_card_for_tree_measurements_information(),
+                    expand=True,
+                    # ADDED PADDING AROUND TABLE HERE:
+                    padding=ft.padding.only(left=8, right=8, bottom=8), 
                 )
-            )
-            
-            error_cards.append(error_card)
-            issue_counter += 1
-        
-        # Return a scrollable container with all error cards
-        return ft.Container(
+            ],
             expand=True,
-            content=ft.ListView(
-                controls=error_cards,
-                spacing=10,
-                padding=20,
-                auto_scroll=False,
-            )
-        )
-            
-        
-        
-        
-    def build(self):
-        """Build a stunning warning dialog with modern aesthetics and toggle buttons"""
-        
-        header = Warning_Dialog_Header( self.error_messages, self.error_message_for_out_of_bounds_dbh_or_height_value)        
-        # Create scrollable content for error messages
-        self.error_content = ft.ListView(
-            expand=True,
-            spacing=12,
-            padding=20,
-            auto_scroll=False,
+            spacing=0,
         )
         
-        # Populate with current view
-        self._update_error_display()
-        
-        tabs_section = ft.Tabs(
-            selected_index = 0,
+        self.tabs_control = ft.Tabs(
+            selected_index=initial_tab_index,
             animation_duration=300,
+            divider_color=ft.Colors.GREY_300,
+            indicator_color=ft.Colors.GREEN_600,
+            label_color=ft.Colors.GREEN_600,
+            unselected_label_color=ft.Colors.GREY_600,
             tabs=[
                 ft.Tab(
                     text="Validation Errors",
-                    icon=ft.Icons.WARNING,
-                    content=self.display_error_card_for_validation_information(),
+                    icon=ft.Icons.WARNING_AMBER_ROUNDED,
+                    content=validation_tab_content,
                 ),
                 ft.Tab(
                     text="Tree Measurement Errors",
                     icon=ft.Icons.NATURE_PEOPLE_ROUNDED,
-                    content=ft.Column(
-                        controls=[
-                            ft.Container(
-                                #STYLING
-                                padding=ft.padding.all(10),
-                                margin=10,
-                                bgcolor=ft.Colors.YELLOW_50,
-                                border_radius=12,
-                                border=ft.border.all(1, ft.Colors.YELLOW_200),
-                                content=ft.Row(
-                                    controls=[
-                                        ft.Text("Height must be (1.3 <= x <= 50.0), DBH must be (2.5 <= x <= 100.0)", size=16, weight=ft.FontWeight.BOLD, color=ft.Colors.GREY_800),
-                                    ]
-                                ),
-                            ),
-                            self.display_error_card_for_tree_measurements_information()
-                        ],
-                    ),
+                    content=measurement_tab_content_column,
                 ),
-               
             ],
-            expand=1,
+            expand=True,  # Make tabs expand
         )
         
-        # Main content container with tabs
-        main_content = ft.Column(
-            controls=[
-                header,
-                ft.Container(
-                    content=tabs_section,
-                    expand=1,  # Give tabs less space
-                    bgcolor=ft.Colors.WHITE,
-                    border_radius=12,
-                    padding=10,
-                ),
-            ],
-            spacing=3,
-            expand=True,
-        ) 
-        
-        # Modern action buttons
-        self.dialog = ft.AlertDialog(
-            modal=True,
-            shape=ft.RoundedRectangleBorder(radius=15),
-            content=ft.Container(
-                content=main_content,
-                width=900,
-                height=950,
+        # Main content container (the white panel that holds the errors)
+        main_content_panel = ft.Container(
+            content=ft.Column(
+                controls=[
+                    header,
+                    ft.Container(
+                        content=self.tabs_control,
+                        expand=True,  # Expand to fill available space
+                        bgcolor=ft.Colors.WHITE,
+                        # REMOVED INNER PADDING HERE as it's added to the tab contents now
+                        border_radius=ft.border_radius.only(top_left=12, top_right=12),
+                    ),
+                    # Action buttons with improved styling
+                    ft.Container(
+                        content=ft.Row(
+                            [
+                                ft.OutlinedButton(
+                                    content=ft.Row(
+                                        controls=[
+                                            ft.Icon(ft.Icons.CLOSE_ROUNDED, size=20, color=ft.Colors.GREY_700),
+                                            ft.Text("Close", color=ft.Colors.GREY_700, weight=ft.FontWeight.W_600),
+                                        ],
+                                        spacing=10,
+                                    ),
+                                    on_click=self.close_dialog, 
+                                    style=ft.ButtonStyle(
+                                        padding=ft.padding.symmetric(horizontal=28, vertical=16),
+                                        shape=ft.RoundedRectangleBorder(radius=10),
+                                        side=ft.BorderSide(2, ft.Colors.GREY_300),
+                                    ),
+                                ),
+                            ],
+                            alignment=ft.MainAxisAlignment.END,
+                        ),
+                        # ADDED PADDING HERE:
+                        padding=ft.padding.all(20),
+                        bgcolor=ft.Colors.GREY_50,
+                        border_radius=ft.border_radius.only(bottom_left=16, bottom_right=16), # Increased radius for consistency
+                        border=ft.border.only(top=ft.BorderSide(1, ft.Colors.GREY_200))
+                    )
+                ],
+                spacing=0,
+                expand=True,  # Expand to fill available space
             ),
-            actions=[
-                ft.Container(
-                    content=ft.ElevatedButton(
-                        content=ft.Row(
-                            controls=[
-                                ft.Icon(ft.Icons.DOWNLOAD_ROUNDED, size=20, color=ft.Colors.WHITE),
-                                ft.Text("Export Report", color=ft.Colors.WHITE, weight=ft.FontWeight.BOLD),
-                            ],
-                            spacing=10,
-                            tight=True,
-                        ),
-                        # on_click=self.export_report,
-                        bgcolor=ft.Colors.BLUE_600,
-                        color=ft.Colors.WHITE,
-                        elevation=3,
-                        style=ft.ButtonStyle(
-                            padding=ft.padding.symmetric(horizontal=24, vertical=16),
-                            shape=ft.RoundedRectangleBorder(radius=10),
-                            shadow_color=ft.Colors.with_opacity(0.3, ft.Colors.BLUE_600),
-                        ),
-                    ),
-                ),
-                ft.Container(
-                    content=ft.OutlinedButton(
-                        content=ft.Row(
-                            controls=[
-                                ft.Icon(ft.Icons.CLOSE_ROUNDED, size=20, color=ft.Colors.GREY_700),
-                                ft.Text("Close", color=ft.Colors.GREY_700, weight=ft.FontWeight.BOLD),
-                            ],
-                            spacing=10,
-                            tight=True,
-                        ),
-                        on_click=self.close_dialog,
-                        style=ft.ButtonStyle(
-                            padding=ft.padding.symmetric(horizontal=24, vertical=16),
-                            shape=ft.RoundedRectangleBorder(radius=10),
-                            side=ft.BorderSide(2, ft.Colors.GREY_300),
-                        ),
-                    ),
-                ),
-            ],
-            actions_alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
-            actions_padding=ft.padding.all(20),
+            # Panel styling with improved dimensions and shadow
+            width=1300,
+            height=750,
             bgcolor=ft.Colors.WHITE,
+            border_radius=16,
+            shadow=ft.BoxShadow(
+                spread_radius=2,
+                blur_radius=25,
+                color=ft.Colors.with_opacity(0.4, ft.Colors.BLACK),
+                offset=ft.Offset(0, 4),
+                blur_style=ft.ShadowBlurStyle.OUTER,
+            ),
+        )
+
+        # --- Full-page, blackened-out container with padding ---
+        self.dialog = ft.Container(
+            content=ft.Container(
+                content=main_content_panel,
+                # Margin already exists here:
+                margin=ft.margin.all(40),
+            ),
+            # Blackened out background with subtle gradient
+            gradient=ft.LinearGradient(
+                begin=ft.alignment.top_center,
+                end=ft.alignment.bottom_center,
+                colors=[
+                    ft.Colors.with_opacity(0.7, ft.Colors.BLACK),
+                    ft.Colors.with_opacity(0.8, ft.Colors.BLACK),
+                ]
+            ),
+            # Center the content panel
+            alignment=ft.alignment.center,
+            # Ensure it covers the whole page/view
+            expand=True,
+            # Padding already exists here:
+            padding=ft.padding.all(20),
         )
         
         return self.dialog
-   
-    
-    
-    
-    
-    def _switch_view(self,view_type):
-        """Switch between different error views"""
-        self.current_view = view_type
-        # print("OPOPOPO")
-        
-        # Update button states by rebuilding the dialog
-        if self.dialog:
-            # print("OPENING")
-            
-            self.page.open(self.build())
-            self.page.update()
-    
-    def _update_error_display(self):
-        """Update the error display based on current view"""
-        self.error_content.controls.clear()
-        
-        # Filter errors based on current view
-        if self.current_view == "tree_measurements":
-            filtered_errors = self._filter_tree_measurement_errors()
-        else:
-            filtered_errors = self.error_messages
-        
-        # Color palette for different error cards
-        error_colors = [
-            (ft.Colors.RED_50, ft.Colors.RED_500, ft.Colors.RED_700),
-            (ft.Colors.ORANGE_50, ft.Colors.ORANGE_500, ft.Colors.ORANGE_700),
-            (ft.Colors.DEEP_ORANGE_50, ft.Colors.DEEP_ORANGE_500, ft.Colors.DEEP_ORANGE_700),
-        ]
-        
-        # Add filtered error messages as stunning cards
-        for i, error_msg in enumerate(filtered_errors):
-            color_set = error_colors[i % len(error_colors)]
-            bg_color, accent_color, text_color = color_set
-            
-            # Parse the error message to extract structured data
-            parsed_error = self._parse_error_message(error_msg)
-            
-            error_card = ft.Container(
-                content=ft.Column(
-                    controls=[
-                        # Error header with modern badge
-                        ft.Row(
-                            controls=[
-                                ft.Container(
-                                    content=ft.Row(
-                                        controls=[
-                                            ft.Icon(
-                                                ft.Icons.CIRCLE,
-                                                color=ft.Colors.WHITE,
-                                                size=8,
-                                            ),
-                                            ft.Text(
-                                                f"Issue #{i+1}", 
-                                                color=ft.Colors.WHITE,
-                                                weight=ft.FontWeight.BOLD,
-                                                size=13,
-                                            ),
-                                        ],
-                                        spacing=6,
-                                    ),
-                                    bgcolor=accent_color,
-                                    border_radius=20,
-                                    padding=ft.padding.symmetric(horizontal=12, vertical=6),
-                                    shadow=ft.BoxShadow(
-                                        spread_radius=0,
-                                        blur_radius=8,
-                                        color=ft.Colors.with_opacity(0.3, accent_color),
-                                        offset=ft.Offset(0, 2),
-                                    ),
-                                ),
-                                ft.Container(
-                                    content=ft.Icon(
-                                        ft.Icons.ERROR_ROUNDED, 
-                                        color=accent_color, 
-                                        size=20
-                                    ),
-                                ),
-                            ],
-                            alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
-                        ),
-                        # Error message content with modern styling
-                        ft.Container(
-                            content=parsed_error,
-                            padding=ft.padding.all(16),
-                            bgcolor=ft.Colors.with_opacity(0.5, bg_color),
-                            border_radius=12,
-                            border=ft.border.all(1, ft.Colors.with_opacity(0.3, accent_color)),
-                        ),
-                    ],
-                    spacing=12,
-                ),
-                padding=ft.padding.all(16),
-                bgcolor=ft.Colors.WHITE,
-                border_radius=16,
-                border=ft.border.all(1, ft.Colors.GREY_200),
-                shadow=ft.BoxShadow(
-                    spread_radius=0,
-                    blur_radius=20,
-                    color=ft.Colors.with_opacity(0.08, ft.Colors.BLACK),
-                    offset=ft.Offset(0, 4),
-                ),
-            )
-            self.error_content.controls.append(error_card)
-    
-    def _filter_tree_measurement_errors(self):
-        """Filter errors to show only DBH and Height validation errors"""
-        tree_measurement_errors = []
-        
-        for error_msg in self.error_messages:
-            nan_columns = error_msg["nan_columns"]
-            row_data = error_msg["row_data"]
-            
-            # Convert nan_columns to lowercase for case-insensitive comparison
-            nan_columns_lower = [col.lower() for col in nan_columns]
-            
-            # Check if this is a tree measurement error (DBH or Height related) - case insensitive
-            is_tree_measurement_error = (
-                any(col in ['dbh', 'height'] for col in nan_columns_lower) or  # Missing DBH/Height
-                self._is_invalid_tree_measurement(row_data)  # Invalid DBH/Height values
-            )
-            
-            if is_tree_measurement_error:
-                tree_measurement_errors.append(error_msg)
-        
-        return tree_measurement_errors
-    
-    def _is_invalid_tree_measurement(self, row_data):
-        """Check if DBH or Height values are outside valid ranges"""
-        try:
-            # Convert row data to lowercase for case-insensitive access
-            row_data_lower = self._convert_row_data_to_lowercase(row_data)
-            
-            dbh = row_data_lower.get('dbh')
-            height = row_data_lower.get('height')
-            
-            # Check if values are outside typical tree measurement ranges
-            if dbh is not None and not pd.isna(dbh):
-                if dbh < 0 or dbh > 500:  # DBH typically 0-500 cm
-                    return True
-            
-            if height is not None and not pd.isna(height):
-                if height < 0 or height > 100:  # Height typically 0-100 meters
-                    return True
-            
-            return False
-        except (TypeError, ValueError):
-            return False
-    
-    def _parse_error_message(self, error_msg):
-        """Parse error message and create a beautifully formatted display"""
-        index = error_msg["index"]
-        row_data = error_msg["row_data"]
-        nan_columns = error_msg["nan_columns"]
-        
-        # Convert row data to lowercase for case-insensitive access
-        row_data_lower = self._convert_row_data_to_lowercase(row_data)
-        
-        # Handle NaN values by converting to "MISSING" display
-        def format_value(key, value):
-            if pd.isna(value) or value is None:
-                return ft.Text("MISSING", color=ft.Colors.RED_600, weight=ft.FontWeight.BOLD, size=12)
-            else:
-                return ft.Text(str(value), color=ft.Colors.GREY_800, size=12)
-            
-        
-        return self._create_full_display(index, row_data_lower, nan_columns, format_value)
-
-    
-        # print(self.error_message_for_out_of_bounds_dbh_or_height_value[0]["index"])
-        # print(self.error_message_for_out_of_bounds_dbh_or_height_value[0]["row_data"])
-        # print(self.error_message_for_out_of_bounds_dbh_or_height_value[0]["nan_columns"])
-        
-        
-    
-    def _create_full_display(self, index, row_data_lower, nan_columns, format_value):
-        """Create full error display with all columns"""
-        return ft.Column(
-            controls=[
-                # Header with row index
-                ft.Container(
-                    content=ft.Row(
-                        controls=[
-                            ft.Container(
-                                content=ft.Icon(ft.Icons.TAG, size=16, color=ft.Colors.BLUE_600),
-                                padding=ft.padding.all(6),
-                                bgcolor=ft.Colors.BLUE_50,
-                                border_radius=8,
-                            ),
-                            ft.Column(
-                                controls=[
-                                    ft.Text("Row Index", size=11, color=ft.Colors.GREY_600, weight=ft.FontWeight.W_500),
-                                    ft.Text(str(index + 1), size=16, color=ft.Colors.BLUE_700, weight=ft.FontWeight.BOLD),
-                                ],
-                                spacing=2,
-                            ),
-                        ],
-                        spacing=10,
-                    ),
-                    padding=ft.padding.all(12),
-                    bgcolor=ft.Colors.BLUE_50,
-                    border_radius=10,
-                    border=ft.border.all(1, ft.Colors.BLUE_200),
-                ),
-                
-                # Data display (using lowercase keys)
-                ft.Container(
-                    expand=True,
-                    bgcolor=ft.Colors.WHITE,
-                    padding=ft.padding.all(12),
-                    content=ft.Column(
-                        controls=[
-                            ft.Row(
-                                controls=[
-                                    ft.Column(
-                                        controls=[
-                                            ft.Text("Plot:", color=ft.Colors.GREY_600, size=12),
-                                            ft.Text("Year:", color=ft.Colors.GREY_600, size=12),
-                                            ft.Text("Origin:", color=ft.Colors.GREY_600, size=12),
-                                            ft.Text("Tree Status:", color=ft.Colors.GREY_600, size=12),
-                                            ft.Text("SpecCode:", color=ft.Colors.GREY_600, size=12),
-                                            ft.Text("Tree Number:", color=ft.Colors.GREY_600, size=12),
-                                            ft.Text("DBH:", color=ft.Colors.GREY_600, size=12),
-                                            ft.Text("Height:", color=ft.Colors.GREY_600, size=12),
-                                        ],
-                                        spacing=8,
-                                    ),
-                                    ft.Column(
-                                        controls=[
-                                            format_value("Plot", row_data_lower['plot']),
-                                            format_value("Year", row_data_lower['year']),
-                                            format_value("Origin", row_data_lower['origin']),
-                                            format_value("Tree Status", row_data_lower['tree status']),
-                                            format_value("SpecCode", row_data_lower['speccode']),
-                                            format_value("Tree Number", row_data_lower['tree number']),
-                                            format_value("DBH", row_data_lower['dbh']),
-                                            format_value("Height", row_data_lower['height']),
-                                        ],
-                                        spacing=8,
-                                    ),
-                                ],
-                                spacing=20,
-                            ),
-                            # FIX: nan_columns is already a list, don't index it
-                            ft.Container(
-                                content=ft.Row(
-                                    controls=[
-                                        ft.Icon(ft.Icons.WARNING, color=ft.Colors.AMBER, size=16),
-                                        ft.Text(f"Missing data in: {', '.join(nan_columns)}", 
-                                            color=ft.Colors.AMBER_700,
-                                            weight=ft.FontWeight.BOLD),
-                                    ],
-                                    spacing=8,
-                                ),
-                                padding=ft.padding.all(10),
-                                bgcolor=ft.Colors.AMBER_50,
-                                border_radius=8,
-                                margin=ft.margin.only(top=10),
-                            ),
-                        ],
-                    ),
-                )              
-            ]
-        )
-    
-    def _create_tree_measurement_display(self, index, row_data_lower, nan_columns, format_value):
-        """Create focused display for tree measurement errors"""
-        return ft.Column(
-            controls=[
-                # Header with tree measurement focus
-                ft.Container(
-                    content=ft.Row(
-                        controls=[
-                            ft.Container(
-                                content=ft.Icon(ft.Icons.NATURE, size=16, color=ft.Colors.GREEN_600),
-                                padding=ft.padding.all(6),
-                                bgcolor=ft.Colors.GREEN_50,
-                                border_radius=8,
-                            ),
-                            ft.Column(
-                                controls=[
-                                    ft.Text("Tree Measurement Error", size=11, color=ft.Colors.GREY_600, weight=ft.FontWeight.W_500),
-                                    ft.Text(f"Row { 1}", size=16, color=ft.Colors.GREEN_700, weight=ft.FontWeight.BOLD),
-                                ],
-                                spacing=2,
-                            ),
-                        ],
-                        spacing=10,
-                    ),
-                    padding=ft.padding.all(12),
-                    bgcolor=ft.Colors.GREEN_50,
-                    border_radius=10,
-                    border=ft.border.all(1, ft.Colors.GREEN_200),
-                ),
-                
-                # Focused tree measurement data (using lowercase keys)
-                ft.Container(
-                    expand=True,
-                    bgcolor=ft.Colors.WHITE,
-                    padding=ft.padding.all(12),
-                    content=ft.Column(
-                        controls=[
-                            ft.Row(
-                                controls=[
-                                    ft.Column(
-                                        controls=[
-                                            ft.Text("SpecCode:", color=ft.Colors.GREY_600, size=12),
-                                            ft.Text("Tree Number:", color=ft.Colors.GREY_600, size=12),
-                                            ft.Text("DBH:", color=ft.Colors.GREY_600, size=12),
-                                            ft.Text("Height:", color=ft.Colors.GREY_600, size=12),
-                                        ],
-                                        spacing=8,
-                                    ),
-                                    ft.Column(
-                                        controls=[
-                                            format_value("SpecCode", row_data_lower['speccode']),
-                                            format_value("Tree Number", row_data_lower['tree number']),
-                                            format_value("DBH", row_data_lower['dbh']),
-                                            format_value("Height", row_data_lower['height']),
-                                        ],
-                                        spacing=8,
-                                    ),
-                                ],
-                                spacing=20,
-                            ),
-                            # Enhanced warning for tree measurements
-                            ft.Container(
-                                content=ft.Row(
-                                    controls=[
-                                        ft.Icon(ft.Icons.HEIGHT, color=ft.Colors.RED, size=16),
-                                        ft.Text(f"Tree measurement issue: {', '.join(nan_columns)}", 
-                                            color=ft.Colors.RED_700,
-                                            weight=ft.FontWeight.BOLD),
-                                    ],
-                                    spacing=8,
-                                ),
-                                padding=ft.padding.all(10),
-                                bgcolor=ft.Colors.RED_50,
-                                border_radius=8,
-                                margin=ft.margin.only(top=10),
-                            ),
-                        ],
-                    ),
-                )              
-            ]
-        )
-    
-    def show_dialog(self):
-        """Display the dialog on the given page"""
-        if self.dialog is None:
-            self.build()
-        self.page.dialog = self.dialog
-        self.dialog.open = True
-        self.page.update()
-    
-    def close_dialog(self, e):
-        """Close the dialog"""
-        self.error_messages = ""
-        self.error_content = ""
-        self.dialog.open = False
-        
-        self.page.update()
-        self.__del__()
-
-    def __del__(self):
-        print(f"Instance of display warning dialog destroyed (garbage collected).")
-
-# Quick usage function
-def show_warning_dialog(page: ft.Page, error_messages: list):
-    """Helper function to quickly display stunning warning dialog"""
-    if error_messages:
-        dialog = Display_Warning_Dialog(page, error_messages)
-        dialog.show_dialog()
-    else:
-        # Show modern success message
-        page.show_snack_bar(
-            ft.SnackBar(
-                content=ft.Row(
-                    controls=[
-                        ft.Icon(ft.Icons.CHECK_CIRCLE_ROUNDED, color=ft.Colors.WHITE, size=24),
-                        ft.Text(
-                            "✨ All data validation checks passed!",
-                            color=ft.Colors.WHITE,
-                            weight=ft.FontWeight.BOLD,
-                        ),
-                    ],
-                    spacing=12,
-                ),
-                bgcolor=ft.Colors.GREEN_600,
-                behavior=ft.SnackBarBehavior.FLOATING,
-                margin=ft.margin.all(20),
-                padding=ft.padding.symmetric(horizontal=20, vertical=16),
-                shape=ft.RoundedRectangleBorder(radius=12),
-                elevation=6,
-            )
-        )

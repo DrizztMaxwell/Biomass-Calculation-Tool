@@ -20,7 +20,7 @@ from helper_functions.do_mandatory_columns_exist import do_mandatory_columns_exi
 import flet as ft
 from widgets.Loading_Spinner_Widget import Loading_Spinner_Widget
 import json
-
+import concurrent.futures
 class Select_Data_Controller:
     def __init__(self, page: ft.Page, data_imported_callback: callable):
         self.page = page
@@ -32,11 +32,7 @@ class Select_Data_Controller:
         self.data_imported_callback = data_imported_callback  # Fixed parameter name
         self.is_data_imported = False  # Track internal state
 
-        self.show_warning_dialog = Display_Warning_Dialog(
-                        self.page, 
-                        "", 
-                        ""
-                    )
+      
 
     async def on_file_selected(self, e: ft.FilePickerResultEvent):
         """Callback when a file is selected"""
@@ -48,72 +44,97 @@ class Select_Data_Controller:
                 loading_spinner.show_dialog()
                 await loading_spinner.simulate_progressive_loading(0.0, 0.2, 0.1, "Processing the file...")
                
-                # Process the file
-                dataframe = convert_text_file_into_dataframe(selected_file_path=self.selected_file_path)
-                if dataframe is None:
-                    raise Exception("Error reading file. Text Input File may be empty.")
-                # await asyncio.sleep(1)
-                # print("DataFrame loaded:")
-                # print(dataframe)
-                await loading_spinner.simulate_progressive_loading(0.2, 0.4, 0.1, "Beginning mandatory column checking...")
-                # # Check mandatory columns
-                do_mandatory_columns_exist(data_frame=dataframe)
-                # print("Mandatory columns check passed")
-                
-                original_dataframe = dataframe.copy()
-                
-                # # Process dataframe
-                dataframe = convert_columns_to_specific_types(data_frame=dataframe)
-                # print("Column type conversion completed")
-                
-                dataframe = convert_columns_to_lowercase(data_frame=dataframe)
-                # print("Column lowercase conversion completed")
-                
-                # print("Processed DataFrame:")
-                # print(dataframe)
-                
-                # # Validate data
-                nan_detected, error_count, error_messages = check_dataframe_for_nan_values(data_frame=dataframe)
-                # print("NaN validation completed")
-                
-                error_message_for_out_of_bounds_dbh_or_height_value = validate_tree_dbh_and_height_values(dataframe)
-                
-                # print("DBH and height validation completed")
-                await loading_spinner.simulate_progressive_loading(0.4, 0.8, 0.1, "DBH and Height validation completed...")
+                with concurrent.futures.ThreadPoolExecutor(max_workers=2) as pool:
 
-                self.error_messages = error_messages
-               
-                # Show warnings if any
-                if error_messages or error_message_for_out_of_bounds_dbh_or_height_value:
-                    self.show_warning_dialog.error_messages = self.error_messages
-                    self.show_warning_dialog.error_message_for_out_of_bounds_dbh_or_height_value = error_message_for_out_of_bounds_dbh_or_height_value
-                   
+                    # Process the file
+                    # dataframe = convert_text_file_into_dataframe(selected_file_path=self.selected_file_path)
+                    dataframe = pool.submit(convert_text_file_into_dataframe, self.selected_file_path)
+                    await loading_spinner.simulate_progressive_loading(0.2, 0.4, 0.1, "Beginning mandatory column checking...")
                     
-                    self.page.open(self.show_warning_dialog.build())
+                    try:
+                        dataframe = dataframe.result()
+                    except Exception as e:
+                        # Handle exceptions from the worker thread
+                        raise Exception(f"Error reading file: {e}")
+
+                    if dataframe is None:
+                        raise Exception("Error reading file. Text Input File may be empty.")
+                    # await asyncio.sleep(1)
+                    # print("DataFrame loaded:")
+                    # print(dataframe)
+                    await loading_spinner.simulate_progressive_loading(0.2, 0.4, 0.1, "Beginning mandatory column checking...")
+                    # # Check mandatory columns
+                    work_2 = pool.submit(do_mandatory_columns_exist, dataframe)
+                    if (work_2.result()):
+                        print("OK")
                     
-                # Save data to local storage
-                print("File processed successfully. Saving to local storage...")
-                json_data = original_dataframe.to_json(orient='records')
-                with open('storage/localstorage.json', 'w') as json_file:
-                    json_file.write(json_data)
+                    # # Process dataframe
+                    original_dataframe = dataframe.copy()
+                    work_3 = pool.submit(convert_columns_to_specific_types, dataframe)
+                    dataframe = work_3.result()
+                    # print("Column type conversion completed")
+                    print("DAAAMN")
+                    
+                    work_4 = pool.submit(convert_columns_to_lowercase, dataframe)
+                    dataframe = work_4.result()
+                    # print("Column lowercase conversion completed")
+                    
+                    # print("Processed DataFrame:")
+                    # print(dataframe)
+                    
+                    work_5 = pool.submit(check_dataframe_for_nan_values, dataframe)
+                    nan_detected, error_count, error_messages = work_5.result()
+                    # # Validate data
+                    # nan_detected, error_count, error_messages = check_dataframe_for_nan_values(data_frame=dataframe)
+                    # print("NaN validation completed")
+                    print("SHIII")
+                    work_6 = pool.submit(validate_tree_dbh_and_height_values, dataframe)
+                    error_message_for_out_of_bounds_dbh_or_height_value = work_6.result()
+                    # error_message_for_out_of_bounds_dbh_or_height_value = validate_tree_dbh_and_height_values(dataframe)
+                    
+                    # print("DBH and height validation completed")
+                    await loading_spinner.simulate_progressive_loading(0.4, 0.8, 0.1, "DBH and Height validation completed...")
+
+                    self.error_messages = error_messages
                 
-                # Update import status and call callback
-                self.is_data_imported = True
-                if self.data_imported_callback:
+                    # Show warnings if any
+                    if error_messages or error_message_for_out_of_bounds_dbh_or_height_value:
+                        
+                       self.page.overlay.append( Display_Warning_Dialog(
+                        self.page, 
+                        self.error_messages, 
+                        error_message_for_out_of_bounds_dbh_or_height_value
+                    ).show_dialog()
+                       )
+                        # self.page.open(self.show_warning_dialog.build())
+                        
+                        
+                    # Save data to local storage
+                    print("File processed successfully. Saving to local storage...")
+                    json_data = original_dataframe.to_json(orient='records')
+                    with open('storage/localstorage.json', 'w') as json_file:
+                        json_file.write(json_data)
+                    await loading_spinner.simulate_progressive_loading(0.8, 1.0, 0.1, "Completed successfully...")
+                    loading_spinner.hide()  
+                    # Update import status and call callback
+                    self.is_data_imported = True
+                    if self.data_imported_callback:
+                        pool.shutdown()
+                        
+                        self.data_imported_callback(True) # Call the callback to enable sidebar buttons
+                    e.control.page.update()
+
+                    return
                     
-                    self.data_imported_callback(True)  # Call the callback to enable sidebar buttons
-                await loading_spinner.simulate_progressive_loading(0.8, 1.0, 0.1, "Completed successfully...")
-                loading_spinner.hide()  
-                # self.page.update()
-                return
-                
+                    
             else:
                 print("File selection cancelled")
                 self.selected_file_path = None
                 self.is_data_imported = False
-                if self.data_imported_callback:
-                    self.data_imported_callback(False)
-                self.page.update()
+                # if self.data_imported_callback:
+                #     self.data_imported_callback(False)
+                e.page.update()
+                # self.__del__()
                 return
 
         except ValueError as ve:
@@ -133,7 +154,7 @@ class Select_Data_Controller:
                 self.data_imported_callback(False)
             self.page.update()
             return
-       
+    
     def open_file_dialog(self):
         """Open file picker dialog"""
         return self.file_picker.pick_files(

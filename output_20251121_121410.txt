@@ -1,4 +1,10 @@
-PLot	SubPlot	Year	Origin	Tree Status	SpecCode	Tree Number	DBH	Height
+BIOMASS CALCULATION RESULTS
+==================================================
+Generated on: 2025-11-21 12:14:13
+Total records: 2522
+
+plot	subplot	year	origin	tree status	speccode	tree number	dbh	height
+--------------------------------------------------------------------
 1108656	1	2005a	Natural Stand	L 	13a	1a	19.5a	1a7.07
 1108656	1	2005	Natural Stand	L 	13	2	18.3	14s.48
 1108656	1	2005	Natural Stand	L 	13	3	17	13.84
@@ -2521,3 +2527,5 @@ PLot	SubPlot	Year	Origin	Tree Status	SpecCode	Tree Number	DBH	Height
 9999999	1	2005	Natural Stand	L 	13	18265	17.1	10.56
 9999999	1	2005	Natural Stand	L 	13	18266	11.8	8.66
 9999999	1	2005	Natural Stand	L 	13	18267	5	4.36
+
+File: output_20251121_121410.txt

@@ -63,7 +63,8 @@ def convert_columns_to_specific_types(data_frame: pd.DataFrame) -> pd.DataFrame:
         # print("="*50)
         # for col, conversion in conversion_results.items():
         #     print(f"✓ {col:15} : {conversion}")
-        
+        print(data_frame)
+        print("DATADKSK:DJ:DW:KWDKO:WK")
         return data_frame
         
     except Exception as e:

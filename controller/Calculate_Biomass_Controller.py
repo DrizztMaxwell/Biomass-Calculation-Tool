@@ -52,13 +52,31 @@ class Calculate_Biomass_Controller:
     def _process_biomass_calculations(self, local_data: pd.DataFrame, tree_params: pd.DataFrame) -> None:
         """Calculate biomass for each row in the dataset."""
         for index, row in local_data.iterrows():
-            species_code = row.get('speccode')
-            if not species_code:
-                continue # Skip rows without species code
+            raw_species_code = row.get('speccode')
+            species_code = None
+
+            try:
+                # 1. Attempt to convert to integer
+                # We first check if the value is NaN or None, and handle it if possible.
+                if pd.isna(raw_species_code):
+                    # Treat NaN/None as a signal to skip
+                    species_code = None 
+                else:
+                    # Attempt conversion. This handles both strings ('123') and floats (123.0)
+                    species_code = int(raw_species_code)
+
+            except (ValueError, TypeError) as e:
+                # If conversion fails (e.g., 'ABC', or complex types), set code to None
+                print(f"Skipping row {index}: 'speccode' value '{raw_species_code}' could not be converted to integer. Error: {e}")
+                species_code = None
                 
-            species_params = self._get_species_parameters(tree_params, species_code)
-            # print("Species Code parmas printing")
-            # print(species_params)
+            # 2. Check if the code is valid (None means skip)
+            if species_code is None or species_code == 0:
+                continue  # Skip rows without a valid species code (None or 0)
+            
+            # 3. Proceed with calculation if species_code is valid
+            species_params = self._get_species_parameters(tree_params, float(species_code))
+            print(species_params)
             if species_params:
                 self._calculate_row_biomass(local_data, index, row, species_params)
 
@@ -75,14 +93,33 @@ class Calculate_Biomass_Controller:
             self._calculate_dbh_height_based_biomass(data, index, row, species_params)
         # Add other equation types here when implemented
     def _calculate_dbh_height_based_biomass(self, data: pd.DataFrame, index: int, row: pd.Series, species_params: dict) -> None:
-        """Calculate DBH + Height-based biomass for all selected components."""
-        dbh = row.get('dbh', 0)
-        height = row.get('height', 0)
-        if dbh == 0 or height == 0:
+        """
+        Calculate DBH + Height-based biomass for all selected components. 
+        Skips the row if DBH or Height are missing (0) or cannot be converted to a number.
+        """
+        
+        # 1. Safely retrieve raw values, defaulting to 0 or None if key is missing
+        raw_dbh = row.get('dbh')
+        raw_height = row.get('height')
+
+        # 2. Attempt safe conversion to float (and handle missing/zero values)
+        try:
+            # Check if the values are truthy (not None, not empty string) and convert
+            dbh = float(raw_dbh) if raw_dbh is not None and str(raw_dbh).strip() != '' else 0.0
+            height = float(raw_height) if raw_height is not None and str(raw_height).strip() != '' else 0.0
+            
+        except (ValueError, TypeError):
+            # If conversion fails (e.g., 'N/A' or 'Invalid'), skip the row
+            print(f"Skipping row {index}: DBH ('{raw_dbh}') or Height ('{raw_height}') could not be converted to a number.")
             return
         
-        dbh = float(dbh)
-        height = float(height)
+        # 3. Check for zero values after successful conversion
+        if dbh == 0.0 or height == 0.0:
+            print(f"Skipping row {index}: DBH ({dbh}) or Height ({height}) is zero.")
+            return
+
+        # --- Parameters are safely converted to float here ---
+        
         wood_parameter_1 = float(species_params.get("bhwood1", 0))
         wood_parameter_2 = float(species_params.get("bhwood2", 0))
         wood_parameter_3 = float(species_params.get("bhwood3", 0))
@@ -100,14 +137,12 @@ class Calculate_Biomass_Controller:
         foliage_parameter_3 = float(species_params.get("bhfoliage3", 0))
         
         
+        # --- Calculation Initialization (Kept for completeness, though print statements removed) ---
         
-
-        print("BEFORE")
+        wood_biomass = bark_biomass = branches_biomass = stem_biomass = crown_biomass = total_biomass = foliage_biomass = 0 
         
-        wood_biomass = bark_biomass = branches_biomass = stem_biomass = crown_biomass = total_biomass = foliage_biomass = 0        
-        print("AFTER")
-        # if select wood then apply wood formula
-        print(self.selected_components)
+        # --- Biomass Calculation Logic (Unchanged) ---
+        
         if "Wood" in self.selected_components:
             wood_biomass += self._calculate_dbh_and_height_based_biomass_for_wood(dbh, height, wood_parameter_1, wood_parameter_2, wood_parameter_3)
             data.at[index, 'Wood (KG)'] = float(round(wood_biomass, 4))
@@ -127,7 +162,7 @@ class Calculate_Biomass_Controller:
             
         if "Stem" in self.selected_components:
             stem_biomass += self._calculate_dbh_and_height_based_biomass_for_wood(dbh, height, wood_parameter_1, wood_parameter_2, wood_parameter_3)
-            stem_biomass += self._calculate_dbh_and_height_based_biomass_for_bark(dbh, height, bark_parameter_1, bark_parameter_2, bark_parameter_3)   
+            stem_biomass += self._calculate_dbh_and_height_based_biomass_for_bark(dbh, height, bark_parameter_1, bark_parameter_2, bark_parameter_3)  
             data.at[index, 'Stem (KG)'] = float(round(stem_biomass, 4))
             
         
@@ -138,18 +173,11 @@ class Calculate_Biomass_Controller:
             
             
         if "Total" in self.selected_components:
-            total_biomass  += self._calculate_dbh_and_height_based_biomass_for_wood(dbh, height, wood_parameter_1, wood_parameter_2, wood_parameter_3)
+            total_biomass += self._calculate_dbh_and_height_based_biomass_for_wood(dbh, height, wood_parameter_1, wood_parameter_2, wood_parameter_3)
             total_biomass += self._calculate_dbh_and_height_based_biomass_for_bark(dbh, height, bark_parameter_1, bark_parameter_2, bark_parameter_3)
             total_biomass += self._calculate_dbh_and_height_based_biomass_for_foliage(dbh, height, foliage_parameter_1, foliage_parameter_2, foliage_parameter_3)
             total_biomass += self._calculate_dbh_and_height_based_biomass_for_branch(dbh, height, branch_parameter_1, branch_parameter_2, branch_parameter_3 )
             data.at[index, 'Total (KG)'] = float(round(total_biomass, 4))
-
-            
-        
-        
-        
-        
-        
       
         # calculate for wood = wood1 * (DBH)^(bwood2) * (Height)^bwood3 
         
@@ -170,8 +198,22 @@ class Calculate_Biomass_Controller:
     def _calculate_dbh_based_biomass(self, data: pd.DataFrame, index: int, row: pd.Series, species_params: dict) -> None:
         """Calculate DBH-based biomass for all selected components."""
         dbh = row.get('dbh', 0)
-        if dbh == 0:
+         # 2. Attempt safe conversion to float (and handle missing/zero values)
+        try:
+            # Check if the values are truthy (not None, not empty string) and convert
+            dbh = float(dbh) if dbh is not None and str(dbh).strip() != '' else 0.0
+         
+            
+        except (ValueError, TypeError):
+            # If conversion fails (e.g., 'N/A' or 'Invalid'), skip the row
+            print(f"Skipping row {index}: DBH ('{dbh}') ")
             return
+        
+        # 3. Check for zero values after successful conversion
+        if dbh == 0.0:
+            print(f"Skipping row {index}: DBH ({dbh}) is 0")
+            return
+
 
         self._calculate_individual_components(data, index, species_params, dbh)
         self._calculate_composite_components(data, index, species_params, dbh)
