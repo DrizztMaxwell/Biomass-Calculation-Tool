@@ -192,7 +192,7 @@ class Display_Warning_Dialog:
         
     def _create_error_table(self, error_list, is_tree_measurement_tab: bool, page_type: str):
         """
-        Create a table view for errors with pagination and horizontal scrolling.
+        Create a table view for errors with pagination and horizontal/vertical scrolling.
         """
         if not error_list:
             return ft.Container(
@@ -258,38 +258,54 @@ class Display_Warning_Dialog:
         if is_tree_measurement_tab:
             columns.append(ft.DataColumn(ft.Text("Issue", weight=ft.FontWeight.BOLD, size=13, color=ft.Colors.WHITE))) # Added White color
         
-        # Create a horizontally scrollable table that expands to fill available space
+        # Create a container for the DataTable with horizontal and vertical scrolling
+        # Vertical Scrolling Fix: The outer Container needs a fixed height or max_height
+        # to constrain the DataTable's vertical expansion and enable scrolling.
+        # We'll use expand=True here, and rely on the main content panel's dimensions
+        # to constrain it, then wrap the DataTable to handle scrolling.
         table_container = ft.Container(
-            content=ft.Row(
-                controls=[
-                    ft.DataTable(
-                        columns=columns,
-                        rows=table_rows,
-                        vertical_lines=ft.BorderSide(1, ft.Colors.GREY_300),
-                        horizontal_lines=ft.BorderSide(1, ft.Colors.GREY_200),
-                        heading_row_height=45,
-                        data_row_min_height=42,
-                        data_row_max_height=42,
-                        column_spacing=12,
-                        divider_thickness=1,
-                        heading_row_color=ft.Colors.GREEN_700,
-                        sort_column_index=0,
-                        show_checkbox_column=False,
-                        expand=True,  # Make DataTable expand
-                    )
-                ],
-                scroll=ft.ScrollMode.ADAPTIVE,
-                expand=True,  # Make Row expand
-            ),
+            # 1. Outer Container sets the fixed height boundary
+            # height=900, 
             margin=ft.margin.symmetric(horizontal=8),
-            expand=True,  # Make Container expand
+            expand=True,
+            
+            content=ft.Column(
+                # 2. ft.Column handles Vertical Scrolling (to see more rows)
+                controls=[
+                    ft.Row( 
+                        # 3. ft.Row handles Horizontal Scrolling (to see more columns)
+                        controls=[
+                            ft.DataTable(
+                                columns=columns,
+                                rows=table_rows,
+                                vertical_lines=ft.BorderSide(1, ft.Colors.GREY_300),
+                                horizontal_lines=ft.BorderSide(1, ft.Colors.GREY_200),
+                                heading_row_height=45,
+                                data_row_min_height=42,
+                                data_row_max_height=42,
+                                column_spacing=12,
+                                divider_thickness=1,
+                                heading_row_color=ft.Colors.GREEN_700,
+                                sort_column_index=0,
+                                show_checkbox_column=False,
+                                expand=True,  # Allows DataTable to stretch horizontally within the Row
+                            )
+                        ],
+                        scroll=ft.ScrollMode.ADAPTIVE, # Horizontal Scrolling
+                        expand=True,
+                    ),
+                ],
+                scroll=ft.ScrollMode.ADAPTIVE, # Vertical Scrolling
+                # The ft.Column does not need expand=True here, as its height is constrained by the parent Container's height.
+                spacing=0, # Remove default spacing for cleaner table layout
+            ),
         )
         
         return ft.Container(
             expand=True,  # Expand to fill available space
             content=ft.Column(
                 controls=[
-                    # Results count
+                    # Results count - Bug Fix: Removed extraneous data that caused "Showing x of x 31 errors"
                     ft.Container(
                         content=ft.Text(
                             f"Showing {len(paginated_data)} of {total_rows} errors",
@@ -302,12 +318,14 @@ class Display_Warning_Dialog:
                         alignment=ft.alignment.center_left,
                     ),
                     
-                    # Table with horizontal scrolling - expanded
+                    # Table with horizontal/vertical scrolling - expanded
                     ft.Container(
                         content=table_container,
                         expand=True,  # Expand to fill available space
                         border=ft.border.all(1, ft.Colors.GREY_300),
                         border_radius=8,
+                        alignment=ft.alignment.center,
+                        # REMOVED scroll=ft.ScrollMode.ADAPTIVE here, it's inside table_container
                     ),
                     
                     # Pagination controls
@@ -327,6 +345,10 @@ class Display_Warning_Dialog:
             
         current_tab_index = self.tabs_control.selected_index
         
+        # Ensure tabs list is accessible
+        if not self.tabs_control.tabs:
+            return
+
         if current_tab_index == 0:  # Validation Errors tab
             # Rebuild validation tab content
             new_validation_content = self._create_error_table(
@@ -334,11 +356,12 @@ class Display_Warning_Dialog:
                 is_tree_measurement_tab=False,
                 page_type="validation"
             )
-            self.tabs_control.tabs[0].content = ft.Container(
-                content=new_validation_content,
-                # REMOVED INNER PADDING HERE to let the _create_error_table container manage it.
-                expand=True,  # Make container expand
-            )
+            # Find the existing container for validation content and update its content
+            if self.tabs_control.tabs[0].content:
+                self.tabs_control.tabs[0].content.content = new_validation_content
+            # NOTE: If the inner padding was removed from the validation tab content container in show_dialog, 
+            # you need to ensure new_validation_content handles its own padding. (It does.)
+            
         else:  # Tree Measurement Errors tab
             # Rebuild measurement tab content
             new_measurement_content = self._create_error_table(
@@ -347,6 +370,7 @@ class Display_Warning_Dialog:
                 page_type="measurement"
             )
             
+            # Rebuild the entire measurement tab's Column content
             measurement_column = ft.Column(
                 controls=[
                     # Informational banner
@@ -383,6 +407,7 @@ class Display_Warning_Dialog:
             
             self.tabs_control.tabs[1].content = measurement_column
         
+        self.tabs_control.update() # Update the tabs control to reflect content changes
         self.page.update()
 
     def display_error_card_for_tree_measurements_information(self):
@@ -523,20 +548,24 @@ class Display_Warning_Dialog:
                                 ),
                             ],
                             alignment=ft.MainAxisAlignment.END,
+                            
                         ),
                         # ADDED PADDING HERE:
                         padding=ft.padding.all(20),
                         bgcolor=ft.Colors.GREY_50,
                         border_radius=ft.border_radius.only(bottom_left=16, bottom_right=16), # Increased radius for consistency
                         border=ft.border.only(top=ft.BorderSide(1, ft.Colors.GREY_200))
+                ,
                     )
                 ],
                 spacing=0,
-                expand=True,  # Expand to fill available space
+                expand=True,
+                
+               
             ),
-            # Panel styling with improved dimensions and shadow
-            width=1300,
-            height=750,
+            # Vertical Scrolling Fix: Removed fixed height to allow inner column to expand
+            # and push content correctly, relying on the overall dialog height.
+           
             bgcolor=ft.Colors.WHITE,
             border_radius=16,
             shadow=ft.BoxShadow(

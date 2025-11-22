@@ -5,24 +5,31 @@ from controller.EULA_Controller import EULA_Controller
 from views.EULA_View import EULA_View
 from views.SideNavbar_View import SideNavbar_View
 from controller.SideNavbar_Controller import SideNavbar_Controller
-
+import pyautogui
 def _screen_configuration(page:ft.Page):
     page.title = "Biomass Calculator"
+    width, height = pyautogui.size()
     page.bgcolor = ft.Colors.WHITE
-    page.window_height = 800
-    page.window_width = 1200
+    page.window.resizable = True  # window is not resizable
+    page.window.width = width        # window's width is 200 px
+    page.window.height = height       # window's height is 200 px
+   
+    page.window_full_screen = True
     page.padding = 0
      # Set fonts
     page.fonts = {
             "Poppins-Medium": "./assets/fonts/poppins/Poppins-Medium.ttf",
             "Poppins-Regular": "./assets/fonts/poppins/Poppins-Regular.ttf" 
         }
+    page.update()
+    
 
 
 # from views.SideNavBar_View import main
 def main(page: ft.Page):
     _screen_configuration(page)
-    
+   
+  
     """
     Entry point for the app.
     """

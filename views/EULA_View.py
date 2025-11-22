@@ -187,6 +187,7 @@ class EULA_View:
 
         # CHANGED: Removed gradient, set to white background
         self.page.add(ft.Container(
+            margin=30,
             content=layout,
             bgcolor=ft.Colors.WHITE,  # Changed from gradient to solid white
             expand=True
