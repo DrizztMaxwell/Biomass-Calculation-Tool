@@ -22,9 +22,9 @@ from widgets.Loading_Spinner_Widget import Loading_Spinner_Widget
 import json
 import concurrent.futures
 class Select_Data_Controller:
-    def __init__(self, page: ft.Page, data_imported_callback: callable):
+    def __init__(self, page: ft.Page, data_imported_callback: callable, view: Select_Data_View):
         self.page = page
-        self.view = Select_Data_View(self)
+        self.view = view
         self.file_picker = ft.FilePicker(on_result=self.on_file_selected)
         self.page.overlay.append(self.file_picker)
         self.selected_file_path = None
@@ -39,6 +39,7 @@ class Select_Data_Controller:
         try:
             if e.files:
                 self.selected_file_path = e.files[0].path
+                self.view.update_file_status(self.selected_file_path)
                 print(f"Selected file: {self.selected_file_path}")
                 loading_spinner = Loading_Spinner_Widget(self.page)
                 loading_spinner.show_dialog()
@@ -130,6 +131,7 @@ class Select_Data_Controller:
             else:
                 print("File selection cancelled")
                 self.selected_file_path = None
+                self.view.update_file_status(self.selected_file_path)
                 self.is_data_imported = False
                 # if self.data_imported_callback:
                 #     self.data_imported_callback(False)

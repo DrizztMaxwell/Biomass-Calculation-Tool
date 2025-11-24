@@ -52,7 +52,11 @@ class SideNavbar_View:
         self.main_view_content = self.main_controller.build()
         
         self.is_data_imported = False
-        self.select_data_controller = Select_Data_Controller(self.page, self.set_data_imported)
+        self.select_data_view = Select_Data_View(page=self.page, controller=None)
+        self.select_data_controller = Select_Data_Controller(self.page, self.set_data_imported, self.select_data_view)
+        self.select_data_view.controller = self.select_data_controller
+        
+        
     def set_data_imported(self, imported: bool):
         """Set the data imported status and update the UI"""
         self.data_imported = imported
