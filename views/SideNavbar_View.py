@@ -38,6 +38,7 @@ class SideNavbar_View:
         self.sidebar_content = None
         self.main_content_area = None
         self.data_imported = False  # Track if data has been imported successfully
+        self.about_dialog = About_Dialog_View(self.page)
       
         # Initialize controllers and forms - FIXED: Initialize Main_Controller properly
         self.main_model = Calculate_Biomass_Model()
@@ -63,8 +64,8 @@ class SideNavbar_View:
             self.page.update()
 
     def show_about_dialog(self, e):
-        about_dialog = About_Dialog_View(self.page)
-        about_dialog.open_dialog()
+        print("Clickeing")
+        self.about_dialog.show()
         
     def _exit_application_direct(self):
         """Exit application without any UI interactions that could cause recursion."""

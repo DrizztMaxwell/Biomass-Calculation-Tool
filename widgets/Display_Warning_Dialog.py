@@ -266,9 +266,10 @@ class Display_Warning_Dialog:
         table_container = ft.Container(
             # 1. Outer Container sets the fixed height boundary
             # height=900, 
-            margin=ft.margin.symmetric(horizontal=8),
-            expand=True,
             
+            margin=ft.margin.symmetric(horizontal=8),
+            # expand=True,
+           
             content=ft.Column(
                 # 2. ft.Column handles Vertical Scrolling (to see more rows)
                 controls=[
@@ -302,7 +303,7 @@ class Display_Warning_Dialog:
         )
         
         return ft.Container(
-            expand=True,  # Expand to fill available space
+           
             content=ft.Column(
                 controls=[
                     # Results count - Bug Fix: Removed extraneous data that caused "Showing x of x 31 errors"
@@ -321,6 +322,7 @@ class Display_Warning_Dialog:
                     # Table with horizontal/vertical scrolling - expanded
                     ft.Container(
                         content=table_container,
+                        width=1000,
                         expand=True,  # Expand to fill available space
                         border=ft.border.all(1, ft.Colors.GREY_300),
                         border_radius=8,
@@ -332,9 +334,12 @@ class Display_Warning_Dialog:
                     self._create_pagination_controls(total_pages, current_page_display, go_previous, go_next),
                 ],
                 expand=True,  # Expand to fill available space
-                spacing=8,
+                spacing=8,                horizontal_alignment=ft.CrossAxisAlignment.CENTER,
+
             ),
             # ADDED PADDING HERE:
+                        alignment=ft.alignment.center,
+
             padding=ft.padding.all(8),
         )
 

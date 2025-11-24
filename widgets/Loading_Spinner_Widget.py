@@ -8,7 +8,7 @@ class Loading_Spinner_Widget:
     Uses AlertDialog for proper modal behavior.
     """
     
-    def __init__(self, page: ft.Page, size=64, stroke_width=4, text_size=14, show_loading_text=True):
+    def __init__(self, page: ft.Page, size=64, stroke_width=4, text_size=18, show_loading_text=True):
         self.page = page
         self.size = size
         self.stroke_width = stroke_width
@@ -34,22 +34,28 @@ class Loading_Spinner_Widget:
             width=self.size, height=self.size,
         )
         self.loading_text = ft.Text(
-            "Loading...", size=self.text_size - 2, color=ft.Colors.BLACK54
+            "Loading...", size=self.text_size - 3 , color=ft.Colors.BLACK, weight=ft.FontWeight.BOLD
         )
 
         controls = [self.loading_stack]
         if show_loading_text:
-            controls.append(self.loading_text)
+            # Wrap loading_text in a Container to apply a top margin/padding AND center the text.
+            loading_text_container = ft.Container(
+                content=self.loading_text, 
+                margin=ft.margin.only(top=30),
+                alignment=ft.alignment.center 
+            )
+            controls.append(loading_text_container)
 
-        # Content Card (The white box with spinner) - Fixed to 300x300 with proper centering
+        # Content Card (The white box with spinner) - Adjusted to 400x400
         self.content_card = ft.Container(
             content=ft.Column(
                 controls, 
                 horizontal_alignment=ft.CrossAxisAlignment.CENTER, 
-                spacing=10,
+                spacing=0, 
                 # Center the column content both ways
                 alignment=ft.MainAxisAlignment.CENTER,
-                expand=True,  # This makes the column take all available space
+                expand=True, 
             ),
             padding=30,
             bgcolor=ft.Colors.WHITE,
@@ -57,9 +63,9 @@ class Loading_Spinner_Widget:
             shadow=ft.BoxShadow(
                 spread_radius=1, blur_radius=20, color=ft.Colors.BLACK26, offset=ft.Offset(0, 4)
             ),
-            width=300,  # Fixed width
-            height=300, # Fixed height
-            alignment=ft.alignment.center,  # Center the column within the container
+            width=400,  # <-- INCREASED WIDTH
+            height=400, # <-- INCREASED HEIGHT
+            alignment=ft.alignment.center, 
         )
 
         # AlertDialog as the main container

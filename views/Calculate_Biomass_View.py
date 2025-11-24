@@ -213,7 +213,7 @@ class Calculate_Biomass_View:
         await loading_spinner.simulate_progressive_loading(0.0, 0.2, 0.1, "Beginning Calculation...")
         
         self.controller.calculate_biomass()
-        await loading_spinner.simulate_progressive_loading(1.0, 0.2, 0.1, "Completed...")
+        await loading_spinner.simulate_progressive_loading(1.0, 1.0, 0.1, "Completed...")
         loading_spinner.hide()
         
         
@@ -228,15 +228,23 @@ class Calculate_Biomass_View:
         e.control.update()
 
     def _show_results_table(self):
-        """Create and display the results table."""
+      
+        """Create and display the results table and auto-scroll to it."""
         results_table = self._create_results_table()
         self.results_table_container.content = results_table
+        self.results_table_container.key = "results_table_container"
         self.results_table_container.visible = True
-        
-        # Update UI
+        self.page.scroll_to(
+            key="results_table_container",  # Use the ID we set
+            duration=259,
+         
+            curve=ft.AnimationCurve.EASE_OUT
+        )
+        # Update UI first to ensure the table is rendered
         if self.page:
             self.page.update()
-
+            
+       
     def get_selected_components(self):
         """Get currently selected components."""
         return [comp['title'] for comp in COMPONENTS_DATA if comp['is_selected']]
@@ -248,7 +256,8 @@ class Calculate_Biomass_View:
             on_click_callback=self.on_calculate_biomass_click,
             is_disabled=self.is_button_disabled
         ).create()
-        
+         # Add an ID to the results container for precise scrolling
+        self.results_table_container.id = "results_table_container"
         return ft.Column(
             controls=[
                 self._create_equation_section(),
@@ -329,7 +338,7 @@ class Calculate_Biomass_View:
         export_button = ft.ElevatedButton(
             text="Export to TXT",
             icon=ft.Icons.DOWNLOAD,
-            bgcolor=ft.Colors.BLUE_700,
+            bgcolor=ft.Colors.GREEN_700,
             color=ft.Colors.WHITE,
             on_click=self._on_export_click,
             style=ft.ButtonStyle(
@@ -341,6 +350,7 @@ class Calculate_Biomass_View:
         # Create horizontally scrollable container for the table
         scrollable_table = ft.Container(
             content=ft.Row(
+                alignment=ft.MainAxisAlignment.CENTER,
                 controls=[data_table],
                 scroll=ft.ScrollMode.AUTO,
             ),
@@ -355,41 +365,43 @@ class Calculate_Biomass_View:
                 offset=ft.Offset(0, 3),
             ),
         )
-        
+
         # Wrap in a container with title and info
         table_container = ft.Container(
             content=ft.Column([
                 ft.Row([
-                    ft.Text("Biomass Calculation Results", 
-                        size=20, 
-                        weight=ft.FontWeight.BOLD,
-                        color=ft.Colors.GREEN_700),
+                    TitleTextWidget("Calculated Biomass Results Table"),
                     export_button
                 ], alignment=ft.MainAxisAlignment.SPACE_BETWEEN),
                 ft.Container(
-                    content=ft.Column([
-                        ft.Row([
-                            ft.Text(f"Showing first 10 of {len(data)} records", 
-                                color=ft.Colors.GREY_600,
-                                size=12),
-                            ft.Text("← Scroll horizontally →", 
-                                color=ft.Colors.BLUE_600,
-                                size=12,
-                                weight=ft.FontWeight.W_500)
-                        ], alignment=ft.MainAxisAlignment.SPACE_BETWEEN),
-                        ft.Divider(height=10, color=ft.Colors.TRANSPARENT),
-                        scrollable_table
-                    ]),
+                    content=ft.Column(
+                        controls=[
+                            ft.Row([
+                                DescriptionText(f"Showing first 10 of {len(data)} records"),
+                                ft.Text("← Scroll horizontally →", 
+                                    color=ft.Colors.GREEN_700,
+                                    size=12,
+                                    weight=ft.FontWeight.W_500)
+                            ], alignment=ft.MainAxisAlignment.SPACE_BETWEEN),
+                            ft.Divider(height=10, color=ft.Colors.TRANSPARENT),
+                            scrollable_table
+                        ]
+                    ),
                 )
             ]),
             margin=ft.margin.all(20),
-            padding=ft.padding.all(15),
-            bgcolor=ft.Colors.GREY_50,
+            padding=ft.padding.all(30),
+            bgcolor=ft.Colors.WHITE,
+            shadow=ft.BoxShadow(
+                spread_radius=1,
+                blur_radius=5,
+                color=ft.Colors.with_opacity(0.15, ft.Colors.BLUE_GREY_900),
+                offset=ft.Offset(0, 3),
+            ),
             border_radius=10,
         )
-        
+
         return table_container
-    
     def _on_export_click(self, e):
         """Handle export button click - open file save dialog."""
         # Generate default filename with timestamp

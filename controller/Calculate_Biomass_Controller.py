@@ -43,48 +43,55 @@ class Calculate_Biomass_Controller:
         except Exception as e:
             print(f"Error calculating biomass: {e}")
             # self.view.show_error_dialog(str(e))  # Uncomment for user error display
-
+   
     def _lower_column_names(self, *dataframes) -> None:
         """Convert all column names to lowercase for consistency."""
         for df in dataframes:
-            df.columns = [col.lower() for col in df.columns]
+            df.columns = df.columns.str.lower()
+
+    def lookup(self, data, species_code:int) -> dict:
+        print(species_code)
+        species_code_lookup = {int(dat["speciescode"]): dat for dat in data}
+        print(species_code_lookup.get(species_code))
+        
+        if species_code_lookup.get(species_code) is None:
+            return None
+        
+        # FIX: Return the species data using species_code, not species_code_lookup
+        return species_code_lookup.get(species_code)
 
     def _process_biomass_calculations(self, local_data: pd.DataFrame, tree_params: pd.DataFrame) -> None:
-        """Calculate biomass for each row in the dataset."""
-        for index, row in local_data.iterrows():
-            raw_species_code = row.get('speccode')
-            species_code = None
-
+        """Calculate biomass for each row in the dataset - most efficient version."""
+        
+        # 1. Precompute lookup dictionary ONCE
+        species_code_lookup = {}
+        for _, row in tree_params.iterrows():
             try:
-                # 1. Attempt to convert to integer
-                # We first check if the value is NaN or None, and handle it if possible.
-                if pd.isna(raw_species_code):
-                    # Treat NaN/None as a signal to skip
-                    species_code = None 
-                else:
-                    # Attempt conversion. This handles both strings ('123') and floats (123.0)
-                    species_code = int(raw_species_code)
-
-            except (ValueError, TypeError) as e:
-                # If conversion fails (e.g., 'ABC', or complex types), set code to None
-                print(f"Skipping row {index}: 'speccode' value '{raw_species_code}' could not be converted to integer. Error: {e}")
-                species_code = None
-                
-            # 2. Check if the code is valid (None means skip)
-            if species_code is None or species_code == 0:
-                continue  # Skip rows without a valid species code (None or 0)
-            
-            # 3. Proceed with calculation if species_code is valid
-            species_params = self._get_species_parameters(tree_params, float(species_code))
-            print(species_params)
+                code = row['speciescode']
+                if pd.notna(code):
+                    species_code_lookup[int(code)] = row.to_dict()
+            except (ValueError, TypeError):
+                continue
+        
+        # 2. Vectorized filtering of valid rows
+        species_codes = pd.to_numeric(local_data['speccode'], errors='coerce')
+        valid_mask = (species_codes.notna()) & (species_codes != 0)
+        valid_indices = species_codes[valid_mask].index
+        valid_codes = species_codes[valid_mask].astype(int)
+        
+        # 3. Process only valid rows
+        for idx, species_code in zip(valid_indices, valid_codes):
+            species_params = species_code_lookup.get(species_code)
             if species_params:
-                self._calculate_row_biomass(local_data, index, row, species_params)
+                # print("HALOOO")
+                # print(species_params)
+                self._calculate_row_biomass(local_data, idx, local_data.loc[idx], species_params)
 
-    def _get_species_parameters(self, tree_params: pd.DataFrame, species_code: str) -> dict:
+    def _get_species_parameters(self, tree_params: pd.DataFrame, species_code: int) -> dict:
         """Retrieve parameters for a specific species code."""
-        matching_row = tree_params[tree_params['speciescode'] == species_code]
-        return matching_row.iloc[0].to_dict() if not matching_row.empty else None
-
+        # Convert DataFrame to list of dictionaries for the lookup function
+        data_as_dict = tree_params.to_dict('records')
+        return self.lookup(data_as_dict, species_code)
     def _calculate_row_biomass(self, data: pd.DataFrame, index: int, row: pd.Series, species_params: dict) -> None:
         """Calculate biomass for a single row based on equation type."""
         if self.equation_type == "DBH-based":

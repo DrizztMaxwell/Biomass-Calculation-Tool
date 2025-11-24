@@ -87,7 +87,7 @@ class Select_Data_Controller:
                     # # Validate data
                     # nan_detected, error_count, error_messages = check_dataframe_for_nan_values(data_frame=dataframe)
                     # print("NaN validation completed")
-                    print("SHIII")
+                 
                     work_6 = pool.submit(validate_tree_dbh_and_height_values, dataframe)
                     error_message_for_out_of_bounds_dbh_or_height_value = work_6.result()
                     # error_message_for_out_of_bounds_dbh_or_height_value = validate_tree_dbh_and_height_values(dataframe)
