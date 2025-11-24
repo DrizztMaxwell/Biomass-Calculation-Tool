@@ -22,6 +22,7 @@ class Display_Warning_Dialog:
         self.measurement_tab_container = None
         self.tabs_control = None
         
+        
     def close_dialog(self, e):
         """Removes the custom container from the page to dismiss the 'modal' effect."""
         if self.dialog and self.dialog in self.page.overlay:
@@ -39,44 +40,85 @@ class Display_Warning_Dialog:
     def _create_table_row(self, error_data, is_tree_measurement_tab: bool):
         """Create a table row for an error entry with improved styling"""
         row_data_lower = self._convert_row_data_to_lowercase(error_data['row_data'])
-        print(row_data_lower)
+        print(f"{error_data} ")
         nan_columns_lower = [col.lower() for col in error_data.get('nan_columns', [])]
         
         # Helper function to create styled text cells with better visual hierarchy
-        def create_cell(value, is_error=False):
+        def create_cell(value, is_error=False, column_name=None, row_data_lower=None, nan_columns_lower=None):
+    
+            # Determine if the value should be displayed as an error
+            should_display_error = is_error
             
             if value is None or (isinstance(value, float) and np.isnan(value)):
                 # Check for Python None or numpy.nan (float('nan'))
-                display_value = "ERROR"  # Display 'MISSING' for None/NaN
-                is_error = True  # Treat 'MISSING' as an error for visual emphasis
+                display_value = "ERROR"  # Display 'ERROR' for None/NaN
+                should_display_error = True  # Treat missing values as errors
             else:
-                display_value = str(value) 
+                display_value = str(value)
+                
+                # Additional validation checks based on column type
+                if column_name and row_data_lower is not None:
+                    try:
+                        if column_name == 'year':
+                            # Year validation: should be integer and reasonable year
+                            year_val = int(float(value))
+                            if year_val < 1900 or year_val > 2100:
+                                should_display_error = True
+                                
+                        elif column_name == 'tree number':
+                            # Tree number validation: should be positive integer
+                            tree_num = int(float(value))
+                            if tree_num <= 0:
+                                should_display_error = True
+                                
+                        elif column_name == 'speccode':
+                            # SpecCode validation: should be integer
+                            spec_val = float(value)
+                            if spec_val != int(spec_val):  # Check if it's not a whole number
+                                should_display_error = True
+                                
+                        elif column_name == 'dbh':
+                            # DBH validation: should be numeric and within range
+                            dbh_val = float(value)
+                            if dbh_val < 2.5 or dbh_val > 100.0:
+                                should_display_error = True
+                                
+                        elif column_name == 'height':
+                            # Height validation: should be numeric and within range
+                            height_val = float(value)
+                            if height_val < 1.3 or height_val > 50.0:
+                                should_display_error = True
+                                
+                    except (ValueError, TypeError):
+                        # If conversion fails, it's a data type error
+                        should_display_error = True
             
             return ft.DataCell(
                 ft.Container(
                     content=ft.Text(
                         display_value,
                         size=12,
-                        # Use RED_600 if the column was flagged in nan_columns_lower OR if the value is MISSING
-                        color=ft.Colors.RED_600 if is_error else ft.Colors.GREY_800,
-                        weight=ft.FontWeight.W_500 if is_error else ft.FontWeight.NORMAL,
+                        color=ft.Colors.RED_600 if should_display_error else ft.Colors.GREY_800,
+                        weight=ft.FontWeight.W_500 if should_display_error else ft.FontWeight.NORMAL,
                     ),
                     padding=ft.padding.symmetric(horizontal=8, vertical=6),
+                    # Optional: Add background color for errors to make them stand out more
+                    bgcolor=ft.Colors.RED_50 if should_display_error else ft.Colors.TRANSPARENT,
+                    border_radius=4 if should_display_error else 0,
                 )
             )
         
         # Common cells for both tabs - Plot, Year, SpecCode, Tree Number, DBH, Height
         cells = [
-            # Row Index - Note: We do NOT want to check for None/NaN for the index
-            create_cell(error_data['index'] + 1, is_error=False), 
-            create_cell(row_data_lower.get('plot', None), 'plot' in nan_columns_lower),
-            create_cell(row_data_lower.get('year', None), 'year' in nan_columns_lower),
-            create_cell(row_data_lower.get('speccode', None), 'speccode' in nan_columns_lower),
-            create_cell(row_data_lower.get('tree number', None), 'tree number' in nan_columns_lower),
-            create_cell(row_data_lower.get('dbh', None), 'dbh' in nan_columns_lower),
-            create_cell(row_data_lower.get('height', None), 'height' in nan_columns_lower),
-        ]
-        
+    # Row Index
+    create_cell(error_data['index'] + 1, is_error=False), 
+    create_cell(row_data_lower.get('plot', None), 'plot' in nan_columns_lower, 'plot', row_data_lower, nan_columns_lower),
+    create_cell(row_data_lower.get('year', None), 'year' in nan_columns_lower, 'year', row_data_lower, nan_columns_lower),
+    create_cell(row_data_lower.get('speccode', None), 'speccode' in nan_columns_lower, 'speccode', row_data_lower, nan_columns_lower),
+    create_cell(row_data_lower.get('tree number', None), 'tree number' in nan_columns_lower, 'tree number', row_data_lower, nan_columns_lower),
+    create_cell(row_data_lower.get('dbh', None), 'dbh' in nan_columns_lower, 'dbh', row_data_lower, nan_columns_lower),
+    create_cell(row_data_lower.get('height', None), 'height' in nan_columns_lower, 'height', row_data_lower, nan_columns_lower),
+]
         if is_tree_measurement_tab:
             # For tree measurement errors, add Issue cell
             dbh_value = row_data_lower.get('dbh')

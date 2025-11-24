@@ -31,7 +31,7 @@ class Select_Data_Controller:
         self.error_messages = []
         self.data_imported_callback = data_imported_callback  # Fixed parameter name
         self.is_data_imported = False  # Track internal state
-
+        
       
 
     async def on_file_selected(self, e: ft.FilePickerResultEvent):
@@ -50,7 +50,6 @@ class Select_Data_Controller:
                     # Process the file
                     # dataframe = convert_text_file_into_dataframe(selected_file_path=self.selected_file_path)
                     dataframe = pool.submit(convert_text_file_into_dataframe, self.selected_file_path)
-                    await loading_spinner.simulate_progressive_loading(0.2, 0.4, 0.1, "Beginning mandatory column checking...")
                     
                     try:
                         dataframe = dataframe.result()
@@ -73,6 +72,8 @@ class Select_Data_Controller:
                     original_dataframe = dataframe.copy()
                     work_3 = pool.submit(convert_columns_to_specific_types, dataframe)
                     dataframe = work_3.result()
+                    print("JAIAIOPEJIPWEJIPDJPDJIPDJIPWDJIP")
+                    print(dataframe)
                     # print("Column type conversion completed")
                     print("DAAAMN")
                     
@@ -84,7 +85,8 @@ class Select_Data_Controller:
                     # print(dataframe)
                     
                     work_5 = pool.submit(check_dataframe_for_nan_values, dataframe)
-                    nan_detected, error_count, error_messages = work_5.result()
+                    errors_detected, error_count, error_messages = work_5.result()
+                    print(error_messages)
                     # # Validate data
                     # nan_detected, error_count, error_messages = check_dataframe_for_nan_values(data_frame=dataframe)
                     # print("NaN validation completed")
@@ -123,7 +125,7 @@ class Select_Data_Controller:
                         pool.shutdown()
                         
                         self.data_imported_callback(True) # Call the callback to enable sidebar buttons
-                    e.control.page.update()
+                    self.page.update()
 
                     return
                     
@@ -135,7 +137,7 @@ class Select_Data_Controller:
                 self.is_data_imported = False
                 # if self.data_imported_callback:
                 #     self.data_imported_callback(False)
-                e.page.update()
+                self.page.update()
                 # self.__del__()
                 return
 

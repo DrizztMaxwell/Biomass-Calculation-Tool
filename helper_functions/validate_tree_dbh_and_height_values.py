@@ -20,16 +20,34 @@ def validate_tree_dbh_and_height_values(data_frame: pd.DataFrame, dbh_min: float
     dbh_col = column_mapping['dbh']
     height_col = column_mapping['height']
     
-    # Vectorized validation (much faster than iterrows)
-    dbh_values = data_frame[dbh_col]
-    height_values = data_frame[height_col]
+    # Function to check if values can be converted to float
+    def can_convert_to_float(series):
+        def is_convertible(value):
+            if pd.isna(value):
+                return True  # NaN is considered valid for conversion check
+            try:
+                float(value)
+                return True
+            except (ValueError, TypeError):
+                return False
+        return series.apply(is_convertible)
+    
+    # Check if DBH and Height values can be converted to float
+    dbh_convertible_mask = can_convert_to_float(data_frame[dbh_col])
+    height_convertible_mask = can_convert_to_float(data_frame[height_col])
+    
+    # Vectorized validation for numeric ranges (only for convertible values)
+    dbh_values_numeric = pd.to_numeric(data_frame[dbh_col], errors='coerce')
+    height_values_numeric = pd.to_numeric(data_frame[height_col], errors='coerce')
     
     # Create boolean masks for invalid values
-    dbh_invalid_mask = (~dbh_values.isna()) & ((dbh_values < dbh_min) | (dbh_values >= dbh_max))
-    height_invalid_mask = (~height_values.isna()) & ((height_values < height_min) | (height_values > height_max))
+    dbh_range_invalid_mask = (~dbh_values_numeric.isna()) & ((dbh_values_numeric < dbh_min) | (dbh_values_numeric >= dbh_max))
+    height_range_invalid_mask = (~height_values_numeric.isna()) & ((height_values_numeric < height_min) | (height_values_numeric > height_max))
     
     # Combine masks to find rows with any invalid values
-    invalid_rows_mask = dbh_invalid_mask | height_invalid_mask
+    conversion_errors_mask = (~dbh_convertible_mask) | (~height_convertible_mask)
+    range_errors_mask = dbh_range_invalid_mask | height_range_invalid_mask
+    invalid_rows_mask = conversion_errors_mask | range_errors_mask
     
     if not invalid_rows_mask.any():
         # print("✓ No DBH/Height validation errors found")
@@ -41,11 +59,20 @@ def validate_tree_dbh_and_height_values(data_frame: pd.DataFrame, dbh_min: float
     # Generate error messages efficiently
     error_messages = []
     for idx in invalid_indices:
-        invalid_columns = []
-        if dbh_invalid_mask.loc[idx]:
-            invalid_columns.append(dbh_col)
-        if height_invalid_mask.loc[idx]:
-            invalid_columns.append(height_col)
+        conversion_errors = []
+        range_errors = []
+        
+        # Check conversion errors
+        if not dbh_convertible_mask.loc[idx]:
+            conversion_errors.append(dbh_col)
+        if not height_convertible_mask.loc[idx]:
+            conversion_errors.append(height_col)
+        
+        # Check range errors (only if values are convertible)
+        if dbh_convertible_mask.loc[idx] and dbh_range_invalid_mask.loc[idx]:
+            range_errors.append(dbh_col)
+        if height_convertible_mask.loc[idx] and height_range_invalid_mask.loc[idx]:
+            range_errors.append(height_col)
         
         # Convert only the problematic row to dict (more efficient)
         row_data = data_frame.loc[idx].to_dict()
@@ -53,7 +80,8 @@ def validate_tree_dbh_and_height_values(data_frame: pd.DataFrame, dbh_min: float
         error_msg = {
             'index': idx,
             'row_data': row_data,
-            'nan_columns': invalid_columns
+            'conversion_errors': conversion_errors,
+            'range_errors': range_errors
         }
         error_messages.append(error_msg)
     

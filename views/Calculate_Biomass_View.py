@@ -14,7 +14,7 @@ from data.components_data import COMPONENTS_DATA
 from widgets.Calculate_Biomass_Button import Calculate_Biomass_Button
 
 class Calculate_Biomass_View:
-    def __init__(self, controller, page: ft.Page):
+    def __init__(self, controller, page: ft.Page, selected_file_path):
         
         self.controller = controller
         self.page = page  # Initialize page reference
@@ -30,7 +30,7 @@ class Calculate_Biomass_View:
             color=ft.Colors.BLACK,
             weight=ft.FontWeight.W_500
         )
-        
+        self.selected_file_path = selected_file_path
         # Results table container (initially empty)
         self.results_table_container = ft.Container(visible=False)
 
@@ -123,11 +123,15 @@ class Calculate_Biomass_View:
         )
     
     def _generate_filename(self):
+        
         """Generate filename with date and time prefix."""
         now = datetime.datetime.now()
         date_prefix = now.strftime("%Y%m%d")
         time_prefix = now.strftime("%H%M%S")
-        return f"output_{date_prefix}_{time_prefix}.txt"
+        print(f"FILE PATH:{self.selected_file_path}")
+        filename_without_ext = os.path.splitext(os.path.basename(self.selected_file_path))[0]
+        print(filename_without_ext)  # Output: "data_set"
+        return f"{filename_without_ext}_{date_prefix}_{time_prefix}.txt"
     
     def _export_to_txt(self, data, file_path: str):
         """Export data to a formatted text file."""
@@ -240,9 +244,11 @@ class Calculate_Biomass_View:
          
             curve=ft.AnimationCurve.EASE_OUT
         )
+        print(self.selected_file_path)
         # Update UI first to ensure the table is rendered
         if self.page:
             self.page.update()
+            print("updated")
             
        
     def get_selected_components(self):

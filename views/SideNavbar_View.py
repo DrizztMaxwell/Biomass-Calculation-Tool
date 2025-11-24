@@ -40,21 +40,26 @@ class SideNavbar_View:
         self.data_imported = False  # Track if data has been imported successfully
         self.about_dialog = About_Dialog_View(self.page)
       
-        # Initialize controllers and forms - FIXED: Initialize Main_Controller properly
-        self.main_model = Calculate_Biomass_Model()
-        self.main_view = Calculate_Biomass_View(None, page = self.page)  # Pass None initially, set controller later
-        self.main_controller = Calculate_Biomass_Controller(self.main_model, self.main_view)
+       
         # Now set the controller reference in the view
-        self.main_view.controller = self.main_controller
         
         self.create_species_controller = Create_Species_Controller()
         self.add_species_form = AddSpeciesForm(self.create_species_controller)
-        self.main_view_content = self.main_controller.build()
         
         self.is_data_imported = False
         self.select_data_view = Select_Data_View(page=self.page, controller=None)
         self.select_data_controller = Select_Data_Controller(self.page, self.set_data_imported, self.select_data_view)
         self.select_data_view.controller = self.select_data_controller
+        
+        
+         # Initialize controllers and forms - FIXED: Initialize Main_Controller properly
+        self.main_model = Calculate_Biomass_Model()
+        self.main_view = Calculate_Biomass_View(None, page = self.page, selected_file_path=None)  # Pass None initially, set controller later
+        self.main_controller = Calculate_Biomass_Controller(self.main_model, self.main_view, )
+        self.main_view.controller = self.main_controller
+        self.main_view.selected_file_path = self.select_data_controller.selected_file_path
+        self.main_view_content = self.main_controller.build()
+        
         
         
     def set_data_imported(self, imported: bool):
@@ -101,7 +106,14 @@ class SideNavbar_View:
         # Add the appropriate page based on selection
         if page_name == "calculate_biomass":
             # Render Main_View page
+            print("File Path")
+            
+            self.main_view.selected_file_path =self.select_data_controller.selected_file_path
+            self.page.update()
+            print(self.main_view.selected_file_path)
+            self.page.update()
             self.main_content_area.controls.append(self.main_view_content)
+       
         elif page_name == "create_species":
             # Render Create Species page
             create_species_content = self.add_species_form.build(page=self.page)
