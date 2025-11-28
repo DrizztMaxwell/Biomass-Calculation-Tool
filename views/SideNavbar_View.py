@@ -5,7 +5,7 @@ from controller.Select_Data_Controller import Select_Data_Controller
 from views import Select_Data_View
 from views.Calculate_Biomass_View import  Calculate_Biomass_View
 from model.Calculate_Biomass_Model import Calculate_Biomass_Model
-from views.Create_Species import AddSpeciesForm
+from views.Create_Species_View import Create_Species_View
 from controller.Create_Species_Controller import Create_Species_Controller
 from controller.Calculate_Biomass_Controller import Calculate_Biomass_Controller
 from views.Select_Data_View import Select_Data_View
@@ -44,7 +44,7 @@ class SideNavbar_View:
         # Now set the controller reference in the view
         
         self.create_species_controller = Create_Species_Controller()
-        self.add_species_form = AddSpeciesForm(self.create_species_controller)
+        self.add_species_form = Create_Species_View(self.create_species_controller)
         
         self.is_data_imported = False
         self.select_data_view = Select_Data_View(page=self.page, controller=None)
@@ -233,7 +233,9 @@ class SideNavbar_View:
                     is_active=(self.active__nav_item == "create_species"),
                     on_click=lambda e: self.navigate_to_page("create_species"),
                     # Disabled until data is imported
-                    enabled=self.data_imported
+                    # enabled=self.data_imported,
+                                        enabled=True
+
                 ),
                 Display_Nav_Item(
                     ft.Icons.SETTINGS, 
@@ -335,8 +337,8 @@ class SideNavbar_View:
        
       
         # Set initial page to Select Data
-        self.active__nav_item = "select_data"
-        self.navigate_to_page("select_data")
+        self.active__nav_item = "create_species"
+        self.navigate_to_page("create_species")
         
         self.page.add(ft.Row(
                 [

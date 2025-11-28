@@ -852,7 +852,7 @@
     {
         "SpecCommon": "Softwood",
         "SpeciesCode": "",
-
+        
         "bwood1": 0.0648,
         "bwood2": 2.3927,
         "bbark1": 0.0162,

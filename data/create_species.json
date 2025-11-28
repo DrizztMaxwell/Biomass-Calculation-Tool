@@ -1,0 +1,25 @@
+[{
+  
+        "SpeciesCode": 251,
+
+        "bwood1": 0.0528,
+        "bwood2": 2.4309,
+        "bbark1": 0.0108,
+        "bbark2": 2.3876,
+        "bbranches1": 0.0121,
+        "bbranches2": 2.3519,
+        "bfoliage1": 0.0251,
+        "bfoliage2": 2.0389,
+        "bhwood1": 0.0268,
+        "bhwood2": 1.7579,
+        "bhwood3": 0.9871,
+        "bhbark1": 0.0009,
+        "bhbark2": 1.446,
+        "bhbark3": 1.8839,
+        "bhbranches1": 0.047,
+        "bhbranches2": 2.9288,
+        "bhbranches3": -1.1588,
+        "bhfoliage1": 0.0551,
+        "bhfoliage2": 1.7585,
+        "bhfoliage3": 0
+}]

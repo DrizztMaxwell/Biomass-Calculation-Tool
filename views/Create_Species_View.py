@@ -5,9 +5,9 @@ from widgets.DescriptionText import DescriptionText
 from data.components_data_2 import COMPONENTS_DATA_2
 from controller.Create_Species_Controller import Create_Species_Controller
 from widgets.Select_Components_Widget import Select_Components_Widget
+from widgets.Create_Title_And_Description_Widget import Create_Title_And_Description_Widget
 
-# 2. Main Form Control Class (No ft.UserControl inheritance)
-class AddSpeciesForm:
+class Create_Species_View:
     """The main application form, responsible for assembling the UI controls."""
     
     def __init__(self, controller: Create_Species_Controller):
@@ -31,15 +31,7 @@ class AddSpeciesForm:
         self.dialog = None
     
     # --- UI Creation Helpers ---
-    def _create_header(self):
-        """Creates the header section."""
-        return ft.Column(
-            controls=[
-                TitleTextWidget("Create Species"),
-                DescriptionText("Create a new species to add it in the program"),
-            ],
-            spacing=5
-    )
+    
 
     def _create_species_row(self):
         """Creates the Code, Origin, and Equation Type row and stores controls in the controller."""
@@ -595,7 +587,7 @@ class AddSpeciesForm:
             content=ft.Container(
                 content=ft.Column(
                     controls=[
-                        self._create_header(),
+                        Create_Title_And_Description_Widget("Create Species", "Create a new species to add it in the program"),
                         ft.Divider(color=ft.Colors.GREY_300, height=30),  # More space
 
                         self._create_species_row(),
