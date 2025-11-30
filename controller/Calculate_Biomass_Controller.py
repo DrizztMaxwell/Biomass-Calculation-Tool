@@ -1,16 +1,80 @@
+import json
 import pandas as pd
 from model.Calculate_Biomass_Model import Calculate_Biomass_Model
+from widgets.Bar_Chart_Widget import Bar_Chart_Widget
 
 
 class Calculate_Biomass_Controller:
     """Controller for calculating tree biomass based on selected components and equation types."""
+    
+    
     
     def __init__(self, model: Calculate_Biomass_Model, view):
         self.model = model
         self.view = view
         self.equation_type = "DBH-based"
         self.selected_components = []
-
+    def json_to_dataframe_basic(self, json_file_path):
+        """Convert JSON file to DataFrame (basic approach)"""
+        try:
+            with open(json_file_path, 'r') as f:
+                data = json.load(f)
+            
+            # Convert to DataFrame
+            df = pd.DataFrame(data)
+            return df
+        except Exception as e:
+            print(f"Error converting JSON to DataFrame: {e}")
+            return pd.DataFrame()
+    def reorder_by_species_code(self, data: pd.DataFrame) -> pd.DataFrame:
+        """Reorder the DataFrame by 'speciescode' in ascending order."""
+        if 'speccode' in data.columns:
+            return data.sort_values(by='speccode').reset_index(drop=True)
+        return data
+    def _get_sum_of_component_for_specific_species(self, data: pd.DataFrame, species_code: int, component: str) -> float:
+        """Get the sum of a specific component for a given species code."""
+        print(type(data["speccode"]))
+        filtered_data = data[data['speccode'].astype(str) == str(species_code)]
+        print(f"filtered_data: {filtered_data}")
+        component_column = f"{component} (KG)"
+        if component_column in filtered_data.columns:
+            return filtered_data[component_column].sum()
+        return 0.0
+    def _extract_all_species_codes(self, data: pd.DataFrame) -> list:
+        """Extract all unique species codes from the DataFrame."""
+        if 'speccode' in data.columns:
+            return data['speccode'].unique().tolist()
+        return []
+    def _click_on_show_chart_button(self) -> None:
+        """Handle the click event for the 'Show Chart' button."""
+        print("Show Chart button clicked.")
+        species_data_for_chart = []
+        data = self.json_to_dataframe_basic("storage/biomass_results.json")
+        data = self.reorder_by_species_code(data)
+        species_codes = self._extract_all_species_codes(data)
+        for species_code in species_codes:
+            wood_sum = self._get_sum_of_component_for_specific_species(data, species_code, "Wood")
+            bark_sum = self._get_sum_of_component_for_specific_species(data, species_code, "Bark")
+            branch_sum = self._get_sum_of_component_for_specific_species(data, species_code, "Branch")
+            foliage_sum = self._get_sum_of_component_for_specific_species(data, species_code, "Foliage")
+            if wood_sum == 0 and bark_sum == 0 and branch_sum == 0 and foliage_sum == 0:
+                continue
+            species_data_for_chart.append({
+                "species_code": species_code,
+                "Wood": wood_sum,
+                "Bark": bark_sum,
+                "Branch": branch_sum,
+                "Foliage": foliage_sum
+            })
+       
+        
+        # print(f"Wood Sum: {wood_sum}")
+        # print(f"Bark Sum: {bark_sum}")
+        # print(species_data_for_chart)
+        return species_data_for_chart
+        # Implement chart display logic here
+        # self.reorder_by_species_code(data)
+        
     def set_equation_type(self, equation_type: str) -> None:
         """Set the equation type for biomass calculations."""
         self.equation_type = equation_type
@@ -63,8 +127,11 @@ class Calculate_Biomass_Controller:
     def _process_biomass_calculations(self, local_data: pd.DataFrame, tree_params: pd.DataFrame) -> None:
         """Calculate biomass for each row in the dataset - most efficient version."""
         
-        # 1. Precompute lookup dictionary ONCE
+        # 1. Precompute lookup dictionaries ONCE
         species_code_lookup = {}
+        created_species_lookup = {}
+        
+        # Load from tree_params (existing)
         for _, row in tree_params.iterrows():
             try:
                 code = row['speciescode']
@@ -73,18 +140,37 @@ class Calculate_Biomass_Controller:
             except (ValueError, TypeError):
                 continue
         
+        # Load from created_species.json (new)
+        try:
+            with open("data/create_species.json", "r") as f:
+                created_species_data = json.load(f)
+            
+            for species in created_species_data:
+                try:
+                    code = species.get('SpeciesCode')
+                    if code and pd.notna(code):
+                        created_species_lookup[int(code)] = species
+                except (ValueError, TypeError):
+                    continue
+                    
+        except (FileNotFoundError, json.JSONDecodeError) as e:
+            print(f"Warning: Could not load created_species.json: {e}")
+        
         # 2. Vectorized filtering of valid rows
         species_codes = pd.to_numeric(local_data['speccode'], errors='coerce')
         valid_mask = (species_codes.notna()) & (species_codes != 0)
         valid_indices = species_codes[valid_mask].index
         valid_codes = species_codes[valid_mask].astype(int)
         
-        # 3. Process only valid rows
+        # 3. Process only valid rows - check both lookup sources
         for idx, species_code in zip(valid_indices, valid_codes):
             species_params = species_code_lookup.get(species_code)
+            
+            # If not found in tree_params, try created_species
+            if not species_params:
+                species_params = created_species_lookup.get(species_code)
+            
             if species_params:
-                # print("HALOOO")
-                # print(species_params)
                 self._calculate_row_biomass(local_data, idx, local_data.loc[idx], species_params)
 
     def _get_species_parameters(self, tree_params: pd.DataFrame, species_code: int) -> dict:

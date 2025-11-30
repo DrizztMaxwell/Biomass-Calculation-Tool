@@ -1,3 +1,5 @@
+import json
+from sys import prefix
 import flet as ft
 from widgets.Create_Label_With_Icon import Create_Label_With_Icon
 from widgets.TitleTextWidget import TitleTextWidget
@@ -24,7 +26,7 @@ class Create_Species_View:
         self.parameters_section = None
         
         # Track current equation type
-        self.current_equation_type = "DBH-based [Default]"
+        self.current_equation_type = "DBH-based"
         
         # Store references for dialog
         self.page_ref = None
@@ -63,7 +65,7 @@ class Create_Species_View:
         # Equation Type Dropdown Control
         equation_type_control = ft.Dropdown(
             options=[
-                ft.dropdown.Option("DBH-based [Default]"),
+                ft.dropdown.Option("DBH-based"),
                 ft.dropdown.Option("DBH + Height-based"),
             ],
             value="DBH-based [Default]",
@@ -273,29 +275,29 @@ class Create_Species_View:
 
         # Create all parameter controls for both equation types
         # DBH-based parameters (b1, b2)
-        wood_b1 = self._param_input("b1 (Wood)")
-        wood_b2 = self._param_input("b2 (Wood)")
-        bark_b1 = self._param_input("b1 (Bark)")
-        bark_b2 = self._param_input("b2 (Bark)")
-        branch_b1 = self._param_input("b1 (Branch)")
-        branch_b2 = self._param_input("b2 (Branch)")
-        foliage_b1 = self._param_input("b1 (Foliage)")
-        foliage_b2 = self._param_input("b2 (Foliage)")
-        crown_b1 = self._param_input("b1 (Crown)")
-        crown_b2 = self._param_input("b2 (Crown)")
-        stem_b1 = self._param_input("b1 (Stem)")
-        stem_b2 = self._param_input("b2 (Stem)")
-        total_b1 = self._param_input("b1 (Total)")
-        total_b2 = self._param_input("b2 (Total)")
-
+        wood_b1 = self._param_input("b1")
+        wood_b2 = self._param_input("b2")
+        bark_b1 = self._param_input("b1")
+        bark_b2 = self._param_input("b2")
+        branch_b1 = self._param_input("b1")
+        branch_b2 = self._param_input("b2")
+        foliage_b1 = self._param_input("b1")
+        foliage_b2 = self._param_input("b2")
+        crown_b1 = self._param_input("b1")
+        crown_b2 = self._param_input("b2")
+        stem_b1 = self._param_input("b1")
+        stem_b2 = self._param_input("b2")
+        total_b1 = self._param_input("b1")
+        total_b2 = self._param_input("b2")
+    
         # DBH+Height-based parameters (b1, b2, b3)
-        wood_b3 = self._param_input("b3 (Wood)")
-        bark_b3 = self._param_input("b3 (Bark)")
-        branch_b3 = self._param_input("b3 (Branch)")
-        foliage_b3 = self._param_input("b3 (Foliage)")
-        crown_b3 = self._param_input("b3 (Crown)")
-        stem_b3 = self._param_input("b3 (Stem)")
-        total_b3 = self._param_input("b3 (Total)")
+        wood_b3 = self._param_input("b3")
+        bark_b3 = self._param_input("b3")
+        branch_b3 = self._param_input("b3")
+        foliage_b3 = self._param_input("b3")
+        crown_b3 = self._param_input("b3")
+        stem_b3 = self._param_input("b3")
+        total_b3 = self._param_input("b3")
 
         # Store references for dynamic visibility
         self.param_controls = {
@@ -544,11 +546,69 @@ class Create_Species_View:
 
     def _proceed_with_creation(self, e):
         """Proceed with species creation"""
+        
+        
         print("Proceeding with species creation...")
         self._close_dialog(e)
         # Call the original controller submit method
         self._controller.handle_submit(None)
+        print("Species creation process initiated.")
+        # get the values from the form and process them as needed
+        print(self.current_equation_type)
+        # get the parameter values
+        # print(self.param_controls.get("DBH-based").get("Wood")[0].value)
+        components = self._get_current_selected_components()
+        print("Selected Components for JSON:")
+        print(components)
+        
+        if self.current_equation_type == "DBH-based":
+            #update the data_to_be_inserted_into_json dictionary
+            
+            data_to_be_inserted_into_json = self._collect_parameter_data(components)
+            print("Data to be inserted into JSON:")
+            print(data_to_be_inserted_into_json)
+        else:
+            data_to_be_inserted_into_json = self._collect_parameter_data(components)
+            print("Data to be inserted into JSON:")
+            print(data_to_be_inserted_into_json)  
+            
+                # print(param.value)
+        # insert the data into the json called storage/created_species.json
+        # insert
+        
+        created_species_json = json.loads(open("data/create_species.json").read())
+        created_species_json.append({"SpeciesCode": int(self._controller.species_code_control.value),
+            **data_to_be_inserted_into_json})
+        with open("data/create_species.json", "w") as f:
+            json.dump(created_species_json, f, indent=4)
+            print("Species data inserted into JSON file successfully.")
 
+    def _get_equation_prefix(self, equation_type):
+        return "bh" if equation_type == "DBH + Height-based" else "b"
+    def _collect_parameter_data(self, components):
+        # Select b for DBH + Height-based
+        # Select bh for DBH-Based (Look at the tree_paramaters json for reference)
+        data_to_be_inserted_into_json = {"Origin": self._controller.origin_control.value,}
+        
+        
+        prefix = self._get_equation_prefix(self.current_equation_type)
+
+        param_label  = ["b1", "b2", "b3"]
+        print(components)
+        print("Collecting parameter data...")
+        for component in components:
+            for param in self.param_controls.get(self.current_equation_type).get(component):
+                if prefix == "bh":
+                    for _,index in param_label[0:len(param_label)]:    
+                        
+                        data_to_be_inserted_into_json[f"{prefix}{component.lower()}{index}"] = float(param.value)
+                else:
+                    for _,index in param_label[0:len(param_label)-1]:
+            
+                        data_to_be_inserted_into_json[f"{prefix}{component.lower()}{index}"] = float(param.value)                    
+           
+        return data_to_be_inserted_into_json
+    
     def _create_submit_button(self, page: ft.Page):
         """Creates the submit button, linked to the confirmation dialog."""
         return ft.Row(

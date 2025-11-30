@@ -12,10 +12,11 @@ from widgets.Select_Components_Widget import Select_Components_Widget
 from widgets.Equation_Type_Card import Equation_Type_Card
 from data.components_data import COMPONENTS_DATA
 from widgets.Calculate_Biomass_Button import Calculate_Biomass_Button
+from widgets.Bar_Chart_Widget import Bar_Chart_Widget
 
 class Calculate_Biomass_View:
     def __init__(self, controller, page: ft.Page, selected_file_path):
-        
+        self.data=None
         self.controller = controller
         self.page = page  # Initialize page reference
         self.is_button_disabled = False
@@ -275,13 +276,28 @@ class Calculate_Biomass_View:
             horizontal_alignment=ft.CrossAxisAlignment.CENTER,
             expand=True
         )
-
+    def _on_view_chart_click(self, e):
+        """Handle View Chart button click - delegate to controller."""
+        print("View Chart button clicked")
+        species_data = self.controller._click_on_show_chart_button()
+        self._show_biomass_chart(species_data)
+        
+        
+    def _show_biomass_chart(self, species_data):
+        """Show biomass chart - delegate to controller."""
+        chart = Bar_Chart_Widget(self.page, species_data=species_data).build()
+        self.page.overlay.append(chart)
+        self.page.update()
+        
+    
+        
     def _create_results_table(self) -> ft.Container:
         """Create a table to display biomass results from JSON data."""
         # Load data from JSON file
         try:
             with open('storage/biomass_results.json', 'r') as f:
                 data = json.load(f)
+                self.data = data
         except FileNotFoundError:
             # Return empty container if file doesn't exist
             return ft.Container(
@@ -340,6 +356,19 @@ class Calculate_Biomass_View:
             show_checkbox_column=False,
         )
         
+        # Create View Chart button
+        view_chart_button = ft.ElevatedButton(
+            text="View Chart",
+            icon=ft.Icons.BAR_CHART,
+            bgcolor=ft.Colors.BLUE_700,
+            color=ft.Colors.WHITE,
+            on_click= lambda e: self._on_view_chart_click(e),  # You'll need to implement this method
+            style=ft.ButtonStyle(
+                shape=ft.RoundedRectangleBorder(radius=ft.border_radius.all(10)),
+                padding=ft.padding.symmetric(horizontal=20, vertical=10)
+            )
+        )
+        
         # Create export button
         export_button = ft.ElevatedButton(
             text="Export to TXT",
@@ -377,7 +406,10 @@ class Calculate_Biomass_View:
             content=ft.Column([
                 ft.Row([
                     TitleTextWidget("Calculated Biomass Results Table"),
-                    export_button
+                    ft.Row([
+                        view_chart_button,  # View Chart button on the left
+                        export_button      # Export to TXT button on the right
+                    ])
                 ], alignment=ft.MainAxisAlignment.SPACE_BETWEEN),
                 ft.Container(
                     content=ft.Column(
