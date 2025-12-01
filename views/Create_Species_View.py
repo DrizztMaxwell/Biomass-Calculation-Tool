@@ -1,6 +1,8 @@
 import json
 from sys import prefix
 import flet as ft
+import pandas as pd
+from widgets.Custom_Alert_Dialog import Custom_Alert_Dialog
 from widgets.Create_Label_With_Icon import Create_Label_With_Icon
 from widgets.TitleTextWidget import TitleTextWidget
 from widgets.DescriptionText import DescriptionText
@@ -12,7 +14,8 @@ from widgets.Create_Title_And_Description_Widget import Create_Title_And_Descrip
 class Create_Species_View:
     """The main application form, responsible for assembling the UI controls."""
     
-    def __init__(self, controller: Create_Species_Controller):
+    def __init__(self, page:ft.Page, controller: Create_Species_Controller):
+        self.page = page
         self._controller = controller
         self.selected_components_text = ft.Text(
             value="",
@@ -510,7 +513,7 @@ class Create_Species_View:
                 ft.TextButton("Cancel", on_click=self._close_dialog),
                 ft.ElevatedButton(
                     "Proceed", 
-                    on_click=self._proceed_with_creation,
+                    on_click=self._handle_create_species_button_click,
                     bgcolor=ft.Colors.GREEN_700,
                     color=ft.Colors.WHITE
                 ),
@@ -543,7 +546,35 @@ class Create_Species_View:
             if self.page_ref:
                 self.page_ref.update()
             print("Dialog closed")
-
+    
+    def _handle_create_species_button_click(self, e):
+        """Handle Create Species button click - show confirmation dialog."""
+     
+        does_species_code_exist_in_tree_parameters = self._does_species_code_exist_within_dataset(int(self._controller.species_code_control.value), "data/treeparameters.json")
+        if does_species_code_exist_in_tree_parameters:
+            Custom_Alert_Dialog(self.page, title_icon=ft.Icons.ERROR_OUTLINE, title_color=ft.Colors.RED_700, title_icon_color=ft.Colors.RED, title="Error", message="Species Code already exists in tree_parameters.json.", solution="Please use a different code.").show()
+            return
+        
+        does_species_code_exist_in_created_species = self._does_species_code_exist_within_dataset(int(self._controller.species_code_control.value), "data/create_species.json")
+        if does_species_code_exist_in_created_species:
+            Custom_Alert_Dialog(self.page, title_icon=ft.Icons.ERROR_OUTLINE, title_color=ft.Colors.RED_700, title_icon_color=ft.Colors.RED, title="Error", message="User has already created a species with this code.", solution="Please use a different code.").show()
+            return
+        
+        # If everything checks out then proceed
+        self._proceed_with_creation(e)
+       
+    
+    def _does_species_code_exist_within_dataset(self, species_code: int, json_file_path: str) -> bool:
+        """Check if the species code already exists in the given JSON dataset."""
+        try:
+            data_set = pd.read_json(json_file_path)
+            if 'SpeciesCode' in data_set.columns:
+                return species_code in data_set['SpeciesCode'].values
+            return False
+        except Exception as e:
+            print(f"Error reading JSON file: {e}")
+            return False
+   
     def _proceed_with_creation(self, e):
         """Proceed with species creation"""
         
@@ -582,6 +613,7 @@ class Create_Species_View:
         with open("data/create_species.json", "w") as f:
             json.dump(created_species_json, f, indent=4)
             print("Species data inserted into JSON file successfully.")
+            display_alert = Custom_Alert_Dialog(self.page, title_icon=ft.Icons.CHECK_CIRCLE_OUTLINED, title_color=ft.Colors.GREEN_700, title_icon_color=ft.Colors.GREEN, title="Success",  message="Species created successfully!").show()
 
     def _get_equation_prefix(self, equation_type):
         return "bh" if equation_type == "DBH + Height-based" else "b"

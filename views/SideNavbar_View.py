@@ -44,7 +44,7 @@ class SideNavbar_View:
         # Now set the controller reference in the view
         
         self.create_species_controller = Create_Species_Controller()
-        self.add_species_form = Create_Species_View(self.create_species_controller)
+        self.add_species_form = Create_Species_View(self.page, self.create_species_controller)
         
         self.is_data_imported = False
         self.select_data_view = Select_Data_View(page=self.page, controller=None)
