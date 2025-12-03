@@ -5,6 +5,7 @@ import os
 from widgets.Equation_Card_Description_Text import Equation_Card_Description_Text
 from widgets.Equation_Card_Formula_Text import Equation_Card_Formula_Text
 from widgets.Equation_Card_Title_Text import Equation_Card_Title_Text
+from widgets.Hardwood_or_Softwood_Dialog import HardwoodOrSoftwoodDialog
 from widgets.Loading_Spinner_Widget import Loading_Spinner_Widget
 from widgets.TitleTextWidget import TitleTextWidget
 from widgets.DescriptionText import DescriptionText
@@ -25,7 +26,7 @@ class Calculate_Biomass_View:
                     is_disabled=self.is_button_disabled
                 )
         print("Calculate_Biomass_View initialized")
-        
+        self.hardwood_softwood_dialog = None
         self.selected_components_text = ft.Text(
             value="",
             color=ft.Colors.BLACK,
@@ -122,7 +123,14 @@ class Calculate_Biomass_View:
             selected_card_component=self.selected_components_text,
             components_data=COMPONENTS_DATA
         )
-    
+    async def show_species_code_dialog(self, missing_species_codes):
+        """Show dialog to select hardwood or softwood for missing species codes."""
+        self.hardwood_softwood_dialog = HardwoodOrSoftwoodDialog(self.page, missing_species_codes)
+        
+        # Show dialog and wait for result
+        result = await self.hardwood_softwood_dialog.show_species_code_dialog()
+        return result
+
     def _generate_filename(self):
         
         """Generate filename with date and time prefix."""
@@ -217,7 +225,17 @@ class Calculate_Biomass_View:
         # Call controller method
         await loading_spinner.simulate_progressive_loading(0.0, 0.2, 0.1, "Beginning Calculation...")
         
-        self.controller.calculate_biomass()
+        did_it_calculate = await self.controller.calculate_biomass()
+        if not did_it_calculate:
+            # Re-enable button
+            self.calculate_biomass_button.is_disabled = False
+            e.control.bgcolor = ft.Colors.GREEN_700
+            e.control.color = ft.Colors.WHITE
+            e.control.disabled = False
+            e.control.update()
+            loading_spinner.hide()
+            return  # Exit if calculation did not complete successfully
+        
         await loading_spinner.simulate_progressive_loading(1.0, 1.0, 0.1, "Completed...")
         loading_spinner.hide()
         
@@ -276,11 +294,18 @@ class Calculate_Biomass_View:
             horizontal_alignment=ft.CrossAxisAlignment.CENTER,
             expand=True
         )
-    def _on_view_chart_click(self, e):
+    async def _on_view_chart_click(self, e):
         """Handle View Chart button click - delegate to controller."""
         print("View Chart button clicked")
+        loading_spinner = Loading_Spinner_Widget(self.page)
+        loading_spinner.show_dialog()
+        await loading_spinner.simulate_progressive_loading(0.0, 0.2, 0.1, "Preparing Chart...")
         species_data = self.controller._click_on_show_chart_button()
+      
+        
         self._show_biomass_chart(species_data)
+        await loading_spinner.simulate_progressive_loading(1.0, 1.0, 0.1, "Completed...")
+        loading_spinner.hide()
         
         
     def _show_biomass_chart(self, species_data):
@@ -362,7 +387,7 @@ class Calculate_Biomass_View:
             icon=ft.Icons.BAR_CHART,
             bgcolor=ft.Colors.BLUE_700,
             color=ft.Colors.WHITE,
-            on_click= lambda e: self._on_view_chart_click(e),  # You'll need to implement this method
+            on_click= lambda e: self.page.run_task(self._on_view_chart_click, e),  # You'll need to implement this method
             style=ft.ButtonStyle(
                 shape=ft.RoundedRectangleBorder(radius=ft.border_radius.all(10)),
                 padding=ft.padding.symmetric(horizontal=20, vertical=10)

@@ -15,7 +15,8 @@ class Bar_Chart_Widget(ft.BarChart):
         self.confirmation_container_ref = ft.Ref[ft.Container]()
         self.species_data = species_data
         
-        self.pending_image_data = None
+        # Track if we've saved a screenshot
+        self.has_saved = False
         
     def _calculate_max_y(self) -> float:
         """Calculate maximum Y value for the chart with some padding."""
@@ -37,19 +38,85 @@ class Bar_Chart_Widget(ft.BarChart):
         
     def _on_close(self, e):
         print("Closing Bar Chart Widget")
-       
         self.page.overlay.pop()
         self.page.update()
-    
-    def _on_save_result(self, e: ft.FilePickerResultEvent):
-        print(e)
-        # save the bar chart as PNG
-        #random name for file name 
-        from datetime import datetime
-        date_and_time_stamp = datetime.now().strftime("%Y%m%d%H%M%S")
+        
+    def _update_confirmation_display(self):
+        """Update the confirmation text container."""
+        if hasattr(self, 'confirmation_container_ref') and self.confirmation_container_ref.current:
+            # Update existing container
+            self.confirmation_container_ref.current.content = ft.Row(
+                controls=[
+                    ft.Icon(ft.Icons.CHECK_CIRCLE, color=ft.Colors.GREEN, size=20),
+                    ft.Text(" Successfully saved to: ", size=14, color=ft.Colors.BLACK),
+                    ft.Text(f"{self.file_path_of_saved_chart_image}", 
+                           size=14, 
+                           color=ft.Colors.BLUE, 
+                           weight=ft.FontWeight.BOLD,
+                           selectable=True)  # Added selectable so user can copy the path
+                ]
+            )
+            self.confirmation_container_ref.current.bgcolor = ft.Colors.LIGHT_GREEN_100
+            self.confirmation_container_ref.current.padding = 15
+            self.confirmation_container_ref.current.border_radius = ft.border_radius.all(10)
+            self.confirmation_container_ref.current.border = ft.border.all(2, ft.Colors.GREEN_300)
+            self.confirmation_container_ref.current.visible = True
+            self.confirmation_container_ref.current.opacity = 1
+            
+    def _on_save_result(self, e):
+        print("Save button clicked")
+        
+        # Generate timestamp for filename
+        date_and_time_stamp = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
         self.file_path_of_saved_chart_image = f"screenshots/screenshot_chart_{date_and_time_stamp}.png"
-        pyautogui.screenshot(self.file_path_of_saved_chart_image)
-        self.page.update()
+        
+        # Take screenshot
+        try:
+            # Ensure screenshots directory exists
+            import os
+            os.makedirs("screenshots", exist_ok=True)
+            
+            pyautogui.screenshot(self.file_path_of_saved_chart_image)
+            print(f"Screenshot saved to: {self.file_path_of_saved_chart_image}")
+            
+            # Mark as saved
+            self.has_saved = True
+            
+            # Update the confirmation container
+            self._update_confirmation_display()
+            
+            # Force UI update
+            if hasattr(self, 'card_ref') and self.card_ref.current:
+                self.card_ref.current.update()
+            
+            # Also update the page
+            self.page.update()
+            
+            # Show success snackbar
+            self.page.snack_bar = ft.SnackBar(
+                content=ft.Row([
+                    ft.Icon(ft.Icons.CHECK_CIRCLE, color=ft.Colors.WHITE),
+                    ft.Text("Chart saved successfully!", color=ft.Colors.WHITE)
+                ]),
+                bgcolor=ft.Colors.GREEN,
+                duration=3000
+            )
+            self.page.snack_bar.open = True
+            self.page.update()
+            
+        except Exception as ex:
+            print(f"Error saving screenshot: {str(ex)}")
+            # Show error message
+            self.page.snack_bar = ft.SnackBar(
+                content=ft.Row([
+                    ft.Icon(ft.Icons.ERROR, color=ft.Colors.WHITE),
+                    ft.Text(f"Error saving screenshot: {str(ex)}", color=ft.Colors.WHITE)
+                ]),
+                bgcolor=ft.Colors.RED,
+                duration=5000
+            )
+            self.page.snack_bar.open = True
+            self.page.update()
         
     def build(self):
         # Stacked bar chart data for different species components
@@ -102,7 +169,7 @@ class Bar_Chart_Widget(ft.BarChart):
             )
         
         # Calculate chart width - reduce spacing between bars
-        chart_width = max(600, len(species_data) * 40)  # Reduced from 60 to 40 pixels per species
+        chart_width = max(600, len(species_data) * 40)
         
         # Create the bar chart with proper spacing
         bar_chart = ft.BarChart(
@@ -123,12 +190,12 @@ class Bar_Chart_Widget(ft.BarChart):
                         label=ft.Text(
                             species_info["species_code"], 
                             color=ft.Colors.BLACK, 
-                            size=12,  # Increased font size
+                            size=12,
                             weight=ft.FontWeight.NORMAL
                         )
                     ) for i, species_info in enumerate(species_data)
                 ],
-                labels_size=30,  # Reduced from 50 to reduce padding
+                labels_size=30,
                 title_size=16,
             ),
             horizontal_grid_lines=ft.ChartGridLines(
@@ -141,8 +208,7 @@ class Bar_Chart_Widget(ft.BarChart):
             interactive=True,
             width=chart_width,
             height=350,
-            # Reduce spacing between groups
-            groups_space=50,  # Reduced space between bar groups
+            groups_space=50,
         )
         
         # Create scrollable container for the chart
@@ -159,6 +225,26 @@ class Bar_Chart_Widget(ft.BarChart):
             width=800,
             height=400,
             border=ft.border.all(1, ft.Colors.GREY_300),
+        )
+        
+        # Saved screenshot confirmation text - ALWAYS include this container
+        # But initially hide it with opacity=0
+        confirmation_container = ft.Container(
+            ref=self.confirmation_container_ref,
+            content=ft.Row(
+                controls=[
+                    ft.Icon(ft.Icons.CHECK_CIRCLE, color=ft.Colors.GREEN, size=20),
+                    ft.Text("Successfully saved to: ", size=14, color=ft.Colors.BLACK),
+                    ft.Text("", size=14, color=ft.Colors.BLUE, weight=ft.FontWeight.BOLD, selectable=True)
+                ]
+            ),
+            bgcolor=ft.Colors.LIGHT_GREEN_100,
+            padding=15,
+            border_radius=ft.border_radius.all(10),
+            border=ft.border.all(2, ft.Colors.GREEN_300),
+            visible=False,  # Initially hidden
+            opacity=0,  # Initially transparent
+            animate_opacity=300,  # Smooth fade animation
         )
         
         # Main card content
@@ -203,8 +289,11 @@ class Bar_Chart_Widget(ft.BarChart):
                     ft.Container(
                         margin=ft.margin.only(top=20),
                         content=ft.Column([
-                            ft.Text("Components Legend (Bottom to Top):", size=16, weight=ft.FontWeight.BOLD, color=ft.Colors.BLACK),
-                            ft.Row([  # Changed to Row for horizontal legend
+                            ft.Text("Components Legend (Bottom to Top):", 
+                                   size=16, 
+                                   weight=ft.FontWeight.BOLD, 
+                                   color=ft.Colors.BLACK),
+                            ft.Row([
                                 ft.Row([
                                     ft.Container(width=20, height=20, bgcolor=ft.Colors.AMBER, border_radius=5),
                                     ft.Text("Wood", size=12),
@@ -221,25 +310,16 @@ class Bar_Chart_Widget(ft.BarChart):
                                     ft.Container(width=20, height=20, bgcolor=ft.Colors.GREEN, border_radius=5),
                                     ft.Text("Foliage", size=12),
                                 ], spacing=5),
-                            ], spacing=20),  # Space between legend items
+                            ], spacing=20),
                         ]),
                     ),
                     
-                    # Saved screenshot confirmation text
-                    ft.Container(
-                        ref=self.confirmation_container_ref,
-                        bgcolor=ft.Colors.LIGHT_GREEN,
-                        padding=10,
-                        content=ft.Row(
-                            controls=[
-                                ft.Text("Chart saved as: ", size=12, color=ft.Colors.BLACK),
-                                ft.Text(f"{self.file_path_of_saved_chart_image}", size=12, color=ft.Colors.GREEN, weight=ft.FontWeight.BOLD)
-                            ]
-                        )
-                    ) if self.file_path_of_saved_chart_image!="" else ft.Container()
-                ])  # Close the main Column
-            )  # Close the Container
-        )  # Close the Card
+                    # Always include confirmation container (initially hidden)
+                    confirmation_container
+                    
+                ])
+            )
+        )
 
         # Centered container with black semi-transparent background
         return ft.Container(

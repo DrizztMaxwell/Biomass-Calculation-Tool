@@ -3,6 +3,7 @@ import sys
 import flet as ft
 from controller.Select_Data_Controller import Select_Data_Controller
 from views import Select_Data_View
+from views.Modify_Species_View import Modify_Species_View
 from views.Calculate_Biomass_View import  Calculate_Biomass_View
 from model.Calculate_Biomass_Model import Calculate_Biomass_Model
 from views.Create_Species_View import Create_Species_View
@@ -44,7 +45,8 @@ class SideNavbar_View:
         # Now set the controller reference in the view
         
         self.create_species_controller = Create_Species_Controller()
-        self.add_species_form = Create_Species_View(self.page, self.create_species_controller)
+        self.create_species_view = Create_Species_View(self.page, self.create_species_controller)
+        self.create_species_controller.view = self.create_species_view
         
         self.is_data_imported = False
         self.select_data_view = Select_Data_View(page=self.page, controller=None)
@@ -59,6 +61,8 @@ class SideNavbar_View:
         self.main_view.controller = self.main_controller
         self.main_view.selected_file_path = self.select_data_controller.selected_file_path
         self.main_view_content = self.main_controller.build()
+        
+        self.modify_species_view = None
         
         
         
@@ -116,7 +120,7 @@ class SideNavbar_View:
        
         elif page_name == "create_species":
             # Render Create Species page
-            create_species_content = self.add_species_form.build(page=self.page)
+            create_species_content = self.create_species_view.build()
             self.main_content_area.controls.append(create_species_content)
         elif page_name == "settings":
             # Render Settings page (placeholder)
@@ -130,6 +134,12 @@ class SideNavbar_View:
                     alignment=ft.alignment.center
                 )
             )
+        elif page_name == "modify_species":
+            # Render Modify Species page
+            self.modify_species_view = Modify_Species_View(self.page)
+            modify_species_content = self.modify_species_view.build()
+            self.main_content_area.controls.append(modify_species_content)
+            
         elif page_name == "select_data":
             # Pass the set_data_imported callback to the controller
             
@@ -233,10 +243,19 @@ class SideNavbar_View:
                     is_active=(self.active__nav_item == "create_species"),
                     on_click=lambda e: self.navigate_to_page("create_species"),
                     # Disabled until data is imported
-                    # enabled=self.data_imported,
-                                        enabled=True
+                    enabled=self.data_imported
 
                 ),
+                Display_Nav_Item(
+                    ft.Icons.EDIT,
+                    "Modify Species",
+                    is_expanded,
+                    is_active=(self.active__nav_item == "modify_species"),
+                    on_click=lambda e: self.navigate_to_page("modify_species"),
+                    # Disabled until data is imported
+                    enabled=self.data_imported
+                ),
+                
                 Display_Nav_Item(
                     ft.Icons.SETTINGS, 
                     "Settings", 

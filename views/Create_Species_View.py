@@ -2,6 +2,7 @@ import json
 from sys import prefix
 import flet as ft
 import pandas as pd
+from widgets.Create_Species_Preview_Modal import Create_Species_Preview_Modal
 from widgets.Custom_Alert_Dialog import Custom_Alert_Dialog
 from widgets.Create_Label_With_Icon import Create_Label_With_Icon
 from widgets.TitleTextWidget import TitleTextWidget
@@ -22,8 +23,6 @@ class Create_Species_View:
             color=ft.Colors.BLACK,
             weight=ft.FontWeight.W_500
         )
-        self.component_cards_row = ft.Row(wrap=True)
-        
         # Store parameter controls for dynamic visibility
         self.param_controls = {}
         self.parameters_section = None
@@ -34,23 +33,24 @@ class Create_Species_View:
         # Store references for dialog
         self.page_ref = None
         self.dialog = None
-    
-    # --- UI Creation Helpers ---
-    
+        self.error_messages = []
+        self.species_code_textfield = None
+        self.origin_dropdown = None
+        self.equation_type_dropdown = None
+        self.create_species_preview_modal = Create_Species_Preview_Modal(page,{}, callback=self._handle_create_species_button_click)
 
-    def _create_species_row(self):
+    def _create_species_metadata_row(self) -> ft.Row:
         """Creates the Code, Origin, and Equation Type row and stores controls in the controller."""
         
         # Species Code Control
-        species_code_control = ft.TextField(hint_text="ABC123")
-        self._controller.species_code_control = species_code_control # Store in controller
+        self.species_code_textfield = ft.TextField(hint_text="ABC123")
         species_code_form = ft.Column([
             Create_Label_With_Icon(label_text="Species Code", icon_src="./assets/images/key.png"),
-            species_code_control
+            self.species_code_textfield
         ])
 
         # Origin Dropdown Control
-        origin_control = ft.Dropdown(
+        self.origin_dropdown = ft.Dropdown(
             options=[
                 ft.dropdown.Option("Natural Stand"),
                 ft.dropdown.Option("Plantation"),
@@ -59,27 +59,26 @@ class Create_Species_View:
             content_padding=ft.padding.only(left=8, right=8),
             border_radius=5,
         )
-        self._controller.origin_control = origin_control # Store in controller
         origin_form = ft.Column([
             Create_Label_With_Icon(label_text="Select Origin", icon_src="./assets/images/origin.png"),
-            origin_control
+            self.origin_dropdown
         ])
 
         # Equation Type Dropdown Control
-        equation_type_control = ft.Dropdown(
+        self.equation_type_dropdown = ft.Dropdown(
             options=[
                 ft.dropdown.Option("DBH-based"),
                 ft.dropdown.Option("DBH + Height-based"),
             ],
-            value="DBH-based [Default]",
+            value="DBH-based",
             content_padding=ft.padding.only(left=8, right=8),
             border_radius=5,
             on_change=self._on_equation_type_change  # Add change handler
         )
-        self._controller.equation_type_control = equation_type_control # Store in controller
+        self._controller.equation_type_control = self.equation_type_dropdown # Store in controller
         equation_form = ft.Column([
             Create_Label_With_Icon(label_text="Equation Type", icon_src="./assets/images/calculating.png"),
-            equation_type_control
+            self.equation_type_dropdown
         ])
 
         return ft.Row(
@@ -255,21 +254,48 @@ class Create_Species_View:
         control = ft.TextField(
             label=label,
             value="0.00",
-            height=40,
-            content_padding=5,
+            height=50,
+            width=120,
+            text_size=14,
+            content_padding=ft.padding.symmetric(horizontal=12, vertical=8),
             border_radius=5,
             keyboard_type=ft.KeyboardType.NUMBER,
-            # Link on_change to the controller's validation method
-            on_change=self._controller.param_input_validation, 
-            error_text=None, 
-            max_lines=1
+            error_text=None,
+            max_lines=1,
+            text_align=ft.TextAlign.CENTER,
+            # Styling
+            bgcolor=ft.Colors.WHITE,
+           
+            border_color=ft.Colors.BLACK,
+            focused_border_color=ft.Colors.BLACK,
+            focused_border_width=2,
+            border_width=1,
+       
+            # Label styling
+            label_style=ft.TextStyle(
+                size=12,
+                weight=ft.FontWeight.W_500,
+                color=ft.Colors.BLACK87
+            ),
+            # Error styling
+            error_style=ft.TextStyle(
+                size=11,
+                color=ft.Colors.RED_600
+            ),
+            # Hint text
+            hint_text="0.00",
+            hint_style=ft.TextStyle(
+                size=13,
+                color=ft.Colors.GREY_500
+            ),
         )
+        
         # Store a reference to the Flet control in the Controller for state/validation access
-        self._controller.param_controls[label] = control
+        self.param_controls[label] = control
         return control
 
     def _create_parameters_section(self):
-        """Creates the parameter input fields section."""
+        """Creates the parameter input fields section with component labels."""
         self.no_parameters = ft.Text("No Components selected.")
         parameters_header = ft.Row([
             TitleTextWidget("Parameters"),
@@ -292,7 +318,7 @@ class Create_Species_View:
         stem_b2 = self._param_input("b2")
         total_b1 = self._param_input("b1")
         total_b2 = self._param_input("b2")
-    
+
         # DBH+Height-based parameters (b1, b2, b3)
         wood_b3 = self._param_input("b3")
         bark_b3 = self._param_input("b3")
@@ -301,6 +327,15 @@ class Create_Species_View:
         crown_b3 = self._param_input("b3")
         stem_b3 = self._param_input("b3")
         total_b3 = self._param_input("b3")
+
+        # Create component labels
+        wood_label = ft.Text("Wood", size=14, weight=ft.FontWeight.BOLD, color=ft.Colors.BLUE_GREY_800)
+        bark_label = ft.Text("Bark", size=14, weight=ft.FontWeight.BOLD, color=ft.Colors.BLUE_GREY_800)
+        branch_label = ft.Text("Branch", size=14, weight=ft.FontWeight.BOLD, color=ft.Colors.BLUE_GREY_800)
+        foliage_label = ft.Text("Foliage", size=14, weight=ft.FontWeight.BOLD, color=ft.Colors.BLUE_GREY_800)
+        crown_label = ft.Text("Crown", size=14, weight=ft.FontWeight.BOLD, color=ft.Colors.BLUE_GREY_800)
+        stem_label = ft.Text("Stem", size=14, weight=ft.FontWeight.BOLD, color=ft.Colors.BLUE_GREY_800)
+        total_label = ft.Text("Total", size=14, weight=ft.FontWeight.BOLD, color=ft.Colors.BLUE_GREY_800)
 
         # Store references for dynamic visibility
         self.param_controls = {
@@ -324,104 +359,116 @@ class Create_Species_View:
             }
         }
 
-        # Initially hide all parameters and show "no parameters" message
+        # Store label references for visibility control
+        self.param_labels = {
+            "Wood": wood_label,
+            "Bark": bark_label,
+            "Branch": branch_label,
+            "Foliage": foliage_label,
+            "Crown": crown_label,
+            "Stem": stem_label,
+            "Total": total_label
+        }
+
+        # Initially hide all parameters and labels
         for equation_type in self.param_controls.values():
             for component_params in equation_type.values():
                 for param in component_params:
                     param.visible = False
+        
+        for label in self.param_labels.values():
+            label.visible = False
 
         # Initially show "no parameters" message
         self.no_parameters.visible = True
 
-        # Create parameter rows with more spacing
-        parameters_row1 = ft.Row(
-            controls=[
+        # Create parameter rows with component labels and parameters
+        wood_section = ft.Column([
+            wood_label,
+            ft.Row([
                 ft.Container(content=wood_b1, expand=True),
                 ft.Container(content=wood_b2, expand=True),
                 ft.Container(content=wood_b3, expand=True),
-            ],
-            spacing=20
-        )
+            ], spacing=20)
+        ], spacing=10)
         
-        parameters_row2 = ft.Row(
-            controls=[
+        bark_section = ft.Column([
+            bark_label,
+            ft.Row([
                 ft.Container(content=bark_b1, expand=True),
                 ft.Container(content=bark_b2, expand=True),
                 ft.Container(content=bark_b3, expand=True),
-            ],
-            spacing=20
-        )
+            ], spacing=20)
+        ], spacing=10)
         
-        parameters_row3 = ft.Row(
-            controls=[
+        branch_section = ft.Column([
+            branch_label,
+            ft.Row([
                 ft.Container(content=branch_b1, expand=True),
                 ft.Container(content=branch_b2, expand=True),
                 ft.Container(content=branch_b3, expand=True),
-            ],
-            spacing=20
-        )
+            ], spacing=20)
+        ], spacing=10)
         
-        parameters_row4 = ft.Row(
-            controls=[
+        foliage_section = ft.Column([
+            foliage_label,
+            ft.Row([
                 ft.Container(content=foliage_b1, expand=True),
                 ft.Container(content=foliage_b2, expand=True),
                 ft.Container(content=foliage_b3, expand=True),
-            ],
-            spacing=20
-        )
+            ], spacing=20)
+        ], spacing=10)
         
-        parameters_row5 = ft.Row(
-            controls=[
+        crown_section = ft.Column([
+            crown_label,
+            ft.Row([
                 ft.Container(content=crown_b1, expand=True),
                 ft.Container(content=crown_b2, expand=True),
                 ft.Container(content=crown_b3, expand=True),
-            ],
-            spacing=20
-        )
+            ], spacing=20)
+        ], spacing=10)
         
-        parameters_row6 = ft.Row(
-            controls=[
+        stem_section = ft.Column([
+            stem_label,
+            ft.Row([
                 ft.Container(content=stem_b1, expand=True),
                 ft.Container(content=stem_b2, expand=True),
                 ft.Container(content=stem_b3, expand=True),
-            ],
-            spacing=20
-        )
+            ], spacing=20)
+        ], spacing=10)
         
-        parameters_row7 = ft.Row(
-            controls=[
+        total_section = ft.Column([
+            total_label,
+            ft.Row([
                 ft.Container(content=total_b1, expand=True),
                 ft.Container(content=total_b2, expand=True),
                 ft.Container(content=total_b3, expand=True),
-            ],
-            spacing=20
-        )
+            ], spacing=20)
+        ], spacing=10)
         
         return ft.Column(
             controls=[
                 parameters_header,
-                ft.Container(height=15),  # Extra space
-
-                # Fixed ternary operator - show "no parameters" text when no components selected
+                ft.Container(height=15),
                 self.no_parameters,
-
-                ft.Container(height=15),  # Extra space
-                parameters_row1,
-                ft.Container(height=10),  # Extra space between rows
-                parameters_row2,
-                ft.Container(height=10),
-                parameters_row3,
-                ft.Container(height=10),
-                parameters_row4,
-                ft.Container(height=10),
-                parameters_row5,
-                ft.Container(height=10),
-                parameters_row6,
-                ft.Container(height=10),
-                parameters_row7,
+                ft.Container(height=15),
+                wood_section,
+                ft.Container(height=15),
+                bark_section,
+                ft.Container(height=15),
+                branch_section,
+                ft.Container(height=15),
+                foliage_section,
+                ft.Container(height=15),
+                crown_section,
+                ft.Container(height=15),
+                stem_section,
+                ft.Container(height=15),
+                total_section,
             ],
             spacing=5
         )
+
     def update_parameters_visibility(self, selected_components):
         """Update parameter visibility based on selected components and equation type."""
         print(f"Updating parameters for: {selected_components} with equation: {self.current_equation_type}")
@@ -429,22 +476,29 @@ class Create_Species_View:
         # Determine which equation type to use
         equation_key = "DBH-based" if "DBH-based" in self.current_equation_type else "DBH + Height-based"
         
-        # Hide all parameters first
+        # Hide all parameters and labels first
         any_visible = False
         for equation_type in self.param_controls.values():
             for component_params in equation_type.values():
                 for param in component_params:
                     param.visible = False
         
-        # Show parameters for selected components based on equation type
+        for label in self.param_labels.values():
+            label.visible = False
+        
+        # Show parameters and labels for selected components based on equation type
         for component in selected_components:
             if component in self.param_controls[equation_key]:
+                # Show component label
+                if component in self.param_labels:
+                    self.param_labels[component].visible = True
+                
+                # Show parameters
                 for param in self.param_controls[equation_key][component]:
                     param.visible = True
                     any_visible = True
         
         # Update "no parameters" text visibility
-        # Show the text only if NO parameters are visible (no components selected)
         self.no_parameters.visible = not any_visible
         
         # Update the UI
@@ -465,97 +519,40 @@ class Create_Species_View:
         
         # Get parameter values
         param_values = {}
-        for param_name, control in self._controller.param_controls.items():
-            if hasattr(control, 'visible') and control.visible:
-                param_values[param_name] = control.value
-        
-        # Create dialog content
-        dialog_content = ft.Column(
-            controls=[
-                ft.Text("Confirm Species Creation", size=20, weight=ft.FontWeight.BOLD),
-                ft.Divider(height=20),
-                
-                ft.Text("Selected Components:", weight=ft.FontWeight.BOLD),
-                ft.Text(", ".join(selected_components) if selected_components else "No components selected"),
-                
-                ft.Divider(height=15),
-                
-                ft.Text("Equation Type:", weight=ft.FontWeight.BOLD),
-                ft.Text(equation_type),
-                
-                ft.Divider(height=15),
-                
-                ft.Text("Parameters:", weight=ft.FontWeight.BOLD),
-            ],
-            spacing=10,
-            scroll=ft.ScrollMode.AUTO
-        )
-        
-        # Add parameter values to dialog
-        for param_name, value in param_values.items():
-            dialog_content.controls.append(
-                ft.Row([
-                    ft.Text(f"{param_name}:", width=120),
-                    ft.Text(value or "0.00")
-                ])
-            )
-        
-        # If no parameters, show message
-        if not param_values:
-            dialog_content.controls.append(ft.Text("No parameters configured"))
-        
-        # Create dialog
-        self.dialog = ft.AlertDialog(
-            modal=True,
-            title=ft.Text("Confirm Species Creation"),
-            content=dialog_content,
-            actions=[
-                ft.TextButton("Cancel", on_click=self._close_dialog),
-                ft.ElevatedButton(
-                    "Proceed", 
-                    on_click=self._handle_create_species_button_click,
-                    bgcolor=ft.Colors.GREEN_700,
-                    color=ft.Colors.WHITE
-                ),
-            ],
-            actions_alignment=ft.MainAxisAlignment.END,
-        )
-        page.open(self.dialog)
-        # Open dialog - FIXED APPROACH
-        if self.page_ref:
-            self.page_ref.dialog = self.dialog
-            self.dialog.open = True
-            self.page_ref.update()
-            print("Dialog opened successfully")
-        else:
-            print("ERROR: page_ref is None - trying alternative approach")
-            # Alternative approach - get page from the event
-            try:
-                page = e.control.page
-                page.dialog = self.dialog
-                self.dialog.open = True
-                page.update()
-                print("Dialog opened via event approach")
-            except Exception as ex:
-                print(f"Failed to open dialog: {ex}")
 
-    def _close_dialog(self, e):
-        """Close the dialog"""
-        if self.dialog:
-            self.dialog.open = False
-            if self.page_ref:
-                self.page_ref.update()
-            print("Dialog closed")
-    
+
+
+        if equation_type in self.param_controls:
+            components = self.param_controls[equation_type]
+            for component_name, controls_list in components.items():
+                for control in controls_list:
+                    if control.visible:
+                        param_key = f"{equation_type}_{component_name}_{control.label}"
+                        param_values[param_key] = control.value
+                        print(f"Parameter {param_key}: {control.value}")
+        
+        if not self._controller._is_form_valid():
+            print("Form is not valid, cannot show preview modal.")
+            return
+        ###
+        self.create_species_preview_modal.species_data = {
+             "species_code": self.species_code_textfield.value,
+            "origin": self.origin_dropdown.value,
+            "equation_type": equation_type,
+            "selected_components": selected_components,
+            "parameters": param_values
+            } 
+        self.create_species_preview_modal.show()
+     
     def _handle_create_species_button_click(self, e):
         """Handle Create Species button click - show confirmation dialog."""
      
-        does_species_code_exist_in_tree_parameters = self._does_species_code_exist_within_dataset(int(self._controller.species_code_control.value), "data/treeparameters.json")
+        does_species_code_exist_in_tree_parameters = self._does_species_code_exist_within_dataset(int(self.species_code_textfield.value), "data/treeparameters.json")
         if does_species_code_exist_in_tree_parameters:
-            Custom_Alert_Dialog(self.page, title_icon=ft.Icons.ERROR_OUTLINE, title_color=ft.Colors.RED_700, title_icon_color=ft.Colors.RED, title="Error", message="Species Code already exists in tree_parameters.json.", solution="Please use a different code.").show()
+            Custom_Alert_Dialog(self.page, title_icon=ft.Icons.ERROR_OUTLINE, title_color=ft.Colors.RED_700, title_icon_color=ft.Colors.RED, title="Error", message="Species Code already exists in the Lamberts et al. (2005) dataset.", solution="Please use a different code.").show()
             return
         
-        does_species_code_exist_in_created_species = self._does_species_code_exist_within_dataset(int(self._controller.species_code_control.value), "data/create_species.json")
+        does_species_code_exist_in_created_species = self._does_species_code_exist_within_dataset(int(self.species_code_textfield.value), "data/create_species.json")
         if does_species_code_exist_in_created_species:
             Custom_Alert_Dialog(self.page, title_icon=ft.Icons.ERROR_OUTLINE, title_color=ft.Colors.RED_700, title_icon_color=ft.Colors.RED, title="Error", message="User has already created a species with this code.", solution="Please use a different code.").show()
             return
@@ -578,22 +575,9 @@ class Create_Species_View:
     def _proceed_with_creation(self, e):
         """Proceed with species creation"""
         
-        
-        print("Proceeding with species creation...")
-        self._close_dialog(e)
-        # Call the original controller submit method
-        self._controller.handle_submit(None)
-        print("Species creation process initiated.")
-        # get the values from the form and process them as needed
-        print(self.current_equation_type)
-        # get the parameter values
-        # print(self.param_controls.get("DBH-based").get("Wood")[0].value)
         components = self._get_current_selected_components()
-        print("Selected Components for JSON:")
-        print(components)
         
         if self.current_equation_type == "DBH-based":
-            #update the data_to_be_inserted_into_json dictionary
             
             data_to_be_inserted_into_json = self._collect_parameter_data(components)
             print("Data to be inserted into JSON:")
@@ -608,7 +592,7 @@ class Create_Species_View:
         # insert
         
         created_species_json = json.loads(open("data/create_species.json").read())
-        created_species_json.append({"SpeciesCode": int(self._controller.species_code_control.value),
+        created_species_json.append({"SpeciesCode": int(self.species_code_textfield.value),
             **data_to_be_inserted_into_json})
         with open("data/create_species.json", "w") as f:
             json.dump(created_species_json, f, indent=4)
@@ -620,7 +604,9 @@ class Create_Species_View:
     def _collect_parameter_data(self, components):
         # Select b for DBH + Height-based
         # Select bh for DBH-Based (Look at the tree_paramaters json for reference)
-        data_to_be_inserted_into_json = {"Origin": self._controller.origin_control.value,}
+        data_to_be_inserted_into_json = {"Origin": self.origin_dropdown.value, 
+                                         "EquationType": self.current_equation_type}
+        
         
         
         prefix = self._get_equation_prefix(self.current_equation_type)
@@ -665,30 +651,28 @@ class Create_Species_View:
         """Callback function when component selection changes"""
         self.update_parameters_visibility(selected_components)
 
-    def build(self, page=None):
+    def build(self)-> ft.Container:
         """Build the form and store page reference for dialogs"""
-        self.page_ref = page
-        self.component_cards_row = ft.Row(wrap=True)
         
-        # Create parameters section and store reference
+     
         self.parameters_section = self._create_parameters_section()
         
         return ft.Container(
-            expand=True,  # Expand to fill available space
-            alignment=ft.alignment.center,  # Center the content inside the container
+            expand=True,  
+            alignment=ft.alignment.center,
             content=ft.Container(
                 content=ft.Column(
                     controls=[
                         Create_Title_And_Description_Widget("Create Species", "Create a new species to add it in the program"),
                         ft.Divider(color=ft.Colors.GREY_300, height=30),  # More space
 
-                        self._create_species_row(),
-                        ft.Divider(height=30, color=ft.Colors.TRANSPARENT),  # More space
+                        self._create_species_metadata_row(),
+                        ft.Divider(height=30, color=ft.Colors.GREY_300),  # More space
                         
                         Select_Components_Widget(
                             title=TitleTextWidget("Select Tree Component"),
                             description_text=DescriptionText("Select tree components for biomass calculation"),
-                            components_card_row=self.component_cards_row,
+                            components_card_row=ft.Row(),
                             selected_card_component=self.selected_components_text,
                             components_data=COMPONENTS_DATA_2, # Pass the data,
                             displayButton=False,
@@ -697,10 +681,10 @@ class Create_Species_View:
                             is_alternate_card=True
                         ),
                         
-                        ft.Divider(height=30, color=ft.Colors.TRANSPARENT),  # More space
+                        ft.Divider(height=30, color=ft.Colors.GREY_300),  # More space
                         self.parameters_section,  # Use the stored reference
-                        ft.Divider(height=30, color=ft.Colors.TRANSPARENT),  # More space
-                        self._create_submit_button(page=page),
+                        ft.Divider(height=30, color=ft.Colors.GREY_300),  # More space
+                        self._create_submit_button(page=self.page),
                         ft.Container(height=20)  # Extra space at bottom
                     ],
                     scroll=ft.ScrollMode.AUTO,
