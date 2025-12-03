@@ -243,7 +243,7 @@ class SideNavbar_View:
                     is_active=(self.active__nav_item == "create_species"),
                     on_click=lambda e: self.navigate_to_page("create_species"),
                     # Disabled until data is imported
-                    enabled=self.data_imported
+                    enabled=True
 
                 ),
                 Display_Nav_Item(
@@ -253,7 +253,7 @@ class SideNavbar_View:
                     is_active=(self.active__nav_item == "modify_species"),
                     on_click=lambda e: self.navigate_to_page("modify_species"),
                     # Disabled until data is imported
-                    enabled=self.data_imported
+                    enabled=True
                 ),
                 
                 Display_Nav_Item(
@@ -263,7 +263,7 @@ class SideNavbar_View:
                     is_active=(self.active__nav_item == "settings"),
                     on_click=lambda e: self.navigate_to_page("settings"),
                     # Disabled until data is imported
-                    enabled=self.data_imported
+                    enabled=True
                 ),
                 Display_Nav_Item(
                     ft.Icons.EXIT_TO_APP, 
@@ -356,8 +356,8 @@ class SideNavbar_View:
        
       
         # Set initial page to Select Data
-        self.active__nav_item = "create_species"
-        self.navigate_to_page("create_species")
+        self.active__nav_item = "select_data"
+        self.navigate_to_page("select_data")
         
         self.page.add(ft.Row(
                 [
