@@ -344,12 +344,15 @@ class Modify_Species_View:
             equation_type = species.get("EquationType", "Height-based")
             
             # Determine equation type color
-            if equation_type == "Height-based":
-                eq_color = self.secondary_color
+            if equation_type == "DBH + Height-based":
+                eq_color = ft.Colors.GREEN
                 eq_icon = ft.Icons.TRENDING_UP
-            else:
-                eq_color = self.accent_color
+            elif equation_type == "DBH-based":
+                eq_color = ft.Colors.AMBER_700
                 eq_icon = ft.Icons.STRAIGHTEN
+            else:
+                eq_color = self.text_secondary  # Default for other types
+                eq_icon = ft.Icons.FUNCTIONS
             
             # Create row number with correct calculation
             row_number = (self.current_page - 1) * self.items_per_page + index + 1
@@ -390,6 +393,7 @@ class Modify_Species_View:
                     ft.DataCell(
                         ft.Row([
                             ft.Icon(eq_icon, size=16, color=eq_color),
+                            
                             ft.Text(equation_type, size=14, color=eq_color)
                         ], spacing=8)
                     ),
@@ -1652,11 +1656,11 @@ class Modify_Species_View:
             equation_type = species.get("EquationType", "Height-based")
             
             # Determine equation type color
-            if equation_type == "Height-based":
-                eq_color = self.secondary_color
+            if equation_type == "DBH + Height-based":
+                eq_color = ft.Colors.GREEN
                 eq_icon = ft.Icons.TRENDING_UP
             else:
-                eq_color = self.accent_color
+                eq_color = ft.Colors.AMBER_700
                 eq_icon = ft.Icons.STRAIGHTEN
             
             # Create row number with correct calculation
