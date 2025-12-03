@@ -119,212 +119,221 @@ class Bar_Chart_Widget(ft.BarChart):
             self.page.update()
         
     def build(self):
-        # Stacked bar chart data for different species components
-        species_data = self.species_data
-        max_y = self._calculate_max_y()
-        # Color scheme for different components
-        component_colors = {
-            "Bark": ft.Colors.BROWN,
-            "Branch": ft.Colors.ORANGE,
-            "Wood": ft.Colors.AMBER,
-            "Foliage": ft.Colors.GREEN,
-        }
-        
-        # Create bar groups for each species with proper stacking
-        bar_groups = []
-        print(species_data)
-        for i, (species_info) in enumerate(species_data):
-            # Stack order from bottom to top
-            stack_order = ["Wood", "Bark", "Branch", "Foliage"]
+            # Stacked bar chart data for different species components
+            species_data = self.species_data
+            max_y = self._calculate_max_y()
+            # Color scheme for different components
+            component_colors = {
+                "Bark": ft.Colors.BROWN,
+                "Branch": ft.Colors.ORANGE,
+                "Wood": ft.Colors.AMBER,
+                "Foliage": ft.Colors.GREEN,
+            }
             
-            # Create stacked rod items
-            stacked_items = []
-            cumulative = 0
-            
-            for component in stack_order:
-                value = species_info[component]
-                stacked_items.append(
-                    ft.BarChartRodStackItem(
-                        from_y=cumulative,
-                        to_y=cumulative + value,
-                        color=component_colors[component],
-                        border_side=ft.BorderSide(width=0, color=ft.Colors.WHITE),
+            # Create bar groups for each species with proper stacking
+            bar_groups = []
+            for i, (species_info) in enumerate(species_data):
+                # Stack order from bottom to top
+                stack_order = ["Wood", "Bark", "Branch", "Foliage"]
+                
+                # Create stacked rod items
+                stacked_items = []
+                cumulative = 0
+                
+                for component in stack_order:
+                    value = species_info[component]
+                    stacked_items.append(
+                        ft.BarChartRodStackItem(
+                            from_y=cumulative,
+                            to_y=cumulative + value,
+                            color=component_colors[component],
+                            border_side=ft.BorderSide(width=0.5, color=ft.Colors.WHITE70),
+                        )
+                    )
+                    cumulative += value
+                
+                bar_groups.append(
+                    ft.BarChartGroup(
+                        x=i,
+                        bar_rods=[
+                            ft.BarChartRod(
+                                from_y=0,
+                                to_y=cumulative,
+                                width=15, # Reduced Rod Width
+                                border_radius=0,
+                                rod_stack_items=stacked_items,
+                            )
+                        ],
                     )
                 )
-                cumulative += value
             
-            bar_groups.append(
-                ft.BarChartGroup(
-                    x=i,
-                    bar_rods=[
-                        ft.BarChartRod(
-                            from_y=0,
-                            to_y=cumulative,
-                            width=25,
-                            border_radius=0,
-                            rod_stack_items=stacked_items,
+            # Calculate chart width - adjusted multiplier for thinner rods
+            chart_width = max(600, len(species_data) * 25) 
+            
+            # Create the bar chart
+            # Create the bar chart
+            bar_chart = ft.BarChart(
+                bar_groups=bar_groups,
+                border=ft.border.all(1, ft.Colors.GREY_400),
+                bgcolor=ft.Colors.WHITE,
+                
+               
+                left_axis=ft.ChartAxis(
+                    title=ft.Text("Biomass (KG)", color=ft.Colors.BLACK87, size=13, weight=ft.FontWeight.BOLD),
+                    labels_size=70, # More space for Y-axis labels to prevent cutoff
+                    title_size=16,
+                    show_labels=True,
+                ),
+                
+                # --- Bottom Axis Fixes (Increased labels_size, smaller font) ---
+                bottom_axis=ft.ChartAxis(
+                    title=ft.Text("Species Code", color=ft.Colors.BLACK87, size=13, weight=ft.FontWeight.BOLD),
+                    labels=[
+                        ft.ChartAxisLabel(
+                            value=i, 
+                            label=ft.Text(
+                                species_info["species_code"], 
+                                color=ft.Colors.BLACK87, 
+                                size=10, # Readable label font
+                                weight=ft.FontWeight.W_500
+                            )
+                        ) for i, species_info in enumerate(species_data)
+                    ],
+                    labels_size=40, # More space for bottom labels
+                    title_size=16,
+                ),
+                
+                horizontal_grid_lines=ft.ChartGridLines(
+                    color=ft.Colors.GREY_300,
+                    width=1,
+                    dash_pattern=[5, 5],
+                ),
+                max_y=max_y,
+                min_y=0,
+                interactive=True,
+                width=chart_width,
+                height=400, # Increased height for better visibility
+                groups_space=25, # More space between groups
+            )
+            
+            # Create scrollable container for the chart
+            scrollable_chart_container = ft.Container(
+                content=ft.Column(
+                    [
+                        ft.Container(
+                            padding=10,
+                            content=bar_chart,
+                            width=chart_width,
+                         
                         )
                     ],
+                    scroll=ft.ScrollMode.ADAPTIVE,
+                ),
+                width=800,
+                height=500, # Reduced Container Height
+                border=ft.border.all(1, ft.Colors.GREY_300),
+            )
+            
+            # Saved screenshot confirmation text (with top margin)
+            confirmation_container = ft.Container(
+                ref=self.confirmation_container_ref,
+                margin=ft.margin.only(top=20), # Added top margin
+                content=ft.Row(
+                    controls=[
+                        ft.Icon(ft.Icons.CHECK_CIRCLE, color=ft.Colors.GREEN, size=18),
+                        ft.Text("Chart image saved to:", size=13, color=ft.Colors.BLACK), # Simplified text
+                        ft.Text("", size=13, color=ft.Colors.BLUE, weight=ft.FontWeight.BOLD, selectable=True)
+                    ]
+                ),
+                bgcolor=ft.Colors.LIGHT_GREEN_50,
+                padding=10,
+                border_radius=ft.border_radius.all(8),
+                border=ft.border.all(1, ft.Colors.GREEN_300),
+                visible=False,
+                opacity=0,
+                animate_opacity=300,
+            )
+            
+            # Main card content
+            card = ft.Card(
+                
+                ref=self.card_ref,
+                elevation=20,
+                content=ft.Container(
+                    border_radius=ft.border_radius.all(15),
+                    width=800, 
+                    height=900,
+                    bgcolor=ft.Colors.WHITE,
+                    padding=30,
+                    content=ft.Column([
+                        # Header
+                        ft.Row([
+                            ft.Text(
+                                "Biomass by Species Components",
+                                size=20,
+                                weight=ft.FontWeight.BOLD,
+                                color=ft.Colors.BLACK87,
+                                expand=True,
+                            ),
+                            # Save button
+                            ft.IconButton(
+                                icon=ft.Icons.SAVE_ALT,
+                                icon_color=ft.Colors.BLUE_GREY_700,
+                                tooltip="Save as PNG",
+                                on_click=self._on_save_result,
+                            ),
+                            # Close button
+                            ft.IconButton(
+                                icon=ft.Icons.CANCEL,
+                                icon_color=ft.Colors.RED_ACCENT_700,
+                                tooltip="Close",
+                                on_click=self._on_close
+                            ),
+                        ]),
+                        
+                        # Scrollable chart container
+                        scrollable_chart_container,
+                        
+                        # Legend
+                        ft.Container(
+                            margin=ft.margin.only(top=20),
+                            content=ft.Column([
+                                ft.Text("Components Legend (Bottom to Top):", 
+                                    size=14, 
+                                    weight=ft.FontWeight.BOLD, 
+                                    color=ft.Colors.BLACK54),
+                                ft.Row([
+                                    ft.Row([
+                                        ft.Container(width=15, height=15, bgcolor=ft.Colors.AMBER, border_radius=3),
+                                        ft.Text("Wood", size=11),
+                                    ], spacing=3),
+                                    ft.Row([
+                                        ft.Container(width=15, height=15, bgcolor=ft.Colors.BROWN, border_radius=3),
+                                        ft.Text("Bark", size=11),
+                                    ], spacing=3),
+                                    ft.Row([
+                                        ft.Container(width=15, height=15, bgcolor=ft.Colors.ORANGE, border_radius=3),
+                                        ft.Text("Branch", size=11),
+                                    ], spacing=3),
+                                    ft.Row([
+                                        ft.Container(width=15, height=15, bgcolor=ft.Colors.GREEN, border_radius=3),
+                                        ft.Text("Foliage", size=11),
+                                    ], spacing=3),
+                                ], spacing=15),
+                            ], spacing=10),
+                        ),
+                        
+                        # Confirmation container
+                        confirmation_container
+                        
+                    ])
                 )
             )
-        
-        # Calculate chart width - reduce spacing between bars
-        chart_width = max(600, len(species_data) * 40)
-        
-        # Create the bar chart with proper spacing
-        bar_chart = ft.BarChart(
-            bar_groups=bar_groups,
-            border=ft.border.all(1, ft.Colors.GREY_400),
-            bgcolor=ft.Colors.WHITE,
-            left_axis=ft.ChartAxis(
-                title=ft.Text("Calculated Biomass (KG)", color=ft.Colors.BLACK),
-                labels_size=40,
-                labels_interval=max_y / 10 if max_y else 1,
-                title_size=16,
-            ),
-            bottom_axis=ft.ChartAxis(
-                title=ft.Text("Species", color=ft.Colors.BLACK),
-                labels=[
-                    ft.ChartAxisLabel(
-                        value=i, 
-                        label=ft.Text(
-                            species_info["species_code"], 
-                            color=ft.Colors.BLACK, 
-                            size=12,
-                            weight=ft.FontWeight.NORMAL
-                        )
-                    ) for i, species_info in enumerate(species_data)
-                ],
-                labels_size=30,
-                title_size=16,
-            ),
-            horizontal_grid_lines=ft.ChartGridLines(
-                color=ft.Colors.GREY_300,
-                width=1,
-                dash_pattern=[5, 5],
-            ),
-            max_y=max_y,
-            min_y=0,
-            interactive=True,
-            width=chart_width,
-            height=350,
-            groups_space=50,
-        )
-        
-        # Create scrollable container for the chart
-        scrollable_chart_container = ft.Container(
-            content=ft.Column(
-                [
-                    ft.Container(
-                        content=bar_chart,
-                        width=chart_width,
-                    )
-                ],
-                scroll=ft.ScrollMode.ADAPTIVE,
-            ),
-            width=800,
-            height=400,
-            border=ft.border.all(1, ft.Colors.GREY_300),
-        )
-        
-        # Saved screenshot confirmation text - ALWAYS include this container
-        # But initially hide it with opacity=0
-        confirmation_container = ft.Container(
-            ref=self.confirmation_container_ref,
-            content=ft.Row(
-                controls=[
-                    ft.Icon(ft.Icons.CHECK_CIRCLE, color=ft.Colors.GREEN, size=20),
-                    ft.Text("Successfully saved to: ", size=14, color=ft.Colors.BLACK),
-                    ft.Text("", size=14, color=ft.Colors.BLUE, weight=ft.FontWeight.BOLD, selectable=True)
-                ]
-            ),
-            bgcolor=ft.Colors.LIGHT_GREEN_100,
-            padding=15,
-            border_radius=ft.border_radius.all(10),
-            border=ft.border.all(2, ft.Colors.GREEN_300),
-            visible=False,  # Initially hidden
-            opacity=0,  # Initially transparent
-            animate_opacity=300,  # Smooth fade animation
-        )
-        
-        # Main card content
-        card = ft.Card(
-            ref=self.card_ref,
-            elevation=20,
-            content=ft.Container(
-                width=800,
-                height=700,
-                bgcolor=ft.Colors.WHITE,
-                padding=30,
-                content=ft.Column([
-                    # Header with title and buttons
-                    ft.Row([
-                        ft.Text(
-                            "Biomass Analysis by Species",
-                            size=24,
-                            weight=ft.FontWeight.BOLD,
-                            color=ft.Colors.BLACK,
-                            expand=True,
-                        ),
-                        # Save button
-                        ft.IconButton(
-                            icon=ft.Icons.SAVE,
-                            icon_color=ft.Colors.BLUE,
-                            tooltip="Save as PNG",
-                            on_click=self._on_save_result,
-                        ),
-                        # Close button
-                        ft.IconButton(
-                            icon=ft.Icons.CLOSE,
-                            icon_color=ft.Colors.RED,
-                            tooltip="Close",
-                            on_click=self._on_close
-                        ),
-                    ]),
-                    
-                    # Scrollable chart container
-                    scrollable_chart_container,
-                    
-                    # Legend
-                    ft.Container(
-                        margin=ft.margin.only(top=20),
-                        content=ft.Column([
-                            ft.Text("Components Legend (Bottom to Top):", 
-                                   size=16, 
-                                   weight=ft.FontWeight.BOLD, 
-                                   color=ft.Colors.BLACK),
-                            ft.Row([
-                                ft.Row([
-                                    ft.Container(width=20, height=20, bgcolor=ft.Colors.AMBER, border_radius=5),
-                                    ft.Text("Wood", size=12),
-                                ], spacing=5),
-                                ft.Row([
-                                    ft.Container(width=20, height=20, bgcolor=ft.Colors.BROWN, border_radius=5),
-                                    ft.Text("Bark", size=12),
-                                ], spacing=5),
-                                ft.Row([
-                                    ft.Container(width=20, height=20, bgcolor=ft.Colors.ORANGE, border_radius=5),
-                                    ft.Text("Branch", size=12),
-                                ], spacing=5),
-                                ft.Row([
-                                    ft.Container(width=20, height=20, bgcolor=ft.Colors.GREEN, border_radius=5),
-                                    ft.Text("Foliage", size=12),
-                                ], spacing=5),
-                            ], spacing=20),
-                        ]),
-                    ),
-                    
-                    # Always include confirmation container (initially hidden)
-                    confirmation_container
-                    
-                ])
-            )
-        )
 
-        # Centered container with black semi-transparent background
-        return ft.Container(
-            content=card,
-            alignment=ft.alignment.center,
-            bgcolor=ft.Colors.with_opacity(0.7, ft.Colors.BLACK),
-            expand=True,
-        )
+            # Centered container with black semi-transparent background
+            return ft.Container(
+                content=card,
+                alignment=ft.alignment.center,
+                bgcolor=ft.Colors.with_opacity(0.7, ft.Colors.BLACK),
+                expand=True,
+            )
