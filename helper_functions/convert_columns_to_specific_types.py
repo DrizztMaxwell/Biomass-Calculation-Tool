@@ -28,9 +28,9 @@ def convert_columns_to_specific_types(data_frame: pd.DataFrame) -> pd.DataFrame:
                 after_dtype = data_frame[original_col].dtype
                 conversion_results[original_col] = f"{before_dtype} → {after_dtype}"
         
-        # Speccode as Int64
-        if 'speccode' in col_mapping:
-            original_col = col_mapping['speccode']
+        # Species as alphanumeric
+        if 'species' in col_mapping:
+            original_col = col_mapping['species']
             before_dtype = data_frame[original_col].dtype
             
             converted = pd.to_numeric(data_frame[original_col], errors='coerce')
@@ -41,7 +41,7 @@ def convert_columns_to_specific_types(data_frame: pd.DataFrame) -> pd.DataFrame:
             conversion_results[original_col] = f"{before_dtype} → {after_dtype}"
 
         # String columns
-        string_columns = ['origin', 'tree status', 'plot']
+        string_columns = [ 'plot']
         for col in string_columns:
             if col in col_mapping:
                 original_col = col_mapping[col]

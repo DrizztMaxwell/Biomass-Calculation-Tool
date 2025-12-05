@@ -135,26 +135,43 @@ class Calculate_Biomass_Controller:
                 data1 = json.load(f1)
                 data2 = json.load(f2)
                 # soem speciescode is ""
-                species_codes.update(int(item['SpeciesCode']) for item in data1 if 'SpeciesCode' in item and item['SpeciesCode'] != "")
-                species_codes.update(int(item['SpeciesCode']) for item in data2 if 'SpeciesCode' in item and item['SpeciesCode'] != "") 
+                species_codes.update((item['SpecCommon']) for item in data1 if 'SpecCommon' in item and item['SpecCommon'] != "")
+                species_codes.update((item['SpecCommon']) for item in data2 if 'SpecCommon' in item and item['SpecCommon'] != "")
+                species_codes.update((item['SpeciesCode']) for item in data1 if 'SpeciesCode' in item and item['SpeciesCode'] != "")
+                species_codes.update((item['SpeciesCode']) for item in data2 if 'SpeciesCode' in item and item['SpeciesCode'] != "") 
                 
                 
         except Exception as e:
             print(f"Error extracting species codes: {e}")
         
         #reorder species codes before returning
-        species_codes = sorted(species_codes)
+        # species_codes = sorted(species_codes)
+        print(f"Species Codes Extracted: {species_codes}")
         return list(species_codes)
     
     def _extract_all_species_codes_from_local_storage_json(self, local_storage_data: pd.DataFrame) -> list:
         """Extract all unique species codes from the local storage DataFrame."""
         species_codes = set()
+        print("----------------------------------------------------------------------------------------------------------------------")
+        
         try:
-            species_codes.update(int(item) for item in local_storage_data['SpecCode'] if item != "")
+            for item in local_storage_data['Species']:
+                # print(item)
+                if item != "" and pd.notna(item):  # Also check for NaN
+                    try:
+                        # Try to convert to int
+                        int_value = int(item)
+                        # print("INT FOUND")
+                        species_codes.add(int_value)  # Use add() for single values
+                    except ValueError:
+                        # If conversion fails, keep as string
+                        # print("STRING FOUND")
+                        species_codes.add(str(item))  # Use add() for single values
         except Exception as e:
             print(f"Error extracting species codes from local storage: {e}")
         
-        species_codes = sorted(species_codes)
+        # Sort the species codes before returning
+        species_codes = sorted(species_codes, key=lambda x: str(x))  # Convert to string for mixed type sorting
         return list(species_codes)
     def _create_hardwood_softwood_species_code_mapping(self, hardwood_species_codes: list, softwood_species_codes: list) -> dict:
         """Create a mapping of species codes to their type (hardwood or softwood)."""
@@ -171,7 +188,7 @@ class Calculate_Biomass_Controller:
     def _apply_species_type_mapping(self, species_type_mapping):
         """Apply the species type mapping to set parameters."""
         print("Applying species type mapping...")
-        
+        print(f"Species Type Mapping: {species_type_mapping}")
         # Example: For each species code in the mapping, set appropriate parameters
         for species_code, wood_type in species_type_mapping.items():
             print(f"Setting species code {species_code} as {wood_type}")
@@ -250,31 +267,40 @@ class Calculate_Biomass_Controller:
         try:
             self.local_storage_data = pd.read_json("storage/localstorage.json")
             self.tree_params_data = pd.read_json("data/treeparameters.json")
-            if not self.check_if_species_code_exists_within_the_json_files(101, "data/treeparameters.json", "data/create_species.json"):
-                datasets_species_code_list = self._extract_all_the_species_code_from_the_json_files("data/treeparameters.json", "data/create_species.json")
-                print(f"Datasets Species Code List: {datasets_species_code_list}")
-                #Get the dataset species code list from the local storage data
-                local_storage_species_code_list = self._extract_all_species_codes_from_local_storage_json(self.local_storage_data)
-                print(f"Local Storage Species Code List: {local_storage_species_code_list}")
-                 # Compare both lists to find missing species codes
-                missing_species_codes = set(local_storage_species_code_list) - set(datasets_species_code_list)
-                print(f"Missing Species Codes: {missing_species_codes}")
+            # if not self.check_if_species_code_exists_within_the_json_files(101, "data/treeparameters.json", "data/create_species.json"):
+            print("Checking for missing species codes...")
+            datasets_species_code_list = self._extract_all_the_species_code_from_the_json_files("data/treeparameters.json", "data/create_species.json")
+            
+            print(f"Datasets Species Code List: {datasets_species_code_list}")
+            #Get the dataset species code list from the local storage data
+            local_storage_species_code_list = self._extract_all_species_codes_from_local_storage_json(self.local_storage_data)
+            print(f"Local Storage Species Code List: {local_storage_species_code_list}")
+                # Compare both lists to find missing species codes
+            #convert to lower string if possible
+            datasets_species_code_list = [str(code).lower() for code in datasets_species_code_list]
+            print(f"Datasets Species Code List (Lowercase): {datasets_species_code_list}")
+            local_storage_species_code_list = [str(code).lower() for code in local_storage_species_code_list]
+            print(f"Local Storage Species Code List (Lowercase): {local_storage_species_code_list}")
+        
+            missing_species_codes = set(local_storage_species_code_list) - set(datasets_species_code_list)
+            print(f"Missing Species Codes: {missing_species_codes}")
+            
+            if missing_species_codes:
+                # Display dialog to user to select hardwood or softwood for missing species codes
+                # This will wait until the user clicks submit
+                species_type_mapping = await self.view.show_species_code_dialog(missing_species_codes)
                 
-                if missing_species_codes:
-                    # Display dialog to user to select hardwood or softwood for missing species codes
-                    # This will wait until the user clicks submit
-                    species_type_mapping = await self.view.show_species_code_dialog(missing_species_codes)
-                    
-                    if species_type_mapping is None:
-                   
-                        print("Dialog was cancelled. Aborting biomass calculation.")
-                      
-                        raise Exception("Dialog cancelled by user")
-                    
-                    print(f"Species type mapping received: {species_type_mapping}")
-                    # Now you can use the mapping to set parameters
-                    self._apply_species_type_mapping(species_type_mapping)
+                if species_type_mapping is None:
                 
+                    print("Dialog was cancelled. Aborting biomass calculation.")
+                    
+                    raise Exception("Dialog cancelled by user")
+                
+                print(f"Species type mapping received: {species_type_mapping}")
+                # Now you can use the mapping to set parameters
+                self._apply_species_type_mapping(species_type_mapping)
+                print(f"Hardwood and Softwood Species Code Mapping: {self.hardwood_and_softwood_species_code_mapping}")
+            
             self._lower_column_names(self.local_storage_data, self.tree_params_data)
             self._process_biomass_calculations(self.local_storage_data, self.tree_params_data)
             self._save_results(self.local_storage_data)
@@ -306,34 +332,69 @@ class Calculate_Biomass_Controller:
         """Calculate biomass for each row in the dataset - most efficient version."""
         
         # 1. Precompute lookup dictionaries ONCE
-        species_code_lookup = {}
-        created_species_lookup = {}
+        species_code_lookup = {}  # For looking up by species code (int)
+        species_name_lookup = {}  # For looking up by species name (str)
+        created_species_code_lookup = {}  # For created species by code
+        created_species_name_lookup = {}  # For created species by name
         
         # Load from tree_params (existing)
         for _, row in tree_params.iterrows():
-            try:
+           
                 code = row['speciescode']
-                if pd.notna(code):
+                if code and pd.notna(code):
+                    print(f"Adding species code to lookup: {code}")
                     species_code_lookup[int(code)] = row.to_dict()
-            except (ValueError, TypeError):
-                continue
+               
+                    # Store by species name (str) - adjust column name if needed
+                name = row.get('speccommon')
+                if name and pd.notna(name):
+                    print(f"Adding species name to lookup: {name}")
+                    species_name_lookup[str(name).lower().strip()] = row.to_dict()
         
         # Load from created_species.json (new)
         try:
             with open("data/create_species.json", "r") as f:
                 created_species_data = json.load(f)
-            
+            print("Created Species Data Loaded:")
+            print(created_species_data)
             for species in created_species_data:
                 try:
                     code = species.get('SpeciesCode')
                     if code and pd.notna(code):
-                        created_species_lookup[int(code)] = species
+                        created_species_code_lookup[int(code)] = species
+                        
+                    name = species.get('SpecCommon')
+                    if name and pd.notna(name):
+                        created_species_name_lookup[str(name).lower().strip()] = species
                 except (ValueError, TypeError):
                     continue
-                    
+            print("Species Lookups Created:")
+            print("================================")
+                
+            print("Created Species Code Lookup:")
+            print(created_species_code_lookup)
+            print("================================")
+            print("Created Species Name Lookup:")
+            print(created_species_name_lookup)
+            print("================================")
+            
+            print("Species Code Lookup:")
+            print(species_code_lookup)
+            print("================================")
+            
+            print("Species Name Lookup:")
+            print(species_name_lookup)     
+            print("================================")
+            for keys in species_name_lookup:
+                print(f"Finding Jack pine : {keys}")
+            # print(f"Finding Jack pine : {specie\s_name_lookup.get('jack pine')}")
+            
         except (FileNotFoundError, json.JSONDecodeError) as e:
             print(f"Warning: Could not load created_species.json: {e}")
         
+        print("Mapping dictionaries prepared. Starting biomass calculations..."
+              )
+        print(f"Mapping data: {self.hardwood_and_softwood_species_code_mapping}")
         # check self.hardwood_and_softwood_species_code_mapping to see if species code
         for species_list in self.hardwood_and_softwood_species_code_mapping:
             for species in species_list:
@@ -341,27 +402,62 @@ class Calculate_Biomass_Controller:
                     code = species.get('SpeciesCode')
                     print(f"Adding species code from mapping: {code}")
                     if code and pd.notna(code):
-                        created_species_lookup[int(code)] = species
+                        created_species_code_lookup[int(code)] = species
                 except (ValueError, TypeError):
                     continue
         
-        # 2. Vectorized filtering of valid rows
-        species_codes = pd.to_numeric(local_data['speccode'], errors='coerce')
-        valid_mask = (species_codes.notna()) & (species_codes != 0)
-        valid_indices = species_codes[valid_mask].index
-        valid_codes = species_codes[valid_mask].astype(int)
-        
-        # 3. Process only valid rows - check both lookup sources
-        for idx, species_code in zip(valid_indices, valid_codes):
-            species_params = species_code_lookup.get(species_code)
+        # 2. Vectorized filtering of valid rows\
+            #check alphanumeric species codes and name
             
-            # If not found in tree_params, try created_species
-            if not species_params:
-                species_params = created_species_lookup.get(species_code)
+        for idx, row in local_data.iterrows():
+            species_value = row.get('species')  # assuming 'species' column
+            # if pd.isna(species_value):
+            #     continue  # Skip if species is NaN
             
+            species_params = None
+            
+            # First try: Convert to int (treat as species code)
+            try:
+                species_code = int(species_value)
+                # print(f"Row {idx}: Treating '{species_value}' as code {species_code}")
+                
+                # Try to find by code in tree_params
+                species_params = species_code_lookup.get(species_code)
+                
+                # If not found, try created_species by code
+                
+                if not species_params:
+                    species_params = created_species_code_lookup.get(species_code)
+                    
+                    
+            except (ValueError, TypeError):
+                # Conversion to int failed, so treat as string (species name)
+                species_name = str(species_value).lower().strip()
+            
+                # print(f"Processing row {idx} with species value: {species_value.lower().strip()}")
+                # print(f"Row {idx}: Treating '{species_value}' as name '{species_name}'")
+                
+                # Try to find by name in tree_params
+                species_params = species_name_lookup.get(species_name)
+                
+                # If not found, try created_species by name
+                if not species_params:
+                    species_params = created_species_name_lookup.get(species_name)
+            # print(f"Processing row {idx} with species value: {species_params}")
+            
+            # If we found species parameters, calculate biomass
             if species_params:
-                self._calculate_row_biomass(local_data, idx, local_data.loc[idx], species_params)
+                print("Found species parameters:")
+                print(species_params)
+                # print(f"Row {idx}: Found species params for '{species_value}'")
+                self._calculate_row_biomass(local_data, idx, row, species_params)
+            else:
+                pass
+                # print(f"Row {idx}: Species '{species_value}' not found in any lookup table")
+            # print(species_params)
+        
 
+          
     def _get_species_parameters(self, tree_params: pd.DataFrame, species_code: int) -> dict:
         """Retrieve parameters for a specific species code."""
         # Convert DataFrame to list of dictionaries for the lookup function
@@ -369,6 +465,8 @@ class Calculate_Biomass_Controller:
         return self.lookup(data_as_dict, species_code)
     def _calculate_row_biomass(self, data: pd.DataFrame, index: int, row: pd.Series, species_params: dict) -> None:
         """Calculate biomass for a single row based on equation type."""
+        print("Calculating biomass for row:SIOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO")
+        print(species_params)
         if self.equation_type == "DBH-based":
             self._calculate_dbh_based_biomass(data, index, row, species_params)
         if self.equation_type == "DBH + Height-based":
@@ -480,6 +578,9 @@ class Calculate_Biomass_Controller:
     def _calculate_dbh_based_biomass(self, data: pd.DataFrame, index: int, row: pd.Series, species_params: dict) -> None:
         """Calculate DBH-based biomass for all selected components."""
         dbh = row.get('dbh', 0)
+        print(f"Calculating DBH-based biomass for row {index} with DBH: {dbh}")
+        print(species_params)
+        print(row)
          # 2. Attempt safe conversion to float (and handle missing/zero values)
         try:
             # Check if the values are truthy (not None, not empty string) and convert

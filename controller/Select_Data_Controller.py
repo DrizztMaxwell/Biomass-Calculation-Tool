@@ -72,10 +72,7 @@ class Select_Data_Controller:
                     original_dataframe = dataframe.copy()
                     work_3 = pool.submit(convert_columns_to_specific_types, dataframe)
                     dataframe = work_3.result()
-                    print("JAIAIOPEJIPWEJIPDJPDJIPDJIPWDJIP")
-                    print(dataframe)
-                    # print("Column type conversion completed")
-                    print("DAAAMN")
+                  
                     
                     work_4 = pool.submit(convert_columns_to_lowercase, dataframe)
                     dataframe = work_4.result()
@@ -87,15 +84,10 @@ class Select_Data_Controller:
                     work_5 = pool.submit(check_dataframe_for_nan_values, dataframe)
                     errors_detected, error_count, error_messages = work_5.result()
                     print(error_messages)
-                    # # Validate data
-                    # nan_detected, error_count, error_messages = check_dataframe_for_nan_values(data_frame=dataframe)
-                    # print("NaN validation completed")
-                 
+                   
                     work_6 = pool.submit(validate_tree_dbh_and_height_values, dataframe)
                     error_message_for_out_of_bounds_dbh_or_height_value = work_6.result()
-                    # error_message_for_out_of_bounds_dbh_or_height_value = validate_tree_dbh_and_height_values(dataframe)
-                    
-                    # print("DBH and height validation completed")
+                  
                     await loading_spinner.simulate_progressive_loading(0.4, 0.8, 0.1, "DBH and Height validation completed...")
 
                     self.error_messages = error_messages

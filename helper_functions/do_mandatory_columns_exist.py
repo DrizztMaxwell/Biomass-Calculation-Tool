@@ -4,7 +4,7 @@ import pandas as pd
 def do_mandatory_columns_exist(data_frame: pd.DataFrame) -> bool:
     print(data_frame.columns)
    
-    required_columns = ['plot', 'year', 'origin', 'tree status', 'tree number', 'dbh', 'height', 'speccode']
+    required_columns = ['plot', 'year', 'species', 'tree number', 'dbh', 'height']
     
     # Get the actual column names from the DataFrame (in lowercase for case-insensitive comparison)
     actual_columns = [col.lower() for col in data_frame.columns]

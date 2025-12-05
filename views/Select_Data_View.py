@@ -15,6 +15,7 @@ class Select_Data_View:
             weight=ft.FontWeight.W_500,
         )
         
+        
     def create_main_layout(self):
         main_content = self._create_main_content()
 
@@ -102,7 +103,7 @@ class Select_Data_View:
                             ),
                             ft.TextSpan(", ", style=ft.TextStyle(color=ft.Colors.BLACK)),
                             ft.TextSpan(
-                                "SpecCode",
+                                "Species",
                                 style=ft.TextStyle(
                                     weight=ft.FontWeight.BOLD,
                                     color=ft.Colors.BLACK,
