@@ -78,7 +78,7 @@ class Calculate_Biomass_View:
                 radio_value="DBH-based"
             ),
             self._create_equation_card(
-                title="DBH + Height-based Equation",
+                title="DBH + Height-based",
                 formula="B = b₁ × DBHᵇ² × Heightᵇ³",
                 description="Uses both DBH and tree height for more accurate estimation",
                 radio_value="DBH + Height-based"
@@ -140,7 +140,7 @@ class Calculate_Biomass_View:
         print(f"FILE PATH:{self.selected_file_path}")
         filename_without_ext = os.path.splitext(os.path.basename(self.selected_file_path))[0]
         print(filename_without_ext)  # Output: "data_set"
-        return f"{filename_without_ext}_{date_prefix}_{time_prefix}.txt"
+        return f"Output_{filename_without_ext}_{date_prefix}_{time_prefix}.txt"
     
     def _export_to_txt(self, data, file_path: str):
         """Export data to a formatted text file."""
@@ -148,7 +148,6 @@ class Calculate_Biomass_View:
             with open(file_path, 'w') as f:
                 # Write header
                 f.write("BIOMASS CALCULATION RESULTS\n")
-                f.write("=" * 50 + "\n")
                 f.write(f"Generated on: {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
                 f.write(f"Total records: {len(data)}\n\n")
                 
@@ -158,7 +157,7 @@ class Calculate_Biomass_View:
                     # Write header row
                     header_line = "\t".join(headers)
                     f.write(header_line + "\n")
-                    f.write("-" * len(header_line) + "\n")
+                    
                     
                     # Write data rows
                     for item in data:
@@ -178,7 +177,7 @@ class Calculate_Biomass_View:
                         
                         f.write("\t".join(row_values) + "\n")
                 
-                f.write(f"\nFile: {os.path.basename(file_path)}\n")
+               
             
             return True
         except Exception as e:

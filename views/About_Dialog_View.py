@@ -11,16 +11,37 @@ class About_Dialog_View():
         """Show the about container with overlay"""
         self.page.overlay.append(self.overlay)
         self.page.overlay.append(self.container)
+        self.is_visible = True
+        self._update_container_size()  # Update size based on current screen
         self.page.update()
-        print(self.page.overlay)
         
-
-
     def close(self, e=None):
         """Close the about container and remove overlay"""
-        self.page.overlay.remove(self.overlay)
-        self.page.overlay.remove(self.container)
+        if self.overlay in self.page.overlay:
+            self.page.overlay.remove(self.overlay)
+        if self.container in self.page.overlay:
+            self.page.overlay.remove(self.container)
+        self.is_visible = False
         self.page.update()
+    
+    def _update_container_size(self):
+        """Update container size based on current page dimensions"""
+        # Calculate responsive width and height
+        screen_width = self.page.width
+        screen_height = self.page.height
+        
+        # Use 80% of screen width (with min and max limits)
+        dialog_width = min(max(screen_width * 0.8, 700), 1200)  # Between 700px and 1200px
+        # Use 85% of screen height (with min and max limits)
+        dialog_height = min(max(screen_height * 0.85, 600), 900)  # Between 600px and 900px
+        
+        # Update container dimensions
+        self.container.width = dialog_width
+        self.container.height = dialog_height
+        
+        # Center the container
+        self.container.left = (screen_width - dialog_width) / 2
+        self.container.top = (screen_height - dialog_height) / 2
 
     def _create_overlay(self):
         """Create a dimmed overlay background"""
@@ -87,6 +108,7 @@ class About_Dialog_View():
         )
 
     def _create_about_content(self):
+        """Create scrollable content section"""
         return ft.Column(
             [
                 # Introduction
@@ -164,13 +186,93 @@ class About_Dialog_View():
                     border_radius=ft.border_radius.all(10),
                     border=ft.border.all(1, ft.Colors.BLUE_100)
                 ),
+                
+                ft.Divider(height=30, color=ft.Colors.GREY_200),
+                
+                # Development and Contact section
+                ft.Container(
+                    content=ft.Column([
+                        ft.Text(
+                            "Development & Contact",
+                            size=16,
+                            weight=ft.FontWeight.BOLD,
+                            color=ft.Colors.GREY_900
+                        ),
+                        ft.Text(
+                            "This biomass calculation tool was developed by the Ontario Ministry of Natural Resources and Forestry in collaboration with Trent University. For more information, please contact:",
+                            size=14,
+                            color=ft.Colors.GREY_700,
+                            text_align=ft.TextAlign.JUSTIFY
+                        ),
+                        
+                        # Email links container
+                        ft.Container(
+                            content=ft.Column([
+                                ft.Container(
+                                    content=ft.Row([
+                                        ft.Icon(ft.Icons.MAIL_OUTLINED, color="#EA580C", size=18),
+                                        ft.Text(
+                                            "Jamshid Eslamdoust",
+                                            size=14,
+                                            color=ft.Colors.GREY_800,
+                                            weight=ft.FontWeight.W_500
+                                        ),
+                                    ], spacing=10),
+                                    padding=ft.padding.symmetric(vertical=8, horizontal=15),
+                                    border_radius=ft.border_radius.all(8),
+                                    bgcolor=ft.Colors.ORANGE_50,
+                                    border=ft.border.all(1, ft.Colors.ORANGE_100),
+                                    on_click=lambda e: self._open_email("Jamshid.Eslamdoust@ontario.ca"),
+                                    data="Jamshid.Eslamdoust@ontario.ca",
+                                    ink=True,
+                                ),
+                                
+                                ft.Container(
+                                    content=ft.Row([
+                                        ft.Icon(ft.Icons.MAIL_OUTLINED, color="#0284C7", size=18),
+                                        ft.Text(
+                                            "Christopher Stratton",
+                                            size=14,
+                                            color=ft.Colors.GREY_800,
+                                            weight=ft.FontWeight.W_500
+                                        ),
+                                    ], spacing=10),
+                                    padding=ft.padding.symmetric(vertical=8, horizontal=15),
+                                    border_radius=ft.border_radius.all(8),
+                                    bgcolor=ft.Colors.BLUE_50,
+                                    border=ft.border.all(1, ft.Colors.BLUE_100),
+                                    on_click=lambda e: self._open_email("Christopher.Stratton@ontario.ca"),
+                                    data="Christopher.Stratton@ontario.ca",
+                                    ink=True,
+                                ),
+                            ], spacing=8),
+                            margin=ft.margin.only(top=15),
+                        ),
+                        
+                        ft.Text(
+                            "Click on any email address above to open your default email client.",
+                            size=12,
+                            color=ft.Colors.GREY_600,
+                            italic=True,
+                            text_align=ft.TextAlign.CENTER
+                        ),
+                    ], spacing=12),
+                    padding=ft.padding.all(20),
+                    margin=ft.margin.only(top=20),
+                    bgcolor=ft.Colors.GREY_50,
+                    border_radius=ft.border_radius.all(10),
+                    border=ft.border.all(1, ft.Colors.GREY_200)
+                ),
             ], 
             spacing=0,
-            scroll=ft.ScrollMode.ADAPTIVE,
-            height=700,
-           
+            scroll=ft.ScrollMode.AUTO,
+            expand=True,
         )
     
+    def _open_email(self, email_address):
+        """Open default email client with the specified email address"""
+        self.page.launch_url(f"mailto:{email_address}")
+        
     def _create_icon_with_text(self, icon, text, color):
         return ft.Container(
             content=ft.Row([
@@ -181,7 +283,7 @@ class About_Dialog_View():
         )
 
     def _create_about_container(self):
-        """Create the about section as a container"""
+        """Create the about section as a responsive container"""
         return ft.Container(
             content=ft.Column(
                 [
@@ -189,12 +291,13 @@ class About_Dialog_View():
                     ft.Container(
                         padding=30,
                         content=self._create_about_content(),
+                        expand=True,
                     ),
                 ],
                 spacing=0,
+                expand=True,
             ),
             bgcolor="white",
-           
             border_radius=20,
             shadow=ft.BoxShadow(
                 spread_radius=1,
@@ -202,12 +305,11 @@ class About_Dialog_View():
                 color=ft.Colors.with_opacity(0.3, ft.Colors.BLACK),
                 offset=ft.Offset(0, 8),
             ),
-            # Center the container on the screen
-            top=100,
+            # Initial dimensions - will be updated in show() method
+            width=800,
+            height=700,
+            top=0,
             left=0,
-            right=0,
-            margin=ft.margin.symmetric(horizontal=50),
-            alignment=ft.alignment.center,
         )
 
     def update_view(self):
