@@ -33,9 +33,7 @@ class Display_Warning_Dialog:
         """Convert all keys in row_data to lowercase for case-insensitive access"""
         return {str(key).lower(): value for key, value in row_data.items()}
         
-    # NOTE: _create_table_header is no longer used, as the header is defined by ft.DataTable's 'columns'
-    # def _create_table_header(self, is_tree_measurement_tab: bool):
-    #     ... (Removed) ...
+  
     
     def _create_table_row(self, error_data, is_tree_measurement_tab: bool):
         """Create a table row for an error entry with improved styling"""
@@ -114,7 +112,7 @@ class Display_Warning_Dialog:
     create_cell(error_data['index'] + 1, is_error=False), 
     create_cell(row_data_lower.get('plot', None), 'plot' in nan_columns_lower, 'plot', row_data_lower, nan_columns_lower),
     create_cell(row_data_lower.get('year', None), 'year' in nan_columns_lower, 'year', row_data_lower, nan_columns_lower),
-    create_cell(row_data_lower.get('speccode', None), 'speccode' in nan_columns_lower, 'speccode', row_data_lower, nan_columns_lower),
+    create_cell(row_data_lower.get('species', None), 'species' in nan_columns_lower, 'species', row_data_lower, nan_columns_lower),
     create_cell(row_data_lower.get('tree number', None), 'tree number' in nan_columns_lower, 'tree number', row_data_lower, nan_columns_lower),
     create_cell(row_data_lower.get('dbh', None), 'dbh' in nan_columns_lower, 'dbh', row_data_lower, nan_columns_lower),
     create_cell(row_data_lower.get('height', None), 'height' in nan_columns_lower, 'height', row_data_lower, nan_columns_lower),
@@ -291,7 +289,7 @@ class Display_Warning_Dialog:
             ft.DataColumn(ft.Text("Row", weight=ft.FontWeight.BOLD, size=13, color=ft.Colors.WHITE)), # Added White color
             ft.DataColumn(ft.Text("Plot", weight=ft.FontWeight.BOLD, size=13, color=ft.Colors.WHITE)), # Added White color
             ft.DataColumn(ft.Text("Year", weight=ft.FontWeight.BOLD, size=13, color=ft.Colors.WHITE)), # Added White color
-            ft.DataColumn(ft.Text("SpecCode", weight=ft.FontWeight.BOLD, size=13, color=ft.Colors.WHITE)), # Added White color
+            ft.DataColumn(ft.Text("Species", weight=ft.FontWeight.BOLD, size=13, color=ft.Colors.WHITE)), # Added White color
             ft.DataColumn(ft.Text("Tree Number", weight=ft.FontWeight.BOLD, size=13, color=ft.Colors.WHITE)), # Added White color
             ft.DataColumn(ft.Text("DBH", weight=ft.FontWeight.BOLD, size=13, color=ft.Colors.WHITE)), # Added White color
             ft.DataColumn(ft.Text("Height", weight=ft.FontWeight.BOLD, size=13, color=ft.Colors.WHITE)), # Added White color

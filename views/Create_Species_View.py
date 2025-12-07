@@ -34,7 +34,7 @@ class Create_Species_View:
         self.page_ref = None
         self.dialog = None
         self.error_messages = []
-        self.species_code_textfield = None
+        self.species_textfield = None
         self.origin_dropdown = None
         self.equation_type_dropdown = None
         self.create_species_preview_modal = Create_Species_Preview_Modal(page,{}, callback=self._handle_create_species_button_click)
@@ -42,12 +42,25 @@ class Create_Species_View:
     def _create_species_metadata_row(self) -> ft.Row:
         """Creates the Code, Origin, and Equation Type row and stores controls in the controller."""
         
-        # Species Code Control
-        self.species_code_textfield = ft.TextField(hint_text="ABC123")
-        species_code_form = ft.Column([
-            Create_Label_With_Icon(label_text="Species Code", icon_src="./assets/images/key.png"),
-            self.species_code_textfield
-        ])
+        # Common width for all form elements to ensure equal sizing
+        FORM_ELEMENT_WIDTH = 300
+        
+        # Species Code Control with expanded width for error text
+        self.species_textfield = ft.TextField(
+            hint_text="Alpine fir or 123",
+            # height=80,
+            width=FORM_ELEMENT_WIDTH,  # Fixed width
+           
+        )
+        
+        species_container = ft.Container(
+            content=ft.Column([
+                Create_Label_With_Icon(label_text="Species (Code or Name)", icon_src="./assets/images/key.png"),
+                self.species_textfield
+            ], width=FORM_ELEMENT_WIDTH),
+            padding=ft.padding.only(top=10),
+            alignment=ft.alignment.center,
+        )
 
         # Origin Dropdown Control
         self.origin_dropdown = ft.Dropdown(
@@ -55,14 +68,19 @@ class Create_Species_View:
                 ft.dropdown.Option("Natural Stand"),
                 ft.dropdown.Option("Plantation"),
             ],
-            value="Natural Stand", # Default Value
+            value="Natural Stand",  # Default Value
             content_padding=ft.padding.only(left=8, right=8),
             border_radius=5,
+            width=FORM_ELEMENT_WIDTH,  # Same width
         )
-        origin_form = ft.Column([
-            Create_Label_With_Icon(label_text="Select Origin", icon_src="./assets/images/origin.png"),
-            self.origin_dropdown
-        ])
+        
+        origin_container = ft.Container(
+            content=ft.Column([
+                Create_Label_With_Icon(label_text="Select Origin", icon_src="./assets/images/origin.png"),
+                self.origin_dropdown
+            ], width=FORM_ELEMENT_WIDTH),
+            padding=ft.padding.only(top=10),
+        )
 
         # Equation Type Dropdown Control
         self.equation_type_dropdown = ft.Dropdown(
@@ -73,21 +91,27 @@ class Create_Species_View:
             value="DBH-based",
             content_padding=ft.padding.only(left=8, right=8),
             border_radius=5,
-            on_change=self._on_equation_type_change  # Add change handler
+            on_change=self._on_equation_type_change,  # Add change handler
+            width=FORM_ELEMENT_WIDTH,  # Same width
         )
-        self._controller.equation_type_control = self.equation_type_dropdown # Store in controller
-        equation_form = ft.Column([
-            Create_Label_With_Icon(label_text="Equation Type", icon_src="./assets/images/calculating.png"),
-            self.equation_type_dropdown
-        ])
+        self._controller.equation_type_control = self.equation_type_dropdown  # Store in controller
+        
+        equation_container = ft.Container(
+            content=ft.Column([
+                Create_Label_With_Icon(label_text="Equation Type", icon_src="./assets/images/calculating.png"),
+                self.equation_type_dropdown
+            ], width=FORM_ELEMENT_WIDTH),
+            padding=ft.padding.only(top=10),
+        )
 
         return ft.Row(
             controls=[
-                ft.Container(content=species_code_form, padding=ft.padding.only(top=10), alignment=ft.alignment.center,),
-                ft.Container(content=origin_form, padding=ft.padding.only(top=10)),
-                ft.Container(content=equation_form, padding=ft.padding.only(top=10)),
+                species_container,
+                origin_container,
+                equation_container,
             ],
             spacing=20,
+           
         )
     
     def _on_equation_type_change(self, e):
@@ -536,7 +560,7 @@ class Create_Species_View:
             return
         ###
         self.create_species_preview_modal.species_data = {
-             "species_code": self.species_code_textfield.value,
+             "species_code": self.species_textfield.value,
             "origin": self.origin_dropdown.value,
             "equation_type": equation_type,
             "selected_components": selected_components,
@@ -546,13 +570,13 @@ class Create_Species_View:
      
     def _handle_create_species_button_click(self, e):
         """Handle Create Species button click - show confirmation dialog."""
-     
-        does_species_code_exist_in_tree_parameters = self._does_species_code_exist_within_dataset(int(self.species_code_textfield.value), "data/treeparameters.json")
+   
+        does_species_code_exist_in_tree_parameters = self._does_species_code_exist_within_dataset((self.species_textfield.value), "data/treeparameters.json")
         if does_species_code_exist_in_tree_parameters:
             Custom_Alert_Dialog(self.page, title_icon=ft.Icons.ERROR_OUTLINE, title_color=ft.Colors.RED_700, title_icon_color=ft.Colors.RED, title="Error", message="Species Code already exists in the Lamberts et al. (2005) dataset.", solution="Please use a different code.").show()
             return
         
-        does_species_code_exist_in_created_species = self._does_species_code_exist_within_dataset(int(self.species_code_textfield.value), "data/create_species.json")
+        does_species_code_exist_in_created_species = self._does_species_code_exist_within_dataset((self.species_textfield.value), "data/create_species.json")
         if does_species_code_exist_in_created_species:
             Custom_Alert_Dialog(self.page, title_icon=ft.Icons.ERROR_OUTLINE, title_color=ft.Colors.RED_700, title_icon_color=ft.Colors.RED, title="Error", message="User has already created a species with this code.", solution="Please use a different code.").show()
             return
@@ -561,13 +585,22 @@ class Create_Species_View:
         self._proceed_with_creation(e)
        
     
-    def _does_species_code_exist_within_dataset(self, species_code: int, json_file_path: str) -> bool:
+    def _does_species_code_exist_within_dataset(self, species_name_or_code, json_file_path: str) -> bool:
         """Check if the species code already exists in the given JSON dataset."""
         try:
             data_set = pd.read_json(json_file_path)
-            if 'SpeciesCode' in data_set.columns:
-                return species_code in data_set['SpeciesCode'].values
+            # try to convert species_code to int
+            if species_name_or_code.isdigit():
+                species_name_or_code = int(species_name_or_code)
+                if 'SpeciesCode' in data_set.columns:
+                    return species_name_or_code in data_set['SpeciesCode'].values
+            else:
+                species_name_or_code = str(species_name_or_code)
+                if 'SpecCommon' in data_set.columns:
+                    #lowercase comparison
+                    return species_name_or_code.lower() in data_set['SpecCommon'].str.lower().values
             return False
+          
         except Exception as e:
             print(f"Error reading JSON file: {e}")
             return False
@@ -592,8 +625,13 @@ class Create_Species_View:
         # insert
         
         created_species_json = json.loads(open("data/create_species.json").read())
-        created_species_json.append({"SpeciesCode": int(self.species_code_textfield.value),
+        if self.species_textfield.value.isdigit():
+            created_species_json.append({"SpeciesCode": int(self.species_textfield.value),
             **data_to_be_inserted_into_json})
+        else:
+            created_species_json.append({"SpecCommon": self.species_textfield.value,
+            **data_to_be_inserted_into_json})
+            
         with open("data/create_species.json", "w") as f:
             json.dump(created_species_json, f, indent=4)
             print("Species data inserted into JSON file successfully.")

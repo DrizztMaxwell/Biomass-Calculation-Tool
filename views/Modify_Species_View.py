@@ -30,7 +30,7 @@ class Modify_Species_View:
         
         # Search Field with Uber Eats style
         self.search_field = ft.TextField(
-            hint_text="🔍 Search species by code or origin...",
+            hint_text="🔍 Search by code, common name, or origin...",  # Updated hint
             hint_style=ft.TextStyle(size=14, color=ft.Colors.GREY_500, italic=True),
             text_size=14,
             border_color=ft.Colors.GREY_300,
@@ -121,14 +121,12 @@ class Modify_Species_View:
 
         # Data table with Uber Eats styling
         self.data_table = ft.DataTable(
-            
             columns=[
-                
                 ft.DataColumn(ft.Text("ROW", 
                                      weight=ft.FontWeight.W_700, 
                                      color=self.text_primary,
                                      size=12)),
-                ft.DataColumn(ft.Text("SPECIES CODE", 
+                ft.DataColumn(ft.Text("SPECIES", 
                                      weight=ft.FontWeight.W_700, 
                                      color=self.text_primary,
                                      size=12)),
@@ -157,7 +155,6 @@ class Modify_Species_View:
             column_spacing=30,
             width=9999,
             heading_text_style=ft.TextStyle(size=12, weight=ft.FontWeight.W_700, color=self.text_primary),
-            
         )
         
         # Pagination controls
@@ -290,17 +287,23 @@ class Modify_Species_View:
         # Clear existing rows
         self.data_table.rows.clear()
         
-        # Apply search filter
+        # Apply search filter - search in SpeciesCode, SpecCommon, and Origin
         search_text = self.search_field.value.lower() if self.search_field.value else ""
         self.filtered_species = []
         
         for species in self.species_data:
             species_code = str(species.get("SpeciesCode", ""))
+            spec_common = str(species.get("SpecCommon", ""))
             origin = species.get("Origin", "")
             
-            if search_text and (search_text not in species_code.lower() and 
-                               search_text not in origin.lower()):
-                continue
+            # Check if search text matches any of these fields
+            if search_text:
+                matches_code = search_text in species_code.lower()
+                matches_common = search_text in spec_common.lower()
+                matches_origin = search_text in origin.lower()
+                
+                if not (matches_code or matches_common or matches_origin):
+                    continue
             
             self.filtered_species.append(species)
         
@@ -340,8 +343,16 @@ class Modify_Species_View:
             actual_index = (self.current_page - 1) * self.items_per_page + index
             
             species_code = str(species.get("SpeciesCode", ""))
+            spec_common = str(species.get("SpecCommon", ""))
             origin = species.get("Origin", "")
             equation_type = species.get("EquationType", "Height-based")
+            
+            # Determine what to display in the SPECIES column
+            # Show either SpecCommon OR SpeciesCode, not both
+            if spec_common and spec_common != "" and spec_common != "None":
+                species_display = spec_common  # Just show the common name
+            else:
+                species_display = species_code  # Show the code if no common name
             
             # Determine equation type color
             if equation_type == "DBH + Height-based":
@@ -351,7 +362,7 @@ class Modify_Species_View:
                 eq_color = ft.Colors.AMBER_700
                 eq_icon = ft.Icons.STRAIGHTEN
             else:
-                eq_color = self.text_secondary  # Default for other types
+                eq_color = self.text_secondary
                 eq_icon = ft.Icons.FUNCTIONS
             
             # Create row number with correct calculation
@@ -370,14 +381,15 @@ class Modify_Species_View:
                             padding=10,
                         )
                     ),
-                    # Species Code cell
+                    # SPECIES cell - shows either common name OR code
                     ft.DataCell(
                         ft.Container(
-                            content=ft.Text(species_code, 
+                            content=ft.Text(species_display, 
                                           size=14, 
                                           weight=ft.FontWeight.W_600,
                                           color=self.text_primary),
                             padding=10,
+                            tooltip=f"Code: {species_code}" if spec_common else f"Name: {spec_common}" if spec_common else None
                         )
                     ),
                     # Origin cell
@@ -393,7 +405,6 @@ class Modify_Species_View:
                     ft.DataCell(
                         ft.Row([
                             ft.Icon(eq_icon, size=16, color=eq_color),
-                            
                             ft.Text(equation_type, size=14, color=eq_color)
                         ], spacing=8)
                     ),
@@ -446,8 +457,6 @@ class Modify_Species_View:
         self.data_table.visible = True
         self.no_data_display.visible = False
         self.no_search_results_display.visible = False
-
-        # Update page once
         self.page.update()
 
     def view_species_dialog(self, index):
@@ -467,7 +476,6 @@ class Modify_Species_View:
         if not hasattr(self, '_create_detail_row'):
             self._create_detail_row = _create_detail_row
 
-
         if index >= len(self.filtered_species):
             return
         
@@ -476,11 +484,8 @@ class Modify_Species_View:
         # Calculate dialog width based on page width
         page_width = self.page.width
         dialog_width = min(700, page_width * 0.9)  # Max 700px or 90% of page width
-        # Set a MAX height, but don't force it fixed on inner content
         max_dialog_height = min(650, self.page.height * 0.85)
         
-        # Define a simple close function since you referenced self.close_dialog
-        # If self.close_dialog exists, this is redundant but safe.
         def close_dialog(e):
             dialog.open = False
             self.page.update()
@@ -533,6 +538,8 @@ class Modify_Species_View:
                 ft.Container(height=20),
                 self._create_detail_row("Species Code", str(species.get("SpeciesCode", "")), ft.Icons.TAG),
                 ft.Container(height=12),
+                self._create_detail_row("Common Name", species.get("SpecCommon", "N/A"), ft.Icons.TEXT_SNIPPET),  # Added this line
+                ft.Container(height=12),
                 self._create_detail_row("Origin", species.get("Origin", ""), ft.Icons.LOCATION_ON),
                 ft.Container(height=12),
                 self._create_detail_row("Equation Type", species.get("EquationType", "Height-based"), 
@@ -553,7 +560,7 @@ class Modify_Species_View:
         # --- Parameter Section Logic ---
         equation_params = {}
         for key, value in species.items():
-            if key not in ["SpeciesCode", "Origin", "EquationType"]:
+            if key not in ["SpeciesCode", "Origin", "EquationType", "SpecCommon"]:
                 if key.startswith("bh"):
                     category = "DBH + Height-based Parameters"
                     icon = ft.Icons.TRENDING_UP
@@ -602,7 +609,6 @@ class Modify_Species_View:
                                                 color=self.text_primary),
                                 expand=True,
                                 padding=ft.padding.symmetric(vertical=10, horizontal=15),
-                                # *** FIX: Changed background to White ***
                                 bgcolor=ft.Colors.GREY_50, 
                                 border_radius=6
                             )
@@ -676,13 +682,12 @@ class Modify_Species_View:
                         ft.Container(height=24),
                         *param_cards,
                         ft.Container(height=24),
-                    ], scroll=ft.ScrollMode.AUTO, spacing=0, tight=True), # Use tight=True
+                    ], scroll=ft.ScrollMode.AUTO, spacing=0, tight=True),
                     padding=ft.padding.symmetric(horizontal=30, vertical=20),
-                    expand=True # Allows this inner container to take available vertical space
+                    expand=True
                 )
             ], spacing=0),
             width=dialog_width,
-            # *** FIX: Changed height to a max constraint, using expand=True on inner content ***
             height=max_dialog_height, 
             bgcolor=ft.Colors.WHITE,
             clip_behavior=ft.ClipBehavior.HARD_EDGE
@@ -691,7 +696,7 @@ class Modify_Species_View:
         # Professional action buttons
         actions = ft.Container(
             content=ft.Row([
-                ft.Container(expand=True),  # Spacer
+                ft.Container(expand=True),
                 ft.ElevatedButton(
                     "Close",
                     icon=ft.Icons.CLOSE,
@@ -702,7 +707,7 @@ class Modify_Species_View:
                         shape=ft.RoundedRectangleBorder(radius=10),
                         side=ft.BorderSide(1, ft.Colors.GREY_200)
                     ),
-                    on_click=close_dialog # Use local close_dialog
+                    on_click=close_dialog
                 ),
                 ft.Container(width=12),
             ], alignment=ft.MainAxisAlignment.END),
@@ -720,12 +725,6 @@ class Modify_Species_View:
             ], spacing=0),
             width=dialog_width,
             border_radius=16,
-            # shadow=ft.BoxShadow(
-            #     spread_radius=2,
-            #     blur_radius=40,
-            #     color=ft.Colors.with_opacity(0.25, ft.Colors.BLACK),
-            #     offset=ft.Offset(0, 10)
-            # ),
             clip_behavior=ft.ClipBehavior.HARD_EDGE
         )
         
@@ -736,7 +735,6 @@ class Modify_Species_View:
             content_padding=0,
             shape=ft.RoundedRectangleBorder(radius=16),
             bgcolor=ft.Colors.TRANSPARENT,
-            # Keeping inset padding for screen safety
             inset_padding=ft.padding.symmetric(horizontal=20, vertical=40) 
         )
         
@@ -750,10 +748,23 @@ class Modify_Species_View:
         if index >= len(self.filtered_species):
             return
         
-        # Find actual index in species_data
         filtered_species = self.filtered_species[index]
-        actual_index = next((i for i, species in enumerate(self.species_data) 
-                        if species.get("SpeciesCode") == filtered_species.get("SpeciesCode")), None)
+        species_code = filtered_species.get("SpeciesCode")
+        spec_common = filtered_species.get("SpecCommon")
+        
+        # Find actual index in species_data by checking both SpeciesCode and SpecCommon
+        actual_index = None
+        for i, species in enumerate(self.species_data):
+            sp_code = species.get("SpeciesCode")
+            sp_common = species.get("SpecCommon")
+            
+            # Check if either SpeciesCode or SpecCommon matches
+            if species_code is not None and sp_code is not None and sp_code == species_code:
+                actual_index = i
+                break
+            elif spec_common is not None and sp_common is not None and sp_common == spec_common:
+                actual_index = i
+                break
         
         if actual_index is None:
             return
@@ -765,6 +776,9 @@ class Modify_Species_View:
         page_width = self.page.width
         dialog_width = min(700, page_width * 0.9)
         dialog_height = min(650, self.page.height * 0.85)
+        
+        # Determine display value for header
+        display_value = spec_common if spec_common and spec_common != "" else species_code
         
         # Header with professional gradient
         header = ft.Container(
@@ -781,7 +795,7 @@ class Modify_Species_View:
                         size=24, 
                         weight=ft.FontWeight.W_700, 
                         color=ft.Colors.WHITE),
-                    ft.Text(f"Species Code: {species.get('SpeciesCode', '')}", 
+                    ft.Text(f"Species: {display_value}", 
                         size=14, 
                         color=ft.Colors.with_opacity(0.9, ft.Colors.WHITE)),
                 ], spacing=4, alignment=ft.CrossAxisAlignment.START)
@@ -846,7 +860,7 @@ class Modify_Species_View:
         equation_params = {}
         
         for key, value in species.items():
-            if key not in ["SpeciesCode", "Origin", "EquationType"]:
+            if key not in ["SpeciesCode", "Origin", "EquationType", "SpecCommon"]:
                 if key.startswith("bh"):
                     category = "DBH + Height-based Parameters"
                     icon = ft.Icons.TRENDING_UP
@@ -882,7 +896,7 @@ class Modify_Species_View:
             
             # Process each parameter in this category
             for param_key, param_value in category_data["params"]:
-                # Create TextField directly (instead of using helper method)
+                # Create TextField directly
                 text_field = ft.TextField(
                     value=str(param_value),
                     keyboard_type=ft.KeyboardType.NUMBER,
@@ -949,17 +963,8 @@ class Modify_Species_View:
                 )
             )
         
-        print(f"Total param_text_fields created: {len(param_text_fields)}")
-        print(f"Keys in param_text_fields: {list(param_text_fields.keys())}")
-        
         def save_changes(e):
             try:
-                print("Saving changes...")
-                print(f"Origin selected: {origin_dropdown.value}")
-                print(f"Species_data before update: {self.species_data[self.current_species_index]}")
-                print(f"Parameter text fields count: {len(param_text_fields)}")
-                print(f"Parameter keys: {list(param_text_fields.keys())}")
-                
                 # Update basic info
                 self.species_data[self.current_species_index]["Origin"] = origin_dropdown.value
                 
@@ -969,11 +974,9 @@ class Modify_Species_View:
                 
                 # Loop through each parameter text field
                 for param_key, text_field in param_text_fields.items():
-                    print(f"Processing {param_key}: {text_field.value}")
                     if text_field.value is not None and text_field.value != "":
                         try:
                             value = float(text_field.value)
-                            print(f"Validating {param_key} with value {value}")
                             # Check if value is within range -5 to 5
                             if value < -5 or value > 5:
                                 # Mark field with error
@@ -982,14 +985,12 @@ class Modify_Species_View:
                                 text_field.update()
                                 has_errors = True
                                 error_messages.append(f"{param_key}: {value} is not between -5 and 5")
-                                print(f"Error: {param_key} value {value} is out of range")
                             else:
                                 # Clear any previous error
                                 text_field.error_text = None
                                 text_field.border_color = ft.Colors.GREY_200
                                 text_field.update()
                                 self.species_data[self.current_species_index][param_key] = value
-                                print(f"Updated {param_key}: {value}")
                         except ValueError:
                             # Mark field with error
                             text_field.error_text = "Invalid number format"
@@ -997,7 +998,6 @@ class Modify_Species_View:
                             text_field.update()
                             has_errors = True
                             error_messages.append(f"{param_key}: Invalid number format")
-                            print(f"Warning: Invalid number for {param_key}: {text_field.value}")
                     else:
                         # Handle empty value - show error
                         text_field.error_text = "This field cannot be empty"
@@ -1005,12 +1005,10 @@ class Modify_Species_View:
                         text_field.update()
                         has_errors = True
                         error_messages.append(f"{param_key}: Field cannot be empty")
-                        print(f"Field {param_key} is empty")
                 
                 # If there are errors, show them and don't save
                 if has_errors:
                     error_message = "Please fix the following errors:\n" + "\n".join(f"• {msg}" for msg in error_messages)
-                    
                     return
                 
                 # All validations passed, save the data
@@ -1037,7 +1035,7 @@ class Modify_Species_View:
         # Professional action buttons
         actions = ft.Container(
             content=ft.Row([
-                ft.Container(expand=True),  # Spacer
+                ft.Container(expand=True),
                 ft.ElevatedButton(
                     "Cancel",
                     icon=ft.Icons.CLOSE,
@@ -1117,20 +1115,32 @@ class Modify_Species_View:
         self.page.update()
     def delete_species_confirmation(self, index):
         """Show professional confirmation dialog for deletion, dynamically sized to content."""
-
         if index >= len(self.filtered_species):
             return
         
         species = self.filtered_species[index]
         species_code = species.get("SpeciesCode", "Unknown")
+        spec_common = species.get("SpecCommon", "Unknown")
         
-        # Find actual index in species_data
-        # Use species_code for lookup, as 'species' object is from 'filtered_species'
-        actual_index = next((i for i, sp in enumerate(self.species_data) 
-                            if sp.get("SpeciesCode") == species_code), None)
+        # Determine what to show in the dialog (use whichever is available)
+        display_value = spec_common if spec_common and spec_common != "" and spec_common != "Unknown" else species_code
+        
+        # Find actual index in species_data by checking both SpeciesCode and SpecCommon
+        actual_index = None
+        for i, sp in enumerate(self.species_data):
+            # Check if either SpeciesCode or SpecCommon matches
+            sp_code = sp.get("SpeciesCode")
+            sp_common = sp.get("SpecCommon")
+            
+            if species_code and sp_code and sp_code == species_code:
+                actual_index = i
+                break
+            elif spec_common and sp_common and sp_common == spec_common:
+                actual_index = i
+                break
         
         if actual_index is None:
-            self.show_error_dialog(f"Error: Species Code {species_code} not found in master data.")
+            self.show_error_dialog(f"Error: Species '{display_value}' not found in master data.")
             return
         
         # Calculate dialog width
@@ -1142,33 +1152,50 @@ class Modify_Species_View:
             self.page.update()
 
         def confirm_delete(e):
-            close_dialog(e) # Close dialog immediately
+            close_dialog(e)
             
             try:
-                # Re-confirm index just before pop (robustness against concurrent edits)
-                current_actual_index = next((i for i, sp in enumerate(self.species_data) 
-                                            if sp.get("SpeciesCode") == species_code), None)
+                # Re-confirm index just before pop
+                current_actual_index = None
+                for i, sp in enumerate(self.species_data):
+                    sp_code = sp.get("SpeciesCode")
+                    sp_common = sp.get("SpecCommon")
+                    
+                    if species_code and sp_code and sp_code == species_code:
+                        current_actual_index = i
+                        break
+                    elif spec_common and sp_common and sp_common == spec_common:
+                        current_actual_index = i
+                        break
 
                 if current_actual_index is None:
-                    self.show_error_dialog(f"Species {species_code} not found just before deletion.")
+                    self.show_error_dialog(f"Species '{display_value}' not found just before deletion.")
                     return
 
                 deleted_species = self.species_data.pop(current_actual_index)
                 
                 if self.save_species_data():
-                    Custom_Alert_Dialog(page=self.page, title_icon=ft.Icons.CHECK_CIRCLE, title_color=ft.Colors.BLACK, title_icon_color=ft.Colors.GREEN,  title="Success", message=f"Species {species_code} deleted successfully!", button_text="OK").show()
-                   
+                    Custom_Alert_Dialog(
+                        page=self.page, 
+                        title_icon=ft.Icons.CHECK_CIRCLE, 
+                        title_color=ft.Colors.BLACK, 
+                        title_icon_color=ft.Colors.GREEN,  
+                        title="Success", 
+                        message=f"Species '{display_value}' deleted successfully!", 
+                        button_text="OK"
+                    ).show()
+                
                     self.current_page = 1
                     self.refresh_data_table()
                 else:
-                    # Rollback: Re-insert species if save failed
+                    # Rollback
                     self.species_data.insert(current_actual_index, deleted_species) 
                     self.show_error_dialog("Failed to save data after deleting species. Deletion canceled.")
             
             except Exception as e:
                 self.show_error_dialog(f"Error deleting species: {e}")
             
-            self.page.update() # Final update after operation and potentially showing success/error dialog
+            self.page.update()
 
         # Header with warning gradient
         header = ft.Container(
@@ -1185,7 +1212,7 @@ class Modify_Species_View:
                             size=24, 
                             weight=ft.FontWeight.W_700, 
                             color=ft.Colors.WHITE),
-                    ft.Text(f"Species Code: {species_code}", 
+                    ft.Text(f"Species: {display_value}", 
                             size=14, 
                             color=ft.Colors.with_opacity(0.9, ft.Colors.WHITE)),
                 ], spacing=4, alignment=ft.CrossAxisAlignment.START)
@@ -1214,13 +1241,12 @@ class Modify_Species_View:
                     border_radius=50,
                     margin=ft.margin.only(bottom=20)
                 ),
-                # make the **species code** bold in the text
                 ft.Text(f"Are you sure you want to delete species ", 
                         size=18, 
                         weight=ft.FontWeight.W_600, 
                         color=self.text_primary,
                         text_align=ft.TextAlign.CENTER),
-                 ft.Text(f"{species_code}?", 
+                ft.Text(f"{display_value}?", 
                         size=18, 
                         weight=ft.FontWeight.BOLD, 
                         color=self.text_primary,
@@ -1248,7 +1274,7 @@ class Modify_Species_View:
             )
         )
 
-        # Content container (WITHOUT fixed height)
+        # Content container
         content_container = ft.Container(
             content=ft.Column([
                 header,
@@ -1259,7 +1285,6 @@ class Modify_Species_View:
                         ft.Container(height=30),
                     ], spacing=0),
                     padding=ft.padding.symmetric(horizontal=30),
-                    # Removed expand=True and fixed height
                 )
             ], spacing=0),
             width=dialog_width,
@@ -1303,19 +1328,19 @@ class Modify_Species_View:
             border_radius=ft.border_radius.only(bottom_left=16, bottom_right=16)
         )
         
-        # Main dialog container (WITHOUT fixed height, naturally sized by children)
+        # Main dialog container
         main_container = ft.Container(
             content=ft.Column([
                 content_container,
                 actions
-            ], spacing=0, tight=True), # Use tight=True to prevent vertical expansion
+            ], spacing=0, tight=True),
             width=dialog_width,
             border_radius=16,
             shadow=ft.BoxShadow(
                 spread_radius=2,
                 blur_radius=40,
                 color=ft.Colors.with_opacity(0.25, ft.Colors.BLACK),
-                offset=ft.Offset(0, 10) # Keeping offset for a slight drop shadow effect
+                offset=ft.Offset(0, 10)
             ),
             clip_behavior=ft.ClipBehavior.HARD_EDGE
         )
@@ -1327,7 +1352,6 @@ class Modify_Species_View:
             content_padding=0,
             shape=ft.RoundedRectangleBorder(radius=16),
             bgcolor=ft.Colors.TRANSPARENT,
-            # Using a small inset_padding prevents the dialog from hugging the edges on small screens
             inset_padding=ft.padding.all(20) 
         )
         
@@ -1444,7 +1468,7 @@ class Modify_Species_View:
             dense=True
         )
 
-    def _create_professional_form_field(self, label, value, keyboard_type,  icon_color, field_bg):
+    def _create_professional_form_field(self, label, value, keyboard_type, icon_color, field_bg):
         """Helper to create a professional styled form field"""
         return ft.Column([
             ft.Text(label, size=14, weight=ft.FontWeight.W_500, color=self.text_secondary),
@@ -1455,13 +1479,10 @@ class Modify_Species_View:
                     keyboard_type=keyboard_type,
                     border_radius=8,
                     filled=True,
-                    # fill_color=field_bg,
                     border_color=ft.Colors.GREY_200,
-                    # focused_border_color=icon_color,
                     focused_bgcolor=ft.Colors.WHITE,
                     text_size=14,
                     content_padding=ft.padding.symmetric(horizontal=15, vertical=12),
-                    # prefix_icon=ft.Icon(ft.Icons.CIRCLE, color=icon_color, size=16),
                     dense=True
                 ),
                 shadow=ft.BoxShadow(
@@ -1506,7 +1527,7 @@ class Modify_Species_View:
         # Initialize filtered species
         self.filtered_species = self.species_data.copy()
         
-        # Calculate initial pagination values (don't call update_pagination_controls)
+        # Calculate initial pagination values
         if self.filtered_species:
             total_species = len(self.filtered_species)
             start_index = min((self.current_page - 1) * self.items_per_page + 1, total_species)
@@ -1531,7 +1552,7 @@ class Modify_Species_View:
         pagination_row = ft.Container(
             content=ft.Row([
                 self.pagination_info,
-                ft.Container(expand=True),  # Spacer
+                ft.Container(expand=True),
                 ft.Row([
                     self.prev_button,
                     self.page_number_display,
@@ -1605,17 +1626,9 @@ class Modify_Species_View:
                     ),
                 )
             ], expand=True, spacing=0),
-            
-            # # Main container styling
-            # bgcolor=ft.Colors.GREY_50,
-            # padding=30,
-            # border_radius=0,
-            # expand=True
         )
         
         # Now that the view is built, populate the table
-        # We'll use a small delay or call refresh_data_table after the page is loaded
-        # For now, we'll populate the table directly
         self.populate_initial_table()
         
         return content
@@ -1628,11 +1641,16 @@ class Modify_Species_View:
         
         for species in self.species_data:
             species_code = str(species.get("SpeciesCode", ""))
+            spec_common = str(species.get("SpecCommon", ""))
             origin = species.get("Origin", "")
             
-            if search_text and (search_text not in species_code.lower() and 
-                               search_text not in origin.lower()):
-                continue
+            if search_text:
+                matches_code = search_text in species_code.lower()
+                matches_common = search_text in spec_common.lower()
+                matches_origin = search_text in origin.lower()
+                
+                if not (matches_code or matches_common or matches_origin):
+                    continue
             
             self.filtered_species.append(species)
         
@@ -1648,12 +1666,19 @@ class Modify_Species_View:
         
         # Populate table with current page species
         for index, species in enumerate(current_page_species):
-            # Calculate actual index in filtered_species
             actual_index = (self.current_page - 1) * self.items_per_page + index
             
             species_code = str(species.get("SpeciesCode", ""))
+            spec_common = str(species.get("SpecCommon", ""))
             origin = species.get("Origin", "")
             equation_type = species.get("EquationType", "Height-based")
+            
+            # Determine what to display in the SPECIES column
+            # Show either SpecCommon OR SpeciesCode, not both
+            if spec_common and spec_common != "" and spec_common != "None":
+                species_display = spec_common  # Just show the common name
+            else:
+                species_display = species_code  # Show the code if no common name
             
             # Determine equation type color
             if equation_type == "DBH + Height-based":
@@ -1679,10 +1704,10 @@ class Modify_Species_View:
                             padding=10,
                         )
                     ),
-                    # Species Code cell
+                    # SPECIES cell - shows either common name OR code
                     ft.DataCell(
                         ft.Container(
-                            content=ft.Text(species_code, 
+                            content=ft.Text(species_display, 
                                           size=14, 
                                           weight=ft.FontWeight.W_600,
                                           color=self.text_primary),

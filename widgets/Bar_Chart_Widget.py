@@ -14,7 +14,8 @@ class Bar_Chart_Widget(ft.BarChart):
         self.file_path_of_saved_chart_image = ""
         self.confirmation_container_ref = ft.Ref[ft.Container]()
         self.species_data = species_data
-        
+        print("Initializing Bar Chart Widget with species data:")
+        print(species_data)
         # Track if we've saved a screenshot
         self.has_saved = False
         
@@ -159,7 +160,7 @@ class Bar_Chart_Widget(ft.BarChart):
                             ft.BarChartRod(
                                 from_y=0,
                                 to_y=cumulative,
-                                width=15, # Reduced Rod Width
+                                width=15,
                                 border_radius=0,
                                 rod_stack_items=stacked_items,
                             )
@@ -167,39 +168,41 @@ class Bar_Chart_Widget(ft.BarChart):
                     )
                 )
             
-            # Calculate chart width - adjusted multiplier for thinner rods
-            chart_width = max(600, len(species_data) * 25) 
+            # Calculate chart width - increased multiplier for better spacing
+            chart_width = max(800, len(species_data) * 45)
             
-            # Create the bar chart
-            # Create the bar chart
+            # Create the bar chart with rotated labels
             bar_chart = ft.BarChart(
                 bar_groups=bar_groups,
                 border=ft.border.all(1, ft.Colors.GREY_400),
                 bgcolor=ft.Colors.WHITE,
                 
-               
                 left_axis=ft.ChartAxis(
                     title=ft.Text("Biomass (KG)", color=ft.Colors.BLACK87, size=13, weight=ft.FontWeight.BOLD),
-                    labels_size=70, # More space for Y-axis labels to prevent cutoff
+                    labels_size=70,
                     title_size=16,
                     show_labels=True,
                 ),
                 
-                # --- Bottom Axis Fixes (Increased labels_size, smaller font) ---
+                # Bottom Axis with rotated labels for better readability
                 bottom_axis=ft.ChartAxis(
-                    title=ft.Text("Species Code", color=ft.Colors.BLACK87, size=13, weight=ft.FontWeight.BOLD),
+                    title=ft.Text("Species", color=ft.Colors.BLACK87, size=13, weight=ft.FontWeight.BOLD),
                     labels=[
                         ft.ChartAxisLabel(
                             value=i, 
-                            label=ft.Text(
-                                species_info["species_code"], 
-                                color=ft.Colors.BLACK87, 
-                                size=10, # Readable label font
-                                weight=ft.FontWeight.W_500
+                            label=ft.Container(
+                                content=ft.Text(
+                                    species_info["species_code"], 
+                                    color=ft.Colors.BLACK87, 
+                                    size=9,
+                                    weight=ft.FontWeight.W_500
+                                ),
+                                rotate=ft.Rotate(angle=-0.785),  # -45 degrees in radians
+                                alignment=ft.alignment.center_right,
                             )
                         ) for i, species_info in enumerate(species_data)
                     ],
-                    labels_size=40, # More space for bottom labels
+                    labels_size=80,  # Increased to accommodate rotated labels
                     title_size=16,
                 ),
                 
@@ -212,8 +215,8 @@ class Bar_Chart_Widget(ft.BarChart):
                 min_y=0,
                 interactive=True,
                 width=chart_width,
-                height=400, # Increased height for better visibility
-                groups_space=25, # More space between groups
+                height=450,  # Increased height for better visibility with rotated labels
+                groups_space=35,  # Increased space between groups
             )
             
             # Create scrollable container for the chart
@@ -224,24 +227,23 @@ class Bar_Chart_Widget(ft.BarChart):
                             padding=10,
                             content=bar_chart,
                             width=chart_width,
-                         
                         )
                     ],
                     scroll=ft.ScrollMode.ADAPTIVE,
                 ),
-                width=800,
-                height=500, # Reduced Container Height
+                width=1000,  # Increased width
+                height=550,  # Increased height to accommodate rotated labels
                 border=ft.border.all(1, ft.Colors.GREY_300),
             )
             
             # Saved screenshot confirmation text (with top margin)
             confirmation_container = ft.Container(
                 ref=self.confirmation_container_ref,
-                margin=ft.margin.only(top=20), # Added top margin
+                margin=ft.margin.only(top=20),
                 content=ft.Row(
                     controls=[
                         ft.Icon(ft.Icons.CHECK_CIRCLE, color=ft.Colors.GREEN, size=18),
-                        ft.Text("Chart image saved to:", size=13, color=ft.Colors.BLACK), # Simplified text
+                        ft.Text("Chart image saved to:", size=13, color=ft.Colors.BLACK),
                         ft.Text("", size=13, color=ft.Colors.BLUE, weight=ft.FontWeight.BOLD, selectable=True)
                     ]
                 ),
@@ -256,13 +258,12 @@ class Bar_Chart_Widget(ft.BarChart):
             
             # Main card content
             card = ft.Card(
-                
                 ref=self.card_ref,
                 elevation=20,
                 content=ft.Container(
                     border_radius=ft.border_radius.all(15),
-                    width=800, 
-                    height=900,
+                    width=1000,  # Increased width
+                    height=950,  # Increased height
                     bgcolor=ft.Colors.WHITE,
                     padding=30,
                     content=ft.Column([

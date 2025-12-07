@@ -1,4 +1,4 @@
-PLot	SubPlot	Year	Origin	Tree Status	SpecCode	Tree Number	DBH	Height
+PLot	SubPlot	Year	Origin	Tree Status	Species	Tree Number	DBH	Height
 1108656	1	2005a	Natural Stand	L 	13a	1a	19.5a	1a7.07
 1108656	1	2005	Natural Stand	L 	251	2	18.3	14.48
 1108656	1	2005	Natural Stand	L 	251	3	17	13.84

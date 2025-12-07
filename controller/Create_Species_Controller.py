@@ -14,6 +14,7 @@ class Create_Species_Controller:
         self.SPECIES_CODE_UPPER_CHARACTER_LIMIT = 30
         self.PARAMETER_VALUE_LOWER_LIMIT = -5.0
         self.PARAMETER_VALUE_UPPER_LIMIT = 5.0
+        self.species_textfield_value = ""
    
     def build(self):
         """Initializes the model."""
@@ -21,12 +22,21 @@ class Create_Species_Controller:
        
     def is_species_code_valid(self) -> bool:
         """Validates the species code input."""
+        self.species_textfield_value = self.view.species_textfield.value.strip()
+        if self.species_textfield_value == "":
+            return False
         try:
-            species_code_value = self.view.species_code_textfield.value.strip()
+            species_code_value = self.species_textfield_value
             species_code_value = int(species_code_value)
+            self.species_textfield_value = species_code_value
             return len(str(species_code_value)) >= self.SPECIES_CODE_LOWER_CHARACTER_LIMIT and len(str(species_code_value)) <= self.SPECIES_CODE_UPPER_CHARACTER_LIMIT
         except:
-            return False
+            # Not a valid integer, mening its probably speccommon a.k.a species name
+            print("Validating as species name its A STRING")
+            species_name_value = str(self.species_textfield_value.strip())
+            self.species_textfield_value = species_name_value
+            return len(species_name_value) >= self.SPECIES_CODE_LOWER_CHARACTER_LIMIT and len(species_name_value) <= self.SPECIES_CODE_UPPER_CHARACTER_LIMIT
+   
     
     def _is_at_least_one_component_selected(self) -> bool:
         """Checks if at least one component is selected."""
@@ -35,11 +45,15 @@ class Create_Species_Controller:
     
     def _is_form_valid(self) -> bool:
         """Checks if all required fields are valid."""
+    
         # Validate species code
         if not self.is_species_code_valid():
             self._update_species_code_error_text_message()
             return False
         self._update_species_code_error_text_message()
+        
+        # Checking to see if species code already exists in both created_species.json and tree_params.json
+        
         
         # Validate at least one component is selected
         if not self._is_at_least_one_component_selected():
@@ -97,9 +111,9 @@ class Create_Species_Controller:
     
     def _update_species_code_error_text_message(self):
         if not self.is_species_code_valid():
-            self.view.species_code_textfield.error_text = f"It must be a number ({self.SPECIES_CODE_LOWER_CHARACTER_LIMIT}-{self.SPECIES_CODE_UPPER_CHARACTER_LIMIT} characters)."
+            self.view.species_textfield.error_text = f"It must be a number or a name ({self.SPECIES_CODE_LOWER_CHARACTER_LIMIT}-{self.SPECIES_CODE_UPPER_CHARACTER_LIMIT} characters)."
             
-            self.view.species_code_textfield.update()
+            self.view.species_textfield.update()
         else:
-            self.view.species_code_textfield.error_text = None
-            self.view.species_code_textfield.update()
+            self.view.species_textfield.error_text = None
+            self.view.species_textfield.update()
