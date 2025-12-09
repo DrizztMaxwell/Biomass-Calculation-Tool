@@ -73,7 +73,7 @@ class HardwoodOrSoftwoodDialog:
             #     return
             
             self.user_selections = final_selections
-            print(f"Final Selected types: {self.user_selections}")
+            # print(f"Final Selected types: {self.user_selections}")
             
             # Set the future result
             self.result_future.set_result(self.user_selections)

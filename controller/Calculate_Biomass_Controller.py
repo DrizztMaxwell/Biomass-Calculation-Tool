@@ -259,6 +259,7 @@ class Calculate_Biomass_Controller:
         """Calculate biomass based on selected parameters and equation type."""
         #print("Calculate Biomass button clicked.")
         self.hardwood_and_softwood_species_code_mapping = []
+        
         self.selected_components = self.view.get_selected_components()
         self.equation_type = self.get_equation_type()
         #print(f"Selected Components: {self.selected_components}")
@@ -295,12 +296,12 @@ class Calculate_Biomass_Controller:
                     #print("Dialog was cancelled. Aborting biomass calculation.")
                     
                     raise Exception("Dialog cancelled by user")
-                
+                print(species_type_mapping)
                 #print(f"Species type mapping received: {species_type_mapping}")
                 # Now you can use the mapping to set parameters
                 self._apply_species_type_mapping(species_type_mapping)
                 #print(f"Hardwood and Softwood Species Code Mapping: {self.hardwood_and_softwood_species_code_mapping}")
-            
+            print(self.hardwood_and_softwood_species_code_mapping)
             self._lower_column_names(self.local_storage_data, self.tree_params_data)
             self._process_biomass_calculations(self.local_storage_data, self.tree_params_data)
             self._save_results(self.local_storage_data)
@@ -336,6 +337,7 @@ class Calculate_Biomass_Controller:
         species_name_lookup = {}  # For looking up by species name (str)
         created_species_code_lookup = {}  # For created species by code
         created_species_name_lookup = {}  # For created species by name
+        hardwood_and_softwood_species_code_mapping_lookup = {}
         
         # Load from tree_params (existing)
         for _, row in tree_params.iterrows():
@@ -398,12 +400,18 @@ class Calculate_Biomass_Controller:
             for species in species_list:
                 try:
                     code = species.get('SpeciesCode')
+                    if code.isdigit():
+                        code = int(code)
+                    else:
+                        code = str(code).lower().strip()
                     # print(f"Adding species code from mapping: {code}")
                     if code and pd.notna(code):
-                        created_species_code_lookup[int(code)] = species
+                        print(f"Looking up hardwood/softwood mapping for species name 2'{code}': {species}")
+                        hardwood_and_softwood_species_code_mapping_lookup[(code)] = species
                 except (ValueError, TypeError):
                     continue
-        
+        print("Hardwood and Softwood Species Code Mapping Lookup:")
+        print(hardwood_and_softwood_species_code_mapping_lookup)
         # 2. Vectorized filtering of valid rows\
             #check alphanumeric species codes and name
             
@@ -426,6 +434,9 @@ class Calculate_Biomass_Controller:
                 
                 if not species_params:
                     species_params = created_species_code_lookup.get(species_code)
+                if not species_params:
+                    species_params = hardwood_and_softwood_species_code_mapping_lookup.get(species_code)
+                    print(f"Looking up hardwood/softwood mapping for species name 1'{species_code}': {hardwood_and_softwood_species_code_mapping_lookup.get(species_code)}")
                     
                     
             except (ValueError, TypeError):
@@ -441,8 +452,11 @@ class Calculate_Biomass_Controller:
                 # If not found, try created_species by name
                 if not species_params:
                     species_params = created_species_name_lookup.get(species_name)
+                if not species_params:
+                    species_params = hardwood_and_softwood_species_code_mapping_lookup.get(species_name)
+                    print(f"Looking up hardwood/softwood mapping for species name '{species_name}': {hardwood_and_softwood_species_code_mapping_lookup.get(species_name)}")
             # print(f"Processing row {idx} with species value: {species_params}")
-            
+
             # If we found species parameters, calculate biomass
             if species_params:
                # print("Found species parameters:")

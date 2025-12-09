@@ -15,7 +15,7 @@ class Bar_Chart_Widget(ft.BarChart):
         self.confirmation_container_ref = ft.Ref[ft.Container]()
         self.species_data = species_data
         print("Initializing Bar Chart Widget with species data:")
-        print(species_data)
+        # print(species_data)
         # Track if we've saved a screenshot
         self.has_saved = False
         
