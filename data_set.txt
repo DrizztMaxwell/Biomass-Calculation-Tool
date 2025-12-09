@@ -1,0 +1,13 @@
+PLot	SubPlot	Year	Origin	Tree Status	Species	Tree Number	DBH	Height
+1108656	1	2005a	Natural Stand	L 	13a	1a	19.5a	1a7.07
+1108656	1	2005	Natural Stand	L 	251	2	18.3	14.48
+1108656	1	2005	Natural Stand	L 	251	3	17	13.84
+1108656	1	2005	Natural Stand	L 	13	4	17.8	13.82
+1108656	1	2005	Natural Stand	L 	13	5	15.7	13.81
+1108656	1	2005	Natural Stand	L 	13	6	18.2	13.64
+1108656	1	2005	Natural Stand	L 	13	7	15.7	13.32
+1108656	1	2005	Natural Stand	L 	13	8	16	12s.08
+1108656	1	2005	Natural Stand	L 	13	9	10.3	10.77
+1108656	1	2016	Natural Stand	L 	13	95	10.3	10.77
+9999999	1	2005	Natural Stand	L 	13	18266	11.8	8.66
+9999999	1	2005	Natural Stand	L 	13	18267	5	4.36
