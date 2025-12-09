@@ -433,6 +433,7 @@ class Calculate_Biomass_Controller:
                 # If not found, try created_species by code
                 
                 if not species_params:
+                    
                     species_params = created_species_code_lookup.get(species_code)
                 if not species_params:
                     species_params = hardwood_and_softwood_species_code_mapping_lookup.get(species_code)
@@ -451,7 +452,11 @@ class Calculate_Biomass_Controller:
                 
                 # If not found, try created_species by name
                 if not species_params:
+                    if species_name == "aw2":
+                        print("HERE")
                     species_params = created_species_name_lookup.get(species_name)
+                    print(f"Looking up created species name '{species_name}': {created_species_name_lookup.get(species_name)}")
+                    
                 if not species_params:
                     species_params = hardwood_and_softwood_species_code_mapping_lookup.get(species_name)
                     print(f"Looking up hardwood/softwood mapping for species name '{species_name}': {hardwood_and_softwood_species_code_mapping_lookup.get(species_name)}")
@@ -477,8 +482,7 @@ class Calculate_Biomass_Controller:
         return self.lookup(data_as_dict, species_code)
     def _calculate_row_biomass(self, data: pd.DataFrame, index: int, row: pd.Series, species_params: dict) -> None:
         """Calculate biomass for a single row based on equation type."""
-        # print("Calculating biomass for row:SIOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO")
-        # print(species_params)
+  
         if self.equation_type == "DBH-based":
             self._calculate_dbh_based_biomass(data, index, row, species_params)
         if self.equation_type == "DBH + Height-based":
@@ -590,10 +594,7 @@ class Calculate_Biomass_Controller:
     def _calculate_dbh_based_biomass(self, data: pd.DataFrame, index: int, row: pd.Series, species_params: dict) -> None:
         """Calculate DBH-based biomass for all selected components."""
         dbh = row.get('dbh', 0)
-        #print(f"Calculating DBH-based biomass for row {index} with DBH: {dbh}")
-        #print(species_params)
-        #print(row)
-         # 2. Attempt safe conversion to float (and handle missing/zero values)
+      
         try:
             # Check if the values are truthy (not None, not empty string) and convert
             dbh = float(dbh) if dbh is not None and str(dbh).strip() != '' else 0.0

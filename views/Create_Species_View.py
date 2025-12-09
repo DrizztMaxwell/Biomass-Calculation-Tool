@@ -656,12 +656,16 @@ class Create_Species_View:
             for param in self.param_controls.get(self.current_equation_type).get(component):
                 if prefix == "bh":
                     for _,index in param_label[0:len(param_label)]:    
-                        
-                        data_to_be_inserted_into_json[f"{prefix}{component.lower()}{index}"] = float(param.value)
+                        if component.lower() == "branch":
+                            data_to_be_inserted_into_json[f"{prefix}branches{index}"] = float(param.value)
+                        else:
+                            data_to_be_inserted_into_json[f"{prefix}{component.lower()}{index}"] = float(param.value)
                 else:
                     for _,index in param_label[0:len(param_label)-1]:
-            
-                        data_to_be_inserted_into_json[f"{prefix}{component.lower()}{index}"] = float(param.value)                    
+                        if component.lower() == "branch":
+                            data_to_be_inserted_into_json[f"{prefix}branches{index}"] = float(param.value)
+                        else:
+                            data_to_be_inserted_into_json[f"{prefix}{component.lower()}{index}"] = float(param.value)                    
            
         return data_to_be_inserted_into_json
     
