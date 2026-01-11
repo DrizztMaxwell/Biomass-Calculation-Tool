@@ -31,18 +31,18 @@ class Modify_Species_View:
         # Search Field with Uber Eats style
         self.search_field = ft.TextField(
             hint_text="🔍 Search by code, common name, or origin...",  # Updated hint
-            hint_style=ft.TextStyle(size=14, color=ft.Colors.GREY_500, italic=True),
+            hint_style=ft.TextStyle(size=14, color=ft.Colors.PRIMARY, italic=True),
             text_size=14,
-            border_color=ft.Colors.GREY_300,
-            bgcolor=ft.Colors.WHITE,
+            border_color=ft.Colors.PRIMARY,
+            bgcolor=ft.Colors.SECONDARY,
             height=48,
             content_padding=ft.padding.only(left=20, right=20, top=15, bottom=15),
             border_radius=15,
             expand=True,
             filled=True,
-            fill_color=ft.Colors.GREY_50,
-            focused_border_color=ft.Colors.BLACK,
-            focused_bgcolor=ft.Colors.WHITE,
+            fill_color=ft.Colors.SECONDARY,
+            focused_border_color=ft.Colors.PRIMARY,
+            focused_bgcolor=ft.Colors.PRIMARY,
             on_change=self.filter_species,
             suffix_icon=ft.Icon(ft.Icons.SEARCH, color=self.primary_color, size=20)
         )
@@ -95,10 +95,10 @@ class Modify_Species_View:
                 ft.Text("No Matching Species Found", 
                        size=18, 
                        weight=ft.FontWeight.W_700, 
-                       color=self.text_primary),
+                       color=ft.Colors.PRIMARY),
                 ft.Text("Try searching with a different species code or origin", 
                        size=14, 
-                       color=self.text_secondary,
+                       color=ft.Colors.PRIMARY,
                        text_align=ft.TextAlign.CENTER),
                 ft.Container(height=10),
                 ft.TextButton(
@@ -110,7 +110,7 @@ class Modify_Species_View:
             alignment=ft.alignment.center,
             padding=40,
             visible=False,
-            bgcolor=ft.Colors.WHITE,
+            bgcolor=ft.Colors.SECONDARY_CONTAINER,
             border_radius=15,
             shadow=ft.BoxShadow(
                 spread_radius=1,
@@ -124,23 +124,23 @@ class Modify_Species_View:
             columns=[
                 ft.DataColumn(ft.Text("ROW", 
                                      weight=ft.FontWeight.W_700, 
-                                     color=self.text_primary,
+                                     color=ft.Colors.PRIMARY,
                                      size=12)),
                 ft.DataColumn(ft.Text("SPECIES", 
                                      weight=ft.FontWeight.W_700, 
-                                     color=self.text_primary,
+                                     color=ft.Colors.PRIMARY,
                                      size=12)),
                 ft.DataColumn(ft.Text("ORIGIN", 
                                      weight=ft.FontWeight.W_700, 
-                                     color=self.text_primary,
+                                     color=ft.Colors.PRIMARY,
                                      size=12)),
                 ft.DataColumn(ft.Text("EQUATION TYPE", 
                                      weight=ft.FontWeight.W_700, 
-                                     color=self.text_primary,
+                                     color=ft.Colors.PRIMARY,
                                      size=12)),
                 ft.DataColumn(ft.Text("ACTIONS", 
                                      weight=ft.FontWeight.W_700, 
-                                     color=self.text_primary,
+                                     color=ft.Colors.PRIMARY,
                                      size=12)),
             ],
             rows=[],
@@ -376,7 +376,7 @@ class Modify_Species_View:
                             content=ft.Text(str(row_number),
                                           size=14,
                                           weight=ft.FontWeight.W_600,
-                                          color=self.text_primary),
+                                          color=ft.Colors.PRIMARY),
                             alignment=ft.alignment.center,
                             padding=10,
                         )
@@ -387,7 +387,7 @@ class Modify_Species_View:
                             content=ft.Text(species_display, 
                                           size=14, 
                                           weight=ft.FontWeight.W_600,
-                                          color=self.text_primary),
+                                          color=ft.Colors.PRIMARY),
                             padding=10,
                             tooltip=f"Code: {species_code}" if spec_common else f"Name: {spec_common}" if spec_common else None
                         )
@@ -398,7 +398,7 @@ class Modify_Species_View:
                             ft.Icon(ft.Icons.LOCATION_ON_OUTLINED, 
                                    size=16, 
                                    color=self.text_secondary),
-                            ft.Text(origin, size=14, color=self.text_secondary)
+                            ft.Text(origin, size=14, color=ft.Colors.PRIMARY)
                         ], spacing=8)
                     ),
                     # Equation Type cell
@@ -532,9 +532,9 @@ class Modify_Species_View:
                     ft.Text("Basic Information", 
                             size=17, 
                             weight=ft.FontWeight.W_600, 
-                            color=self.text_primary),
+                            color=ft.Colors.PRIMARY),
                 ], spacing=12),
-                ft.Divider(height=1, color=ft.Colors.GREY_200),
+                
                 ft.Container(height=20),
                 self._create_detail_row("Species Code", str(species.get("SpeciesCode", "")), ft.Icons.TAG),
                 ft.Container(height=12),
@@ -547,7 +547,7 @@ class Modify_Species_View:
                 ft.Container(height=5),
             ], spacing=0),
             padding=ft.padding.all(24),
-            bgcolor=self.card_bg,
+            bgcolor=ft.Colors.SECONDARY_CONTAINER,
             border_radius=12,
             border=ft.border.all(1, ft.Colors.GREY_100),
             shadow=ft.BoxShadow(
@@ -597,7 +597,7 @@ class Modify_Species_View:
                                 content=ft.Text(param_key, 
                                                 size=14, 
                                                 weight=ft.FontWeight.W_500,
-                                                color=self.text_secondary),
+                                                color=ft.Colors.PRIMARY),
                                 width=180,
                                 padding=ft.padding.symmetric(vertical=10, horizontal=15)
                             ),
@@ -606,16 +606,16 @@ class Modify_Species_View:
                                 content=ft.Text(f"{float(param_value):.6f}", 
                                                 size=14, 
                                                 weight=ft.FontWeight.W_600,
-                                                color=self.text_primary),
+                                                color=ft.Colors.PRIMARY),
                                 expand=True,
                                 padding=ft.padding.symmetric(vertical=10, horizontal=15),
-                                bgcolor=ft.Colors.GREY_50, 
+                                bgcolor=ft.Colors.SECONDARY_CONTAINER, 
                                 border_radius=6
                             )
                         ], spacing=0),
-                        border=ft.border.all(0.5, ft.Colors.GREY_100),
+                        border=ft.border.all(0.5, ft.Colors.GREY_200),
                         border_radius=6,
-                        bgcolor=ft.Colors.WHITE
+                        bgcolor=ft.Colors.SECONDARY_CONTAINER
                     )
                 )
             
@@ -642,15 +642,15 @@ class Modify_Species_View:
                                     ft.Text("Parameter", 
                                             size=13,
                                             weight=ft.FontWeight.W_600,
-                                            color=ft.Colors.GREY_600,
+                                            color=ft.Colors.PRIMARY,
                                             width=180),
                                     ft.Text("Value", 
                                             size=13,
                                             weight=ft.FontWeight.W_600,
-                                            color=ft.Colors.GREY_600),
+                                            color=ft.Colors.PRIMARY),
                                 ], spacing=0),
                                 padding=ft.padding.symmetric(horizontal=15, vertical=8),
-                                bgcolor=ft.Colors.GREY_50,
+                                bgcolor=ft.Colors.SECONDARY_CONTAINER,
                                 border_radius=6,
                                 border=ft.border.all(0.5, ft.Colors.GREY_200)
                             ),
@@ -659,9 +659,9 @@ class Modify_Species_View:
                         ])
                     ], spacing=0),
                     padding=24,
-                    bgcolor=self.card_bg,
+                    bgcolor=ft.Colors.SECONDARY_CONTAINER,
                     border_radius=12,
-                    border=ft.border.all(1, ft.Colors.GREY_100),
+                    border=ft.border.all(1, ft.Colors.PRIMARY),
                     shadow=ft.BoxShadow(
                         spread_radius=0,
                         blur_radius=12,
@@ -689,7 +689,7 @@ class Modify_Species_View:
             ], spacing=0),
             width=dialog_width,
             height=max_dialog_height, 
-            bgcolor=ft.Colors.WHITE,
+            bgcolor=ft.Colors.SECONDARY,
             clip_behavior=ft.ClipBehavior.HARD_EDGE
         )
         
@@ -701,8 +701,8 @@ class Modify_Species_View:
                     "Close",
                     icon=ft.Icons.CLOSE,
                     style=ft.ButtonStyle(
-                        bgcolor=ft.Colors.GREY_100,
-                        color=self.text_secondary,
+                        bgcolor=ft.Colors.TERTIARY,
+                        color=ft.Colors.WHITE,
                         padding=ft.padding.symmetric(horizontal=28, vertical=14),
                         shape=ft.RoundedRectangleBorder(radius=10),
                         side=ft.BorderSide(1, ft.Colors.GREY_200)
@@ -712,7 +712,7 @@ class Modify_Species_View:
                 ft.Container(width=12),
             ], alignment=ft.MainAxisAlignment.END),
             padding=ft.padding.symmetric(horizontal=30, vertical=20),
-            bgcolor=ft.Colors.GREY_50,
+            bgcolor=ft.Colors.SECONDARY_CONTAINER,
             border=ft.border.only(top=ft.BorderSide(1, ft.Colors.GREY_200)),
             border_radius=ft.border_radius.only(bottom_left=16, bottom_right=16)
         )
@@ -823,8 +823,8 @@ class Modify_Species_View:
             ],
             border_radius=10,
             filled=True,
-            fill_color=ft.Colors.GREY_50,
-            border_color=ft.Colors.GREY_200,
+            fill_color=ft.Colors.SECONDARY_CONTAINER,
+            border_color=ft.Colors.PRIMARY,
             focused_border_color=self.primary_color,
             focused_bgcolor=ft.Colors.WHITE,
             text_size=14,
@@ -840,18 +840,18 @@ class Modify_Species_View:
                     ft.Text("Basic Information", 
                         size=17, 
                         weight=ft.FontWeight.W_600, 
-                        color=self.text_primary),
+                        color=ft.Colors.PRIMARY),
                 ], spacing=12),
                 ft.Divider(height=1, color=ft.Colors.GREY_200),
                 ft.Container(height=15),
-                ft.Text("Origin", size=14, weight=ft.FontWeight.W_500, color=self.text_secondary),
+                ft.Text("Origin", size=14, weight=ft.FontWeight.W_500, color=ft.Colors.PRIMARY),
                 origin_dropdown,
                 ft.Container(height=15),
             ]),
             padding=ft.padding.all(24),
-            bgcolor=self.card_bg,
+            bgcolor=ft.Colors.SECONDARY_CONTAINER,
             border_radius=12,
-            border=ft.border.all(1, ft.Colors.GREY_100),
+            border=ft.border.all(1, ft.Colors.PRIMARY),
         )
         
         # Parameters form with professional styling
@@ -902,8 +902,8 @@ class Modify_Species_View:
                     keyboard_type=ft.KeyboardType.NUMBER,
                     border_radius=8,
                     filled=True,
-                    fill_color=ft.Colors.GREY_50,
-                    border_color=ft.Colors.GREY_200,
+                    fill_color=ft.Colors.SECONDARY_CONTAINER,
+                    border_color=ft.Colors.PRIMARY,
                     focused_border_color=category_data["color"],
                     focused_bgcolor=ft.Colors.WHITE,
                     text_size=14,
@@ -913,10 +913,11 @@ class Modify_Species_View:
                 
                 # Store reference to the TextField
                 param_text_fields[param_key] = text_field
+                text_field.color = ft.Colors.PRIMARY
                 
                 # Create the field container
                 field_container = ft.Column([
-                    ft.Text(param_key, size=14, weight=ft.FontWeight.W_500, color=self.text_secondary),
+                    ft.Text(param_key, size=14, weight=ft.FontWeight.W_500, color=ft.Colors.PRIMARY),
                     ft.Container(height=6),
                     ft.Container(
                         content=text_field,
@@ -952,7 +953,7 @@ class Modify_Species_View:
                         param_fields
                     ]),
                     padding=24,
-                    bgcolor=self.card_bg,
+                    bgcolor=ft.Colors.SECONDARY_CONTAINER,
                     border_radius=12,
                     border=ft.border.all(1, ft.Colors.GREY_100),
                     shadow=ft.BoxShadow(
@@ -1064,7 +1065,7 @@ class Modify_Species_View:
                 )
             ], alignment=ft.MainAxisAlignment.END),
             padding=ft.padding.symmetric(horizontal=30, vertical=20),
-            bgcolor=ft.Colors.GREY_50,
+            bgcolor=ft.Colors.SECONDARY_CONTAINER,
             border=ft.border.only(top=ft.BorderSide(1, ft.Colors.GREY_200)),
             border_radius=ft.border_radius.only(bottom_left=16, bottom_right=16)
         )
@@ -1087,7 +1088,7 @@ class Modify_Species_View:
             ], spacing=0),
             width=dialog_width,
             height=dialog_height,
-            bgcolor=ft.Colors.WHITE,
+            bgcolor=ft.Colors.SECONDARY,
             clip_behavior=ft.ClipBehavior.HARD_EDGE
         )
         
@@ -1244,17 +1245,17 @@ class Modify_Species_View:
                 ft.Text(f"Are you sure you want to delete species ", 
                         size=18, 
                         weight=ft.FontWeight.W_600, 
-                        color=self.text_primary,
+                        color=ft.Colors.PRIMARY,
                         text_align=ft.TextAlign.CENTER),
                 ft.Text(f"{display_value}?", 
                         size=18, 
                         weight=ft.FontWeight.BOLD, 
-                        color=self.text_primary,
+                        color=ft.Colors.PRIMARY,
                         text_align=ft.TextAlign.CENTER),
                 ft.Container(height=10),
                 ft.Text("This action cannot be undone. All associated data will be permanently removed.", 
                         size=14, 
-                        color=self.text_secondary,
+                        color=ft.Colors.PRIMARY,
                         text_align=ft.TextAlign.CENTER),
                 ft.Container(height=5),
                 ft.Text("⚠️ Warning: This is a destructive operation", 
@@ -1264,7 +1265,7 @@ class Modify_Species_View:
                         text_align=ft.TextAlign.CENTER),
             ], horizontal_alignment=ft.CrossAxisAlignment.CENTER, spacing=0),
             padding=ft.padding.all(30),
-            bgcolor=self.card_bg,
+            bgcolor=ft.Colors.SECONDARY_CONTAINER,
             border_radius=12,
             border=ft.border.all(1, ft.Colors.GREY_100),
             shadow=ft.BoxShadow(
@@ -1288,7 +1289,7 @@ class Modify_Species_View:
                 )
             ], spacing=0),
             width=dialog_width,
-            bgcolor=ft.Colors.WHITE,
+            bgcolor=ft.Colors.SECONDARY,
             clip_behavior=ft.ClipBehavior.HARD_EDGE
         )
         
@@ -1323,7 +1324,7 @@ class Modify_Species_View:
                 )
             ], alignment=ft.MainAxisAlignment.END),
             padding=ft.padding.symmetric(horizontal=30, vertical=20),
-            bgcolor=ft.Colors.GREY_50,
+            bgcolor=ft.Colors.SECONDARY_CONTAINER,
             border=ft.border.only(top=ft.BorderSide(1, ft.Colors.GREY_200)),
             border_radius=ft.border_radius.only(bottom_left=16, bottom_right=16)
         )
@@ -1430,21 +1431,21 @@ class Modify_Species_View:
         """Helper to create a detail row with icon"""
         return ft.Row([
             ft.Row([
-                ft.Icon(icon, size=18, color=self.text_secondary),
+                ft.Icon(icon, size=18, color=ft.Colors.PRIMARY),
                 ft.Text(label + ":", 
                        size=14, 
                        weight=ft.FontWeight.W_500,
-                       color=self.text_secondary,
+                       color=ft.Colors.PRIMARY,
                        width=120),
             ], spacing=10),
             ft.Container(
                 content=ft.Text(value, 
                               size=14, 
                               weight=ft.FontWeight.W_600,
-                              color=self.text_primary),
+                              color=ft.Colors.PRIMARY),
                 expand=True,
                 padding=ft.padding.symmetric(vertical=8, horizontal=15),
-                bgcolor=ft.Colors.GREY_50,
+                bgcolor=ft.Colors.SECONDARY_CONTAINER,
                 border_radius=8
             )
         ], spacing=10, vertical_alignment=ft.CrossAxisAlignment.CENTER)
@@ -1533,7 +1534,9 @@ class Modify_Species_View:
             start_index = min((self.current_page - 1) * self.items_per_page + 1, total_species)
             end_index = min(self.current_page * self.items_per_page, total_species)
             self.pagination_info.value = f"Showing {start_index}-{end_index} of {total_species} species"
+            self.pagination_info.color = ft.Colors.PRIMARY
             self.page_number_display.content.value = str(self.current_page)
+            self.page_number_display.content.color = ft.Colors.PRIMARY
             
             # Calculate button states
             total_pages = max(1, (total_species + self.items_per_page - 1) // self.items_per_page)
@@ -1550,6 +1553,7 @@ class Modify_Species_View:
         
         # Create the pagination row
         pagination_row = ft.Container(
+            
             content=ft.Row([
                 self.pagination_info,
                 ft.Container(expand=True),
@@ -1560,7 +1564,7 @@ class Modify_Species_View:
                 ], spacing=10, alignment=ft.MainAxisAlignment.END)
             ], vertical_alignment=ft.CrossAxisAlignment.CENTER),
             padding=ft.padding.symmetric(vertical=15, horizontal=20),
-            bgcolor=ft.Colors.WHITE,
+            bgcolor=ft.Colors.SECONDARY_CONTAINER,
             border_radius=ft.border_radius.only(bottom_left=10, bottom_right=10),
             border=ft.border.only(top=ft.BorderSide(1, ft.Colors.GREY_200)),
             visible=len(self.filtered_species) > 0
@@ -1571,7 +1575,9 @@ class Modify_Species_View:
             margin=ft.margin.all(20),
             padding=ft.padding.all(20),
             expand=True,
-            bgcolor=ft.Colors.WHITE,
+            bgcolor=ft.Colors.SECONDARY_CONTAINER,
+            border_radius=15,
+            border=ft.border.all(0.5, ft.Colors.PRIMARY),
             shadow=ft.BoxShadow(
                 spread_radius=1,
                 blur_radius=10,
@@ -1582,7 +1588,7 @@ class Modify_Species_View:
                 ft.Column([
                     ft.Container(
                         content=ft.Row([
-                            ft.Icon(ft.Icons.TUNE_OUTLINED, size=28, color=ft.Colors.BLACK),
+                            ft.Icon(ft.Icons.TUNE_OUTLINED, size=28, color=ft.Colors.PRIMARY),
                             TitleTextWidget("Modify Species")
                         ], spacing=15),
                         padding=ft.padding.only(bottom=10)
@@ -1616,9 +1622,9 @@ class Modify_Species_View:
                         pagination_row
                     ], spacing=0),
                     expand=True,
-                    border=ft.border.all(0.5, ft.Colors.GREY_200),
+                    border=ft.border.all(0.5, ft.Colors.PRIMARY),
                     border_radius=15,
-                    bgcolor=ft.Colors.WHITE,
+                    bgcolor=ft.Colors.SECONDARY,
                     shadow=ft.BoxShadow(
                         spread_radius=1,
                         blur_radius=10,
@@ -1699,7 +1705,7 @@ class Modify_Species_View:
                             content=ft.Text(str(row_number),
                                           size=14,
                                           weight=ft.FontWeight.W_600,
-                                          color=self.text_primary),
+                                          color=ft.Colors.PRIMARY),
                             alignment=ft.alignment.center,
                             padding=10,
                         )
@@ -1710,7 +1716,7 @@ class Modify_Species_View:
                             content=ft.Text(species_display, 
                                           size=14, 
                                           weight=ft.FontWeight.W_600,
-                                          color=self.text_primary),
+                                          color=ft.Colors.PRIMARY),
                             padding=10,
                         )
                     ),
@@ -1719,15 +1725,15 @@ class Modify_Species_View:
                         ft.Row([
                             ft.Icon(ft.Icons.LOCATION_ON_OUTLINED, 
                                    size=16, 
-                                   color=self.text_secondary),
-                            ft.Text(origin, size=14, color=self.text_secondary)
+                                   color=ft.Colors.PRIMARY),
+                            ft.Text(origin, size=14, color=ft.Colors.PRIMARY)
                         ], spacing=8)
                     ),
                     # Equation Type cell
                     ft.DataCell(
                         ft.Row([
-                            ft.Icon(eq_icon, size=16, color=eq_color),
-                            ft.Text(equation_type, size=14, color=eq_color)
+                            ft.Icon(eq_icon, size=16, color=ft.Colors.PRIMARY),
+                            ft.Text(equation_type, size=14, color=ft.Colors.PRIMARY)
                         ], spacing=8)
                     ),
                     # Actions cell
@@ -1741,7 +1747,7 @@ class Modify_Species_View:
                                     tooltip="View Details",
                                     on_click=lambda e, idx=actual_index: self.view_species_dialog(idx)
                                 ),
-                                bgcolor=self.primary_color,
+                                bgcolor=ft.Colors.BLUE_400,
                                 border_radius=8,
                                 padding=ft.padding.all(2)
                             ),

@@ -20,7 +20,7 @@ class Create_Species_View:
         self._controller = controller
         self.selected_components_text = ft.Text(
             value="",
-            color=ft.Colors.BLACK,
+            color=ft.Colors.PRIMARY,
             weight=ft.FontWeight.W_500
         )
         # Store parameter controls for dynamic visibility
@@ -48,9 +48,8 @@ class Create_Species_View:
         # Species Code Control with expanded width for error text
         self.species_textfield = ft.TextField(
             hint_text="Alpine fir or 123",
-            # height=80,
             width=FORM_ELEMENT_WIDTH,  # Fixed width
-           
+             border_color=ft.Colors.PRIMARY,
         )
         
         species_container = ft.Container(
@@ -71,7 +70,9 @@ class Create_Species_View:
             value="Natural Stand",  # Default Value
             content_padding=ft.padding.only(left=8, right=8),
             border_radius=5,
+            border_color=ft.Colors.PRIMARY,
             width=FORM_ELEMENT_WIDTH,  # Same width
+         
         )
         
         origin_container = ft.Container(
@@ -93,6 +94,7 @@ class Create_Species_View:
             border_radius=5,
             on_change=self._on_equation_type_change,  # Add change handler
             width=FORM_ELEMENT_WIDTH,  # Same width
+            border_color=ft.Colors.PRIMARY,
         )
         self._controller.equation_type_control = self.equation_type_dropdown  # Store in controller
         
@@ -288,7 +290,7 @@ class Create_Species_View:
             max_lines=1,
             text_align=ft.TextAlign.CENTER,
             # Styling
-            bgcolor=ft.Colors.WHITE,
+            bgcolor=ft.Colors.SECONDARY_CONTAINER,
            
             border_color=ft.Colors.BLACK,
             focused_border_color=ft.Colors.BLACK,
@@ -299,7 +301,7 @@ class Create_Species_View:
             label_style=ft.TextStyle(
                 size=12,
                 weight=ft.FontWeight.W_500,
-                color=ft.Colors.BLACK87
+                color=ft.Colors.PRIMARY,
             ),
             # Error styling
             error_style=ft.TextStyle(
@@ -310,7 +312,7 @@ class Create_Species_View:
             hint_text="0.00",
             hint_style=ft.TextStyle(
                 size=13,
-                color=ft.Colors.GREY_500
+                color=ft.Colors.ON_PRIMARY_CONTAINER
             ),
         )
         
@@ -353,13 +355,13 @@ class Create_Species_View:
         total_b3 = self._param_input("b3")
 
         # Create component labels
-        wood_label = ft.Text("Wood", size=14, weight=ft.FontWeight.BOLD, color=ft.Colors.BLUE_GREY_800)
-        bark_label = ft.Text("Bark", size=14, weight=ft.FontWeight.BOLD, color=ft.Colors.BLUE_GREY_800)
-        branch_label = ft.Text("Branch", size=14, weight=ft.FontWeight.BOLD, color=ft.Colors.BLUE_GREY_800)
-        foliage_label = ft.Text("Foliage", size=14, weight=ft.FontWeight.BOLD, color=ft.Colors.BLUE_GREY_800)
-        crown_label = ft.Text("Crown", size=14, weight=ft.FontWeight.BOLD, color=ft.Colors.BLUE_GREY_800)
-        stem_label = ft.Text("Stem", size=14, weight=ft.FontWeight.BOLD, color=ft.Colors.BLUE_GREY_800)
-        total_label = ft.Text("Total", size=14, weight=ft.FontWeight.BOLD, color=ft.Colors.BLUE_GREY_800)
+        wood_label = ft.Text("Wood", size=14, weight=ft.FontWeight.BOLD, color=ft.Colors.ON_PRIMARY_CONTAINER)
+        bark_label = ft.Text("Bark", size=14, weight=ft.FontWeight.BOLD, color=ft.Colors.ON_PRIMARY_CONTAINER)
+        branch_label = ft.Text("Branch", size=14, weight=ft.FontWeight.BOLD, color=ft.Colors.ON_PRIMARY_CONTAINER)
+        foliage_label = ft.Text("Foliage", size=14, weight=ft.FontWeight.BOLD, color=ft.Colors.ON_PRIMARY_CONTAINER)
+        crown_label = ft.Text("Crown", size=14, weight=ft.FontWeight.BOLD, color=ft.Colors.ON_PRIMARY_CONTAINER)
+        stem_label = ft.Text("Stem", size=14, weight=ft.FontWeight.BOLD, color=ft.Colors.ON_PRIMARY_CONTAINER)
+        total_label = ft.Text("Total", size=14, weight=ft.FontWeight.BOLD, color=ft.Colors.ON_PRIMARY_CONTAINER)
 
         # Store references for dynamic visibility
         self.param_controls = {
@@ -680,7 +682,7 @@ class Create_Species_View:
                     ], spacing=5, alignment=ft.MainAxisAlignment.CENTER),
                     # Link to confirmation dialog instead of direct submit
                     on_click=lambda e: self._show_confirmation_dialog(e, page), 
-                    bgcolor=ft.Colors.GREEN_700,
+                    bgcolor=ft.Colors.TERTIARY,
                     color=ft.Colors.WHITE,
                     height=40,
                     style=ft.ButtonStyle(shape=ft.RoundedRectangleBorder(radius=8))
@@ -734,7 +736,8 @@ class Create_Species_View:
                 margin=30,
                 padding=40,
                 border_radius=15,
-                bgcolor=ft.Colors.WHITE,
+                border=ft.border.all(1, ft.Colors.PRIMARY),
+                bgcolor=ft.Colors.SECONDARY_CONTAINER,
                 shadow=ft.BoxShadow(
                     spread_radius=1,
                     blur_radius=10,

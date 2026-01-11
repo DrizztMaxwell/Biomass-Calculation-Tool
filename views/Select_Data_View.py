@@ -27,7 +27,7 @@ class Select_Data_View:
                 padding=ft.padding.all(40),
                 margin=ft.margin.all(30),
                 border_radius=ft.border_radius.all(20),
-                bgcolor=ft.Colors.WHITE,
+                bgcolor=ft.Colors.SECONDARY_CONTAINER,
                 expand=True,
                 height=600,
                 shadow=ft.BoxShadow(
@@ -168,23 +168,23 @@ class Select_Data_View:
                             "Import Local Text File",
                             size=14,
                             weight=ft.FontWeight.W_600,
-                            color=ft.Colors.GREY_900,
+                            color=ft.Colors.PRIMARY,
                         ),
                         ft.Text(
                             "Select a text file from your computer to import its contents directly into the application",
                             size=12,
-                            color=ft.Colors.GREY_600,
+                            color=ft.Colors.ON_PRIMARY_CONTAINER,
                         ),
                     ], spacing=4, expand=True),
                     ft.IconButton(
                         icon=ft.Icons.ARROW_FORWARD_ROUNDED,
-                        icon_color=ft.Colors.GREY_700,
+                        icon_color=ft.Colors.ON_PRIMARY_CONTAINER,
                         icon_size=20,
                         on_click=self.controller.on_import_text_file_click,
                     )
                 ], spacing=16, alignment=ft.MainAxisAlignment.SPACE_BETWEEN),
                 padding=ft.padding.all(20),
-                bgcolor=ft.Colors.GREY_50,
+                bgcolor=ft.Colors.SECONDARY,
                 border_radius=ft.border_radius.all(12),
                 border=ft.border.all(1, ft.Colors.GREY_200),
                 ink=True,
@@ -198,11 +198,12 @@ class Select_Data_View:
             content=ft.Icon(
                 ft.Icons.TABLE_CHART_SHARP,
                 color=ft.Colors.WHITE,
+            
                 size=24
             ),
             width=50,
             height=50,
-            bgcolor=ft.Colors.GREY_400,  # Changed to lighter grey
+            bgcolor=ft.Colors.BLUE,  # Changed to lighter grey
             border_radius=ft.border_radius.all(25),
             alignment=ft.alignment.center,
         ),
@@ -211,28 +212,28 @@ class Select_Data_View:
                 "Import From Database",
                 size=14,
                 weight=ft.FontWeight.W_600,
-                color=ft.Colors.GREY_500,  # Changed to lighter grey
+                color=ft.Colors.ON_PRIMARY_CONTAINER,  # Changed to lighter grey
             ),
              ft.Text(
                             "Connect to database and import the dataset.",
                             size=12,
-                            color=ft.Colors.GREY_600,
+                            color=ft.Colors.ON_PRIMARY_CONTAINER,
                         ),
             ft.Text(
                 "Coming Soon...",  # Changed text to "Coming Soon..."
                 size=12,
-                color=ft.Colors.GREY_400,  # Changed to lighter grey
+                color=ft.Colors.ON_PRIMARY_CONTAINER,  # Changed to lighter grey
             ),
         ], spacing=4, expand=True),
         ft.IconButton(
             icon=ft.Icons.ARROW_FORWARD_ROUNDED,
-            icon_color=ft.Colors.GREY_400,  # Changed to lighter grey
+            icon_color=ft.Colors.ON_PRIMARY_CONTAINER,  # Changed to lighter grey
             icon_size=20,
             on_click=None,  # Disabled click handler
         )
     ], spacing=16, alignment=ft.MainAxisAlignment.SPACE_BETWEEN),
     padding=ft.padding.all(20),
-    bgcolor=ft.Colors.GREY_100,  # Changed to lighter grey
+    bgcolor=ft.Colors.SECONDARY,  # Changed to lighter grey
     border_radius=ft.border_radius.all(12),
     border=ft.border.all(1, ft.Colors.GREY_300),  # Changed to lighter grey
     ink=False,  # Disabled ink effect

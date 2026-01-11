@@ -22,7 +22,7 @@ def Select_Components_Widget(
             width=150,
             height=150,
             border_radius=10,
-            bgcolor=ft.Colors.GREEN_50 if component["is_selected"] else ft.Colors.WHITE,
+            bgcolor=ft.Colors.GREEN_50 if component["is_selected"] else ft.Colors.SECONDARY_CONTAINER,
             border=ft.border.all(
                 2, 
                 ft.Colors.GREEN if component["is_selected"] else ft.Colors.GREY_300
@@ -52,7 +52,7 @@ def Select_Components_Widget(
                         content=ft.Text(
                             value=component["title"],
                             weight=ft.FontWeight.BOLD,
-                            color=ft.Colors.BLACK,
+                            color=ft.Colors.PRIMARY,
                             size=18,
                             text_align=ft.TextAlign.CENTER
                         )
@@ -79,7 +79,7 @@ def Select_Components_Widget(
         component["is_selected"] = not component["is_selected"]
         
         # Update the card background color and border
-        e.control.bgcolor = ft.Colors.GREEN_50 if component["is_selected"] else ft.Colors.WHITE
+        e.control.bgcolor = ft.Colors.GREEN_50 if component["is_selected"] else ft.Colors.SECONDARY_CONTAINER
         e.control.border = ft.border.all(
             2, 
             ft.Colors.GREEN if component["is_selected"] else ft.Colors.GREY_300
@@ -113,7 +113,7 @@ def Select_Components_Widget(
         for i, component in enumerate(components_data):
             if i < len(components_card_row.controls):
                 card = components_card_row.controls[i]
-                card.bgcolor = ft.Colors.GREEN_50 if component["is_selected"] else ft.Colors.WHITE
+                card.bgcolor = ft.Colors.GREEN_50 if component["is_selected"] else ft.Colors.SECONDARY_CONTAINER
                 card.border = ft.border.all(
                     2, 
                     ft.Colors.GREEN if component["is_selected"] else ft.Colors.GREY_300
@@ -146,7 +146,7 @@ def Select_Components_Widget(
         text="Select All",
         icon=ft.Icons.CHECK_BOX_OUTLINED,
         style=ft.ButtonStyle(
-            color=ft.Colors.BLUE_500,
+            color=ft.Colors.TERTIARY,
         ),
         on_click=select_all_components
     )
@@ -191,7 +191,7 @@ def Select_Components_Widget(
 
     return ft.Container(
         expand=True,  # Expand to fill parent container
-        bgcolor="white",
+        bgcolor=ft.Colors.SECONDARY_CONTAINER,
         padding=0 if is_alternate_card else 20,
   margin=0 if is_alternate_card else 30,
         border_radius=10,
