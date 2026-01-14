@@ -53,6 +53,7 @@ class About_Dialog_View():
 
     def _create_about_header(self):
         return ft.Container(
+            
             content=ft.Row([
                 # Info icon and title with elegant styling
                 ft.Row([
@@ -116,7 +117,7 @@ class About_Dialog_View():
                     "This tool provides a reliable way to estimate the aboveground biomass of Canadian tree species by applying the national biomass equations developed by Lambert et al. (2005). "
                     "These equations were designed to support carbon accounting and forest management by converting standard forest inventory measurements into biomass estimates. The tool calculates biomass for individual tree components—wood, bark, branches, and foliage—and ensures that the sum of these components equals the total aboveground biomass. It uses species-specific allometric models based on diameter at breast height (DBH) and, when available, tree height, offering two levels of precision:",
                     size=14,
-                    color=ft.Colors.GREY_800,
+                    color=ft.Colors.PRIMARY,
                     text_align=ft.TextAlign.JUSTIFY
                 ),
             
@@ -127,7 +128,7 @@ class About_Dialog_View():
                     "Precision Types",
                     size=16,
                     weight=ft.FontWeight.BOLD,
-                    color=ft.Colors.GREY_900
+                    color=ft.Colors.PRIMARY
                 ),
             
                 ft.Container(
@@ -136,7 +137,7 @@ class About_Dialog_View():
                         self._create_icon_with_text(ft.Icons.HEIGHT, "DBH + height-based equations for improved accuracy when both measurements are provided.", "#3B82F6"),
                     ], spacing=6),
                     padding=ft.padding.only(left=15, top=15, bottom=15, right=15),
-                    bgcolor=ft.Colors.GREY_50,
+                    bgcolor=ft.Colors.SECONDARY_CONTAINER,
                     border_radius=ft.border_radius.all(10),
                     margin=ft.margin.symmetric(vertical=12)
                 ),
@@ -148,7 +149,7 @@ class About_Dialog_View():
                     "Key Features",
                     size=16,
                     weight=ft.FontWeight.BOLD,
-                    color=ft.Colors.GREY_900
+                    color=ft.Colors.PRIMARY
                 ),
             
                 ft.Container(
@@ -157,7 +158,7 @@ class About_Dialog_View():
                         self._create_icon_with_text(ft.Icons.ANALYTICS, "Provides outputs suitable for forest carbon budget estimation, ecological modeling, and operational planning.", "#F59E0B"),
                     ], spacing=6),
                     padding=ft.padding.only(left=15, top=15, bottom=15, right=15),
-                    bgcolor=ft.Colors.GREY_50,
+                    bgcolor=ft.Colors.SECONDARY_CONTAINER,
                     border_radius=ft.border_radius.all(10),
                     margin=ft.margin.symmetric(vertical=12)
                 ),
@@ -171,12 +172,12 @@ class About_Dialog_View():
                             "Intended For",
                             size=16,
                             weight=ft.FontWeight.BOLD,
-                            color=ft.Colors.GREY_900
+                            color=ft.Colors.BLACK
                         ),
                         ft.Text(
                             "Researchers, forest managers, and policy analysts who require consistent and scientifically robust biomass estimates across Canada.",
                             size=14,
-                            color=ft.Colors.GREY_700,
+                            color=ft.Colors.BLACK,
                             text_align=ft.TextAlign.JUSTIFY
                         ),
                     ], spacing=10),
@@ -196,12 +197,12 @@ class About_Dialog_View():
                             "Development & Contact",
                             size=16,
                             weight=ft.FontWeight.BOLD,
-                            color=ft.Colors.GREY_900
+                            color=ft.Colors.PRIMARY
                         ),
                         ft.Text(
                             "This biomass calculation tool was developed by the Ontario Ministry of Natural Resources and Forestry in collaboration with Trent University. For more information, please contact:",
                             size=14,
-                            color=ft.Colors.GREY_700,
+                            color=ft.Colors.PRIMARY,
                             text_align=ft.TextAlign.JUSTIFY
                         ),
                         
@@ -214,7 +215,7 @@ class About_Dialog_View():
                                         ft.Text(
                                             "Jamshid Eslamdoust",
                                             size=14,
-                                            color=ft.Colors.GREY_800,
+                                            color=ft.Colors.BLACK,
                                             weight=ft.FontWeight.W_500
                                         ),
                                     ], spacing=10),
@@ -233,7 +234,7 @@ class About_Dialog_View():
                                         ft.Text(
                                             "Christopher Stratton",
                                             size=14,
-                                            color=ft.Colors.GREY_800,
+                                            color=ft.Colors.BLACK,
                                             weight=ft.FontWeight.W_500
                                         ),
                                     ], spacing=10),
@@ -259,7 +260,7 @@ class About_Dialog_View():
                     ], spacing=12),
                     padding=ft.padding.all(20),
                     margin=ft.margin.only(top=20),
-                    bgcolor=ft.Colors.GREY_50,
+                    bgcolor=ft.Colors.SECONDARY_CONTAINER,
                     border_radius=ft.border_radius.all(10),
                     border=ft.border.all(1, ft.Colors.GREY_200)
                 ),
@@ -277,7 +278,7 @@ class About_Dialog_View():
         return ft.Container(
             content=ft.Row([
                 ft.Icon(icon, color=color, size=18),
-                ft.Text(text, size=14, color=ft.Colors.GREY_800, expand=True),
+                ft.Text(text, size=14, color=ft.Colors.PRIMARY, expand=True),
             ], spacing=12),
             padding=ft.padding.symmetric(vertical=8),
         )
@@ -297,7 +298,7 @@ class About_Dialog_View():
                 spacing=0,
                 expand=True,
             ),
-            bgcolor="white",
+            bgcolor=ft.Colors.SECONDARY_CONTAINER,
             border_radius=20,
             shadow=ft.BoxShadow(
                 spread_radius=1,

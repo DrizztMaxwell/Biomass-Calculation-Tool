@@ -42,7 +42,7 @@ class Select_Data_View:
                 padding=ft.padding.all(40),
                 margin=ft.margin.all(30),
                 border_radius=ft.border_radius.all(20),
-                bgcolor=ft.Colors.WHITE,
+                bgcolor=ft.Colors.SECONDARY_CONTAINER,
                 expand=True,
                 height=600,
                 shadow=ft.BoxShadow(

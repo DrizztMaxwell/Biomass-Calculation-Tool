@@ -14,7 +14,7 @@ from views.About_Dialog_View import About_Dialog_View
 from widgets.Display_Nav_Item import Display_Nav_Item
 from widgets.Display_Version_Number import Display_Version_Number
 from widgets.Display_Exit_Dialog import Display_Exit_Dialog
-
+from views.Settings_View import SettingsView
 class SideNavbar_View:
     """Main application class for the Biomass Calculator"""
     
@@ -29,6 +29,19 @@ class SideNavbar_View:
 
     def __init__(self, page: ft.Page):
         self.page = page
+        
+     
+
+    # Define Dark Theme
+    #     self.page.dark_theme = ft.Theme(
+    #     color_scheme=ft.ColorScheme(
+    #         primary=ft.Colors.WHITE,      # For text colors in dark theme
+    #         secondary=ft.Colors.BLACK87  ,     # background colors in dark theme
+    #         secondary_container=ft.Colors.GREY_900, # container backgrounds
+    #         tertiary=ft.Colors.PURPLE_600
+    #     )
+    # )
+    #     self.page.bgcolor =  ft.Colors.SECONDARY
         self._initialise()
 
     def _initialise(self):
@@ -64,6 +77,7 @@ class SideNavbar_View:
         
         self.modify_species_view = None
         
+        self.settings_view = SettingsView(self.page)
         
         
     def set_data_imported(self, imported: bool):
@@ -125,14 +139,7 @@ class SideNavbar_View:
         elif page_name == "settings":
             # Render Settings page (placeholder)
             self.main_content_area.controls.append(
-                ft.Container(
-                    content=ft.Column([
-                        ft.Text("Settings Page", size=24, weight=ft.FontWeight.BOLD),
-                        ft.Text("Settings functionality coming soon...")
-                    ], alignment=ft.MainAxisAlignment.CENTER, horizontal_alignment=ft.CrossAxisAlignment.CENTER),
-                    expand=True,
-                    alignment=ft.alignment.center
-                )
+                self.settings_view.build()
             )
         elif page_name == "modify_species":
             # Render Modify Species page

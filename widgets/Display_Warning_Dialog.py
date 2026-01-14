@@ -178,13 +178,16 @@ class Display_Warning_Dialog:
     def _create_pagination_controls(self, total_pages, current_page, on_previous, on_next):
         """Create pagination controls with page info and navigation buttons"""
         return ft.Container(
+            margin=ft.margin.only(top=12),
+            bgcolor=ft.Colors.SECONDARY,
             content=ft.Row(
                 [
                     # Page info
                     ft.Text(
                         f"Page {current_page} of {total_pages}",
                         size=12,
-                        color=ft.Colors.GREY_600,
+                        color=ft.Colors.PRIMARY,
+                        
                         weight=ft.FontWeight.W_500,
                     ),
                     
@@ -226,7 +229,6 @@ class Display_Warning_Dialog:
                 vertical_alignment=ft.CrossAxisAlignment.CENTER,
             ),
             padding=ft.padding.symmetric(vertical=12, horizontal=16),
-            bgcolor=ft.Colors.GREY_50,
             border_radius=8,
         )
         
@@ -379,7 +381,7 @@ class Display_Warning_Dialog:
             ),
             # ADDED PADDING HERE:
                         alignment=ft.alignment.center,
-
+                bgcolor=ft.Colors.SECONDARY_CONTAINER,
             padding=ft.padding.all(8),
         )
 
@@ -496,6 +498,7 @@ class Display_Warning_Dialog:
         
         # 1. Validation Tab Content
         validation_tab_content = ft.Container(
+            
             content=self.display_error_card_for_validation_information(),
             # ADDED PADDING around the validation table content:
             padding=ft.padding.all(16), 
@@ -568,25 +571,29 @@ class Display_Warning_Dialog:
                     ft.Container(
                         content=self.tabs_control,
                         expand=True,  # Expand to fill available space
-                        bgcolor=ft.Colors.WHITE,
+                        bgcolor=ft.Colors.SECONDARY_CONTAINER,
                         # REMOVED INNER PADDING HERE as it's added to the tab contents now
                         border_radius=ft.border_radius.only(top_left=12, top_right=12),
                     ),
                     # Action buttons with improved styling
                     ft.Container(
+                        
                         content=ft.Row(
                             [
                                 ft.OutlinedButton(
+                                    
                                     content=ft.Row(
                                         controls=[
-                                            ft.Icon(ft.Icons.CLOSE_ROUNDED, size=20, color=ft.Colors.GREY_700),
-                                            ft.Text("Close", color=ft.Colors.GREY_700, weight=ft.FontWeight.W_600),
+                                            ft.Icon(ft.Icons.CLOSE_ROUNDED, size=20, color=ft.Colors.WHITE),
+                                            ft.Text("Close", color=ft.Colors.WHITE, weight=ft.FontWeight.W_600),
                                         ],
                                         spacing=10,
                                     ),
                                     on_click=self.close_dialog, 
                                     style=ft.ButtonStyle(
                                         padding=ft.padding.symmetric(horizontal=28, vertical=16),
+                                
+                                bgcolor=ft.Colors.TERTIARY,
                                         shape=ft.RoundedRectangleBorder(radius=10),
                                         side=ft.BorderSide(2, ft.Colors.GREY_300),
                                     ),
@@ -597,7 +604,7 @@ class Display_Warning_Dialog:
                         ),
                         # ADDED PADDING HERE:
                         padding=ft.padding.all(20),
-                        bgcolor=ft.Colors.GREY_50,
+                        bgcolor=ft.Colors.SECONDARY,
                         border_radius=ft.border_radius.only(bottom_left=16, bottom_right=16), # Increased radius for consistency
                         border=ft.border.only(top=ft.BorderSide(1, ft.Colors.GREY_200))
                 ,
@@ -611,7 +618,7 @@ class Display_Warning_Dialog:
             # Vertical Scrolling Fix: Removed fixed height to allow inner column to expand
             # and push content correctly, relying on the overall dialog height.
            
-            bgcolor=ft.Colors.WHITE,
+            bgcolor=ft.Colors.SECONDARY_CONTAINER,
             border_radius=16,
             shadow=ft.BoxShadow(
                 spread_radius=2,

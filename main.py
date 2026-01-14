@@ -9,15 +9,37 @@ import pyautogui
 def _screen_configuration(page:ft.Page):
     page.title = "Biomass Calculator"
     width, height = pyautogui.size()
-    page.bgcolor = ft.Colors.WHITE
+
     page.window.resizable = True  # window is not resizable
     page.window.width = width        # window's width is 200 px
     page.window.height = height       # window's height is 200 px
-   
+    page.theme_mode = ft.ThemeMode.DARK
     page.window_full_screen = True
+    page.theme = ft.Theme(color_scheme=ft.ColorScheme(
+            primary=ft.Colors.BLACK,      # For text colors in light theme
+           secondary=ft.Colors.WHITE ,       # background colors in light theme
+           secondary_container=ft.Colors.WHITE, # container backgrounds
+           tertiary=ft.Colors.BLUE_700  
+           
+           
+
+        )
+    )
+    page.dark_theme = ft.Theme(
+        color_scheme=ft.ColorScheme(
+            primary=ft.Colors.WHITE,      # For text colors in dark theme
+            secondary=ft.Colors.BLACK87  ,     # background colors in dark theme
+            secondary_container=ft.Colors.GREY_900, # container backgrounds
+            tertiary=ft.Colors.PURPLE_600,
+            background=ft.Colors.BLACK
+        )
+    )
+    page.bgcolor = ft.Colors.SECONDARY
+
     page.padding = 0
      # Set fonts
     page.fonts = {
+        
             "Poppins-Medium": "./assets/fonts/poppins/Poppins-Medium.ttf",
             "Poppins-Regular": "./assets/fonts/poppins/Poppins-Regular.ttf" 
         }

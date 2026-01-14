@@ -95,7 +95,7 @@ class HardwoodOrSoftwoodDialog:
             """Dynamically update the action buttons based on the current step."""
             if self.current_step[0] == 0:
                 self.dialog.actions = [
-                    ft.ElevatedButton(text="Next Step", on_click=on_next, icon=ft.Icons.ARROW_FORWARD_IOS_ROUNDED, bgcolor=ft.Colors.BLUE_700, color=ft.Colors.WHITE),
+                    ft.ElevatedButton(text="Next Step", on_click=on_next, icon=ft.Icons.ARROW_FORWARD_IOS_ROUNDED, bgcolor=ft.Colors.TERTIARY, color=ft.Colors.WHITE),
                     ft.TextButton(text="Cancel", on_click=on_cancel)
                 ]
             else:
@@ -107,8 +107,9 @@ class HardwoodOrSoftwoodDialog:
         
         # Initialize dialog with fixed width and height
         self.dialog = ft.AlertDialog(
-            title=ft.Text("🌲 Species Type Checklist", weight=ft.FontWeight.BOLD, color=ft.Colors.BLUE_GREY_900),
+            title=ft.Text("🌲 Species Type Checklist", weight=ft.FontWeight.BOLD, color=ft.Colors.PRIMARY),
             content=ft.Container(
+               
                 content=self.main_column,
                 width=600,  # Fixed width
                 height=500,  # Fixed height
@@ -119,7 +120,7 @@ class HardwoodOrSoftwoodDialog:
             modal=True,
             # Styling for a clean, professional look
             shape=ft.RoundedRectangleBorder(radius=15),
-            bgcolor=ft.Colors.WHITE,
+            bgcolor=ft.Colors.SECONDARY,
             content_padding=ft.padding.all(0),  # Remove content padding since we're using Container
         )
         
@@ -146,16 +147,16 @@ class HardwoodOrSoftwoodDialog:
         
         # Define the border color and thickness based on selection state
         # Use a Green color for a clear "checked" state
-        border_color = ft.Colors.GREEN_600 if is_selected else ft.Colors.GREY_300
+        border_color = ft.Colors.AMBER_600 if self.page.theme_mode == ft.ThemeMode.DARK and is_selected else (ft.Colors.GREEN_600 if is_selected else ft.Colors.GREY_300)
         border_width = 2.0 if is_selected else 1
 
         # The core interactive element: A Checkbox
         checkbox = ft.Checkbox(
             value=is_selected,
-            fill_color=ft.Colors.WHITE,
+            fill_color=ft.Colors.GREEN_600 if is_selected else ft.Colors.GREY_300,
             tooltip=f"Select {species_type}",
             disabled=True, # Disable standard checkbox interaction, use card tap instead
-            check_color=ft.Colors.GREEN_700,
+            check_color=ft.Colors.WHITE,
         )
 
         # Card content: List tile is now simpler, acting as the main touch area
@@ -164,11 +165,11 @@ class HardwoodOrSoftwoodDialog:
             title=ft.Text(
                 str(code),
                 weight=ft.FontWeight.BOLD,
-                color=ft.Colors.BLUE_GREY_900 if not is_selected else ft.Colors.BLACK87
+                color=ft.Colors.PRIMARY 
             ),
             subtitle=ft.Text(
                 f"Classify as {species_type}", 
-                color=ft.Colors.BLUE_GREY_400
+                color=ft.Colors.PRIMARY
             ),
         )
 
@@ -189,11 +190,13 @@ class HardwoodOrSoftwoodDialog:
         # The interactive Card component
         card = ft.Card(
             content=ft.Container(
+                
                 content=card_content,
                 padding=5,
                 border=ft.border.all(border_width, border_color),
                 border_radius=ft.border_radius.all(8),
-                bgcolor=ft.Colors.WHITE if not is_selected else ft.Colors.GREEN_50, 
+                # if selected and is dark theme switch to amber yellow else green light
+                bgcolor= ft.Colors.TERTIARY if self.page.theme_mode == ft.ThemeMode.DARK and is_selected else (ft.Colors.SECONDARY_CONTAINER if not is_selected else ft.Colors.GREEN_50),
                 on_click=on_tap,
                 ink=True, 
             ),
@@ -226,8 +229,8 @@ class HardwoodOrSoftwoodDialog:
         if step == 1 and not available_codes:
              info_message = ft.Column([
                 ft.Text("✅ All remaining species codes were classified as Hardwood in the previous step.", 
-                        weight=ft.FontWeight.BOLD, color=ft.Colors.BLUE_GREY_700),
-                ft.Text("Click 'Back' to review, or 'Submit Final' to complete the classification.", size=14)
+                        weight=ft.FontWeight.BOLD, color=ft.Colors.PRIMARY),
+                ft.Text("Click 'Back' to review, or 'Submit Final' to complete the classification.", size=14, color=ft.Colors.PRIMARY),
             ])
              card_area = ft.Container(
                 content=info_message,
@@ -250,7 +253,7 @@ class HardwoodOrSoftwoodDialog:
         # Assemble the full content for the step
         content = ft.Column([
             ft.Text(f"📋 Step {step + 1}: Select codes for {species_type}:", 
-                    weight=ft.FontWeight.W_700, size=18, color=ft.Colors.BLUE_GREY_900),
+                    weight=ft.FontWeight.W_700, size=18, color=ft.Colors.PRIMARY),
             
             # Info for Softwood step
             *(

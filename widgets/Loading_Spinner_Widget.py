@@ -18,10 +18,10 @@ class Loading_Spinner_Widget:
         # Progress Ring and Text setup
         self.progress_ring = ft.ProgressRing(
             width=self.size, height=self.size, stroke_width=self.stroke_width,
-            color=ft.Colors.BLACK, bgcolor=ft.Colors.GREY_300, value=0
+            color=ft.Colors.PRIMARY, bgcolor=ft.Colors.GREY_300, value=0
         )
         self.percentage_text = ft.Text(
-            "0%", size=self.text_size, weight=ft.FontWeight.BOLD, color=ft.Colors.BLACK
+            "0%", size=self.text_size, weight=ft.FontWeight.BOLD, color=ft.Colors.PRIMARY
         )
         self.loading_stack = ft.Stack(
             [
@@ -34,7 +34,7 @@ class Loading_Spinner_Widget:
             width=self.size, height=self.size,
         )
         self.loading_text = ft.Text(
-            "Loading...", size=self.text_size - 3 , color=ft.Colors.BLACK, weight=ft.FontWeight.BOLD
+            "Loading...", size=self.text_size - 3 , color=ft.Colors.PRIMARY, weight=ft.FontWeight.BOLD
         )
 
         controls = [self.loading_stack]
@@ -58,7 +58,7 @@ class Loading_Spinner_Widget:
                 expand=True, 
             ),
             padding=30,
-            bgcolor=ft.Colors.WHITE,
+            bgcolor=ft.Colors.SECONDARY_CONTAINER,
             border_radius=16,
             shadow=ft.BoxShadow(
                 spread_radius=1, blur_radius=20, color=ft.Colors.BLACK26, offset=ft.Offset(0, 4)
