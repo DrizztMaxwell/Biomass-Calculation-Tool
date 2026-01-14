@@ -19,6 +19,7 @@ from helper_functions.validate_tree_dbh_and_height_values import validate_tree_d
 from helper_functions.check_dataframe_for_nan_values import check_dataframe_for_nan_values
 from helper_functions.do_mandatory_columns_exist import do_mandatory_columns_exist
 from data.data_manager import DataManager
+from data.database_config import get_sql_server_odbc_driver
 import flet as ft
 from widgets.Loading_Spinner_Widget import Loading_Spinner_Widget
 import json
@@ -170,8 +171,10 @@ class Select_Data_Controller:
 
     @staticmethod
     def _read_tree_data_from_db(db_name: str) -> list[dict]:
+        driver = get_sql_server_odbc_driver()
+
         conn = pyodbc.connect(
-            "Driver={ODBC Driver 18 for SQL Server};"
+            f"Driver={{{driver}}};"
             "Server=.\\SQLEXPRESS;"
             f"Database={db_name};"
             "Trusted_Connection=yes;"

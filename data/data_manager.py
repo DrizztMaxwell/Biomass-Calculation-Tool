@@ -3,6 +3,8 @@
 import json
 import os
 from threading import Lock
+from data.database_config import get_sql_server_odbc_driver
+
 
 class DataManager:
     _instance = None
@@ -38,8 +40,10 @@ class DataManager:
         """
         Save the database connection info and generate a full ODBC connection string.
         """
+        driver = get_sql_server_odbc_driver()
+
         connection_string = (
-            "Driver={ODBC Driver 18 for SQL Server};"
+            f"Driver={{{driver}}};"
             "Server=.\\SQLEXPRESS;"
             f"Database={db_name};"
             "Trusted_Connection=yes;"
