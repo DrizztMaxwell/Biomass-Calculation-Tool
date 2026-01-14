@@ -6,6 +6,7 @@ class Custom_Alert_Dialog:
         self.display_alert = ft.AlertDialog(
             modal=True,
             title=ft.Container(
+                
                 content=ft.Row([
                     ft.Icon(title_icon, color=title_icon_color, size=24),
                     ft.Text(f" {title}", size=20, weight=ft.FontWeight.BOLD, color=title_color),
@@ -18,12 +19,12 @@ class Custom_Alert_Dialog:
                     ft.Text(
                         f"{message}",
                         size=16,
-                        color=ft.Colors.GREY_800,
+                        color=ft.Colors.PRIMARY,
                     ),
                     ft.Text(
                         f"{solution}",
                         size=16,
-                        color=ft.Colors.GREY_800,
+                        color=ft.Colors.PRIMARY,
                         weight=ft.FontWeight.W_500,
                     ),
                 ],
@@ -52,7 +53,7 @@ class Custom_Alert_Dialog:
             ],
             actions_alignment=ft.MainAxisAlignment.END,
             shape=ft.RoundedRectangleBorder(radius=15),
-            bgcolor=ft.Colors.WHITE,
+            bgcolor=ft.Colors.SECONDARY_CONTAINER,
             elevation=20,
             content_padding=ft.padding.all(20),
             inset_padding=ft.padding.symmetric(horizontal=40, vertical=20),

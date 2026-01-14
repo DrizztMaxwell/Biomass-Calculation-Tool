@@ -8,6 +8,11 @@ class SettingsView:
         
     def toggle_theme(self, e):
         self.page.theme_mode = ft.ThemeMode.DARK if e.control.value else ft.ThemeMode.LIGHT
+        print("Theme toggled to:", self.page.theme_mode)
+        if self.page.theme_mode == ft.ThemeMode.DARK:
+            self.page.bgcolor = ft.Colors.BLACK
+        else:
+            self.page.bgcolor = ft.Colors.WHITE
         self.page.update()
     
     def build(self):

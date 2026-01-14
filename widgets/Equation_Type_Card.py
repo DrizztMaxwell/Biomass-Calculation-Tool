@@ -6,11 +6,12 @@ def Equation_Type_Card(main_text_column, desc_widget, radio_value):
         main_text_column is a ft.Column containing the title and the formula.
         """
         return ft.Container(
+            
             padding=15,
             margin=ft.margin.only(bottom=10),
             border_radius=10,
             border=ft.border.all(1, ft.Colors.BLUE_GREY_100),
-            bgcolor=ft.Colors.WHITE,
+            bgcolor=ft.Colors.SECONDARY_CONTAINER,
             content=ft.Row([
                 ft.Radio(value=radio_value,  active_color="#047648", ), # Radio on the left
                 ft.Column([

@@ -97,7 +97,7 @@ class Bar_Chart_Widget(ft.BarChart):
             self.page.snack_bar = ft.SnackBar(
                 content=ft.Row([
                     ft.Icon(ft.Icons.CHECK_CIRCLE, color=ft.Colors.WHITE),
-                    ft.Text("Chart saved successfully!", color=ft.Colors.WHITE)
+                    ft.Text("Chart saved successfully!", color=ft.Colors.PRIMARY)
                 ]),
                 bgcolor=ft.Colors.GREEN,
                 duration=3000
@@ -175,10 +175,10 @@ class Bar_Chart_Widget(ft.BarChart):
             bar_chart = ft.BarChart(
                 bar_groups=bar_groups,
                 border=ft.border.all(1, ft.Colors.GREY_400),
-                bgcolor=ft.Colors.WHITE,
+                bgcolor=ft.Colors.SECONDARY_CONTAINER,
                 
                 left_axis=ft.ChartAxis(
-                    title=ft.Text("Biomass (KG)", color=ft.Colors.BLACK87, size=13, weight=ft.FontWeight.BOLD),
+                    title=ft.Text("Biomass (KG)", color=ft.Colors.PRIMARY, size=13, weight=ft.FontWeight.BOLD),
                     labels_size=70,
                     title_size=16,
                     show_labels=True,
@@ -186,14 +186,14 @@ class Bar_Chart_Widget(ft.BarChart):
                 
                 # Bottom Axis with rotated labels for better readability
                 bottom_axis=ft.ChartAxis(
-                    title=ft.Text("Species", color=ft.Colors.BLACK87, size=13, weight=ft.FontWeight.BOLD),
+                    title=ft.Text("Species", color=ft.Colors.PRIMARY, size=13, weight=ft.FontWeight.BOLD),
                     labels=[
                         ft.ChartAxisLabel(
                             value=i, 
                             label=ft.Container(
                                 content=ft.Text(
                                     species_info["species_code"], 
-                                    color=ft.Colors.BLACK87, 
+                                    color=ft.Colors.PRIMARY, 
                                     size=9,
                                     weight=ft.FontWeight.W_500
                                 ),
@@ -221,6 +221,7 @@ class Bar_Chart_Widget(ft.BarChart):
             
             # Create scrollable container for the chart
             scrollable_chart_container = ft.Container(
+                bgcolor=ft.Colors.SECONDARY_CONTAINER,
                 content=ft.Column(
                     [
                         ft.Container(
@@ -264,7 +265,7 @@ class Bar_Chart_Widget(ft.BarChart):
                     border_radius=ft.border_radius.all(15),
                     width=1000,  # Increased width
                     height=950,  # Increased height
-                    bgcolor=ft.Colors.WHITE,
+                    bgcolor=ft.Colors.SECONDARY_CONTAINER,
                     padding=30,
                     content=ft.Column([
                         # Header
@@ -273,7 +274,7 @@ class Bar_Chart_Widget(ft.BarChart):
                                 "Biomass by Species Components",
                                 size=20,
                                 weight=ft.FontWeight.BOLD,
-                                color=ft.Colors.BLACK87,
+                                color=ft.Colors.PRIMARY,
                                 expand=True,
                             ),
                             # Save button
@@ -302,23 +303,23 @@ class Bar_Chart_Widget(ft.BarChart):
                                 ft.Text("Components Legend (Bottom to Top):", 
                                     size=14, 
                                     weight=ft.FontWeight.BOLD, 
-                                    color=ft.Colors.BLACK54),
+                                    color=ft.Colors.PRIMARY),
                                 ft.Row([
                                     ft.Row([
                                         ft.Container(width=15, height=15, bgcolor=ft.Colors.AMBER, border_radius=3),
-                                        ft.Text("Wood", size=11),
+                                        ft.Text("Wood", size=11, color=ft.Colors.PRIMARY),
                                     ], spacing=3),
                                     ft.Row([
                                         ft.Container(width=15, height=15, bgcolor=ft.Colors.BROWN, border_radius=3),
-                                        ft.Text("Bark", size=11),
+                                        ft.Text("Bark", size=11, color=ft.Colors.PRIMARY),
                                     ], spacing=3),
                                     ft.Row([
                                         ft.Container(width=15, height=15, bgcolor=ft.Colors.ORANGE, border_radius=3),
-                                        ft.Text("Branch", size=11),
+                                        ft.Text("Branch", size=11, color=ft.Colors.PRIMARY),
                                     ], spacing=3),
                                     ft.Row([
                                         ft.Container(width=15, height=15, bgcolor=ft.Colors.GREEN, border_radius=3),
-                                        ft.Text("Foliage", size=11),
+                                        ft.Text("Foliage", size=11, color=ft.Colors.PRIMARY),
                                     ], spacing=3),
                                 ], spacing=15),
                             ], spacing=10),
@@ -333,6 +334,7 @@ class Bar_Chart_Widget(ft.BarChart):
 
             # Centered container with black semi-transparent background
             return ft.Container(
+                
                 content=card,
                 alignment=ft.alignment.center,
                 bgcolor=ft.Colors.with_opacity(0.7, ft.Colors.BLACK),

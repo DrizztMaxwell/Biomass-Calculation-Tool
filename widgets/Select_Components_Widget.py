@@ -100,6 +100,7 @@ def Select_Components_Widget(
     def update_selected_text():
         selected_items = [comp["title"] for comp in components_data if comp["is_selected"]]
         selected_card_component.value = f"Selected: {', '.join(selected_items)}" if selected_items else "No components selected"
+        selected_card_component.color = ft.Colors.PRIMARY
     
     # Function to select all components
     def select_all_components(e):

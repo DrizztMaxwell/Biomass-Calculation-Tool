@@ -30,28 +30,18 @@ class SideNavbar_View:
     def __init__(self, page: ft.Page):
         self.page = page
         
-        self.page.theme = ft.Theme(
-       color_scheme=ft.ColorScheme(
-            primary=ft.Colors.BLACK,      # For text colors in light theme
-           secondary=ft.Colors.WHITE ,       # background colors in light theme
-           secondary_container=ft.Colors.WHITE, # container backgrounds
-           tertiary=ft.Colors.BLUE_700  
-           
-           
-
-        )
-    )
+     
 
     # Define Dark Theme
-        self.page.dark_theme = ft.Theme(
-        color_scheme=ft.ColorScheme(
-            primary=ft.Colors.WHITE,      # For text colors in dark theme
-            secondary=ft.Colors.BLACK87  ,     # background colors in dark theme
-            secondary_container=ft.Colors.GREY_900, # container backgrounds
-            tertiary=ft.Colors.PURPLE_600
-        )
-    )
-        self.page.bgcolor =  ft.Colors.SECONDARY
+    #     self.page.dark_theme = ft.Theme(
+    #     color_scheme=ft.ColorScheme(
+    #         primary=ft.Colors.WHITE,      # For text colors in dark theme
+    #         secondary=ft.Colors.BLACK87  ,     # background colors in dark theme
+    #         secondary_container=ft.Colors.GREY_900, # container backgrounds
+    #         tertiary=ft.Colors.PURPLE_600
+    #     )
+    # )
+    #     self.page.bgcolor =  ft.Colors.SECONDARY
         self._initialise()
 
     def _initialise(self):

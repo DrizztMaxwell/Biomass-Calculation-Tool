@@ -21,6 +21,7 @@ class EULA_View:
         """
         # Header with icon
         header = ft.Container(
+            bgcolor=ft.Colors.SECONDARY_CONTAINER,
             content=ft.Row(
                 controls=[
                     ft.Icon(
@@ -39,7 +40,7 @@ class EULA_View:
                             text_widget.TextWidget.create_description_text(
                                 "Please read the following terms carefully",
                                 size=14,
-                                color=ft.Colors.BLUE_700,
+                                color=ft.Colors.PRIMARY,
                                 font_family="Arial"
                             )
                         ],
@@ -54,6 +55,7 @@ class EULA_View:
         # Section containers (no significant change needed here)
         def create_section(heading_text, content_text, icon_name):
             return ft.Container(
+                bgcolor=ft.Colors.SECONDARY_CONTAINER,
                 content=ft.Column(
                     controls=[
                         ft.Row(
@@ -76,18 +78,20 @@ class EULA_View:
                             content=text_widget.TextWidget.create_description_text(
                                 content_text,
                                 size=14,
-                                color=ft.Colors.GREY_800
+                                color=ft.Colors.PRIMARY
                             ),
                             margin=ft.margin.only(left=30, top=10, bottom=10),
                             padding=ft.padding.all(15),
-                            bgcolor=ft.Colors.GREY_50,
+                            bgcolor=ft.Colors.SECONDARY_CONTAINER,
                             border_radius=8,
                             border=ft.border.all(1, ft.Colors.GREY_300)
                         )
                     ],
                     spacing=5,
                     horizontal_alignment=ft.CrossAxisAlignment.START
+                
                 ),
+               
                 padding=ft.padding.symmetric(vertical=10)
             )
 
@@ -136,6 +140,7 @@ class EULA_View:
 
         # Scrollable content area
         scrollable_content = ft.Container(
+            bgcolor=ft.Colors.SECONDARY_CONTAINER,
             content=ft.ListView( # Changed to ListView for built-in scrolling
                 controls=[
                     terms_section,
@@ -149,6 +154,7 @@ class EULA_View:
 
         # --- FIX: Main layout alignment ---
         layout = ft.Container(
+            bgcolor=ft.Colors.SECONDARY_CONTAINER,
             content=ft.Column(
                 controls=[
                     header,
@@ -173,7 +179,7 @@ class EULA_View:
             ),
             padding=ft.padding.all(30),
             margin=ft.margin.all(20),
-            bgcolor=ft.Colors.WHITE,
+           
             border_radius=12,
             border=ft.border.all(1, ft.Colors.GREY_300),
             shadow=ft.BoxShadow(
@@ -189,7 +195,7 @@ class EULA_View:
         self.page.add(ft.Container(
             margin=30,
             content=layout,
-            bgcolor=ft.Colors.WHITE,  # Changed from gradient to solid white
+            bgcolor=ft.Colors.SECONDARY_CONTAINER,  # Changed from gradient to solid white
             expand=True
         ))
 
@@ -199,6 +205,8 @@ class EULA_View:
         Displays an exit message instructing them to close the application manually.
         """
         exit_content = ft.Container(
+            padding=ft.padding.all(30),
+            bgcolor=ft.Colors.SECONDARY_CONTAINER,
             content=ft.Column(
                 controls=[
                     ft.Icon(
@@ -217,23 +225,26 @@ class EULA_View:
                             "You must agree to the EULA to use this application.\n\n"
                             "Please close the application manually.",
                             size=16,
-                            color=ft.Colors.GREY_700
+                            color=ft.Colors.PRIMARY
                         ),
                         padding=ft.padding.all(20),
                         margin=ft.margin.symmetric(vertical=10),
-                        bgcolor=ft.Colors.GREY_50,
+                        bgcolor=ft.Colors.SECONDARY_CONTAINER,
                         border_radius=8,
                         border=ft.border.all(1, ft.Colors.GREY_300)
                     )
                 ],
                 horizontal_alignment=ft.CrossAxisAlignment.CENTER,
                 spacing=20
+                
             ),
-            padding=ft.padding.all(40)
+            # padding=ft.padding.all(40)
+            height=400,
         )
 
         layout = container_widget.ContainerWidget.create_column(
             widgets=[exit_content],
+            
             spacing=0,
             alignment=ft.MainAxisAlignment.CENTER,
             horizontal_alignment=ft.CrossAxisAlignment.CENTER,
@@ -245,7 +256,7 @@ class EULA_View:
             ft.Container(
                 content=ft.Container(
                     content=layout,
-                    bgcolor=ft.Colors.WHITE,
+                  
                     border_radius=12,
                     border=ft.border.all(1, ft.Colors.GREY_300),
                     shadow=ft.BoxShadow(
@@ -254,12 +265,14 @@ class EULA_View:
                         color=ft.Colors.BLACK38,
                         offset=ft.Offset(0, 4)
                     ),
-                    width=500,  # Fixed width
-                height=400  # Fixed height,
-                ,
-                    margin=ft.margin.all(20)
+             
+                expand=True,
+                height=400
+          
+                    # margin=ft.margin.all(20)
                 ),
-                bgcolor=ft.Colors.WHITE,  # Solid white background
+             
+                # bgcolor=ft.Colors.SECONDARY,  # Solid white background
                 expand=True,  # This allows the container to take full available space
                 alignment=ft.alignment.center  # Centers the card both horizontally and vertically
             )

@@ -92,7 +92,7 @@ class Calculate_Biomass_View:
         )
        
         return ft.Container(
-            bgcolor="white",
+            bgcolor=ft.Colors.SECONDARY_CONTAINER,
             padding=20,
             margin=30,
             border_radius=10,
@@ -362,7 +362,7 @@ class Calculate_Biomass_View:
                 else:
                     display_value = str(value) if value is not None else "N/A"
                 
-                cells.append(ft.DataCell(ft.Text(display_value)))
+                cells.append(ft.DataCell(ft.Text(display_value, color=ft.Colors.PRIMARY)))
             
             data_rows.append(ft.DataRow(cells=cells))
         
@@ -376,7 +376,7 @@ class Calculate_Biomass_View:
             heading_row_color=ft.Colors.GREEN_700,
             heading_row_height=40,
             data_row_color={ft.ControlState.HOVERED: ft.Colors.GREY_100},
-            data_text_style=ft.TextStyle(color=ft.Colors.BLACK),
+            data_text_style=ft.TextStyle(color=ft.Colors.PRIMARY),
             show_checkbox_column=False,
         )
         
@@ -384,7 +384,7 @@ class Calculate_Biomass_View:
         view_chart_button = ft.ElevatedButton(
             text="View Chart",
             icon=ft.Icons.BAR_CHART,
-            bgcolor=ft.Colors.BLUE_700,
+            bgcolor=ft.Colors.TERTIARY,
             color=ft.Colors.WHITE,
             on_click= lambda e: self.page.run_task(self._on_view_chart_click, e),  # You'll need to implement this method
             style=ft.ButtonStyle(
@@ -416,7 +416,7 @@ class Calculate_Biomass_View:
             padding=10,
             border=ft.border.all(1, ft.Colors.GREY_300),
             border_radius=10,
-            bgcolor=ft.Colors.WHITE,
+            bgcolor=ft.Colors.SECONDARY_CONTAINER,
             shadow=ft.BoxShadow(
                 spread_radius=1,
                 blur_radius=5,
@@ -427,6 +427,8 @@ class Calculate_Biomass_View:
 
         # Wrap in a container with title and info
         table_container = ft.Container(
+            border_radius=10,
+            bgcolor=ft.Colors.SECONDARY_CONTAINER,
             content=ft.Column([
                 ft.Row([
                     TitleTextWidget("Calculated Biomass Results Table"),
@@ -453,14 +455,13 @@ class Calculate_Biomass_View:
             ]),
             margin=ft.margin.all(20),
             padding=ft.padding.all(30),
-            bgcolor=ft.Colors.WHITE,
+        
             shadow=ft.BoxShadow(
                 spread_radius=1,
                 blur_radius=5,
                 color=ft.Colors.with_opacity(0.15, ft.Colors.BLUE_GREY_900),
                 offset=ft.Offset(0, 3),
             ),
-            border_radius=10,
         )
 
         return table_container

@@ -20,34 +20,34 @@ class Create_Species_Preview_Modal:
                 ft.Divider(height=20),
                 
                 ft.Row([
-                    ft.Text("Species Code:", weight=ft.FontWeight.BOLD),
-                    ft.Text(self.species_data.get("species_code", "N/A"))
+                    ft.Text("Species Code:", weight=ft.FontWeight.BOLD, color=ft.Colors.PRIMARY),
+                    ft.Text(self.species_data.get("species_code", "N/A"), color=ft.Colors.PRIMARY)
                 ]),
                 
                 ft.Divider(height=15),
                 
                 ft.Row([
-                    ft.Text("Origin:", weight=ft.FontWeight.BOLD),
-                    ft.Text(self.species_data.get("origin", "N/A"))
+                    ft.Text("Origin:", weight=ft.FontWeight.BOLD, color=ft.Colors.PRIMARY),
+                    ft.Text(self.species_data.get("origin", "N/A"), color=ft.Colors.PRIMARY)
                 ]),
                 
                 ft.Divider(height=15),
                 
                 ft.Row([
-                    ft.Text("Selected Components:", weight=ft.FontWeight.BOLD),
-                    ft.Text(", ".join(self.species_data.get("selected_components", [])) if self.species_data.get("selected_components") else "No components selected")
+                    ft.Text("Selected Components:", weight=ft.FontWeight.BOLD, color=ft.Colors.PRIMARY),
+                    ft.Text(", ".join(self.species_data.get("selected_components", [])) if self.species_data.get("selected_components") else "No components selected", color=ft.Colors.PRIMARY)
                 ]),
                 
                 ft.Divider(height=15),
                 
                 ft.Row([
-                    ft.Text("Equation Type:", weight=ft.FontWeight.BOLD),
-                    ft.Text(self.species_data.get("equation_type", ""))
+                    ft.Text("Equation Type:", weight=ft.FontWeight.BOLD, color=ft.Colors.PRIMARY),
+                    ft.Text(self.species_data.get("equation_type", ""), color=ft.Colors.PRIMARY)
                 ]),
                 
                 ft.Divider(height=15),
                 
-                ft.Text("Parameters:", weight=ft.FontWeight.BOLD),
+                ft.Text("Parameters:", weight=ft.FontWeight.BOLD, color=ft.Colors.PRIMARY),
             ],
             spacing=10,
             scroll=ft.ScrollMode.AUTO,
@@ -61,13 +61,13 @@ class Create_Species_Preview_Modal:
             
             dialog_content.controls.append(
                 ft.Row([
-                    ft.Text(f"{display_name}:", width=120),
-                    ft.Text(value or "0.00")
+                    ft.Text(f"{display_name}:", width=120, color=ft.Colors.PRIMARY),
+                    ft.Text(value or "0.00", color=ft.Colors.PRIMARY)
                 ])
             )
         # If no parameters, show message
         if not self.species_data.get("parameters"):
-            dialog_content.controls.append(ft.Text("No parameters configured"))
+            dialog_content.controls.append(ft.Text("No parameters configured", color=ft.Colors.PRIMARY))
         
         # Wrap content in a Container with fixed dimensions
         content_container = ft.Container(
@@ -95,7 +95,7 @@ class Create_Species_Preview_Modal:
         self.dialog = ft.AlertDialog(
             modal=True,
             title=title_row,
-            bgcolor=ft.Colors.WHITE,
+            bgcolor=ft.Colors.SECONDARY_CONTAINER,
             content=content_container,
             actions=[
                 ft.TextButton("Cancel", on_click = lambda e: self.close(e)),
