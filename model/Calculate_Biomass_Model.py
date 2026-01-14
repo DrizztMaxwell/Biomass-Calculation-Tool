@@ -1,3 +1,4 @@
+#Calculate_Biomass_Model
 class Calculate_Biomass_Model:
     def __init__(self):
         self.equation_type = "DBH-based"

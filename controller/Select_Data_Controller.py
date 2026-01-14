@@ -1,4 +1,5 @@
 # from helper_functions import do_mandatory_columns_exist
+#select_data_controller.py
 import asyncio
 from helper_functions.convert_columns_to_specific_types import convert_columns_to_specific_types
 from helper_functions.convert_text_file_into_dataframe import convert_text_file_into_dataframe
@@ -17,21 +18,33 @@ from helper_functions.set_first_row_as_header import set_first_row_as_header
 from helper_functions.validate_tree_dbh_and_height_values import validate_tree_dbh_and_height_values
 from helper_functions.check_dataframe_for_nan_values import check_dataframe_for_nan_values
 from helper_functions.do_mandatory_columns_exist import do_mandatory_columns_exist
+from data.data_manager import DataManager
 import flet as ft
 from widgets.Loading_Spinner_Widget import Loading_Spinner_Widget
 import json
+import pyodbc
+import os
+import uuid
+import time
+import decimal
 import concurrent.futures
+
+
 class Select_Data_Controller:
     def __init__(self, page: ft.Page, data_imported_callback: callable, view: Select_Data_View):
         self.page = page
         self.view = view
+
         self.file_picker = ft.FilePicker(on_result=self.on_file_selected)
+
         self.page.overlay.append(self.file_picker)
+
+
         self.selected_file_path = None
         self.error_messages = []
-        self.data_imported_callback = data_imported_callback  # Fixed parameter name
-        self.is_data_imported = False  # Track internal state
-        
+        self.data_imported_callback = data_imported_callback
+        self.is_data_imported = False
+
       
 
     async def on_file_selected(self, e: ft.FilePickerResultEvent):
@@ -106,15 +119,18 @@ class Select_Data_Controller:
                         
                     # Save data to local storage
                     print("File processed successfully. Saving to local storage...")
-                    json_data = original_dataframe.to_json(orient='records')
-                    with open('storage/localstorage.json', 'w') as json_file:
-                        json_file.write(json_data)
+                    # Convert dataframe to list-of-dicts
+                    records = json.loads(original_dataframe.to_json(orient='records'))
+
+                    # Use DataManager to store the records
+                    dm = DataManager()
+                    dm.set_all(records)  # this will automatically save to localstorage.json
                     await loading_spinner.simulate_progressive_loading(0.8, 1.0, 0.1, "Completed successfully...")
                     loading_spinner.hide()  
                     # Update import status and call callback
                     self.is_data_imported = True
                     if self.data_imported_callback:
-                        pool.shutdown()
+                        pool.shutdown() #is this needed?
                         
                         self.data_imported_callback(True) # Call the callback to enable sidebar buttons
                     self.page.update()
@@ -150,7 +166,79 @@ class Select_Data_Controller:
                 self.data_imported_callback(False)
             self.page.update()
             return
+
+
+    @staticmethod
+    def _read_tree_data_from_db(db_name: str) -> list[dict]:
+        conn = pyodbc.connect(
+            "Driver={ODBC Driver 18 for SQL Server};"
+            "Server=.\\SQLEXPRESS;"
+            f"Database={db_name};"
+            "Trusted_Connection=yes;"
+            "Encrypt=no;"
+            "TrustServerCertificate=yes;"
+        )
+
+        cursor = conn.cursor()
+
+        cursor.execute("""
+            SELECT
+                plot,
+                year,
+                species,
+                tree_number,
+                dbh,
+                height
+            FROM dbo.tCalcBCTInput
+        """)
+
+        columns = [c[0] for c in cursor.description]
+        rows = [dict(zip(columns, row)) for row in cursor.fetchall()]
+
+        conn.close()
+
+        if not rows:
+            raise ValueError("tCalcBCTInput table is empty")
+
+        return rows
     
+    def import_from_database(self, db_name: str):
+        try:
+            if db_name.lower() != "gypsppgp":
+                raise ValueError(
+                    "Selected database does not match required database: gyPSPPGP"
+                )
+
+            rows = self._read_tree_data_from_db(db_name)
+
+            os.makedirs("storage", exist_ok=True)
+            # Convert Decimal to float for JSON
+            rows_safe = [
+                {k: (float(v) if isinstance(v, decimal.Decimal) else v) for k, v in row.items()}
+                for row in rows
+            ]
+
+            # Save via DataManager
+            dm = DataManager()
+            dm.set_all(rows_safe) # save the data
+            dm.set_database_path(db_name) # save the DB path
+
+            self.is_data_imported = True
+            if self.data_imported_callback:
+                self.data_imported_callback(True)
+
+            self.page.update()
+
+        except Exception as e:
+            self.page.open(
+                Display_Error_Dialog(self.page, str(e)).show()
+            )
+            self.is_data_imported = False
+            if self.data_imported_callback:
+                self.data_imported_callback(False)
+
+
+
     def open_file_dialog(self):
         """Open file picker dialog"""
         return self.file_picker.pick_files(
@@ -166,16 +254,15 @@ class Select_Data_Controller:
         self.open_file_dialog()
      
     def on_import_from_database_click(self, e):
-        """Handle import from database button click"""
-        print("Import from database clicked - feature coming next semester")
-        # Show a message that this feature is not yet available
-        self.page.show_snack_bar(
-            ft.SnackBar(
-                content=ft.Text("Database import feature coming in the next release!"),
-                action="OK"
-            )
+        print("Import from database clicked")
+
+        self.bak_file_picker.pick_files(
+            allow_multiple=False,
+            allowed_extensions=["bak"],
+            dialog_title="Select SQL Server Backup (.bak)",
+            file_type=ft.FilePickerFileType.CUSTOM
         )
-    
+        
     def build(self):
         """Build the controller view"""
         return self.view.create_main_layout()

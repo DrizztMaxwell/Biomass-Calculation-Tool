@@ -1,3 +1,4 @@
+#Calculate_Biomass_View
 import flet as ft
 import json
 import datetime
@@ -293,6 +294,7 @@ class Calculate_Biomass_View:
             horizontal_alignment=ft.CrossAxisAlignment.CENTER,
             expand=True
         )
+
     async def _on_view_chart_click(self, e):
         """Handle View Chart button click - delegate to controller."""
         print("View Chart button clicked")
@@ -305,6 +307,32 @@ class Calculate_Biomass_View:
         self._show_biomass_chart(species_data)
         await loading_spinner.simulate_progressive_loading(1.0, 1.0, 0.1, "Completed...")
         loading_spinner.hide()
+
+    async def _on_write_database_click(self, e):
+        """Handle write to database button click."""
+        print("Write to database button clicked")
+        loading_spinner = Loading_Spinner_Widget(self.page)
+        loading_spinner.show_dialog()
+        
+        await loading_spinner.simulate_progressive_loading(0.0, 0.5, 0.1, "Writing to database...")
+
+        success = self.controller.write_results_to_database()
+
+        await loading_spinner.simulate_progressive_loading(1.0, 1.0, 0.1, "Completed...")
+        loading_spinner.hide()
+
+        if success:
+            print("Results successfully written to database")
+            # Optionally show a message dialog
+            self.page.snack_bar = ft.SnackBar(ft.Text("Results written to database successfully"))
+            self.page.snack_bar.open = True
+            self.page.update()
+        else:
+            print("Failed to write results to database")
+            self.page.snack_bar = ft.SnackBar(ft.Text("Failed to write results to database"))
+            self.page.snack_bar.open = True
+            self.page.update()
+
         
         
     def _show_biomass_chart(self, species_data):
@@ -406,6 +434,18 @@ class Calculate_Biomass_View:
             )
         )
         
+        # Write to database button
+        write_db_button = ft.ElevatedButton(
+            text="Write to Database",
+            icon=ft.Icons.STORAGE,
+            bgcolor=ft.Colors.ORANGE_700,
+            color=ft.Colors.WHITE,
+            on_click=lambda e: self.page.run_task(self._on_write_database_click, e),
+            style=ft.ButtonStyle(
+                shape=ft.RoundedRectangleBorder(radius=ft.border_radius.all(10)),
+                padding=ft.padding.symmetric(horizontal=20, vertical=10)
+            )
+        )
         # Create horizontally scrollable container for the table
         scrollable_table = ft.Container(
             content=ft.Row(
@@ -432,7 +472,8 @@ class Calculate_Biomass_View:
                     TitleTextWidget("Calculated Biomass Results Table"),
                     ft.Row([
                         view_chart_button,  # View Chart button on the left
-                        export_button      # Export to TXT button on the right
+                        export_button,     # Export to TXT button on the right
+                        write_db_button #Write to database button
                     ])
                 ], alignment=ft.MainAxisAlignment.SPACE_BETWEEN),
                 ft.Container(

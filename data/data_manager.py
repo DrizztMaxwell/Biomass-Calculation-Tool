@@ -9,6 +9,7 @@ class DataManager:
     _lock = Lock()
     _file_path = os.path.join("storage", "localstorage.json")
     _param_file_path = os.path.join("data", "treeparameters.json")
+    _db_path: str | None = None  # store path to DB
 
     def __new__(cls):
         with cls._lock:
@@ -17,6 +18,8 @@ class DataManager:
                 cls._instance._data = []
                 cls._instance._load()
             return cls._instance
+
+
 
     # ---------- Core Data Handling ----------
     def _load(self):
@@ -30,6 +33,51 @@ class DataManager:
                 self._data = [] 
         else:
             self._data = []
+
+    def set_database_path(self, db_name: str):
+        """
+        Save the database connection info and generate a full ODBC connection string.
+        """
+        connection_string = (
+            "Driver={ODBC Driver 18 for SQL Server};"
+            "Server=.\\SQLEXPRESS;"
+            f"Database={db_name};"
+            "Trusted_Connection=yes;"
+            "Encrypt=no;"
+            "TrustServerCertificate=yes;"
+        )
+
+        self._db_path = connection_string
+
+        meta_file = os.path.join("storage", "metadata.json")
+        with open(meta_file, "w", encoding="utf-8") as f:
+            json.dump(
+                {
+                    "db_name": db_name,
+                    "db_path": connection_string
+                },
+                f,
+                indent=4
+            )
+
+        print(f"✅ Database connection saved for database: {db_name}")
+
+
+    def get_database_path(self) -> str | None:
+        """Return the last used database path from metadata.json."""
+
+        # Try to load from metadata.json
+        meta_file = os.path.join("storage", "metadata.json")
+        if os.path.exists(meta_file):
+            try:
+                with open(meta_file, "r", encoding="utf-8") as f:
+                    data = json.load(f)
+                    self._db_path = data.get("db_path")
+            except json.JSONDecodeError:
+                print(f"⚠️ Failed to parse {meta_file}, database path unavailable.")
+                self._db_path = None
+
+        return self._db_path
 
     def save(self):
         """Save current data to localstorage.json."""

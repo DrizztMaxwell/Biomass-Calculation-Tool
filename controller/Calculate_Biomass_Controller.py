@@ -1,5 +1,9 @@
+#Calculate_Biomass_Controller
 import json
 import pandas as pd
+import pyodbc
+from datetime import datetime
+from data.data_manager import DataManager
 from model.Calculate_Biomass_Model import Calculate_Biomass_Model
 from widgets.Bar_Chart_Widget import Bar_Chart_Widget
 
@@ -733,3 +737,122 @@ class Calculate_Biomass_Controller:
             
         except Exception as e:
             print(f"Error saving to text file: {e}")
+
+    def _normalize_biomass_row(self, row: dict) -> dict:
+        plot = (
+            row.get("Plot")
+            or row.get("plot")
+        )
+
+        year = (
+            row.get("Year")
+            or row.get("year")
+        )
+
+        tree_number = (
+            row.get("Tree Number")
+            or row.get("tree_number")
+        )
+
+        if not plot or year is None or tree_number is None:
+            raise ValueError(f"Missing required fields in row: {row}")
+
+        return {
+            "plot": plot,
+            "subplot": row.get("Section") or row.get("subplot"),
+            "year": int(year),
+            "origin": row.get("Origin"),
+            "tree_status": row.get("Tree Status"),
+            "speccode": row.get("SpecCode") or row.get("species"),
+            "tree_number": int(tree_number),
+            "dbh": row.get("DBH") or row.get("dbh"),
+            "height": row.get("Height") or row.get("height"),
+            "wood_kg": row.get("Wood (KG)") or row.get("wood_kg"),
+            "bark_kg": row.get("Bark (KG)") or row.get("bark_kg"),
+            "foliage_kg": row.get("Foliage (KG)") or row.get("foliage_kg"),
+            "branch_kg": row.get("Branch (KG)") or row.get("branch_kg"),
+            "crown_kg": row.get("Crown (KG)") or row.get("crown_kg"),
+            "stem_kg": row.get("Stem (KG)") or row.get("stem_kg"),
+            "total_kg": row.get("Total (KG)") or row.get("total_kg"),
+        }
+
+
+    def write_results_to_database(self):
+            """Write the biomass results from JSON to SQL Server database."""
+            try:
+                dm = DataManager()  # create instance locally
+                # Load database path/connection string
+                db_path = dm.get_database_path()  # get database path/connection string
+                conn = pyodbc.connect(db_path)
+                cursor = conn.cursor()
+
+                # Ensure the table exists
+                create_table_sql = """
+                IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='tCalcBCTOutput' AND xtype='U')
+                CREATE TABLE dbo.tCalcBCTOutput
+                (
+                    plot          VARCHAR(50) NOT NULL,
+                    subplot       VARCHAR(50) NULL,
+                    year          INT NOT NULL,
+                    origin        VARCHAR(50) NULL,
+                    tree_status   VARCHAR(50) NULL,
+                    speccode      VARCHAR(50) NULL,
+                    tree_number   INT NOT NULL,
+                    dbh           NUMERIC(8,2) NULL,
+                    height        NUMERIC(8,2) NULL,
+                    wood_kg       NUMERIC(10,3) NULL,
+                    bark_kg       NUMERIC(10,3) NULL,
+                    foliage_kg    NUMERIC(10,3) NULL,
+                    branch_kg     NUMERIC(10,3) NULL,
+                    crown_kg      NUMERIC(10,3) NULL,
+                    stem_kg       NUMERIC(10,3) NULL,
+                    total_kg      NUMERIC(10,3) NULL,
+                    processed_at  DATETIMEOFFSET NOT NULL DEFAULT SYSDATETIMEOFFSET()
+                )
+                """
+                cursor.execute(create_table_sql)
+                conn.commit()
+
+                # Load JSON results
+                with open('storage/biomass_results.json', 'r') as f:
+                    data = json.load(f)
+
+                # Insert each row
+                insert_sql = """
+                INSERT INTO dbo.tCalcBCTOutput
+                (plot, subplot, year, origin, tree_status, speccode, tree_number, dbh, height,
+                wood_kg, bark_kg, foliage_kg, branch_kg, crown_kg, stem_kg, total_kg)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                """
+
+                cursor.fast_executemany = True
+
+                for row in data:
+                    r = self._normalize_biomass_row(row)
+
+                    cursor.execute(
+                        insert_sql,
+                        r["plot"],
+                        r["subplot"],
+                        r["year"],
+                        r["origin"],
+                        r["tree_status"],
+                        r["speccode"],
+                        r["tree_number"],
+                        r["dbh"],
+                        r["height"],
+                        r["wood_kg"],
+                        r["bark_kg"],
+                        r["foliage_kg"],
+                        r["branch_kg"],
+                        r["crown_kg"],
+                        r["stem_kg"],
+                        r["total_kg"],
+                    )
+                conn.commit()
+                cursor.close()
+                conn.close()
+                return True
+            except Exception as e:
+                print(f"Database write error: {e}")
+                return False
