@@ -147,17 +147,16 @@ class HardwoodOrSoftwoodDialog:
         
         # Define the border color and thickness based on selection state
         # Use a Green color for a clear "checked" state
-        # if dark theme use amber else use green
-        border_color = ft.Colors.AMBER_600 if self.page.dark_theme and is_selected else (ft.Colors.GREEN_600 if is_selected else ft.Colors.GREY_300)
+        border_color = ft.Colors.AMBER_600 if self.page.theme_mode == ft.ThemeMode.DARK and is_selected else (ft.Colors.GREEN_600 if is_selected else ft.Colors.GREY_300)
         border_width = 2.0 if is_selected else 1
 
         # The core interactive element: A Checkbox
         checkbox = ft.Checkbox(
             value=is_selected,
-            fill_color=ft.Colors.PRIMARY,
+            fill_color=ft.Colors.GREEN_600 if is_selected else ft.Colors.GREY_300,
             tooltip=f"Select {species_type}",
             disabled=True, # Disable standard checkbox interaction, use card tap instead
-            check_color=ft.Colors.BLACK,
+            check_color=ft.Colors.WHITE,
         )
 
         # Card content: List tile is now simpler, acting as the main touch area
@@ -197,7 +196,7 @@ class HardwoodOrSoftwoodDialog:
                 border=ft.border.all(border_width, border_color),
                 border_radius=ft.border_radius.all(8),
                 # if selected and is dark theme switch to amber yellow else green light
-                bgcolor= ft.Colors.TERTIARY if self.page.dark_theme and is_selected else (ft.Colors.SECONDARY_CONTAINER if not is_selected else ft.Colors.GREEN_50),
+                bgcolor= ft.Colors.TERTIARY if self.page.theme_mode == ft.ThemeMode.DARK and is_selected else (ft.Colors.SECONDARY_CONTAINER if not is_selected else ft.Colors.GREEN_50),
                 on_click=on_tap,
                 ink=True, 
             ),
