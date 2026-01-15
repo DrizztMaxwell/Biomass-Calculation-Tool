@@ -1,14 +1,13 @@
-# select_data_view.py
+import datetime
 import os
 import flet as ft
+import json
 
 from widgets.DescriptionText import DescriptionText
 from widgets.TitleTextWidget import TitleTextWidget
-
-
+from widgets.Connect_To_Database_Dialog_Widget import Connect_To_Database_Dialog_Widget
 
 class Select_Data_View:
-
     def __init__(self, page: ft.Page, controller):
         self.controller = controller
         self.page = page
@@ -22,11 +21,6 @@ class Select_Data_View:
         )
 
         self.sql_data_path = None
-
-        self.directory_picker = ft.FilePicker(
-        on_result=self._on_sql_directory_selected
-        )
-        self.page.overlay.append(self.directory_picker)
 
     # -------------------------------------------------
     # MAIN LAYOUT
@@ -132,7 +126,6 @@ class Select_Data_View:
             border=ft.border.all(1, ft.Colors.AMBER_200),
         )
 
-
     # -------------------------------------------------
     # IMPORT BUTTONS
     # -------------------------------------------------
@@ -180,7 +173,7 @@ class Select_Data_View:
                             ),
                             ft.IconButton(
                                 icon=ft.Icons.ARROW_FORWARD_ROUNDED,
-                                on_click=lambda e: self._ensure_sql_path_and_open_db_picker(),
+                                on_click=lambda e: self.x(e),
                             ),
                         ],
                         alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
@@ -190,12 +183,41 @@ class Select_Data_View:
                     border_radius=ft.border_radius.all(12),
                     border=ft.border.all(1, ft.Colors.GREY_200),
                     ink=True,
-                    on_click=lambda e: self._ensure_sql_path_and_open_db_picker(),
+                    on_click=lambda e: self.x(e),
                 ),
             ],
             spacing=16,
         )
 
+    def x(self, e):
+        print("Opening database connection dialog...")
+        
+        
+        
+        # Create dialog and set callback
+        self.db_dialog = Connect_To_Database_Dialog_Widget(self.page)
+        self.db_dialog.on_connect_callback = self.controller.on_connection_result
+        self.db_dialog.open_dialog()
+        # import the data
+        self.controller.import_data_from_database()
+    
+    def save_connection_info(self, server, database):
+        """Save connection information"""
+        try:
+            if server and database:
+                with open('data/selected_database.json', 'w') as f:
+                    json.dump({
+                        "server": server,
+                        "database": database,
+                        "connection_type": "sql_server",
+                        "timestamp": datetime.now().isoformat()
+                    }, f, indent=2)
+            else:
+                with open('data/selected_database.json', 'w') as f:
+                    json.dump({}, f)
+        except Exception as e:
+            print(f"Error saving connection info: {e}")
+    
     def _icon_circle(self, icon, color):
         return ft.Container(
             content=ft.Icon(icon, color=ft.Colors.WHITE, size=24),
@@ -217,74 +239,6 @@ class Select_Data_View:
         )
 
     # -------------------------------------------------
-    # DATABASE PICKER
-    # -------------------------------------------------
-
-    def _ensure_sql_path_and_open_db_picker(self):
-        if not self.sql_data_path:
-            self.directory_picker.get_directory_path(
-                dialog_title="Select SQL Server DATA folder"
-            )
-        else:
-            self.open_database_picker()
-
-
-
-    def open_database_picker(self):
-        databases = self._get_databases_from_disk()
-
-        radio_group = ft.RadioGroup(
-            content=ft.Column(
-                [ft.Radio(value=db, label=db) for db in databases],
-                height=300,
-                scroll=ft.ScrollMode.AUTO,
-            )
-        )
-
-        self.db_dialog = ft.AlertDialog(
-            modal=True,
-            title=ft.Text("Select Database"),
-            content=radio_group,
-            actions=[
-                ft.TextButton(
-                    "Cancel",
-                    on_click=lambda e: self.page.close(self.db_dialog),
-                ),
-                ft.ElevatedButton(
-                    "Import",
-                    on_click=lambda e: self._confirm_database(radio_group.value),
-                ),
-            ],
-        )
-
-        self.page.open(self.db_dialog)
-
-    def _on_sql_directory_selected(self, e: ft.FilePickerResultEvent):
-        if not e.path:
-            return
-
-        self.sql_data_path = e.path
-        self.open_database_picker()
-
-    def _confirm_database(self, db_name):
-        if not db_name:
-            return
-        self.page.close(self.db_dialog)
-        self.controller.import_from_database(db_name)
-
-    def _get_databases_from_disk(self):
-        if not self.sql_data_path or not os.path.exists(self.sql_data_path):
-            return []
-
-        return sorted(
-            {
-                os.path.splitext(f)[0]
-                for f in os.listdir(self.sql_data_path)
-                if f.lower().endswith(".mdf")
-            }
-        )
-
-    # -------------------------------------------------
     # STATUS
     # -------------------------------------------------
     def _create_file_status(self):
@@ -296,10 +250,7 @@ class Select_Data_View:
             border=ft.border.all(1, ft.Colors.CYAN_200),
         )
 
-    def update_file_status(self, file_path):
-        self.file_status_text.value = (
-            f"File selected: {file_path}"
-            if file_path
-            else "File selected: No file selected"
-        )
+    def update_file_status(self, status_text):
+        """Update the file status display"""
+        self.file_status_text.value = status_text
         self.page.update()

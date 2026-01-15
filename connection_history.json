@@ -1,0 +1,32 @@
+[
+  {
+    "server": "DESKTOP-EJ33BVS\\SQLEXPRESS",
+    "database": "gyPSPPGP",
+    "timestamp": "2026-01-15T14:38:00.550838",
+    "last_used": "2026-01-15 14:38"
+  },
+  {
+    "server": "LOCALHOST\\SQL2019",
+    "database": "TestDB",
+    "timestamp": "2026-01-15T12:22:14.121184",
+    "last_used": "2026-01-15 12:22"
+  },
+  {
+    "server": "SERVER01\\MSSQLSERVER",
+    "database": "ProductionDB",
+    "timestamp": "2026-01-15T12:22:14.121195",
+    "last_used": "2026-01-15 12:22"
+  },
+  {
+    "server": "DEV-SERVER\\SQLDEV",
+    "database": "DevelopmentDB",
+    "timestamp": "2026-01-15T12:22:14.121202",
+    "last_used": "2026-01-15 12:22"
+  },
+  {
+    "server": "REMOTE-SRV\\SQLEXPRESS",
+    "database": "InventoryDB",
+    "timestamp": "2026-01-15T12:22:14.121208",
+    "last_used": "2026-01-15 12:22"
+  }
+]

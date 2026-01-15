@@ -34,6 +34,7 @@ class Display_Error_Dialog:
         
         self.page.dialog = dialog
         dialog.open = True
+        self.page.open(dialog)
         self.page.update()
         return dialog
     

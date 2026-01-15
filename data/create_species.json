@@ -1,1 +1,9 @@
-[]
+[
+    {
+        "SpecCommon": "sda",
+        "Origin": "Natural Stand",
+        "EquationType": "DBH-based",
+        "bwood1": 0.0,
+        "bwood2": 0.0
+    }
+]

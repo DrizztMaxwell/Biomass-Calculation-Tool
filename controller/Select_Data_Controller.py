@@ -35,7 +35,7 @@ class Select_Data_Controller:
     def __init__(self, page: ft.Page, data_imported_callback: callable, view: Select_Data_View):
         self.page = page
         self.view = view
-
+        self.database_name = None
         self.file_picker = ft.FilePicker(on_result=self.on_file_selected)
 
         self.page.overlay.append(self.file_picker)
@@ -45,8 +45,24 @@ class Select_Data_Controller:
         self.error_messages = []
         self.data_imported_callback = data_imported_callback
         self.is_data_imported = False
+    def on_connection_result(self, success, server, database, connection):
+                """Callback for connection result"""
+                if success:
+                    print(f"✅ Connected to {database} on {server}")
+                    self.data_imported_callback(True)
+                    self.process_database_import()
 
-      
+                else:
+                    print("❌ Connection failed")
+                    self.data_imported_callback(False)
+                  
+                    
+                   
+    def set_database_name(self, db_name: str):
+        self.database_name = db_name
+    
+    def get_database_name(self) -> str:
+        return self.database_name
 
     async def on_file_selected(self, e: ft.FilePickerResultEvent):
         """Callback when a file is selected"""
@@ -168,7 +184,48 @@ class Select_Data_Controller:
             self.page.update()
             return
 
-
+    def process_database_import(self, ):
+        """Process importing data from database"""
+        # read json file called data/selected_database.json to get server and database name
+        with open('data/selected_database.json', 'r') as f:
+            db_config = json.load(f)
+            server = db_config.get("server")
+            database = db_config.get("database")
+        if not server or not database:
+            self.page.open(
+                Display_Error_Dialog(
+                    self.page,
+                    title="Database Configuration Error",
+                    description="Database configuration is missing or invalid. Please connect to the database first."
+                ).show()
+            )
+            self.is_data_imported = False
+            if self.data_imported_callback:
+                self.data_imported_callback(False)
+            self.page.update()
+            return
+        if self._read_tree_data_from_db(database):
+            self.import_from_database(database)
+        else:
+            self.page.open(
+                Display_Error_Dialog(
+                    self.page,
+                    title="Data Import Error",
+                    description=f"No data found in the database: {database}."
+                ).show()
+            )
+            self.is_data_imported = False
+            if self.data_imported_callback:
+                self.data_imported_callback(False)
+            self.page.update()
+            return
+        
+        print(f"Importing data from database: {database}")
+        self.data_imported_callback(True)
+        
+        
+        
+    
     @staticmethod
     def _read_tree_data_from_db(db_name: str) -> list[dict]:
         driver = get_sql_server_odbc_driver()
@@ -201,17 +258,13 @@ class Select_Data_Controller:
         conn.close()
 
         if not rows:
-            raise ValueError("tCalcBCTInput table is empty")
+            raise ValueError(f"{db_name} table is empty")
 
         return rows
     
     def import_from_database(self, db_name: str):
         try:
-            if db_name.lower() != "gypsppgp":
-                raise ValueError(
-                    "Selected database does not match required database: gyPSPPGP"
-                )
-
+        
             rows = self._read_tree_data_from_db(db_name)
 
             os.makedirs("storage", exist_ok=True)
@@ -259,12 +312,12 @@ class Select_Data_Controller:
     def on_import_from_database_click(self, e):
         print("Import from database clicked")
 
-        self.bak_file_picker.pick_files(
-            allow_multiple=False,
-            allowed_extensions=["bak"],
-            dialog_title="Select SQL Server Backup (.bak)",
-            file_type=ft.FilePickerFileType.CUSTOM
-        )
+        # self.bak_file_picker.pick_files(
+        #     allow_multiple=False,
+        #     allowed_extensions=["bak"],
+        #     dialog_title="Select SQL Server Backup (.bak)",
+        #     file_type=ft.FilePickerFileType.CUSTOM
+        # )
         
     def build(self):
         """Build the controller view"""

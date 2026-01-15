@@ -13,7 +13,7 @@ def _screen_configuration(page:ft.Page):
     page.window.resizable = True  # window is not resizable
     page.window.width = width        # window's width is 200 px
     page.window.height = height       # window's height is 200 px
-    page.theme_mode = ft.ThemeMode.DARK
+    # page.theme_mode = ft.ThemeMode.DARK
     page.window_full_screen = True
     page.theme = ft.Theme(color_scheme=ft.ColorScheme(
             primary=ft.Colors.BLACK,      # For text colors in light theme
