@@ -723,7 +723,7 @@ class Create_Species_View:
                             displayShadow=False,
                             on_selection_change=self.on_component_selection_change,  # Add callback
                             is_alternate_card=True
-                        ),
+                        ).get_widget(),
                         
                         ft.Divider(height=30, color=ft.Colors.GREY_300),  # More space
                         self.parameters_section,  # Use the stored reference

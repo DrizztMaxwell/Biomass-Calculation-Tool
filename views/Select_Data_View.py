@@ -199,7 +199,7 @@ class Select_Data_View:
         self.db_dialog.on_connect_callback = self.controller.on_connection_result
         self.db_dialog.open_dialog()
         # import the data
-        self.controller.import_data_from_database()
+        
     
     def save_connection_info(self, server, database):
         """Save connection information"""

@@ -1,207 +1,349 @@
 import flet as ft
 from data.components_data import COMPONENTS_DATA
 
-def Select_Components_Widget(
-    title: ft.Text, 
-    description_text: ft.Text,
-    components_card_row, 
-    selected_card_component,
-    components_data=None,
-    displayButton=True,
-    displayShadow=True,
-    on_selection_change=None,  # Add callback parameter,
-    is_alternate_card = False
-):
-    # Default components data if none provided
-    if components_data is None:
-        components_data = COMPONENTS_DATA
+class Select_Components_Widget:
+    def __init__(
+        self,
+        title: ft.Text,
+        description_text: ft.Text,
+        components_card_row,
+        selected_card_component,
+        components_data=None,
+        displayButton=True,
+        displayShadow=True,
+        on_selection_change=None,
+        is_alternate_card=False,
+        is_database_selected=False
+    ):
+        self.title = title
+        self.description_text = description_text
+        self.components_card_row = components_card_row
+        self.selected_card_component = selected_card_component
+        self.components_data = components_data or COMPONENTS_DATA.copy()
+        self.displayButton = displayButton
+        self.displayShadow = displayShadow
+        self.on_selection_change = on_selection_change
+        self.is_alternate_card = is_alternate_card
+        self.is_database_selected = is_database_selected
+        
+        # Store original components data to reset when needed
+        self.original_components_data = COMPONENTS_DATA.copy()
+        
+        # Apply database selection mode if enabled
+        self.apply_database_mode()
+        
+        # Create the select all button
+        self.select_all_button = ft.TextButton(
+            text=self.get_select_all_button_text(),
+            icon=ft.Icons.CHECK_BOX_OUTLINED,
+            style=ft.ButtonStyle(
+                color=ft.Colors.TERTIARY,
+            ),
+            on_click=self.select_all_components,
+            disabled=self.is_database_selected  # Disable button if database is selected
+        )
+        
+        # Build the component cards
+        self.build_component_cards()
+        
+        # Initialize selected components text
+        self.update_selected_text()
     
-    # Function to create individual component cards
-    def create_component_card(component):
+    def apply_database_mode(self):
+        """Apply database selection mode: select all and disable if database is selected"""
+        if self.is_database_selected:
+            # Select all components and mark them as disabled
+            for component in self.components_data:
+                component["is_selected"] = True
+                component["is_disabled"] = True
+        else:
+            # Reset to normal mode - use original state
+            for i, component in enumerate(self.components_data):
+                original_component = self.original_components_data[i]
+                component["is_selected"] = original_component.get("is_selected", False)
+                component["is_disabled"] = False  # Ensure not disabled
+    
+    def get_select_all_button_text(self):
+        """Get the appropriate text for the select all button"""
+        if self.is_database_selected:
+            return "All Required"
+        
+        all_selected = self.all_components_selected()
+        if all_selected:
+            return "Deselect All"
+        else:
+            return "Select All"
+    
+    def all_components_selected(self):
+        """Check if all components are selected"""
+        return all(comp.get("is_selected", False) for comp in self.components_data)
+    
+    def create_component_card(self, component):
+        """Create individual component card"""
+        is_disabled = component.get("is_disabled", False)
+        is_selected = component["is_selected"]
+        
+        # Determine colors based on selection and disabled state
+        if is_disabled:
+            bgcolor = ft.Colors.GREEN_100
+            border_color = ft.Colors.GREEN
+        elif is_selected:
+            bgcolor = ft.Colors.GREEN_50
+            border_color = ft.Colors.GREEN
+        else:
+            bgcolor = ft.Colors.SECONDARY_CONTAINER
+            border_color = ft.Colors.GREY_300
+        
+        # Determine if card should have hover animation
+        animate_scale = None if is_disabled else ft.Animation(300, "easeInOut")
+        scale = 1.0
+        
+        # Create the card
         card = ft.Container(
             width=150,
             height=150,
             border_radius=10,
-            bgcolor=ft.Colors.GREEN_50 if component["is_selected"] else ft.Colors.SECONDARY_CONTAINER,
-            border=ft.border.all(
-                2, 
-                ft.Colors.GREEN if component["is_selected"] else ft.Colors.GREY_300
-            ),
+            bgcolor=bgcolor,
+            border=ft.border.all(2, border_color),
             padding=10,
             alignment=ft.alignment.center,
-            animate_scale=ft.Animation(300, "easeInOut"),
-            scale=1.0,
+            animate_scale=animate_scale,
+            scale=scale,
             content=ft.Column(
                 horizontal_alignment=ft.CrossAxisAlignment.CENTER,
-                alignment=ft.MainAxisAlignment.CENTER,  # Center vertically
-                spacing=8,  # Add consistent spacing between items
+                alignment=ft.MainAxisAlignment.CENTER,
+                spacing=8,
                 controls=[
-                    # Image
                     ft.Container(
                         width=50,
                         height=50,
-                        alignment=ft.alignment.center,  # Center the image container
+                        alignment=ft.alignment.center,
                         content=ft.Image(
                             src=component["image_src"],
-                            fit=ft.ImageFit.CONTAIN
+                            fit=ft.ImageFit.CONTAIN,
+                            color=ft.Colors.GREY_400 if is_disabled else None
                         )
                     ),
-                    # Title
                     ft.Container(
-                        alignment=ft.alignment.center,  # Center the text container
+                        alignment=ft.alignment.center,
                         content=ft.Text(
                             value=component["title"],
                             weight=ft.FontWeight.BOLD,
-                            color=ft.Colors.PRIMARY,
+                            color=ft.Colors.GREY_600 if is_disabled else ft.Colors.PRIMARY,
                             size=18,
                             text_align=ft.TextAlign.CENTER
                         )
                     )
                 ]
             ),
-            on_click=lambda e, comp=component: toggle_component(e, comp),
-            on_hover=lambda e: handle_hover(e, card)
+            tooltip="Required - cannot be deselected" if is_disabled else "Click to select/deselect"
         )
+        
+        # Set event handlers - only if not disabled
+        if not is_disabled:
+            card.on_click = lambda e, comp=component: self.toggle_component(e, comp)
+            card.on_hover = lambda e: self.handle_hover(e, card)
+        
         return card
     
-    # Function to handle hover effects
-    def handle_hover(e, card):
+    def handle_hover(self, e, card):
+        """Handle hover effects (only for enabled cards)"""
         if e.data == "true":
-            # Mouse enter - scale up
             card.scale = 1.05
         else:
-            # Mouse leave - scale back to normal
             card.scale = 1.0
         card.update()
     
-    # Function to handle component selection/deselection
-    def toggle_component(e, component):
+    def toggle_component(self, e, component):
+        """Handle component selection/deselection (only for enabled cards)"""
+        if component.get("is_disabled", False):
+            return  # Do nothing if component is disabled
+        
         component["is_selected"] = not component["is_selected"]
         
-        # Update the card background color and border
+        # Update the card appearance
         e.control.bgcolor = ft.Colors.GREEN_50 if component["is_selected"] else ft.Colors.SECONDARY_CONTAINER
         e.control.border = ft.border.all(
             2, 
             ft.Colors.GREEN if component["is_selected"] else ft.Colors.GREY_300
         )
         
-        # Update selected components text
-        update_selected_text()
+        # Update UI
+        self.update_selected_text()
+        
+        # Update Select All button text
+        all_selected = self.all_components_selected()
+        self.select_all_button.text = "Deselect All" if all_selected else "Select All"
         
         # Call the callback if provided
-        if on_selection_change:
-            selected_items = [comp["title"] for comp in components_data if comp["is_selected"]]
-            on_selection_change(selected_items)
+        if self.on_selection_change:
+            selected_items = [comp["title"] for comp in self.components_data if comp["is_selected"]]
+            self.on_selection_change(selected_items)
         
         e.control.update()
-        selected_card_component.update()
+        self.select_all_button.update()
+        self.selected_card_component.update()
     
-    # Function to update selected components text
-    def update_selected_text():
-        selected_items = [comp["title"] for comp in components_data if comp["is_selected"]]
-        selected_card_component.value = f"Selected: {', '.join(selected_items)}" if selected_items else "No components selected"
-        selected_card_component.color = ft.Colors.PRIMARY
-    
-    # Function to select all components
-    def select_all_components(e):
-        all_selected = all(comp["is_selected"] for comp in components_data)
+    def update_selected_text(self):
+        """Update selected components text"""
+        selected_items = [comp["title"] for comp in self.components_data if comp["is_selected"]]
         
-        # Toggle all components
-        for component in components_data:
-            component["is_selected"] = not all_selected
+        if self.is_database_selected:
+            self.selected_card_component.value = "All components selected (database mode)"
+            self.selected_card_component.color = ft.Colors.GREEN
+        elif selected_items:
+            self.selected_card_component.value = f"Selected: {', '.join(selected_items)}"
+            self.selected_card_component.color = ft.Colors.PRIMARY
+        else:
+            self.selected_card_component.value = "No components selected"
+            self.selected_card_component.color = ft.Colors.PRIMARY
+    
+    def select_all_components(self, e=None):
+        """Select or deselect all components (only if not disabled)"""
+        if self.is_database_selected:
+            return  # Do nothing if database is selected
+        
+        all_selected = self.all_components_selected()
+        
+        # Toggle all components (only non-disabled ones)
+        for component in self.components_data:
+            if not component.get("is_disabled", False):
+                component["is_selected"] = not all_selected
         
         # Update all cards
-        for i, component in enumerate(components_data):
-            if i < len(components_card_row.controls):
-                card = components_card_row.controls[i]
-                card.bgcolor = ft.Colors.GREEN_50 if component["is_selected"] else ft.Colors.SECONDARY_CONTAINER
-                card.border = ft.border.all(
-                    2, 
-                    ft.Colors.GREEN if component["is_selected"] else ft.Colors.GREY_300
-                )
+        for i, component in enumerate(self.components_data):
+            if i < len(self.components_card_row.controls):
+                card = self.components_card_row.controls[i]
+                if not component.get("is_disabled", False):
+                    card.bgcolor = ft.Colors.GREEN_50 if component["is_selected"] else ft.Colors.SECONDARY_CONTAINER
+                    card.border = ft.border.all(
+                        2, 
+                        ft.Colors.GREEN if component["is_selected"] else ft.Colors.GREY_300
+                    )
                 card.update()
         
-        # Update selected text and button text
-        update_selected_text()
-        select_all_button.text = "Deselect All" if not all_selected else "Select All"
+        # Update UI
+        self.update_selected_text()
+        self.select_all_button.text = "Deselect All" if not all_selected else "Select All"
         
         # Call the callback if provided
-        if on_selection_change:
-            selected_items = [comp["title"] for comp in components_data if comp["is_selected"]]
-            on_selection_change(selected_items)
+        if self.on_selection_change:
+            selected_items = [comp["title"] for comp in self.components_data if comp["is_selected"]]
+            self.on_selection_change(selected_items)
         
-        select_all_button.update()
-        selected_card_component.update()
+        self.select_all_button.update()
+        self.selected_card_component.update()
     
-    # Clear existing cards and render new ones
-    components_card_row.controls.clear()
-    for component in components_data:
-        card = create_component_card(component)
-        components_card_row.controls.append(card)
+    def build_component_cards(self):
+        """Build component cards and add them to the row"""
+        self.components_card_row.controls.clear()
+        for component in self.components_data:
+            card = self.create_component_card(component)
+            self.components_card_row.controls.append(card)
     
-    # Initialize selected components text
-    update_selected_text()
-    
-    # Create Select All button
-    select_all_button = ft.TextButton(
-        text="Select All",
-        icon=ft.Icons.CHECK_BOX_OUTLINED,
-        style=ft.ButtonStyle(
-            color=ft.Colors.TERTIARY,
-        ),
-        on_click=select_all_components
-    )
+    def get_widget(self):
+        """Return the Flet widget container"""
+        # Create controls list
+        controls = [
+            self.title,
+            self.description_text,
+            
+            # Select All button row
+            ft.Row(
+                controls=[self.select_all_button],
+                alignment=ft.MainAxisAlignment.START,
+            ) if self.displayButton else ft.Container(),
+            
+            ft.Container(height=10),  # Spacer
+            
+            self.components_card_row,
 
-    # Create controls list
-    controls = [
-        title,
-        description_text,
+            # Selected Items Display
+            ft.Container( 
+                expand=True,
+                bgcolor=ft.Colors.with_opacity(0.1, ft.Colors.GREEN_ACCENT_400),
+                border_radius=10,
+                margin=ft.margin.only(top=10, bottom=10), 
+                padding=10, 
+                alignment=ft.alignment.center_left,
+                content=self.selected_card_component
+            )
+        ]
         
-        # Select All button row
-        ft.Row(
-            controls=[select_all_button],
-            alignment=ft.MainAxisAlignment.START,
-        ),
+        # Conditionally set shadow
+        shadow = None
+        if self.displayShadow:
+            shadow = ft.BoxShadow(
+                spread_radius=1,
+                blur_radius=5,
+                color=ft.Colors.with_opacity(0.15, ft.Colors.BLUE_GREY_900),
+                offset=ft.Offset(0, 3),
+            )
         
-        ft.Container(height=10),  # Spacer
-        
-        components_card_row,
-
-        # Selected Items Display
-        ft.Container( 
-            expand=True,  # Expand to fill available width
-            bgcolor=ft.Colors.with_opacity(0.1, ft.Colors.GREEN_ACCENT_400), 
+        return ft.Container(
+            expand=True,
+            bgcolor=ft.Colors.SECONDARY_CONTAINER,
+            padding=0 if self.is_alternate_card else 20,
+            margin=0 if self.is_alternate_card else 30,
             border_radius=10,
-            margin=ft.margin.only(top=10, bottom=10), 
-            padding=10, 
-            alignment=ft.alignment.center_left,  # Left align the text inside
-            content=selected_card_component
+            shadow=shadow,
+            alignment=ft.alignment.top_left,
+            content=ft.Column(
+                controls=controls,
+                horizontal_alignment=ft.CrossAxisAlignment.START,
+                alignment=ft.MainAxisAlignment.START,
+                expand=True,
+            )
         )
-    ]
-   
-
-    # Conditionally set shadow based on displayShadow parameter
-    shadow = None
-    if displayShadow:
-        shadow = ft.BoxShadow(
-            spread_radius=1,
-            blur_radius=5,
-            color=ft.Colors.with_opacity(0.15, ft.Colors.BLUE_GREY_900),
-            offset=ft.Offset(0, 3),
-        )
-
-    return ft.Container(
-        expand=True,  # Expand to fill parent container
-        bgcolor=ft.Colors.SECONDARY_CONTAINER,
-        padding=0 if is_alternate_card else 20,
-  margin=0 if is_alternate_card else 30,
-        border_radius=10,
-        shadow=shadow,  # Use conditional shadow
-        alignment=ft.alignment.top_left,  # Align content to top-left
-        content=ft.Column(
-            controls=controls,
-            horizontal_alignment=ft.CrossAxisAlignment.START,  # Left align horizontally
-            alignment=ft.MainAxisAlignment.START,  # Align to top
-            expand=True,  # Expand to fill the container
-        )
-    )
+    
+    # Property to get selected components
+    @property
+    def selected_components(self):
+        """Get list of selected component titles"""
+        return [comp["title"] for comp in self.components_data if comp["is_selected"]]
+    
+    # Method to set specific components
+    def set_selected_components(self, component_titles):
+        """Set specific components as selected (only if not disabled)"""
+        if self.is_database_selected:
+            return  # Do nothing if database is selected
+        
+        # First deselect all non-disabled components
+        for component in self.components_data:
+            if not component.get("is_disabled", False):
+                component["is_selected"] = False
+        
+        # Select specified non-disabled components
+        for component in self.components_data:
+            if not component.get("is_disabled", False) and component["title"] in component_titles:
+                component["is_selected"] = True
+        
+        # Update UI
+        self.build_component_cards()
+        self.update_selected_text()
+        
+        # Update button text
+        all_selected = self.all_components_selected()
+        self.select_all_button.text = "Deselect All" if all_selected else "Select All"
+        self.select_all_button.update()
+    
+    def toggle_database_mode(self, is_database_selected: bool):
+        """Toggle between database mode and normal mode"""
+        self.is_database_selected = is_database_selected
+        
+        # Re-apply the mode
+        self.apply_database_mode()
+        
+        # Update button state and text
+        self.select_all_button.disabled = is_database_selected
+        self.select_all_button.text = self.get_select_all_button_text()
+        
+        # Rebuild cards
+        self.build_component_cards()
+        
+        # Update selected text
+        self.update_selected_text()
+        
+        # Update UI
+        self.select_all_button.update()
+        self.selected_card_component.update()

@@ -1,5 +1,6 @@
 #Calculate_Biomass_Controller
 import json
+import os
 import pandas as pd
 import pyodbc
 from datetime import datetime
@@ -21,6 +22,18 @@ class Calculate_Biomass_Controller:
         self.tree_params_data = pd.read_json("data/treeparameters.json")
         self.selected_components = []
         self.hardwood_and_softwood_species_code_mapping = []
+        # check to see if database is selected
+        selected_db_path = 'data/selected_database.json'
+        if os.path.exists(selected_db_path):
+            with open(selected_db_path, 'r') as f:
+                content = f.read().strip()
+                if content and content != "{}":
+                    print("Database selected for calculations.")
+                    self.view.is_database_selected = True
+                else:
+                    print("No database selected for calculations.")
+                    self.view.is_database_selected = False
+                    
     def json_to_dataframe_basic(self, json_file_path):
         """Convert JSON file to DataFrame (basic approach)"""
         try:

@@ -50,10 +50,12 @@ class Select_Data_Controller:
                 if success:
                     print(f"✅ Connected to {database} on {server}")
                     self.data_imported_callback(True)
+                    self.view.update_file_status(f"Connected to database: {database}")
                     self.process_database_import()
 
                 else:
                     print("❌ Connection failed")
+                    self.view.update_file_status("Database connection failed.")
                     self.data_imported_callback(False)
                   
                     
@@ -148,7 +150,9 @@ class Select_Data_Controller:
                     self.is_data_imported = True
                     if self.data_imported_callback:
                         pool.shutdown() #is this needed?
-                        
+                        # create or clear the file data/selected_database.json
+                        with open('data/selected_database.json', 'w') as f:
+                            f.write("{}")
                         self.data_imported_callback(True) # Call the callback to enable sidebar buttons
                     self.page.update()
 
@@ -156,6 +160,7 @@ class Select_Data_Controller:
                     
                     
             else:
+               
                 print("File selection cancelled")
                 self.selected_file_path = None
                 self.view.update_file_status(self.selected_file_path)
@@ -207,6 +212,7 @@ class Select_Data_Controller:
         if self._read_tree_data_from_db(database):
             self.import_from_database(database)
         else:
+            self.view.update_file_status(f"No data found in the database: {database}")
             self.page.open(
                 Display_Error_Dialog(
                     self.page,
@@ -221,7 +227,9 @@ class Select_Data_Controller:
             return
         
         print(f"Importing data from database: {database}")
+        self.view.file_status_text.value = f"Data imported from database: {database}"
         self.data_imported_callback(True)
+        self.page.update()
         
         
         
@@ -282,17 +290,19 @@ class Select_Data_Controller:
             self.is_data_imported = True
             if self.data_imported_callback:
                 self.data_imported_callback(True)
-
+            self.view.update_file_status(f"Data imported from database: {db_name}")
             self.page.update()
 
         except Exception as e:
             self.page.open(
                 Display_Error_Dialog(self.page, str(e)).show()
             )
+            self.view.update_file_status("Failed to import data from database.")
             self.is_data_imported = False
             if self.data_imported_callback:
                 self.data_imported_callback(False)
-
+            self.page.update()
+            
 
 
     def open_file_dialog(self):

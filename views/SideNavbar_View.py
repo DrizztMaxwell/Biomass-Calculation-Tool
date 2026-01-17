@@ -63,14 +63,7 @@ class SideNavbar_View:
         self.select_data_view.controller = self.select_data_controller
         
         
-         # Initialize controllers and forms - FIXED: Initialize Main_Controller properly
-        self.main_model = Calculate_Biomass_Model()
-        self.main_view = Calculate_Biomass_View(None, page = self.page, selected_file_path=None)  # Pass None initially, set controller later
-        self.main_controller = Calculate_Biomass_Controller(self.main_model, self.main_view, )
-        self.main_view.controller = self.main_controller
-        self.main_view.selected_file_path = self.select_data_controller.selected_file_path
-        self.main_view_content = self.main_controller.build()
-        
+         
         self.modify_species_view = None
         
         self.settings_view = SettingsView(self.page)
@@ -121,9 +114,16 @@ class SideNavbar_View:
         if page_name == "calculate_biomass":
             # Render Main_View page
             print("File Path")
+            # Initialize controllers and forms - FIXED: Initialize Main_Controller properly
+            self.main_model = Calculate_Biomass_Model()
+            self.main_view = Calculate_Biomass_View(None, page = self.page, selected_file_path=None)  # Pass None initially, set controller later
+            self.main_controller = Calculate_Biomass_Controller(self.main_model, self.main_view, )
+            self.main_view.controller = self.main_controller
+            self.main_view.selected_file_path = self.select_data_controller.selected_file_path
+            self.main_view_content = self.main_controller.build()
             
             self.main_view.selected_file_path =self.select_data_controller.selected_file_path
-            self.page.update()
+         
             print(self.main_view.selected_file_path)
             self.page.update()
             self.main_content_area.controls.append(self.main_view_content)

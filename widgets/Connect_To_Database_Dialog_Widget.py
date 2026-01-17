@@ -5,6 +5,7 @@ import os
 from datetime import datetime
 from widgets.Display_Error_Dialog import Display_Error_Dialog
 from widgets.Custom_Alert_Dialog import Custom_Alert_Dialog
+from widgets.Loading_Spinner_Widget import Loading_Spinner_Widget as Loading
 
 class Connect_To_Database_Dialog_Widget:
     def __init__(self, page: ft.Page):
@@ -12,7 +13,7 @@ class Connect_To_Database_Dialog_Widget:
         self.on_connect_callback = None  # Callback for connection result
         self.history_file = "connection_history.json"
         self.connection_history = []
-        self.max_history_items = 5
+        self.max_history_items = 10  # Increased to store more history
         
         # Add this to track connection status
         self.connection = None
@@ -49,7 +50,6 @@ class Connect_To_Database_Dialog_Widget:
             text_size=14,
             content_padding=ft.padding.symmetric(horizontal=12, vertical=14),
             border_radius=8,
-            capitalization=ft.TextCapitalization.CHARACTERS,
         )
         
         # Create history dropdown/datalist
@@ -194,15 +194,6 @@ class Connect_To_Database_Dialog_Widget:
                     content=ft.Row(
                         [
                             ft.TextButton(
-                                "Add Test Data",
-                                on_click=self.add_test_history,
-                                style=ft.ButtonStyle(
-                                    color=ft.Colors.ORANGE_700,
-                                    padding=ft.padding.symmetric(horizontal=12, vertical=8),
-                                ),
-                                icon=ft.Icons.DATA_USAGE,
-                            ),
-                            ft.TextButton(
                                 "Clear History",
                                 on_click=self.clear_history,
                                 style=ft.ButtonStyle(
@@ -250,7 +241,12 @@ class Connect_To_Database_Dialog_Widget:
         
         if self.connection_history:
             for i, conn in enumerate(self.connection_history):
+                # Format the display text with server and database
                 display_text = f"{conn['server']} | {conn['database']}"
+                # Add timestamp if available
+                if 'last_used' in conn:
+                    display_text += f" ({conn['last_used']})"
+                
                 self.history_dropdown.options.append(
                     ft.dropdown.Option(
                         key=str(i),
@@ -278,7 +274,13 @@ class Connect_To_Database_Dialog_Widget:
         try:
             if os.path.exists(self.history_file):
                 with open(self.history_file, 'r') as f:
-                    self.connection_history = json.load(f)
+                    data = json.load(f)
+                    # Ensure we have a list
+                    if isinstance(data, list):
+                        self.connection_history = data
+                    else:
+                        self.connection_history = []
+                        print("Invalid history format, resetting...")
             else:
                 self.connection_history = []
         except Exception as e:
@@ -292,50 +294,32 @@ class Connect_To_Database_Dialog_Widget:
                 json.dump(self.connection_history, f, indent=2)
         except Exception as e:
             print(f"Error saving connection history: {e}")
-    
-    def add_test_history(self, e=None):
-        """Add some test history entries for demonstration"""
-        test_connections = [
-            {"server": "DESKTOP-EJ33BVS\\SQLEXPRESS", "database": "gyPSPPGP"},
-            {"server": "LOCALHOST\\SQL2019", "database": "TestDB"},
-            {"server": "SERVER01\\MSSQLSERVER", "database": "ProductionDB"},
-            {"server": "DEV-SERVER\\SQLDEV", "database": "DevelopmentDB"},
-            {"server": "REMOTE-SRV\\SQLEXPRESS", "database": "InventoryDB"}
-        ]
-        
-        self.connection_history = []
-        for conn in test_connections:
-            self.connection_history.append({
-                'server': conn['server'],
-                'database': conn['database'],
-                'timestamp': datetime.now().isoformat(),
-                'last_used': datetime.now().strftime("%Y-%m-%d %H:%M")
-            })
-        
-        self.save_connection_history()
-        self._initialize_dropdown_options()
-        
-        # Show success message
-        self.page.snack_bar = ft.SnackBar(
-            content=ft.Text("Test history added successfully!"),
-            bgcolor=ft.Colors.GREEN_700
-        )
-        self.page.snack_bar.open = True
-        self.page.update()
-    
+
     def add_to_history(self, server, database):
-        """Add a new connection to history"""
-        # Remove duplicates
-        self.connection_history = [conn for conn in self.connection_history 
-                                  if not (conn['server'] == server and conn['database'] == database)]
+        """Add a new connection to history or update existing"""
+        # Format timestamp
+        current_time = datetime.now().strftime("%Y-%m-%d %H:%M")
         
-        # Add new connection at the beginning
+        # Check if this connection already exists in history
+        for conn in self.connection_history:
+            if conn['server'] == server and conn['database'] == database:
+                # Update timestamp and move to front
+                conn['last_used'] = current_time
+                conn['timestamp'] = datetime.now().isoformat()
+                self.connection_history.remove(conn)
+                self.connection_history.insert(0, conn)
+                self.save_connection_history()
+                return
+        
+        # If not found, add new connection
         new_connection = {
             'server': server,
             'database': database,
             'timestamp': datetime.now().isoformat(),
-            'last_used': datetime.now().strftime("%Y-%m-%d %H:%M")
+            'last_used': current_time
         }
+        
+        # Add to beginning of list
         self.connection_history.insert(0, new_connection)
         
         # Keep only max_history_items
@@ -344,11 +328,6 @@ class Connect_To_Database_Dialog_Widget:
         
         # Save to file
         self.save_connection_history()
-        
-        # Update dropdown (now safe to call update since dialog is open)
-        self._initialize_dropdown_options()
-        if self.dialog.open:
-            self.history_dropdown.update()
 
     def update_history_dropdown(self):
         """Update dropdown options based on connection history - only call when dialog is open"""
@@ -369,8 +348,9 @@ class Connect_To_Database_Dialog_Widget:
                     # Clear dropdown selection after populating fields
                     self.history_dropdown.value = None
                     
-                    # Update the page to show the populated fields
-                    self.page.update()
+                    # Update the UI to show the populated fields
+                    self.server_input.update()
+                    self.db_input.update()
             except (ValueError, IndexError):
                 pass
 
@@ -384,6 +364,8 @@ class Connect_To_Database_Dialog_Widget:
                 self.history_dropdown.update()
             self.page.dialog.open = False
             self.page.update()
+            
+            # Show confirmation snackbar
             self.page.snack_bar = ft.SnackBar(
                 ft.Text("Connection history cleared"),
                 bgcolor=ft.Colors.GREEN_700
@@ -402,20 +384,21 @@ class Connect_To_Database_Dialog_Widget:
             content=ft.Text("Are you sure you want to clear all connection history? This action cannot be undone."),
             actions=[
                 ft.TextButton("Cancel", on_click=cancel_clear),
-                ft.ElevatedButton("Clear All", on_click=confirm_clear, bgcolor=ft.Colors.RED_700),
+                ft.ElevatedButton("Clear All", on_click=confirm_clear, text_style=ft.TextStyle(color=ft.Colors.WHITE), bgcolor=ft.Colors.RED_700),
             ],
             actions_alignment=ft.MainAxisAlignment.END,
         )
         
         self.page.dialog = confirm_dialog
         confirm_dialog.open = True
+        self.page.open(confirm_dialog)
         self.page.update()
 
     def open_dialog(self, e=None):
         """Open the dialog"""
         # Clear any previous values
-        self.server_input.value = "DESKTOP-EJ33BVS\\SQLEXPRESS"  # Pre-fill your server
-        self.db_input.value = "gyPSPPGP"  # Pre-fill your database
+        self.server_input.value = ""
+        self.db_input.value = ""
         self.server_input.error_text = None
         self.db_input.error_text = None
         self.history_dropdown.value = None
@@ -424,22 +407,47 @@ class Connect_To_Database_Dialog_Widget:
         self.load_connection_history()
         self._initialize_dropdown_options()
         
+        # Clear test data if present
+        self.remove_test_data()
+        
         self.page.dialog = self.dialog
         self.dialog.open = True
         self.page.open(self.dialog)
         self.page.update()
+
+    def remove_test_data(self):
+        """Remove any test data that might have been added"""
+        # Remove connections that look like test data
+        test_indicators = ["TestDB", "ProductionDB", "DevelopmentDB", "InventoryDB", "DEV-SERVER", "REMOTE-SRV"]
+        
+        filtered_history = []
+        for conn in self.connection_history:
+            is_test_data = False
+            for indicator in test_indicators:
+                if indicator in conn.get('server', '') or indicator in conn.get('database', ''):
+                    is_test_data = True
+                    break
+            
+            if not is_test_data:
+                filtered_history.append(conn)
+        
+        if len(filtered_history) != len(self.connection_history):
+            self.connection_history = filtered_history
+            self.save_connection_history()
 
     def handle_close(self, e):
         """Close the dialog"""
         self.dialog.open = False
         self.page.update()
 
-    def handle_connect(self, e):
+    async def handle_connect(self, e):
         """Handle connect button click"""
         # Clear previous errors
         self.server_input.error_text = None
         self.db_input.error_text = None
-        
+        loading_spinner = Loading(self.page)
+        loading_spinner.show_dialog()
+        await loading_spinner.simulate_progressive_loading(0.1, 0.3, 0.5, "Connecting to database...")        
         has_error = False
         
         # Validate inputs
@@ -460,7 +468,7 @@ class Connect_To_Database_Dialog_Widget:
             database = self.db_input.value.strip()
             
             # Show loading indicator
-            self.show_loading()
+            await loading_spinner.simulate_progressive_loading(0.3, 0.5, 0.5, "Validating credentials...")
             
             # Try to connect to database
             success = self.connect_to_database(server, database)
@@ -471,31 +479,25 @@ class Connect_To_Database_Dialog_Widget:
                 
                 # Call the callback if it exists
                 if self.on_connect_callback:
+                    await loading_spinner.simulate_progressive_loading(0.5, 1.0, 0.5, "Connected successfully...")
                     self.on_connect_callback(True, server, database, self.connection)
-                
+                        
                 self.handle_close(e)
             else:
                 # Remove loading indicator
-                self.hide_loading()
+                loading_spinner.hide()
                 
                 # Call the callback if it exists
                 if self.on_connect_callback:
                     self.on_connect_callback(False, server, database, None)
         else:
+            loading_spinner.hide()
             # Update the dialog to show error messages
             self.page.update()
-    
-    def show_loading(self):
-        """Show loading indicator in dialog"""
-        # Update connection button to show loading (simplified)
-        self.page.update()
-    
-    def hide_loading(self):
-        """Hide loading indicator"""
-        self.page.update()
-    
-    def connect_to_database(self, server, database):
+  
+    def connect_to_database(self, server, database) -> bool:
         """Connect to SQL Server database"""
+        
         try:
             # Close existing connection if any
             if self.cursor:

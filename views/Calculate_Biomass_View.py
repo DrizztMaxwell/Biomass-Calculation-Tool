@@ -43,7 +43,8 @@ class Calculate_Biomass_View:
         self.file_picker = ft.FilePicker(on_result=self._on_file_save_result)
 
         self.page.overlay.append(self.file_picker)
-        
+        #check if data/selected_database.json exists and then check if it has content and not {}
+        self.is_database_selected = False
         self.page.update()
         
 
@@ -122,8 +123,9 @@ class Calculate_Biomass_View:
             description_text=DescriptionText("Select tree components for biomass calculation"),
             components_card_row=self.component_cards_row,
             selected_card_component=self.selected_components_text,
-            components_data=COMPONENTS_DATA
-        )
+            components_data=COMPONENTS_DATA,
+            is_database_selected=self.is_database_selected
+        ).get_widget()
     async def show_species_code_dialog(self, missing_species_codes):
         """Show dialog to select hardwood or softwood for missing species codes."""
         self.hardwood_softwood_dialog = HardwoodOrSoftwoodDialog(self.page, missing_species_codes)
@@ -133,15 +135,23 @@ class Calculate_Biomass_View:
         return result
 
     def _generate_filename(self):
-        
         """Generate filename with date and time prefix."""
         now = datetime.datetime.now()
         date_prefix = now.strftime("%Y%m%d")
         time_prefix = now.strftime("%H%M%S")
-        print(f"FILE PATH:{self.selected_file_path}")
-        filename_without_ext = os.path.splitext(os.path.basename(self.selected_file_path))[0]
-        print(filename_without_ext)  # Output: "data_set"
-        return f"Output_{filename_without_ext}_{date_prefix}_{time_prefix}.txt"
+        
+        print(f"FILE PATH: {self.selected_file_path}")
+        
+        # Check if selected_file_path is not None
+        if self.selected_file_path and os.path.isfile(self.selected_file_path):
+            # Extract filename from the path
+            filename_without_ext = os.path.splitext(os.path.basename(self.selected_file_path))[0]
+            print(f"Filename without extension: {filename_without_ext}")
+            return f"Output_{filename_without_ext}_{date_prefix}_{time_prefix}.txt"
+        else:
+            # Use a default name if no file was selected
+            print("No file selected, using default name")
+            return f"Output_Biomass_Results_{date_prefix}_{time_prefix}.txt"
     
     def _export_to_txt(self, data, file_path: str):
         """Export data to a formatted text file."""
@@ -323,9 +333,7 @@ class Calculate_Biomass_View:
 
         if success:
             print("Results successfully written to database")
-            # Optionally show a message dialog
-            self.page.snack_bar = ft.SnackBar(ft.Text("Results written to database successfully"))
-            self.page.snack_bar.open = True
+            
             self.page.update()
         else:
             print("Failed to write results to database")
@@ -475,7 +483,7 @@ class Calculate_Biomass_View:
                     ft.Row([
                         view_chart_button,  # View Chart button on the left
                         export_button,     # Export to TXT button on the right
-                        write_db_button #Write to database button
+                     *([write_db_button] if self.is_database_selected else []) 
                     ])
                 ], alignment=ft.MainAxisAlignment.SPACE_BETWEEN),
                 ft.Container(
