@@ -496,7 +496,7 @@ class Connect_To_Database_Dialog_Widget:
             self.page.update()
   
     def connect_to_database(self, server, database) -> bool:
-        """Connect to SQL Server database"""
+        """Connect to SQL Server database with auto-detected driver"""
         
         try:
             # Close existing connection if any
@@ -505,39 +505,137 @@ class Connect_To_Database_Dialog_Widget:
             if self.connection:
                 self.connection.close()
             
-            # Build connection string for Windows Authentication
-            connection_string = (
-                f"DRIVER={{SQL Server}};"
-                f"SERVER={server};"
-                f"DATABASE={database};"
-                f"Trusted_Connection=yes;"
-            )
+            # Get available ODBC drivers
+            drivers = pyodbc.drivers()
+            print(f"Available ODBC drivers: {drivers}")
             
-            print(f"Attempting to connect with string: {connection_string}")
+            # Look for SQL Server drivers in order of preference
+            sql_server_drivers = [
+                'ODBC Driver 18 for SQL Server',  # Latest driver
+                'ODBC Driver 17 for SQL Server',
+                'ODBC Driver 13 for SQL Server',
+                'ODBC Driver 11 for SQL Server',
+                'SQL Server Native Client 11.0',
+                'SQL Server Native Client 10.0',
+                'SQL Server'  # Fallback generic name
+            ]
             
-            # Try to establish connection
-            self.connection = pyodbc.connect(connection_string, timeout=5)
+            selected_driver = None
+            for driver in sql_server_drivers:
+                if driver in drivers:
+                    selected_driver = driver
+                    print(f"Selected driver: {selected_driver}")
+                    break
             
-            if not self.connection:
-                raise pyodbc.Error("Failed to create connection object.")
+            if not selected_driver:
+                error_msg = "No SQL Server ODBC driver found. Please install ODBC Driver for SQL Server."
+                Display_Error_Dialog(self.page, title="Driver Missing", description=error_msg).show()
+                
+                # Show installation guidance
+                installation_info = (
+                    "Please install Microsoft ODBC Driver for SQL Server.\n\n"
+                    "Download from: https://learn.microsoft.com/en-us/sql/connect/odbc/download-odbc-driver-for-sql-server\n\n"
+                    "Recommended: ODBC Driver 18 for SQL Server"
+                )
+                Custom_Alert_Dialog(
+                    self.page, 
+                    title_color=ft.Colors.ORANGE, 
+                    title="Install Driver Required", 
+                    title_icon=ft.Icons.WARNING, 
+                    title_icon_color=ft.Colors.ORANGE, 
+                    message=installation_info
+                ).show()
+                
+                self.status = False
+                self.page.update()
+                return False
+            
+            # Try different encryption settings based on driver version
+            encryption_options = []
+            
+            if '18' in selected_driver or '17' in selected_driver:
+                # Newer drivers have different encryption defaults
+                encryption_options = [
+                    "TrustServerCertificate=yes;",  # Try first with trust server certificate
+                    "",  # Try without encryption option (use default)
+                    "Encrypt=no;"  # Try without encryption
+                ]
+            else:
+                # Older drivers
+                encryption_options = [
+                    "",
+                    "Encrypt=no;"
+                ]
+            
+            # Try to establish connection with different options
+            connection_successful = False
+            last_error = None
+            
+            for encryption_option in encryption_options:
+                try:
+                    # Build connection string with selected driver
+                    connection_string = (
+                        f"DRIVER={{{selected_driver}}};"
+                        f"SERVER={server};"
+                        f"DATABASE={database};"
+                        f"Trusted_Connection=yes;"
+                        f"{encryption_option}"
+                    )
+                    
+                    print(f"Attempting connection with: {connection_string}")
+                    
+                    # Try to establish connection with timeout
+                    self.connection = pyodbc.connect(connection_string, timeout=3)
+                    
+                    if self.connection:
+                        connection_successful = True
+                        print(f"Successfully connected using driver: {selected_driver}")
+                        if encryption_option:
+                            print(f"Encryption option used: {encryption_option}")
+                        break
+                        
+                except pyodbc.Error as e:
+                    last_error = e
+                    print(f"Connection attempt failed with option '{encryption_option}': {str(e)}")
+                    continue
+            
+            if not connection_successful:
+                raise last_error or pyodbc.Error("All connection attempts failed")
+            
+            # Connection successful
             self.cursor = self.connection.cursor()
             
-            # Show success message
+            # Test the connection with a simple query
+            try:
+                self.cursor.execute("SELECT @@version")
+                version_info = self.cursor.fetchone()
+                if version_info:
+                    print(f"SQL Server version: {version_info[0][:100]}...")
+            except:
+                pass  # Query failed but connection is still valid
+            
+            # Show success message with driver info
             Custom_Alert_Dialog(
                 self.page, 
                 title_color=ft.Colors.PRIMARY, 
                 title="Connection Successful", 
                 title_icon=ft.Icons.CHECK_CIRCLE, 
                 title_icon_color=ft.Colors.GREEN, 
-                message=f"Successfully connected to {database} on {server}"
+                message=f"Successfully connected to {database} on {server}\n\nDriver: {selected_driver}"
             ).show()
             
-            # Save connection info to JSON
+            # Save connection info to JSON including driver info
             with open('data/selected_database.json', 'w') as f:
-                json.dump({"server": server, "database": database}, f)
+                json.dump({
+                    "server": server, 
+                    "database": database,
+                    "driver": selected_driver
+                }, f)
                 
             print(f"Connected to SQL Server: {server}")
             print(f"Database: {database}")
+            print(f"Using driver: {selected_driver}")
+            
             self.status = True
             self.page.update()
             return True
@@ -545,19 +643,31 @@ class Connect_To_Database_Dialog_Widget:
         except pyodbc.Error as e:
             # Show error message
             error_message = str(e)
-            with open('data/selected_database.json', 'w') as f:
-                json.dump({}, f)  # empty the file on error
-            
-            Display_Error_Dialog(self.page, title="Connection Error", description=error_message).show()
             print(f"Database connection error: {error_message}")
             
-            # Show error on specific field if possible
-            if "Server" in error_message or "server" in error_message:
-                self.server_input.error_text = "Cannot connect to server"
-            elif "Database" in error_message or "database" in error_message:
-                self.db_input.error_text = "Database not found"
-            else:
-                self.server_input.error_text = "Connection failed"
+            # Save empty JSON on error
+            with open('data/selected_database.json', 'w') as f:
+                json.dump({}, f)
+            
+            # Parse error for better user feedback
+            error_dialog = Display_Error_Dialog(
+                self.page, 
+                title="Connection Error", 
+                description=f"Error: {error_message}\n\n"
+                        f"Please verify:\n"
+                        f"1. Server name is correct\n"
+                        f"2. Database exists\n"
+                        f"3. Windows Authentication has access\n"
+                        f"4. SQL Server is running\n"
+                        f"5. Firewall allows connections (default port: 1433)"
+            )
+            error_dialog.show()
+            
+            # Clear any previous error text
+            if hasattr(self, 'server_input'):
+                self.server_input.error_text = ""
+            if hasattr(self, 'db_input'):
+                self.db_input.error_text = ""
             
             self.status = False
             self.page.update()
@@ -565,12 +675,18 @@ class Connect_To_Database_Dialog_Widget:
             
         except Exception as e:
             # Generic error handling
-            print(f"Unexpected error during connection: {e}")
-            with open('data/selected_database.json', 'w') as f:
-                json.dump({}, f)  # empty the file on error
-            Display_Error_Dialog(self.page, f"Unexpected error: {str(e)}").show()
+            error_msg = f"Unexpected error during connection: {e}"
+            print(error_msg)
             
-            print(f"Unexpected error: {e}")
+            with open('data/selected_database.json', 'w') as f:
+                json.dump({}, f)
+            
+            Display_Error_Dialog(
+                self.page, 
+                title="Unexpected Error", 
+                description=error_msg
+            ).show()
+            
             self.status = False
             self.page.update()
             return False

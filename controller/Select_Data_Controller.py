@@ -190,13 +190,15 @@ class Select_Data_Controller:
             return
 
     def process_database_import(self, ):
+        # When you press Conenct
         """Process importing data from database"""
         # read json file called data/selected_database.json to get server and database name
         with open('data/selected_database.json', 'r') as f:
             db_config = json.load(f)
             server = db_config.get("server")
             database = db_config.get("database")
-        if not server or not database:
+            driver = db_config.get("driver")
+        if not server or not database or not driver:
             self.page.open(
                 Display_Error_Dialog(
                     self.page,
@@ -209,8 +211,10 @@ class Select_Data_Controller:
                 self.data_imported_callback(False)
             self.page.update()
             return
-        if self._read_tree_data_from_db(database):
-            self.import_from_database(database)
+    
+        if self.import_from_database(database, driver, server):
+            print(f"Data imported successfully from database: {database}")
+            
         else:
             self.view.update_file_status(f"No data found in the database: {database}")
             self.page.open(
@@ -235,16 +239,17 @@ class Select_Data_Controller:
         
     
     @staticmethod
-    def _read_tree_data_from_db(db_name: str) -> list[dict]:
-        driver = get_sql_server_odbc_driver()
-
+    def _read_tree_data_from_db(db_name: str, driver: str, server: str) -> list[dict]:
+        """Read tree data from the specified database"""
         conn = pyodbc.connect(
             f"Driver={{{driver}}};"
-            "Server=.\\SQLEXPRESS;"
+            f"Server={server};"
             f"Database={db_name};"
             "Trusted_Connection=yes;"
             "Encrypt=no;"
             "TrustServerCertificate=yes;"
+            "Connection Timeout=3;"
+            
         )
 
         cursor = conn.cursor()
@@ -270,10 +275,10 @@ class Select_Data_Controller:
 
         return rows
     
-    def import_from_database(self, db_name: str):
+    def import_from_database(self, db_name: str, driver: str, server: str):
         try:
         
-            rows = self._read_tree_data_from_db(db_name)
+            rows = self._read_tree_data_from_db(db_name, driver, server)
 
             os.makedirs("storage", exist_ok=True)
             # Convert Decimal to float for JSON
@@ -292,8 +297,10 @@ class Select_Data_Controller:
                 self.data_imported_callback(True)
             self.view.update_file_status(f"Data imported from database: {db_name}")
             self.page.update()
+            return True
 
         except Exception as e:
+            print("Error SSSSSSSSSSSSSSSSSSSSSSSSSSS from database:", e)
             self.page.open(
                 Display_Error_Dialog(self.page, str(e)).show()
             )
@@ -302,6 +309,7 @@ class Select_Data_Controller:
             if self.data_imported_callback:
                 self.data_imported_callback(False)
             self.page.update()
+            return False
             
 
 
