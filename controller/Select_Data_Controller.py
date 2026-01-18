@@ -19,7 +19,7 @@ from helper_functions.validate_tree_dbh_and_height_values import validate_tree_d
 from helper_functions.check_dataframe_for_nan_values import check_dataframe_for_nan_values
 from helper_functions.do_mandatory_columns_exist import do_mandatory_columns_exist
 from data.data_manager import DataManager
-from data.database_config import get_sql_server_odbc_driver
+from data.database_config import get_sql_server_odbc_driver, get_mssql_data_path
 import flet as ft
 from widgets.Loading_Spinner_Widget import Loading_Spinner_Widget
 import json
@@ -32,311 +32,258 @@ import concurrent.futures
 
 
 class Select_Data_Controller:
-    def __init__(self, page: ft.Page, data_imported_callback: callable, view: Select_Data_View):
+    def __init__(self, page: ft.Page, data_imported_callback: callable, view):
         self.page = page
         self.view = view
         self.database_name = None
-        self.file_picker = ft.FilePicker(on_result=self.on_file_selected)
-
-        self.page.overlay.append(self.file_picker)
-
-
         self.selected_file_path = None
         self.error_messages = []
         self.data_imported_callback = data_imported_callback
         self.is_data_imported = False
-    def on_connection_result(self, success, server, database, connection):
-                """Callback for connection result"""
-                if success:
-                    print(f"✅ Connected to {database} on {server}")
-                    self.data_imported_callback(True)
-                    self.view.update_file_status(f"Connected to database: {database}")
-                    self.process_database_import()
 
-                else:
-                    print("❌ Connection failed")
-                    self.view.update_file_status("Database connection failed.")
-                    self.data_imported_callback(False)
-                  
-                    
-                   
-    def set_database_name(self, db_name: str):
-        self.database_name = db_name
-    
-    def get_database_name(self) -> str:
-        return self.database_name
+        # File picker setup
+        self.file_picker = ft.FilePicker(on_result=self.on_file_selected)
+        self.page.overlay.append(self.file_picker)
 
+        # Bind the view callback
+        self.view.controller = self
+
+    # -------------------------
+    # TEXT FILE IMPORT
+    # -------------------------
     async def on_file_selected(self, e: ft.FilePickerResultEvent):
-        """Callback when a file is selected"""
+        """Handle text file selection and processing asynchronously"""
         try:
-            if e.files:
-                self.selected_file_path = e.files[0].path
-                self.view.update_file_status(self.selected_file_path)
-                print(f"Selected file: {self.selected_file_path}")
-                loading_spinner = Loading_Spinner_Widget(self.page)
-                loading_spinner.show_dialog()
-                await loading_spinner.simulate_progressive_loading(0.0, 0.2, 0.1, "Processing the file...")
-               
-                with concurrent.futures.ThreadPoolExecutor(max_workers=2) as pool:
-
-                    # Process the file
-                    # dataframe = convert_text_file_into_dataframe(selected_file_path=self.selected_file_path)
-                    dataframe = pool.submit(convert_text_file_into_dataframe, self.selected_file_path)
-                    
-                    try:
-                        dataframe = dataframe.result()
-                    except Exception as e:
-                        # Handle exceptions from the worker thread
-                        raise Exception(f"Error reading file: {e}")
-
-                    if dataframe is None:
-                        raise Exception("Error reading file. Text Input File may be empty.")
-                    # await asyncio.sleep(1)
-                    # print("DataFrame loaded:")
-                    # print(dataframe)
-                    await loading_spinner.simulate_progressive_loading(0.2, 0.4, 0.1, "Beginning mandatory column checking...")
-                    # # Check mandatory columns
-                    work_2 = pool.submit(do_mandatory_columns_exist, dataframe)
-                    if (work_2.result()):
-                        print("OK")
-                    
-                    # # Process dataframe
-                    original_dataframe = dataframe.copy()
-                    work_3 = pool.submit(convert_columns_to_specific_types, dataframe)
-                    dataframe = work_3.result()
-                  
-                    
-                    work_4 = pool.submit(convert_columns_to_lowercase, dataframe)
-                    dataframe = work_4.result()
-                    # print("Column lowercase conversion completed")
-                    
-                    # print("Processed DataFrame:")
-                    # print(dataframe)
-                    
-                    work_5 = pool.submit(check_dataframe_for_nan_values, dataframe)
-                    errors_detected, error_count, error_messages = work_5.result()
-                    print(error_messages)
-                   
-                    work_6 = pool.submit(validate_tree_dbh_and_height_values, dataframe)
-                    error_message_for_out_of_bounds_dbh_or_height_value = work_6.result()
-                  
-                    await loading_spinner.simulate_progressive_loading(0.4, 0.8, 0.1, "DBH and Height validation completed...")
-
-                    self.error_messages = error_messages
-                
-                    # Show warnings if any
-                    if error_messages or error_message_for_out_of_bounds_dbh_or_height_value:
-                        
-                       self.page.overlay.append( Display_Warning_Dialog(
-                        self.page, 
-                        self.error_messages, 
-                        error_message_for_out_of_bounds_dbh_or_height_value
-                    ).show_dialog()
-                       )
-                        # self.page.open(self.show_warning_dialog.build())
-                        
-                        
-                    # Save data to local storage
-                    print("File processed successfully. Saving to local storage...")
-                    # Convert dataframe to list-of-dicts
-                    records = json.loads(original_dataframe.to_json(orient='records'))
-
-                    # Use DataManager to store the records
-                    dm = DataManager()
-                    dm.set_all(records)  # this will automatically save to localstorage.json
-                    await loading_spinner.simulate_progressive_loading(0.8, 1.0, 0.1, "Completed successfully...")
-                    loading_spinner.hide()  
-                    # Update import status and call callback
-                    self.is_data_imported = True
-                    if self.data_imported_callback:
-                        pool.shutdown() #is this needed?
-                        # create or clear the file data/selected_database.json
-                        with open('data/selected_database.json', 'w') as f:
-                            f.write("{}")
-                        self.data_imported_callback(True) # Call the callback to enable sidebar buttons
-                    self.page.update()
-
-                    return
-                    
-                    
-            else:
-               
+            if not e.files:
                 print("File selection cancelled")
                 self.selected_file_path = None
-                self.view.update_file_status(self.selected_file_path)
+                self.view.update_file_status("No file selected")
                 self.is_data_imported = False
-                # if self.data_imported_callback:
-                #     self.data_imported_callback(False)
                 self.page.update()
-                # self.__del__()
                 return
 
-        except ValueError as ve:
-            print("Value Error:", ve)
-            self.page.open(Error_Alert_Import_Data_Dialog(page=self.page, error_message=str(ve)).show())
-            self.is_data_imported = False
-            if self.data_imported_callback:
-                self.data_imported_callback(False)
-            self.page.update()
-            return
-            
-        except Exception as e:
-            print("Error in select data controller:", e)
-            self.page.open(Display_Error_Dialog(page=self.page, description=str(e)).show())
-            self.is_data_imported = False
-            if self.data_imported_callback:
-                self.data_imported_callback(False)
-            self.page.update()
-            return
+            self.selected_file_path = e.files[0].path
+            self.view.update_file_status(f"Processing: {self.selected_file_path}")
+            print(f"Selected file: {self.selected_file_path}")
 
-    def process_database_import(self, ):
-        # When you press Conenct
-        """Process importing data from database"""
-        # read json file called data/selected_database.json to get server and database name
-        with open('data/selected_database.json', 'r') as f:
-            db_config = json.load(f)
-            server = db_config.get("server")
-            database = db_config.get("database")
-            driver = db_config.get("driver")
-        if not server or not database or not driver:
-            self.page.open(
-                Display_Error_Dialog(
-                    self.page,
-                    title="Database Configuration Error",
-                    description="Database configuration is missing or invalid. Please connect to the database first."
-                ).show()
-            )
+            spinner = Loading_Spinner_Widget(self.page)
+            spinner.show_dialog()
+            await spinner.simulate_progressive_loading(0.0, 0.2, 0.1, "Processing the file...")
+
+            # Use ThreadPoolExecutor for CPU-bound processing
+            with concurrent.futures.ThreadPoolExecutor(max_workers=2) as pool:
+                dataframe_future = pool.submit(convert_text_file_into_dataframe, self.selected_file_path)
+                dataframe = dataframe_future.result()
+                if dataframe is None:
+                    raise ValueError("Text file may be empty or invalid.")
+
+                await spinner.simulate_progressive_loading(0.2, 0.4, 0.1, "Checking mandatory columns...")
+                if not pool.submit(do_mandatory_columns_exist, dataframe).result():
+                    raise ValueError("Mandatory columns missing from dataset.")
+
+                original_dataframe = dataframe.copy()
+                dataframe = pool.submit(convert_columns_to_specific_types, dataframe).result()
+                dataframe = pool.submit(convert_columns_to_lowercase, dataframe).result()
+
+                errors_detected, error_count, error_messages = pool.submit(check_dataframe_for_nan_values, dataframe).result()
+                error_message_out_of_bounds = pool.submit(validate_tree_dbh_and_height_values, dataframe).result()
+
+                await spinner.simulate_progressive_loading(0.4, 0.8, 0.1, "DBH and Height validation completed...")
+                self.error_messages = error_messages
+
+                if error_messages or error_message_out_of_bounds:
+                    self.page.overlay.append(Display_Warning_Dialog(
+                        self.page,
+                        self.error_messages,
+                        error_message_out_of_bounds
+                    ).show_dialog())
+
+                # Save processed data to DataManager
+                records = json.loads(original_dataframe.to_json(orient='records'))
+                dm = DataManager()
+                dm.set_all(records)
+
+            await spinner.simulate_progressive_loading(0.8, 1.0, 0.1, "Completed successfully...")
+            spinner.hide()
+
+            self.is_data_imported = True
+            self.view.update_file_status(f"File processed: {os.path.basename(self.selected_file_path)}")
+            if self.data_imported_callback:
+                with open("data/selected_database.json", "w") as f:
+                    f.write("{}")  # Clear DB info
+                self.data_imported_callback(True)
+
+            self.page.update()
+
+        except Exception as e:
+            print("Error in text file import:", e)
+            self.page.open(Display_Error_Dialog(self.page, description=str(e)).show())
             self.is_data_imported = False
             if self.data_imported_callback:
                 self.data_imported_callback(False)
             self.page.update()
-            return
-    
-        if self.import_from_database(database, driver, server):
-            print(f"Data imported successfully from database: {database}")
-            
-        else:
-            self.view.update_file_status(f"No data found in the database: {database}")
-            self.page.open(
-                Display_Error_Dialog(
-                    self.page,
-                    title="Data Import Error",
-                    description=f"No data found in the database: {database}."
-                ).show()
-            )
-            self.is_data_imported = False
-            if self.data_imported_callback:
-                self.data_imported_callback(False)
-            self.page.update()
-            return
-        
-        print(f"Importing data from database: {database}")
-        self.view.file_status_text.value = f"Data imported from database: {database}"
-        self.data_imported_callback(True)
-        self.page.update()
-        
-        
-        
-    
-    @staticmethod
-    def _read_tree_data_from_db(db_name: str, driver: str, server: str) -> list[dict]:
-        """Read tree data from the specified database"""
-        conn = pyodbc.connect(
-            f"Driver={{{driver}}};"
-            f"Server={server};"
-            f"Database={db_name};"
-            "Trusted_Connection=yes;"
-            "Encrypt=no;"
-            "TrustServerCertificate=yes;"
-            "Connection Timeout=3;"
-            
+
+    def on_import_text_file_click(self, e):
+        """Trigger file picker"""
+        print("Import text file clicked")
+        self.file_picker.pick_files(
+            allow_multiple=False,
+            allowed_extensions=["txt"],
+            dialog_title="Select Dataset File",
+            file_type=ft.FilePickerFileType.ANY,
         )
 
-        cursor = conn.cursor()
+    # -------------------------
+    # DATABASE IMPORT
+    # -------------------------
+    def on_database_selected(self, server: str, database: str):
+        """
+        Called by view after user submits dialog.
+        Safely schedules async database connection/import.
+        """
+        if not server or not database:
+            self.page.open(Display_Error_Dialog(self.page, description="Server and database are required").show())
+            return
 
-        cursor.execute("""
-            SELECT
-                plot,
-                year,
-                species,
-                tree_number,
-                dbh,
-                height
-            FROM dbo.tCalcBCTInput
-        """)
-
-        columns = [c[0] for c in cursor.description]
-        rows = [dict(zip(columns, row)) for row in cursor.fetchall()]
-
-        conn.close()
-
-        if not rows:
-            raise ValueError(f"{db_name} table is empty")
-
-        return rows
-    
-    def import_from_database(self, db_name: str, driver: str, server: str):
+        # Schedule async task without blocking Flet
         try:
-        
-            rows = self._read_tree_data_from_db(db_name, driver, server)
+            loop = asyncio.get_running_loop()
+            asyncio.create_task(self._connect_and_import_database(server, database))
+        except RuntimeError:
+            # No loop running, start a temporary loop
+            asyncio.run(self._connect_and_import_database(server, database))
 
-            os.makedirs("storage", exist_ok=True)
-            # Convert Decimal to float for JSON
+    async def _connect_and_import_database(self, server: str, database: str):
+        spinner = Loading_Spinner_Widget(self.page)
+        spinner.show_dialog()
+        await spinner.simulate_progressive_loading(0.0, 0.3, 0.05, "Initializing connection...")
+
+        loop = asyncio.get_running_loop()
+        try:
+            success = await loop.run_in_executor(None, self._connect_and_save_db_info, server, database)
+            if success:
+                self.view.update_file_status(f"Connected to database: {database}")
+                await loop.run_in_executor(None, self.import_from_database, database, None, server)
+            else:
+                self.view.update_file_status("Database connection failed.")
+                if self.data_imported_callback:
+                    self.data_imported_callback(False)
+        finally:
+            spinner.hide()
+            self.page.update()
+
+    def _connect_and_save_db_info(self, server: str, database: str) -> bool:
+        """Connects to SQL Server and saves connection info to JSON"""
+        try:
+            driver = get_sql_server_odbc_driver()
+            conn_str = (
+                f"Driver={{{driver}}};"
+                f"Server={server};"
+                f"Database={database};"
+                "Trusted_Connection=yes;"
+                "Encrypt=no;"
+                "TrustServerCertificate=yes;"
+                "Connection Timeout=5;"
+            )
+            # Test connection
+            with pyodbc.connect(conn_str) as conn:
+                conn.cursor().execute("SELECT 1")
+
+            data_folder_path = get_mssql_data_path()
+            db_config = {
+                "server": server,
+                "database": database,
+                "driver": driver,
+                "data_folder_path": data_folder_path,
+            }
+            os.makedirs("data", exist_ok=True)
+            with open("data/selected_database.json", "w") as f:
+                json.dump(db_config, f, indent=4)
+
+            # Save to history
+            self.view._add_to_history(server, database)
+
+            print(f"Database connection info saved: {db_config}")
+            return True
+        except Exception as e:
+            print("Error connecting to database:", e)
+            self.page.open(Display_Error_Dialog(self.page, description=str(e)).show())
+            return False
+
+    def import_from_database(self, db_name: str = None, driver: str = None, server: str = None):
+        """
+        Load data from database into DataManager.
+        """
+        try:
+            if not all([db_name, driver, server]):
+                with open("data/selected_database.json", "r") as f:
+                    db_info = json.load(f)
+                server = db_info["server"]
+                db_name = db_info["database"]
+                driver = db_info["driver"]
+
+            conn = pyodbc.connect(
+                f"Driver={{{driver}}};"
+                f"Server={server};"
+                f"Database={db_name};"
+                "Trusted_Connection=yes;"
+                "Encrypt=no;"
+                "TrustServerCertificate=yes;"
+                "Connection Timeout=5;"
+            )
+            cursor = conn.cursor()
+            cursor.execute("SELECT plot, year, species, tree_number, dbh, height FROM dbo.tCalcBCTInput")
+            columns = [c[0] for c in cursor.description]
+            rows = [dict(zip(columns, row)) for row in cursor.fetchall()]
+            conn.close()
+
+            if not rows:
+                raise ValueError(f"{db_name} table is empty")
+
             rows_safe = [
-                {k: (float(v) if isinstance(v, decimal.Decimal) else v) for k, v in row.items()}
+                {k: float(v) if isinstance(v, decimal.Decimal) else v for k, v in row.items()}
                 for row in rows
             ]
 
-            # Save via DataManager
             dm = DataManager()
-            dm.set_all(rows_safe) # save the data
-            dm.set_database_path(db_name) # save the DB path
+            dm.set_all(rows_safe)
+            dm.set_database_path(db_name)
 
             self.is_data_imported = True
+            self.view.update_file_status(f"Data imported from database: {db_name}")
             if self.data_imported_callback:
                 self.data_imported_callback(True)
-            self.view.update_file_status(f"Data imported from database: {db_name}")
             self.page.update()
             return True
 
         except Exception as e:
-            print("Error SSSSSSSSSSSSSSSSSSSSSSSSSSS from database:", e)
-            self.page.open(
-                Display_Error_Dialog(self.page, str(e)).show()
-            )
+            print("Error importing from database:", e)
+            self.page.open(Display_Error_Dialog(self.page, description=str(e)).show())
             self.view.update_file_status("Failed to import data from database.")
             self.is_data_imported = False
             if self.data_imported_callback:
                 self.data_imported_callback(False)
             self.page.update()
             return False
-            
 
-
-    def open_file_dialog(self):
-        """Open file picker dialog"""
-        return self.file_picker.pick_files(
-            allow_multiple=False,
-            allowed_extensions=["txt"],
-            dialog_title="Select Dataset File",
-            file_type=ft.FilePickerFileType.ANY,
-        )
-        
-    def on_import_text_file_click(self, e):
-        """Handle import text file button click"""
-        print("Import text file clicked")
-        self.open_file_dialog()
-     
+    # -------------------------
+    # DATABASE BUTTON
+    # -------------------------
     def on_import_from_database_click(self, e):
-        print("Import from database clicked")
+        """Trigger database dialog in view"""
+        self.view._open_database_dialog(e)
 
-        # self.bak_file_picker.pick_files(
-        #     allow_multiple=False,
-        #     allowed_extensions=["bak"],
-        #     dialog_title="Select SQL Server Backup (.bak)",
-        #     file_type=ft.FilePickerFileType.CUSTOM
-        # )
-        
+    # -------------------------
+    # DATABASE NAME
+    # -------------------------
+    def set_database_name(self, db_name: str):
+        self.database_name = db_name
+
+    def get_database_name(self) -> str:
+        return self.database_name
+
+    # -------------------------
+    # BUILD VIEW
+    # -------------------------
     def build(self):
-        """Build the controller view"""
         return self.view.create_main_layout()

@@ -121,17 +121,22 @@ class Loading_Spinner_Widget:
         
     async def simulate_progressive_loading(self, start_progress: float, final_progress: float, duration: float, loading_text: str):
         self.set_loading_text(loading_text)
+
         progress_range = final_progress - start_progress
         updates_per_second = 10
-        total_updates = int(duration * updates_per_second)
+        total_updates = max(int(duration * updates_per_second), 1)  # <- prevent zero division
+
         progress_increment = progress_range / total_updates
         current_progress = start_progress
-        for i in range(total_updates):
+
+        for _ in range(total_updates):
             current_progress += progress_increment
             current_progress = min(current_progress, final_progress)
             self.update_progress(current_progress)
-            await asyncio.sleep(1.0 / updates_per_second)
+            await asyncio.sleep(duration / total_updates)  # smoother timing
+
         self.update_progress(final_progress)
+
         
     async def simulate_loading(self, duration: float = 2.0, steps: int = 10, completion_message: str = "Complete!"):
         self.show_dialog()
