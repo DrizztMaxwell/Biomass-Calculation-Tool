@@ -58,6 +58,8 @@ class Select_Data_Controller:
                 print("File selection cancelled")
                 self.selected_file_path = None
                 self.view.update_file_status("No file selected")
+                self.data_imported_callback(False)
+                
                 self.is_data_imported = False
                 self.page.update()
                 return

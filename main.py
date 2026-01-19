@@ -35,7 +35,7 @@ def _screen_configuration(page:ft.Page):
         )
     )
     page.bgcolor = ft.Colors.SECONDARY
-
+    page.theme_mode = ft.ThemeMode.LIGHT
     page.padding = 0
      # Set fonts
     page.fonts = {

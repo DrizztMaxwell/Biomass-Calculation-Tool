@@ -292,8 +292,8 @@ class Create_Species_View:
             # Styling
             bgcolor=ft.Colors.SECONDARY_CONTAINER,
            
-            border_color=ft.Colors.BLACK,
-            focused_border_color=ft.Colors.BLACK,
+            border_color=ft.Colors.PRIMARY,
+            focused_border_color=ft.Colors.PRIMARY,
             focused_border_width=2,
             border_width=1,
        
@@ -714,6 +714,7 @@ class Create_Species_View:
                         ft.Divider(height=30, color=ft.Colors.GREY_300),  # More space
                         
                         Select_Components_Widget(
+                            page=self.page,
                             title=TitleTextWidget("Select Tree Component"),
                             description_text=DescriptionText("Select tree components for biomass calculation"),
                             components_card_row=ft.Row(),
@@ -736,7 +737,7 @@ class Create_Species_View:
                 margin=30,
                 padding=40,
                 border_radius=15,
-                border=ft.border.all(1, ft.Colors.PRIMARY),
+               
                 bgcolor=ft.Colors.SECONDARY_CONTAINER,
                 shadow=ft.BoxShadow(
                     spread_radius=1,

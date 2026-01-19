@@ -3,7 +3,9 @@ from data.components_data import COMPONENTS_DATA
 
 class Select_Components_Widget:
     def __init__(
+        
         self,
+        page: ft.Page,
         title: ft.Text,
         description_text: ft.Text,
         components_card_row,
@@ -15,6 +17,7 @@ class Select_Components_Widget:
         is_alternate_card=False,
         is_database_selected=False
     ):
+        self.page = page
         self.title = title
         self.description_text = description_text
         self.components_card_row = components_card_row
@@ -85,14 +88,15 @@ class Select_Components_Widget:
         
         # Determine colors based on selection and disabled state
         if is_disabled:
-            bgcolor = ft.Colors.GREEN_100
-            border_color = ft.Colors.GREEN
+            bgcolor = ft.Colors.GREEN_100 if self.page.theme_mode == ft.ThemeMode.LIGHT else ft.Colors.TERTIARY
+            border_color = ft.Colors.GREEN if self.page.theme_mode == ft.ThemeMode.LIGHT else ft.Colors.PRIMARY
         elif is_selected:
-            bgcolor = ft.Colors.GREEN_50
-            border_color = ft.Colors.GREEN
+            bgcolor = ft.Colors.GREEN_50 if self.page.theme_mode == ft.ThemeMode.LIGHT else ft.Colors.TERTIARY
+            border_color = ft.Colors.GREEN if self.page.theme_mode == ft.ThemeMode.LIGHT else ft.Colors.PRIMARY
         else:
-            bgcolor = ft.Colors.SECONDARY_CONTAINER
-            border_color = ft.Colors.GREY_300
+            # if in light mode
+            bgcolor = ft.Colors.WHITE if self.page.theme_mode == ft.ThemeMode.LIGHT else ft.Colors.GREY_500
+            border_color = ft.Colors.GREY_300 if self.page.theme_mode == ft.ThemeMode.LIGHT else ft.Colors.GREY_300
         
         # Determine if card should have hover animation
         animate_scale = None if is_disabled else ft.Animation(300, "easeInOut")
@@ -162,11 +166,20 @@ class Select_Components_Widget:
         component["is_selected"] = not component["is_selected"]
         
         # Update the card appearance
-        e.control.bgcolor = ft.Colors.GREEN_50 if component["is_selected"] else ft.Colors.SECONDARY_CONTAINER
-        e.control.border = ft.border.all(
-            2, 
-            ft.Colors.GREEN if component["is_selected"] else ft.Colors.GREY_300
-        )
+        if self.page.theme_mode == ft.ThemeMode.LIGHT:
+            
+            e.control.bgcolor = ft.Colors.GREEN_100 if component["is_selected"] else ft.Colors.WHITE # see darkmode too
+            e.control.border = ft.border.all(
+                2, 
+                ft.Colors.GREEN_400 if component["is_selected"] else ft.Colors.GREY_300
+            )
+        else:
+            e.control.bgcolor = ft.Colors.TERTIARY if component["is_selected"] else ft.Colors.GREY_500
+            e.control.border = ft.border.all(
+                2, 
+                ft.Colors.PRIMARY if component["is_selected"] else ft.Colors.GREY_300
+            )
+     
         
         # Update UI
         self.update_selected_text()
@@ -181,7 +194,9 @@ class Select_Components_Widget:
             self.on_selection_change(selected_items)
         
         e.control.update()
-        self.select_all_button.update()
+        if hasattr(self.select_all_button, '_Control__page') and self.select_all_button._Control__page is not None:
+            self.select_all_button.update()
+    
         self.selected_card_component.update()
     
     def update_selected_text(self):
@@ -190,7 +205,7 @@ class Select_Components_Widget:
         
         if self.is_database_selected:
             self.selected_card_component.value = "All components selected (database mode)"
-            self.selected_card_component.color = ft.Colors.GREEN
+            self.selected_card_component.color = ft.Colors.PRIMARY
         elif selected_items:
             self.selected_card_component.value = f"Selected: {', '.join(selected_items)}"
             self.selected_card_component.color = ft.Colors.PRIMARY
@@ -215,11 +230,19 @@ class Select_Components_Widget:
             if i < len(self.components_card_row.controls):
                 card = self.components_card_row.controls[i]
                 if not component.get("is_disabled", False):
-                    card.bgcolor = ft.Colors.GREEN_50 if component["is_selected"] else ft.Colors.SECONDARY_CONTAINER
-                    card.border = ft.border.all(
-                        2, 
-                        ft.Colors.GREEN if component["is_selected"] else ft.Colors.GREY_300
-                    )
+                    # darkmode
+                    if self.page.theme_mode == ft.ThemeMode.LIGHT:
+                            card.bgcolor = ft.Colors.GREEN_100 if component["is_selected"] else ft.Colors.WHITE
+                            card.border = ft.border.all(
+                                2, 
+                                ft.Colors.GREEN_400 if component["is_selected"] else ft.Colors.GREY_300
+                            )
+                    else:
+                        card.bgcolor = ft.Colors.TERTIARY if component["is_selected"] else ft.Colors.GREY_500
+                        card.border = ft.border.all(
+                            2, 
+                            ft.Colors.WHITE if component["is_selected"] else ft.Colors.GREY_300
+                        )
                 card.update()
         
         # Update UI

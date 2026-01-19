@@ -119,6 +119,7 @@ class Calculate_Biomass_View:
     def _create_components_section(self) -> Select_Components_Widget:
         """Create the components selection section."""
         return Select_Components_Widget(
+            page=self.page,
             title=TitleTextWidget("Select Tree Component"),
             description_text=DescriptionText("Select tree components for biomass calculation"),
             components_card_row=self.component_cards_row,

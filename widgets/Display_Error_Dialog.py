@@ -12,10 +12,10 @@ class Display_Error_Dialog:
             modal=True,
             title=ft.Row([
                 ft.Icon(ft.Icons.ERROR_OUTLINE, color=ft.Colors.RED_400, size=24),
-                ft.Text(self.title, size=18, weight=ft.FontWeight.BOLD),
+                ft.Text(self.title, size=18, weight=ft.FontWeight.BOLD, color=ft.Colors.PRIMARY),
             ]),
             content=ft.Column([
-                ft.Text(self.description, size=14, color=ft.Colors.GREY_700),
+                ft.Text(self.description, size=14, color=ft.Colors.PRIMARY),
             ], tight=True, spacing=10),
             actions=[
                 ft.TextButton(
