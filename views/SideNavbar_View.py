@@ -64,10 +64,10 @@ class SideNavbar_View:
         self.select_data_view.controller = self.select_data_controller
         
         self.create_species_controller = Create_Species_Controller()
-        self.create_species_view = Create_Species_View(self.page, self.create_species_controller).build()
+        self.create_species_view = Create_Species_View(self.page, self.create_species_controller)
         self.create_species_controller.view = self.create_species_view
         
-        self.modify_species_view = Modify_Species_View(self.page).build()
+        
         
         self.settings_view = SettingsView(self.page).build()
    
@@ -123,13 +123,15 @@ class SideNavbar_View:
             self.main_content_area.controls.append(self._Setup_Biomass_Calculation())
             
         elif page_name == self.CREATE_SPECIES_PAGE:
-            self.main_content_area.controls.append(self.create_species_view)
+          
+            self.main_content_area.controls.append(self.create_species_view.build())
             
         elif page_name == self.SETTINGS_PAGE:
             self.main_content_area.controls.append(self.settings_view)
             
         elif page_name == self.MODIFY_SPECIES_PAGE:
-            self.main_content_area.controls.append(self.modify_species_view)
+            self.modify_species_view = Modify_Species_View(self.page)
+            self.main_content_area.controls.append(self.modify_species_view.build())
             
         elif page_name == self.SELECT_DATA_PAGE:
             self.main_content_area.controls.append(self.select_data_controller.build())
