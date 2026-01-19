@@ -3,10 +3,10 @@ import flet as ft
 
 
 class EULA_Controller:
-    def __init__(self, page:ft.Page, view: EULA_View):
+    def __init__(self, page:ft.Page, view: EULA_View, callback=None):
         self.view = view
         self.page = page
-        self.callback = None  # Callback to notify main
+        self.callback = callback  # Callback to notify main
     
     def set_callback(self, callback):
         """Set a callback function to notify main.py of the user's choice"""

@@ -12,6 +12,7 @@ class DataManager:
     _file_path = os.path.join("storage", "localstorage.json")
     _param_file_path = os.path.join("data", "treeparameters.json")
     _db_path: str | None = None  # store path to DB
+    
 
     def __new__(cls):
         with cls._lock:

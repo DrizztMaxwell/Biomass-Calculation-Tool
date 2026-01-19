@@ -15,7 +15,10 @@ from widgets.Display_Nav_Item import Display_Nav_Item
 from widgets.Display_Version_Number import Display_Version_Number
 from widgets.Display_Exit_Dialog import Display_Exit_Dialog
 from views.Settings_View import SettingsView
+from helper_functions.Remove_Underscores_And_Add_Space_And_Capitalise_Words import Remove_Underscores_And_Add_Space_And_Capitalise_Words
+
 class SideNavbar_View:
+    
     """Main application class for the Biomass Calculator"""
     
     # --- Configuration Constants ---
@@ -26,58 +29,63 @@ class SideNavbar_View:
     ACCENT_DISCLAIMER = ft.Colors.GREEN_700  # Bright green for the Disclaimer button
     ACCENT_ABOUT = "#8B5CF6"  # Purple for the About button
     ACTIVE_ITEM_BG = ft.Colors.with_opacity(0.1, ft.Colors.WHITE)  # Subtle highlight for active item
+    
+    CALCULATE_BIOMASS_PAGE = "calculate_biomass"
+    CREATE_SPECIES_PAGE = "create_species"
+    SETTINGS_PAGE = "settings"
+    MODIFY_SPECIES_PAGE = "modify_species"
+    SELECT_DATA_PAGE = "select_data"
+    EXIT_APPLICATION_PAGE = "exit_application"
+    
+    
 
     def __init__(self, page: ft.Page):
         self.page = page
-        self._initialise()
+        self._Initialise()
+        
 
-    def _initialise(self):
-        # check selected database from json
-        with open('data/selected_database.json', 'r') as f:
-            # see if its empty
-            data = f.read()
-            if not data.strip():
-                self.data_imported = False
+    def _Initialise(self):
         
-            else:
-                self.data_imported = True
-                
+        
+        self.active__nav_item = self.SELECT_DATA_PAGE  # Default active item
         self.is_expanded_state = {'value': True}  # Initialize as True (expanded)
-        self.active__nav_item = None
-        self.sidebar = None
-        self.sidebar_content = None
-        self.main_content_area = None
-        self.data_imported = False  # Track if data has been imported successfully
-        self.about_dialog = About_Dialog_View(self.page)
-      
+        
+        
+        self.Set_Data_Imported_Flag(False)
        
-        # Now set the controller reference in the view
+
+        self._Setup_initial_Views()
         
-        self.create_species_controller = Create_Species_Controller()
-        self.create_species_view = Create_Species_View(self.page, self.create_species_controller)
-        self.create_species_controller.view = self.create_species_view
+    def _Setup_initial_Views(self):
+        self.about_dialog = About_Dialog_View(self.page)
         
-        self.is_data_imported = False
         self.select_data_view = Select_Data_View(page=self.page, controller=None)
-        self.select_data_controller = Select_Data_Controller(self.page, self.set_data_imported, self.select_data_view)
+        self.select_data_controller = Select_Data_Controller(self.page, self.Callback_To_Update_Sidebar_UI, self.select_data_view)
         self.select_data_view.controller = self.select_data_controller
         
+        self.create_species_controller = Create_Species_Controller()
+        self.create_species_view = Create_Species_View(self.page, self.create_species_controller).build()
+        self.create_species_controller.view = self.create_species_view
         
-         
-        self.modify_species_view = None
+        self.modify_species_view = Modify_Species_View(self.page).build()
         
-        self.settings_view = SettingsView(self.page)
-        
-        
-    def set_data_imported(self, imported: bool):
-        """Set the data imported status and update the UI"""
+        self.settings_view = SettingsView(self.page).build()
+   
+           
+    def Set_Data_Imported_Flag(self, imported: bool):
         self.data_imported = imported
-        if self.page:
-            # Rebuild sidebar controls to reflect new enabled/disabled state
-            self.sidebar_content.controls = self._build_sidebar_controls(
-                self.is_expanded_state['value'], None
-            )
-            self.page.update()
+        
+    def Callback_To_Update_Sidebar_UI(self, imported: bool):
+        """Set the data imported status and update the UI"""
+        self.Set_Data_Imported_Flag(imported)
+        self.Refresh_Sidebar()
+        
+    def Refresh_Sidebar(self):
+        """Refresh the sidebar to reflect current state (e.g., enabled/disabled items)"""
+        self.sidebar_content.controls = self._build_sidebar_controls(
+            self.is_expanded_state['value'], None
+        )
+        self.page.update()
 
     def show_about_dialog(self, e):
         print("Clickeing")
@@ -106,55 +114,38 @@ class SideNavbar_View:
         # Clear the main content area
         self.main_content_area.controls.clear()
         
-        if page_name == "exit_application":
+        print(f"Navigating to page: {self.main_content_area.controls}")
+        if page_name == self.EXIT_APPLICATION_PAGE:
             self._exit_application_direct()
             return
-
-        # Add the appropriate page based on selection
-        if page_name == "calculate_biomass":
-            # Render Main_View page
-            print("File Path")
-            # Initialize controllers and forms - FIXED: Initialize Main_Controller properly
-            self.main_model = Calculate_Biomass_Model()
-            self.main_view = Calculate_Biomass_View(None, page = self.page, selected_file_path=None)  # Pass None initially, set controller later
-            self.main_controller = Calculate_Biomass_Controller(self.main_model, self.main_view, )
-            self.main_view.controller = self.main_controller
-            self.main_view.selected_file_path = self.select_data_controller.selected_file_path
-            self.main_view_content = self.main_controller.build()
+        
+        if page_name == self.CALCULATE_BIOMASS_PAGE:
+            self.main_content_area.controls.append(self._Setup_Biomass_Calculation())
             
-            self.main_view.selected_file_path =self.select_data_controller.selected_file_path
-         
-            print(self.main_view.selected_file_path)
-            self.page.update()
-            self.main_content_area.controls.append(self.main_view_content)
-       
-        elif page_name == "create_species":
-            # Render Create Species page
-            create_species_content = self.create_species_view.build()
-            self.main_content_area.controls.append(create_species_content)
-        elif page_name == "settings":
-            # Render Settings page (placeholder)
-            self.main_content_area.controls.append(
-                self.settings_view.build()
-            )
-        elif page_name == "modify_species":
-            # Render Modify Species page
-            self.modify_species_view = Modify_Species_View(self.page)
-            modify_species_content = self.modify_species_view.build()
-            self.main_content_area.controls.append(modify_species_content)
+        elif page_name == self.CREATE_SPECIES_PAGE:
+            self.main_content_area.controls.append(self.create_species_view)
             
-        elif page_name == "select_data":
-            # Pass the set_data_imported callback to the controller
+        elif page_name == self.SETTINGS_PAGE:
+            self.main_content_area.controls.append(self.settings_view)
             
+        elif page_name == self.MODIFY_SPECIES_PAGE:
+            self.main_content_area.controls.append(self.modify_species_view)
+            
+        elif page_name == self.SELECT_DATA_PAGE:
             self.main_content_area.controls.append(self.select_data_controller.build())
         
-        # Update the sidebar to reflect active state
-        self.sidebar_content.controls = self._build_sidebar_controls(
-            self.is_expanded_state['value'], None
-        )
         
-        # Update the page
-        self.page.update()
+        # Refresh the sidebar to update active item highlighting
+        self.Refresh_Sidebar()
+
+    def _Setup_Biomass_Calculation(self) -> ft.Control:
+        self.biomass_model = Calculate_Biomass_Model()
+        self.biomass_view = Calculate_Biomass_View(None, page = self.page, selected_file_path=None)  # Pass None initially, set controller later
+        self.biomass_controller = Calculate_Biomass_Controller(self.biomass_model, self.biomass_view, )
+        self.biomass_view.controller = self.biomass_controller
+        self.biomass_view.selected_file_path = self.select_data_controller.selected_file_path
+        self.biomass_view_content = self.biomass_controller.build()
+        return self.biomass_view_content
 
     def toggle_sidebar(self, e):
         """Toggle the sidebar state and update the UI."""
@@ -220,64 +211,60 @@ class SideNavbar_View:
         """Builds all navigation items and footer buttons."""
         
         def create__nav_items():
-            nav_items = [
-                Display_Nav_Item(
-                    ft.Icons.RESTART_ALT, 
-                    "Select Data", 
-                    is_expanded,
-                    is_active=(self.active__nav_item == "select_data"),
-                    on_click=lambda e: self.navigate_to_page("select_data"),
-                    # Select Data is always enabled
-                    enabled=True
-                ),
-                Display_Nav_Item(
-                    ft.Icons.CALCULATE, 
-                    "Calculate Biomass", 
-                    is_expanded, 
-                    is_active=(self.active__nav_item == "calculate_biomass"),
-                    on_click=lambda e: self.navigate_to_page("calculate_biomass"),
-                    # Disabled until data is imported
-                    enabled=self.data_imported
-                ),
-                Display_Nav_Item(
-                    ft.Icons.ADD_CIRCLE_OUTLINE, 
-                    "Create Species", 
-                    is_expanded,
-                    is_active=(self.active__nav_item == "create_species"),
-                    on_click=lambda e: self.navigate_to_page("create_species"),
-                    # Disabled until data is imported
-                    enabled=True
-
-                ),
-                Display_Nav_Item(
-                    ft.Icons.EDIT,
-                    "Modify Species",
-                    is_expanded,
-                    is_active=(self.active__nav_item == "modify_species"),
-                    on_click=lambda e: self.navigate_to_page("modify_species"),
-                    # Disabled until data is imported
-                    enabled=True
-                ),
-                
-                Display_Nav_Item(
-                    ft.Icons.SETTINGS, 
-                    "Settings", 
-                    is_expanded,
-                    is_active=(self.active__nav_item == "settings"),
-                    on_click=lambda e: self.navigate_to_page("settings"),
-                    # Disabled until data is imported
-                    enabled=True
-                ),
-                Display_Nav_Item(
-                    ft.Icons.EXIT_TO_APP, 
-                    "Exit Application", 
-                    is_expanded,
-                    is_active=(self.active__nav_item == "exit_application"),
-                    on_click=lambda e: self.navigate_to_page("exit_application"),
-                    # Exit is always enabled
-                    enabled=True
-                ),
+            """Create navigation items based on page definitions"""
+            
+            # Define navigation items configuration
+            navigation_config = [
+                {
+                    "page_id": self.SELECT_DATA_PAGE,
+                    "icon": ft.Icons.RESTART_ALT,
+                    "label": self.SELECT_DATA_PAGE,
+                    "enabled": True,  # Always enabled
+                },
+                {
+                    "page_id": self.CALCULATE_BIOMASS_PAGE,
+                    "icon": ft.Icons.CALCULATE,
+                    "label": self.CALCULATE_BIOMASS_PAGE,
+                    "enabled": self.data_imported,  # Requires data import
+                },
+                {
+                    "page_id": self.CREATE_SPECIES_PAGE,
+                    "icon": ft.Icons.ADD_CIRCLE_OUTLINE,
+                    "label": self.CREATE_SPECIES_PAGE,
+                    "enabled": True,  # Always enabled
+                },
+                {
+                    "page_id": self.MODIFY_SPECIES_PAGE,
+                    "icon": ft.Icons.EDIT,
+                    "label": self.MODIFY_SPECIES_PAGE,
+                    "enabled": True,  # Always enabled
+                },
+                {
+                    "page_id": self.SETTINGS_PAGE,
+                    "icon": ft.Icons.SETTINGS,
+                    "label": self.SETTINGS_PAGE,
+                    "enabled": True,  # Always enabled
+                },
+                {
+                    "page_id": self.EXIT_APPLICATION_PAGE,
+                    "icon": ft.Icons.EXIT_TO_APP,
+                    "label": self.EXIT_APPLICATION_PAGE,
+                    "enabled": True,  # Always enabled
+                },
             ]
+            
+            # Build navigation items from configuration
+            nav_items = []
+            for config in navigation_config:
+                nav_item = Display_Nav_Item(
+                    icon=config["icon"],
+                    text=Remove_Underscores_And_Add_Space_And_Capitalise_Words(config["label"]),
+                    is_expanded=is_expanded,
+                    is_active=(self.active__nav_item == config["page_id"]),
+                    on_click=lambda e, page_id=config["page_id"]: self.navigate_to_page(page_id),
+                    enabled=config["enabled"]
+                )
+                nav_items.append(nav_item)
             
             return nav_items
         
@@ -324,10 +311,6 @@ class SideNavbar_View:
     def build(self):
         """Build and return the main application layout"""
         
-        # Set up the page appearance
-        
-
-        # Initialize the sidebar content as expanded
         self.sidebar_content = ft.Column(
             self._build_sidebar_controls(self.is_expanded_state['value'], None),
             scroll=ft.ScrollMode.ADAPTIVE,
@@ -356,10 +339,6 @@ class SideNavbar_View:
             expand=True
         )
 
-       
-      
-        # Set initial page to Select Data
-        self.active__nav_item = "select_data"
         self.navigate_to_page("select_data")
         
         self.page.add(ft.Row(
