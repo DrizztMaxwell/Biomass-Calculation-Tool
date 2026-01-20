@@ -1,6 +1,1 @@
-{
-    "server": ".\\SQLEXPRESS",
-    "database": "gyPSPPGP",
-    "driver": "ODBC Driver 17 for SQL Server",
-    "data_folder_path": "C:\\Program Files\\Microsoft SQL Server\\MSSQL16.SQLEXPRESS\\MSSQL\\DATA"
-}
+{}
