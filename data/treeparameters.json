@@ -99,9 +99,8 @@
         "bhfoliage3": 0.0
     },
     {
-        "SpecCommon": "Beech",
+        "SpecCommon": "American beech",
         "SpeciesCode": 44,
-
         "bwood1": 0.1478,
         "bwood2": 2.2986,
         "bbark1": 0.012,
@@ -249,7 +248,7 @@
         "bhfoliage3": -1.5565
     },
     {
-        "SpecCommon": "Eastern white-cedar",
+        "SpecCommon": "Eastern white cedar",
         "SpeciesCode": 22,
 
         "bwood1": 0.0654,
@@ -275,7 +274,7 @@
     },
     {
         "SpecCommon": "Eastern white pine",
-        "SpeciesCode": 9,
+        "SpeciesCode": 1,
 
         "bwood1": 0.0997,
         "bwood2": 2.2709,
@@ -601,7 +600,7 @@
     },
     {
         "SpecCommon": "Sugar maple",
-        "SpeciesCode": 33,
+        "SpeciesCode": 30,
 
         "bwood1": 0.1315,
         "bwood2": 2.3129,

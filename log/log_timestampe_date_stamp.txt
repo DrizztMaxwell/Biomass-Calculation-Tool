@@ -1,0 +1,7 @@
+# basically everything user does must be in this file.
+
+[Timestamp | Date Stamp] - Clicked on File Import
+
+[Timestamp | Date Stamp]  Errors as well
+[Timestamp | Date Stamp] Success 
+

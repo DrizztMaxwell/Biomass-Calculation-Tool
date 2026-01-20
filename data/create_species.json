@@ -1,21 +1,5 @@
 [
     {
-        "SpecCommon": "sda",
-        "Origin": "Natural Stand",
-        "EquationType": "DBH-based",
-        "bwood1": 0.0,
-        "bwood2": 0.0
-    },
-    {
-        "SpecCommon": "sdasd",
-        "Origin": "Natural Stand",
-        "EquationType": "DBH-based",
-        "bwood1": 0.0,
-        "bwood2": 0.0,
-        "bbranches1": 0.0,
-        "bbranches2": 0.0
-    },
-    {
         "SpecCommon": "sdaads",
         "Origin": "Natural Stand",
         "EquationType": "DBH-based",
