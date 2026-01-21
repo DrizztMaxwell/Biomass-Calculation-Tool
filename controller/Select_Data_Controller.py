@@ -213,9 +213,6 @@ class Select_Data_Controller:
             return False
 
     def import_from_database(self, db_name: str = None, driver: str = None, server: str = None):
-        """
-        Load data from database into DataManager.
-        """
         try:
             if not all([db_name, driver, server]):
                 with open("data/selected_database.json", "r") as f:
@@ -234,13 +231,58 @@ class Select_Data_Controller:
                 "Connection Timeout=5;"
             )
             cursor = conn.cursor()
-            cursor.execute("SELECT plot, year, species, tree_number, dbh, height FROM dbo.tCalcBCTInput")
+
+            # STEP 1 — Setup and insert (no SELECT here)
+            cursor.execute("""
+            IF NOT EXISTS (
+                SELECT 1
+                FROM sys.tables t
+                JOIN sys.schemas s ON t.schema_id = s.schema_id
+                WHERE t.name = 'tCalcBCTInput'
+                AND s.name = 'dbo'
+            )
+            BEGIN
+                CREATE TABLE dbo.tCalcBCTInput
+                (
+                    plot        INT            NOT NULL,
+                    species     SMALLINT       NOT NULL,
+                    tree_number SMALLINT       NOT NULL,
+                    section     TINYINT        NULL,
+                    height      DECIMAL(5,2)   NULL,
+                    dbh         DECIMAL(5,2)   NULL
+                );
+            END;
+
+            TRUNCATE TABLE dbo.tCalcBCTInput;
+
+            INSERT INTO dbo.tCalcBCTInput
+                (plot, species, tree_number, section, height, dbh)
+            SELECT
+                t.PlotMapGrowthPlotKey,
+                t.SpecCode,
+                t.TreeNum,
+                t.Section,
+                m.HtToDBH,
+                m.DBH
+            FROM dbo.tblTree t
+            JOIN dbo.tblTreeMsr m
+                ON t.TreeKey = m.TreeKey;
+            """)
+
+            conn.commit()  # ensure data is written
+
+            # STEP 2 — Query separately
+            cursor.execute("""
+            SELECT plot, species, tree_number, section, dbh, height
+            FROM dbo.tCalcBCTInput;
+            """)
+
             columns = [c[0] for c in cursor.description]
             rows = [dict(zip(columns, row)) for row in cursor.fetchall()]
             conn.close()
 
             if not rows:
-                raise ValueError(f"{db_name} table is empty")
+                raise ValueError(f"{db_name} tCalcBCTInput is empty")
 
             rows_safe = [
                 {k: float(v) if isinstance(v, decimal.Decimal) else v for k, v in row.items()}
@@ -267,6 +309,7 @@ class Select_Data_Controller:
                 self.data_imported_callback(False)
             self.page.update()
             return False
+
 
     # -------------------------
     # DATABASE BUTTON
