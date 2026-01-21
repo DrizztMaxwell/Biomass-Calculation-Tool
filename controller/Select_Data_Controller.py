@@ -232,49 +232,73 @@ class Select_Data_Controller:
             )
             cursor = conn.cursor()
 
-            # STEP 1 — Setup and insert (no SELECT here)
+            # STEP 1 — Drop & recreate input/output tables, then insert
             cursor.execute("""
-            IF NOT EXISTS (
-                SELECT 1
-                FROM sys.tables t
-                JOIN sys.schemas s ON t.schema_id = s.schema_id
-                WHERE t.name = 'tCalcBCTInput'
-                AND s.name = 'dbo'
-            )
-            BEGIN
-                CREATE TABLE dbo.tCalcBCTInput
-                (
-                    plot        INT            NOT NULL,
-                    species     SMALLINT       NOT NULL,
-                    tree_number SMALLINT       NOT NULL,
-                    section     TINYINT        NULL,
-                    height      DECIMAL(5,2)   NULL,
-                    dbh         DECIMAL(5,2)   NULL
-                );
-            END;
+            DROP TABLE IF EXISTS dbo.tCalcBiomassInput;
 
-            TRUNCATE TABLE dbo.tCalcBCTInput;
+            CREATE TABLE dbo.tCalcBiomassInput
+            (
+                Plot         VARCHAR(MAX) NOT NULL,
+                Year         INT          NOT NULL,
+                Species      INT          NOT NULL,
+                Tree_number  SMALLINT     NOT NULL,
+                DBH          DECIMAL(4,1)  NOT NULL,
+                Height       DECIMAL(3,1)  NOT NULL
+            );
 
-            INSERT INTO dbo.tCalcBCTInput
-                (plot, species, tree_number, section, height, dbh)
-            SELECT
-                t.PlotMapGrowthPlotKey,
-                t.SpecCode,
-                t.TreeNum,
-                t.Section,
-                m.HtToDBH,
-                m.DBH
-            FROM dbo.tblTree t
-            JOIN dbo.tblTreeMsr m
-                ON t.TreeKey = m.TreeKey;
+            DROP TABLE IF EXISTS dbo.tCalcBiomassOutput;
+
+            CREATE TABLE dbo.tCalcBiomassOutput
+            (
+                Plot               VARCHAR(MAX) NOT NULL,
+                Year               INT          NOT NULL,
+                Species            INT          NOT NULL,
+                Tree_number        INT          NOT NULL,
+                DBH                DECIMAL(4,1)  NOT NULL,
+                Height             DECIMAL(4,2)  NULL,
+                Wood_kg            NUMERIC(10,3),
+                Bark_kg            NUMERIC(10,3),
+                Foliage_kg         NUMERIC(10,3),
+                Branch_kg          NUMERIC(10,3),
+                Crown_kg           NUMERIC(10,3),
+                Stem_kg            NUMERIC(10,3),
+                Total_kg           NUMERIC(10,3),
+                CoefficientSource  VARCHAR(100)  NULL,
+                processed_at       DATETIMEOFFSET(0) NOT NULL DEFAULT SYSUTCDATETIME()
+            );
+
+            INSERT INTO dbo.tCalcBiomassInput
+            SELECT TOP 10000
+                tblPlot.PlotName                AS Plot,
+                tblVisit.FieldSeasonYear       AS Year,
+                tblTree.SpecCode               AS Species,
+                tblTree.TreeNum                AS Tree_number,
+                tblTreeMsr.DBH                 AS DBH,
+                tCalcTreeHtSharma.CalculatedHeight AS Height
+            FROM tblTreeGrowthPlot
+            INNER JOIN tblTreeHeader
+                ON tblTreeGrowthPlot.TreeHeaderKey = tblTreeHeader.TreeHeaderKey
+            INNER JOIN tblTreeMsr
+                ON tblTreeGrowthPlot.TreeGrowthPlotKey = tblTreeMsr.TreeGrowthPlotKey
+            INNER JOIN tblTree
+                ON tblTreeMsr.TreeKey = tblTree.TreeKey
+            INNER JOIN tblVisit
+                ON tblTreeHeader.VisitKey = tblVisit.VisitKey
+            INNER JOIN tblPackage
+                ON tblVisit.PackageKey = tblPackage.PackageKey
+            INNER JOIN tblPlot
+                ON tblPackage.PlotKey = tblPlot.PlotKey
+            INNER JOIN tCalcTreeHtSharma
+                ON tblTreeMsr.TreeMsrKey = tCalcTreeHtSharma.TreeMsrKey
+            WHERE tblTreeMsr.TreeStatusCode = 'L';
             """)
 
             conn.commit()  # ensure data is written
 
             # STEP 2 — Query separately
             cursor.execute("""
-            SELECT plot, species, tree_number, section, dbh, height
-            FROM dbo.tCalcBCTInput;
+            SELECT Plot, Year, Species, Tree_number, DBH, Height
+            FROM dbo.tCalcBiomassInput;
             """)
 
             columns = [c[0] for c in cursor.description]
@@ -282,7 +306,7 @@ class Select_Data_Controller:
             conn.close()
 
             if not rows:
-                raise ValueError(f"{db_name} tCalcBCTInput is empty")
+                raise ValueError(f"{db_name} tCalcBiomassInput is empty")
 
             rows_safe = [
                 {k: float(v) if isinstance(v, decimal.Decimal) else v for k, v in row.items()}
