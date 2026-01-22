@@ -167,6 +167,8 @@ class Calculate_Biomass_View:
                 # Write column headers
                 if data:
                     headers = list(data[0].keys())
+                    print(data)
+                    print(f"Headers: {headers}")
                     # Write header row
                     header_line = "\t".join(headers)
                     f.write(header_line + "\n")
@@ -342,7 +344,7 @@ class Calculate_Biomass_View:
                 title_icon_color=ft.Colors.GREEN,
                 title_color=ft.Colors.GREEN,
                 title="Success",
-                message="Biomass results have been successfully written to the database in a table called [ dbo.tCalcBCTOutput ].",
+                message="Biomass results have been successfully written to the database in a table called dbo.tCalcBiomassOutput.",
                 button_text="OK",
             ).show()
             self.page.update()

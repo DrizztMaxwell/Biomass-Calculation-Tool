@@ -16,7 +16,7 @@ from widgets.Display_Version_Number import Display_Version_Number
 from widgets.Display_Exit_Dialog import Display_Exit_Dialog
 from views.Settings_View import SettingsView
 from helper_functions.Remove_Underscores_And_Add_Space_And_Capitalise_Words import Remove_Underscores_And_Add_Space_And_Capitalise_Words
-
+from widgets.Supported_Species_Dialog import Supported_Species_Dialog
 class SideNavbar_View:
     
     """Main application class for the Biomass Calculator"""
@@ -36,6 +36,7 @@ class SideNavbar_View:
     MODIFY_SPECIES_PAGE = "modify_species"
     SELECT_DATA_PAGE = "select_data"
     EXIT_APPLICATION_PAGE = "exit_application"
+    SUPPORTED_SPECIES_DIALOG = "supported_species_dialog"
     
     
 
@@ -119,11 +120,21 @@ class SideNavbar_View:
             
         elif page_name == self.SELECT_DATA_PAGE:
             self.main_content_area.controls.append(self.select_data_controller.build())
-        
-        
+      
         # Refresh the sidebar to update active item highlighting
         self.Refresh_Sidebar()
-
+    def _Display_Supported_Species_Dialog(self) -> ft.Control:
+        dialog = ft.AlertDialog(
+            title=ft.Text("Supported Species"),
+            content=ft.Text("List of supported species goes here..."), # get from data source
+            actions=[
+                ft.TextButton("Close", on_click=lambda e: dialog.close())
+            ]
+        )
+        self.page.dialog = dialog
+        self.page.dialog.open = True
+        self.page.update()
+        
     def _Setup_Biomass_Calculation(self) -> ft.Control:
         self.biomass_model = Calculate_Biomass_Model()
         self.biomass_view = Calculate_Biomass_View(None, page = self.page, selected_file_path=None)  # Pass None initially, set controller later
@@ -271,6 +282,23 @@ class SideNavbar_View:
                 on_click=lambda e: About_Dialog_View(self.page).show(),
             )
             
+            
+            supported_species = ft.Container(
+                content=ft.Row(
+                    [
+                        ft.Icon(ft.Icons.SUPPORT, color=ft.Colors.WHITE, size=20),
+                        ft.Text("Supported Species", color=ft.Colors.WHITE, weight=ft.FontWeight.BOLD, visible=is_expanded)
+                    ],
+                    spacing=10,
+                    alignment=ft.MainAxisAlignment.START
+                ),
+                bgcolor=ft.Colors.GREEN,
+                border_radius=10,
+                padding=ft.padding.symmetric(vertical=12, horizontal=20),
+                on_click=lambda e: Supported_Species_Dialog(self.page).show(),
+            )
+            
+            
             # Place buttons in a Column
             return ft.Column(
                 [
@@ -278,6 +306,11 @@ class SideNavbar_View:
                     # Ensure alignment is correct for collapsed mode
                     ft.Container(
                         content=about_btn,
+                        width=self.SIDEBAR_EXPANDED_WIDTH - 20 if is_expanded else self.SIDEBAR_COLLAPSED_WIDTH,
+                        alignment=ft.alignment.center
+                    ),
+                    ft.Container(
+                        content=supported_species,
                         width=self.SIDEBAR_EXPANDED_WIDTH - 20 if is_expanded else self.SIDEBAR_COLLAPSED_WIDTH,
                         alignment=ft.alignment.center
                     )
