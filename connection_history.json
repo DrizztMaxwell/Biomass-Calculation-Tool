@@ -2,7 +2,11 @@
   {
     "server": ".\\SQLEXPRESS",
     "database": "gyPSPPGP",
+<<<<<<< HEAD
     "last_used": "2026-01-21 11:08"
+=======
+    "last_used": "2026-01-21 15:43"
+>>>>>>> 8270cbaaf62f7ffebed0a812025d07bb6f90f1e0
   },
   {
     "server": "DESKTOP-EJ33BVS\\SQLEXPRESS",

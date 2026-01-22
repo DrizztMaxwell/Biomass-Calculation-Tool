@@ -231,9 +231,6 @@ class Select_Data_Controller:
             return False
 
     def import_from_database(self, db_name: str = None, driver: str = None, server: str = None):
-        """
-        Load data from database into DataManager.
-        """
         try:
             if not all([db_name, driver, server]):
                 with open("data/selected_database.json", "r") as f:
@@ -252,13 +249,82 @@ class Select_Data_Controller:
                 "Connection Timeout=5;"
             )
             cursor = conn.cursor()
-            cursor.execute("SELECT plot, year, species, tree_number, dbh, height FROM dbo.tCalcBCTInput")
+
+            # STEP 1 — Drop & recreate input/output tables, then insert
+            cursor.execute("""
+            DROP TABLE IF EXISTS dbo.tCalcBiomassInput;
+
+            CREATE TABLE dbo.tCalcBiomassInput
+            (
+                Plot         VARCHAR(MAX) NOT NULL,
+                Year         INT          NOT NULL,
+                Species      INT          NOT NULL,
+                Tree_number  SMALLINT     NOT NULL,
+                DBH          DECIMAL(4,1)  NOT NULL,
+                Height       DECIMAL(3,1)  NOT NULL
+            );
+
+            DROP TABLE IF EXISTS dbo.tCalcBiomassOutput;
+
+            CREATE TABLE dbo.tCalcBiomassOutput
+            (
+                Plot               VARCHAR(MAX) NOT NULL,
+                Year               INT          NOT NULL,
+                Species            INT          NOT NULL,
+                Tree_number        INT          NOT NULL,
+                DBH                DECIMAL(4,1)  NOT NULL,
+                Height             DECIMAL(4,2)  NULL,
+                Wood_kg            NUMERIC(10,3),
+                Bark_kg            NUMERIC(10,3),
+                Foliage_kg         NUMERIC(10,3),
+                Branch_kg          NUMERIC(10,3),
+                Crown_kg           NUMERIC(10,3),
+                Stem_kg            NUMERIC(10,3),
+                Total_kg           NUMERIC(10,3),
+                CoefficientSource  VARCHAR(100)  NULL,
+                processed_at       DATETIMEOFFSET(0) NOT NULL DEFAULT SYSUTCDATETIME()
+            );
+
+            INSERT INTO dbo.tCalcBiomassInput
+            SELECT TOP 10000
+                tblPlot.PlotName                AS Plot,
+                tblVisit.FieldSeasonYear       AS Year,
+                tblTree.SpecCode               AS Species,
+                tblTree.TreeNum                AS Tree_number,
+                tblTreeMsr.DBH                 AS DBH,
+                tCalcTreeHtSharma.CalculatedHeight AS Height
+            FROM tblTreeGrowthPlot
+            INNER JOIN tblTreeHeader
+                ON tblTreeGrowthPlot.TreeHeaderKey = tblTreeHeader.TreeHeaderKey
+            INNER JOIN tblTreeMsr
+                ON tblTreeGrowthPlot.TreeGrowthPlotKey = tblTreeMsr.TreeGrowthPlotKey
+            INNER JOIN tblTree
+                ON tblTreeMsr.TreeKey = tblTree.TreeKey
+            INNER JOIN tblVisit
+                ON tblTreeHeader.VisitKey = tblVisit.VisitKey
+            INNER JOIN tblPackage
+                ON tblVisit.PackageKey = tblPackage.PackageKey
+            INNER JOIN tblPlot
+                ON tblPackage.PlotKey = tblPlot.PlotKey
+            INNER JOIN tCalcTreeHtSharma
+                ON tblTreeMsr.TreeMsrKey = tCalcTreeHtSharma.TreeMsrKey
+            WHERE tblTreeMsr.TreeStatusCode = 'L';
+            """)
+
+            conn.commit()  # ensure data is written
+
+            # STEP 2 — Query separately
+            cursor.execute("""
+            SELECT Plot, Year, Species, Tree_number, DBH, Height
+            FROM dbo.tCalcBiomassInput;
+            """)
+
             columns = [c[0] for c in cursor.description]
             rows = [dict(zip(columns, row)) for row in cursor.fetchall()]
             conn.close()
 
             if not rows:
-                raise ValueError(f"{db_name} table is empty")
+                raise ValueError(f"{db_name} tCalcBiomassInput is empty")
 
             rows_safe = [
                 {k: float(v) if isinstance(v, decimal.Decimal) else v for k, v in row.items()}
@@ -330,6 +396,7 @@ class Select_Data_Controller:
                 self.data_imported_callback(False)
             self.page.update()
             return False
+
 
     # -------------------------
     # DATABASE BUTTON
