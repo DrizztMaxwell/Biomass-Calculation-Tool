@@ -29,7 +29,7 @@ import uuid
 import time
 import decimal
 import concurrent.futures
-
+from widgets.Custom_Alert_Dialog import Custom_Alert_Dialog
 
 class Select_Data_Controller:
     def __init__(self, page: ft.Page, data_imported_callback: callable, view):
@@ -209,7 +209,25 @@ class Select_Data_Controller:
             return True
         except Exception as e:
             print("Error connecting to database:", e)
-            self.page.open(Display_Error_Dialog(self.page, description=str(e)).show())
+            if e.args:
+                if e.args[0] == '08001':
+                    error_dialog = Display_Error_Dialog(
+                        self.page,
+                        title="Connection Error",
+                        description=f"Could not connect to the database server '{server}'. Please check the server name and your network connection.",
+                     
+                    )
+                    self.page.open(error_dialog.show())
+                elif e.args[0] == '28000' and "Cannot open database" not in e.args:
+                    error_dialog = Display_Error_Dialog(
+                        self.page,
+                        title="No Database Found",
+                        description=f"Please check if the database '{database}' exists and your authentication details are correct.",
+                     
+                    )
+                    self.page.open(error_dialog.show())
+                else:
+                    self.page.open(Display_Error_Dialog(self.page, description=str(e)).show())
             return False
 
     def import_from_database(self, db_name: str = None, driver: str = None, server: str = None):
@@ -255,12 +273,57 @@ class Select_Data_Controller:
             self.view.update_file_status(f"Data imported from database: {db_name}")
             if self.data_imported_callback:
                 self.data_imported_callback(True)
+            
+            Custom_Alert_Dialog(
+                self.page,
+                title_icon=ft.Icons.CHECK_CIRCLE,
+                title_icon_color=ft.Colors.GREEN,
+                title_color=ft.Colors.GREEN,
+                title="Success",
+                message=f"Data successfully imported from database: {db_name}",
+                button_text="OK",
+            ).show()
             self.page.update()
+            
             return True
 
         except Exception as e:
-            print("Error importing from database:", e)
-            self.page.open(Display_Error_Dialog(self.page, description=str(e)).show())
+            print("Error importing from database:", e.args[0])
+            if e.args and e.args[0] == '08001':
+                error_dialog = Display_Error_Dialog(
+                    self.page,
+                    title="Connection Error",
+                    description=f"Could not connect to the database server '{server}'. Please check the server name and your network connection.",
+                 
+                )
+                self.page.open(error_dialog.show())
+            elif e.args and e.args[0] == '42S02':
+                error_dialog = Display_Error_Dialog(
+                    self.page,
+                    title="Table Not Found",
+                    description=f"The required table 'tCalcBCTInput' was not found in database '{db_name}'. Please ensure the database is set up correctly.",
+                 
+                )
+                self.page.open(error_dialog.show())
+            elif e.args and  e.args[0] == '28000':
+                error_dialog = Display_Error_Dialog(
+                    self.page,
+                    title="Authentication Error",
+                    description=f"Authentication failed when connecting to database '{db_name}'. Please check your credentials and try again.",
+                 
+                )
+                self.page.open(error_dialog.show())
+            elif e.args and "Cannot open database" in e.args[0]:
+                error_dialog = Display_Error_Dialog(
+                    self.page,
+                    title="Database Access Error",
+                    description=f"Cannot open database '{db_name}'. Please ensure the database exists and you have access rights.",
+                 
+                )
+                self.page.open(error_dialog.show())
+            else:    
+                self.page.open(Display_Error_Dialog(self.page, description=str(e)).show())
+            
             self.view.update_file_status("Failed to import data from database.")
             self.is_data_imported = False
             if self.data_imported_callback:

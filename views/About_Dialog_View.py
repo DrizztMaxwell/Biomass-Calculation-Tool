@@ -17,10 +17,8 @@ class About_Dialog_View():
         
     def close(self, e=None):
         """Close the about container and remove overlay"""
-        if self.overlay in self.page.overlay:
-            self.page.overlay.remove(self.overlay)
-        if self.container in self.page.overlay:
-            self.page.overlay.remove(self.container)
+        self.page.overlay.remove(self.overlay)
+        self.page.overlay.remove(self.container)
         self.is_visible = False
         self.page.update()
     

@@ -15,6 +15,7 @@ from widgets.Equation_Type_Card import Equation_Type_Card
 from data.components_data import COMPONENTS_DATA
 from widgets.Calculate_Biomass_Button import Calculate_Biomass_Button
 from widgets.Bar_Chart_Widget import Bar_Chart_Widget
+from widgets.Custom_Alert_Dialog import Custom_Alert_Dialog 
 
 class Calculate_Biomass_View:
     def __init__(self, controller, page: ft.Page, selected_file_path):
@@ -198,6 +199,7 @@ class Calculate_Biomass_View:
     
     def _on_file_save_result(self, e: ft.FilePickerResultEvent):
         """Handle file save dialog result."""
+        
         if e.path:
             # Load the complete data from JSON
             try:
@@ -334,12 +336,27 @@ class Calculate_Biomass_View:
 
         if success:
             print("Results successfully written to database")
-            
+            Custom_Alert_Dialog(
+                self.page,
+                title_icon=ft.Icons.CHECK_CIRCLE,
+                title_icon_color=ft.Colors.GREEN,
+                title_color=ft.Colors.GREEN,
+                title="Success",
+                message="Biomass results have been successfully written to the database in a table called [ dbo.tCalcBCTOutput ].",
+                button_text="OK",
+            ).show()
             self.page.update()
         else:
             print("Failed to write results to database")
-            self.page.snack_bar = ft.SnackBar(ft.Text("Failed to write results to database"))
-            self.page.snack_bar.open = True
+            Custom_Alert_Dialog(
+                self.page,
+                title_icon=ft.Icons.ERROR,
+                title_icon_color=ft.Colors.RED,
+                title_color=ft.Colors.RED,
+                title="Error",
+                message="An error occurred while writing biomass results to the database. Please try again.",
+                button_text="OK",
+            ).show()
             self.page.update()
 
         

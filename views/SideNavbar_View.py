@@ -57,7 +57,7 @@ class SideNavbar_View:
         self._Setup_initial_Views()
         
     def _Setup_initial_Views(self):
-        self.about_dialog = About_Dialog_View(self.page)
+        
         
         self.select_data_view = Select_Data_View(page=self.page, controller=None)
         self.select_data_controller = Select_Data_Controller(self.page, self.Callback_To_Update_Sidebar_UI, self.select_data_view)
@@ -88,37 +88,21 @@ class SideNavbar_View:
         self.page.update()
 
     def show_about_dialog(self, e):
-        print("Clickeing")
+        self.about_dialog = About_Dialog_View(self.page)
         self.about_dialog.show()
         
-    def _exit_application_direct(self):
-        """Exit application without any UI interactions that could cause recursion."""
-        print("Exiting application...")
-        exit_dialog = Display_Exit_Dialog(self.yes_clicked, self.no_clicked)
-        self.exit_dialog = exit_dialog
-        self.page.open(exit_dialog)
-
-    def yes_clicked(self, e):
-        self.page.window.destroy()
-
-    def no_clicked(self, e):
-        self.page.dialog = self.exit_dialog
-        self.page.close(self.exit_dialog)
-
     def navigate_to_page(self, page_name: str):
         """Navigate to the specified page and update the UI."""
     
         # Update active navigation item
         self.active__nav_item = page_name
         
-        # Clear the main content area
-        self.main_content_area.controls.clear()
-        
-        print(f"Navigating to page: {self.main_content_area.controls}")
-        if page_name == self.EXIT_APPLICATION_PAGE:
-            self._exit_application_direct()
+        if page_name == self.EXIT_APPLICATION_PAGE:  
+            self.page.open(Display_Exit_Dialog(self.page).get_dialog())
             return
         
+        # Clear the main content area
+        self.main_content_area.controls.clear()
         if page_name == self.CALCULATE_BIOMASS_PAGE:
             self.main_content_area.controls.append(self._Setup_Biomass_Calculation())
             
@@ -284,7 +268,7 @@ class SideNavbar_View:
                 bgcolor=self.ACCENT_ABOUT,
                 border_radius=10,
                 padding=ft.padding.symmetric(vertical=12, horizontal=20),
-                on_click=self.show_about_dialog,
+                on_click=lambda e: About_Dialog_View(self.page).show(),
             )
             
             # Place buttons in a Column

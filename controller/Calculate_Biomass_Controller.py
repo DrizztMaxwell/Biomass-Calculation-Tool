@@ -826,6 +826,12 @@ class Calculate_Biomass_Controller:
                 cursor.execute(create_table_sql)
                 conn.commit()
 
+                # Remove existing records to avoid duplicates
+                delete_sql = "DELETE FROM dbo.tCalcBCTOutput"
+                cursor.execute(delete_sql)
+                conn.commit()
+                
+                
                 # Load JSON results
                 with open('storage/biomass_results.json', 'r') as f:
                     data = json.load(f)
