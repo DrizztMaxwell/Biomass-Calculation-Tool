@@ -74,7 +74,7 @@
         "bhfoliage3": -0.5375
     },
     {
-        "SpecCommon": "Basswood",
+        "SpecCommon": "American Basswood",
         "SpeciesCode": 51,
 
         "bwood1": 0.0562,
@@ -223,7 +223,7 @@
         "bhfoliage3": -0.608
     },
     {
-        "SpecCommon": "Eastern redcedar",
+        "SpecCommon": "Eastern red cedar",
         "SpeciesCode": 23,
 
         "bwood1": 0.1277,
@@ -399,7 +399,7 @@
         "bhfoliage3": 0.0
     },
     {
-        "SpecCommon": "Largetooth aspen",
+        "SpecCommon": "Large-tooth aspen",
         "SpeciesCode": 70,
 
         "bwood1": 0.0959,
@@ -499,7 +499,7 @@
         "bhfoliage3": 0.0
     },
     {
-        "SpecCommon": "Red oak",
+        "SpecCommon": "Northern Red Oak",
         "SpeciesCode": 41,
 
         "bwood1": 0.1754,
