@@ -816,7 +816,7 @@ class Calculate_Biomass_Controller:
             conn.commit()
 
             # Remove existing records to avoid duplicates
-            delete_sql = "DELETE FROM dbo.tCalcBCTOutput"
+            delete_sql = "DELETE FROM dbo.tCalcBiomassOutput"
             cursor.execute(delete_sql)
             conn.commit()
             
