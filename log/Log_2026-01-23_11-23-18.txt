@@ -1,0 +1,52 @@
+[11:23:18] --- Log Session Started ---
+[11:23:18] Splash screen displayed
+[11:23:21] DataManager cleared, proceeding to EULA
+[11:23:22] User agreed to EULA - proceeding with application
+[11:23:22] User navigated to Select Data page
+[11:23:26] Import text file dialog opened
+[11:23:29] Selected file for import: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\testing_dataset\Client_Testing_Files\All_Sp_Data_Test_BCT_Jan.txt
+[11:23:30] Text file imported successfully with 1991 records and 1 errors.
+[11:23:32] Import text file dialog opened
+[11:23:37] Selected file for import: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\testing_dataset\All_Capitalised_Test.txt
+[11:23:37] Error importing text file: Text file may be empty or invalid.
+[11:24:09] Import text file dialog opened
+[11:24:11] Selected file for import: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\testing_dataset\All_Capitalised_Test.txt
+[11:24:11] Text file imported successfully with 72 records and 0 errors.
+[11:24:12] User navigated to Calculate Biomass page
+[11:24:16] Calculate biomass button clicked
+[11:24:16] Biomass results table created and displayed
+[11:24:19] Biomass chart displayed
+[11:24:19] Biomass chart displayed
+[11:24:35] User navigated to Select Data page
+[11:24:37] Import text file dialog opened
+[11:24:39] Selected file for import: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\testing_dataset\Case_Insensitive_Test.txt
+[11:24:40] Text file imported successfully with 72 records and 0 errors.
+[11:24:41] User navigated to Calculate Biomass page
+[11:24:42] Calculate biomass button clicked
+[11:24:43] Biomass results table created and displayed
+[11:24:51] User navigated to Select Data page
+[11:24:52] Import text file dialog opened
+[11:24:57] Selected file for import: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\testing_dataset\Lowercase_Test_BCT.txt
+[11:24:57] Text file imported successfully with 72 records and 0 errors.
+[11:24:58] User navigated to Calculate Biomass page
+[11:24:59] Calculate biomass button clicked
+[11:24:59] Biomass results table created and displayed
+[11:25:00] User navigated to Select Data page
+[11:25:01] Import text file dialog opened
+[11:25:04] Selected file for import: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\testing_dataset\Species_And_Code_Which_Not_In_Lambert.txt
+[11:25:05] Text file imported successfully with 72 records and 0 errors.
+[11:25:06] User navigated to Calculate Biomass page
+[11:25:07] Calculate biomass button clicked
+[11:28:18] User navigated to Select Data page
+[11:28:26] Import text file dialog opened
+[11:28:29] Selected file for import: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\testing_dataset\Client_Testing_Files\All_Sp_Data_Test_BCT_Jan.txt
+[11:28:30] Text file imported successfully with 1991 records and 1 errors.
+[11:28:32] User navigated to Calculate Biomass page
+[11:28:33] Calculate biomass button clicked
+[11:28:34] Biomass results table created and displayed
+[11:28:37] User navigated to Select Data page
+[11:28:38] Import text file dialog opened
+[11:28:40] Selected file for import: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\testing_dataset\Client_Testing_Files\BCT-test.txt
+[11:28:42] Text file imported successfully with 9634 records and 1204 errors.
+[11:28:45] User navigated to Calculate Biomass page
+[11:28:46] Calculate biomass button clicked

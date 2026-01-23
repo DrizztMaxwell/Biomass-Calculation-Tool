@@ -1,0 +1,73 @@
+Plot	Year	Species Origin	Tree Number	DBH	Height	Species
+1	2023	Natural	1	25.5	18.2	desert willow
+1	2023	Natural	1	25.5	18.2	87
+1	2023	Natural	2	18.7	12.5	volcano oak
+1	2023	Natural	2	18.7	12.5	92
+1	2023	Natural	3	32.1	22.8	moonlight pine
+1	2023	Natural	3	32.1	22.8	66
+1	2023	Natural	4	28.4	19.3	arctic maple
+1	2023	Natural	4	28.4	19.3	54
+1	2023	Natural	5	35.2	24.1	silver birch
+1	2023	Natural	5	35.2	24.1	79
+1	2023	Natural	6	22.8	15.7	blue cedar
+1	2023	Natural	6	22.8	15.7	88
+1	2023	Natural	7	19.5	13.2	redwood spruce
+1	2023	Natural	7	19.5	13.2	42
+1	2023	Natural	8	26.3	17.9	golden pine
+1	2023	Natural	8	26.3	17.9	91
+1	2023	Natural	9	31.7	21.4	crystal fir
+1	2023	Natural	9	31.7	21.4	37
+1	2023	Natural	10	24.6	16.8	dragon maple
+1	2023	Natural	10	24.6	16.8	29
+1	2023	Natural	11	29.3	20.1	phantom oak
+1	2023	Natural	11	29.3	20.1	75
+1	2023	Natural	12	33.8	23.5	shadow pine
+1	2023	Natural	12	33.8	23.5	63
+1	2023	Natural	13	21.4	14.6	sunset birch
+1	2023	Natural	13	21.4	14.6	48
+1	2023	Natural	14	27.9	18.7	mountain ash
+1	2023	Natural	14	27.9	18.7	82
+1	2023	Natural	15	23.2	15.9	river pine
+1	2023	Natural	15	23.2	15.9	57
+1	2023	Natural	16	30.5	20.8	cloud spruce
+1	2023	Natural	16	30.5	20.8	94
+1	2023	Natural	17	26.7	18.3	star cedar
+1	2023	Natural	17	26.7	18.3	36
+1	2023	Natural	18	28.9	19.7	rainbow oak
+1	2023	Natural	18	28.9	19.7	69
+1	2023	Natural	19	32.4	22.1	frost maple
+1	2023	Natural	19	32.4	22.1	85
+1	2023	Natural	20	25.8	17.4	thunder pine
+1	2023	Natural	20	25.8	17.4	71
+1	2023	Natural	21	34.1	23.2	ice birch
+1	2023	Natural	21	34.1	23.2	58
+1	2023	Natural	22	29.6	20.3	flame oak
+1	2023	Natural	22	29.6	20.3	93
+1	2023	Natural	23	27.3	18.6	wind cedar
+1	2023	Natural	23	27.3	18.6	67
+1	2023	Natural	24	31.2	21.7	stone pine
+1	2023	Natural	24	31.2	21.7	49
+1	2023	Natural	25	35.8	24.6	earth maple
+1	2023	Natural	25	35.8	24.6	76
+1	2023	Natural	26	22.1	15.1	water birch
+1	2023	Natural	26	22.1	15.1	84
+1	2023	Natural	27	26.9	18.4	fire spruce
+1	2023	Natural	27	26.9	18.4	52
+1	2023	Natural	28	33.5	23.0	air cedar
+1	2023	Natural	28	33.5	23.0	61
+1	2023	Natural	29	24.2	16.5	light oak
+1	2023	Natural	29	24.2	16.5	38
+1	2023	Natural	30	30.1	20.6	dark pine
+1	2023	Natural	30	30.1	20.6	77
+1	2023	Natural	31	28.7	19.5	dream maple
+1	2023	Natural	31	28.7	19.5	45
+1	2023	Natural	32	25.4	17.3	night birch
+1	2023	Natural	32	25.4	17.3	89
+1	2023	Natural	33	32.9	22.5	dawn spruce
+1	2023	Natural	33	32.9	22.5	72
+1	2023	Natural	34	27.6	18.9	dusk cedar
+1	2023	Natural	34	27.6	18.9	65
+1	2023	Natural	35	29.8	20.4	twilight oak
+1	2023	Natural	35	29.8	20.4	59
+1	2023	Natural	36	31.5	21.6	midnight pine
+1	2023	Natural	36	31.5	21.6	83
