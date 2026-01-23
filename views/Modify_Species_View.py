@@ -4,6 +4,7 @@ from widgets.TitleTextWidget import TitleTextWidget
 from widgets.Custom_Alert_Dialog import Custom_Alert_Dialog
 from widgets.DescriptionText import DescriptionText
 from widgets.LogFileTxt import logger
+from widgets.Title_With_Icon import Title_With_Icon
 
 class Modify_Species_View:
     """CRUD interface for managing species in created_species.json"""
@@ -1608,13 +1609,7 @@ class Modify_Species_View:
             content=ft.Column([
                 # Title Section
                 ft.Column([
-                    ft.Container(
-                        content=ft.Row([
-                            ft.Icon(ft.Icons.TUNE_OUTLINED, size=28, color=ft.Colors.PRIMARY),
-                            TitleTextWidget("Modify Species")
-                        ], spacing=15),
-                        padding=ft.padding.only(bottom=10)
-                    ),
+                    Title_With_Icon("Modify Species", ft.Icons.EDIT_OUTLINED),
                     DescriptionText("Manage your created species. Edit or delete existing species as needed."),
                     ft.Divider(thickness=1, color=ft.Colors.GREY_200)
                 ], spacing=8),

@@ -12,6 +12,7 @@ from controller.Create_Species_Controller import Create_Species_Controller
 from widgets.Select_Components_Widget import Select_Components_Widget
 from widgets.Create_Title_And_Description_Widget import Create_Title_And_Description_Widget
 from widgets.LogFileTxt import logger
+from widgets.Title_With_Icon import Title_With_Icon
 
 class Create_Species_View:
     """The main application form, responsible for assembling the UI controls."""
@@ -711,7 +712,10 @@ class Create_Species_View:
             content=ft.Container(
                 content=ft.Column(
                     controls=[
-                        Create_Title_And_Description_Widget("Create Species", "Create a new species to add it in the program"),
+                        ft.Column( [
+                        Title_With_Icon("Create Species", ft.Icons.ADD_BOX),
+                        DescriptionText("Define a new tree species by specifying its parameters and components."),
+                        ], spacing=8),
                         ft.Divider(color=ft.Colors.GREY_300, height=30),  # More space
 
                         self._create_species_metadata_row(),

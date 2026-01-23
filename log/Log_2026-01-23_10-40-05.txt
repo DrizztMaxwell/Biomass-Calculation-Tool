@@ -1,0 +1,33 @@
+[10:40:05] --- Log Session Started ---
+[10:40:06] Splash screen displayed
+[10:40:08] DataManager cleared, proceeding to EULA
+[10:40:14] User agreed to EULA - proceeding with application
+[10:40:14] User navigated to Select Data page
+[10:40:16] User navigated to Create Species page
+[10:40:18] User navigated to Settings page
+[10:40:20] Theme toggled to: ThemeMode.DARK
+[10:40:20] Loaded species data from treeparameters.json
+[10:40:24] Displayed About Dialog
+[10:40:25] Closed About Dialog
+[10:40:26] User navigated to Select Data page
+[10:42:36] Loaded species data from treeparameters.json
+[10:42:47] User navigated to Settings page
+[10:42:49] User navigated to Modify Species page
+[10:42:49] Species data loaded successfully.
+[10:42:52] User navigated to Create Species page
+[10:42:59] User navigated to Settings page
+[10:43:00] User navigated to Modify Species page
+[10:43:00] Species data loaded successfully.
+[10:43:02] User navigated to Create Species page
+[10:43:04] User navigated to Modify Species page
+[10:43:04] Species data loaded successfully.
+[10:43:05] User navigated to Create Species page
+[10:43:07] User navigated to Select Data page
+[10:43:10] User navigated to Modify Species page
+[10:43:10] Species data loaded successfully.
+[10:43:44] User navigated to Settings page
+[10:43:47] User navigated to Select Data page
+[10:44:10] User navigated to Create Species page
+[10:44:11] User navigated to Modify Species page
+[10:44:11] Species data loaded successfully.
+[10:46:32] User navigated to Select Data page

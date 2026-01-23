@@ -11,6 +11,7 @@ from widgets.Display_Error_Dialog import Display_Error_Dialog
 from widgets.Loading_Spinner_Widget import Loading_Spinner_Widget as Loading
 from widgets.Custom_Alert_Dialog import Custom_Alert_Dialog
 from widgets.LogFileTxt import logger
+from widgets.Title_With_Icon import Title_With_Icon
 
 class Select_Data_View:
     def __init__(self, page: ft.Page, controller):
@@ -76,8 +77,10 @@ class Select_Data_View:
         return ft.Container(
             content=ft.Column(
                 [
-                    TitleTextWidget("Select Import Data"),
+                    Title_With_Icon("Select Import Data", ft.Icons.FILE_PRESENT_OUTLINED),
                     DescriptionText("Select how you wish to import the dataset"),
+                        ft.Divider(color=ft.Colors.GREY_300, height=30),  # More space
+                    
                 ],
                 spacing=8,
             ),

@@ -74,7 +74,7 @@ def main(page: ft.Page):
                     
                     # Version/Footer
                     ft.Text(
-                        "Version 1.0.0",
+                        "Version 1.0",
                         size=12,
                         color=ft.Colors.GREY_400
                     ),

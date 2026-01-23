@@ -1,5 +1,9 @@
 import flet as ft
 from widgets.LogFileTxt import logger
+from widgets.TitleTextWidget import TitleTextWidget
+from widgets.DescriptionText import DescriptionText
+from widgets.Title_With_Icon import Title_With_Icon
+
 class SettingsView:
     def __init__(self, page: ft.Page):
         self.page = page
@@ -19,14 +23,12 @@ class SettingsView:
         # logger.write(f"Current Theme Mode: {self.page.theme_mode}")
         # Header Section
         header = ft.Container(
+           
             content=ft.Column([
-                ft.Text("Settings", color=ft.Colors.PRIMARY, size=32, weight=ft.FontWeight.BOLD),
-                ft.Text(
-                    "Customize your experience and application preferences", 
-                    color=ft.Colors.PRIMARY,
-                    size=14
-                ),
-            ], spacing=8),
+                Title_With_Icon("Settings", ft.Icons.SETTINGS_OUTLINED),
+                DescriptionText("Customize your experience and application preferences"),
+                        ft.Divider(color=ft.Colors.GREY_300, height=30),  # More space
+            ]),
             margin=ft.margin.only(bottom=30),
         )
 
@@ -89,6 +91,8 @@ class SettingsView:
         
         # Scrollable wrapper
         return ft.Container(
+            bgcolor=ft.Colors.SECONDARY_CONTAINER,
+            margin=ft.margin.all(20),
             content=ft.Column([
             
             main_content

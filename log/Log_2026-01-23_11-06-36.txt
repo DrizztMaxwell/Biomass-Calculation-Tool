@@ -1,0 +1,8 @@
+[11:06:36] --- Log Session Started ---
+[11:06:36] Splash screen displayed
+[11:06:38] DataManager cleared, proceeding to EULA
+[11:06:39] User agreed to EULA - proceeding with application
+[11:06:39] User navigated to Select Data page
+[11:06:40] User navigated to Settings page
+[11:06:41] Theme toggled to: ThemeMode.DARK
+[11:06:46] Theme toggled to: ThemeMode.LIGHT
