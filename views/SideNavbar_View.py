@@ -17,6 +17,7 @@ from widgets.Display_Exit_Dialog import Display_Exit_Dialog
 from views.Settings_View import SettingsView
 from helper_functions.Remove_Underscores_And_Add_Space_And_Capitalise_Words import Remove_Underscores_And_Add_Space_And_Capitalise_Words
 from widgets.Supported_Species_Dialog import Supported_Species_Dialog
+from widgets.LogFileTxt import logger
 class SideNavbar_View:
     
     """Main application class for the Biomass Calculator"""
@@ -99,42 +100,36 @@ class SideNavbar_View:
         self.active__nav_item = page_name
         
         if page_name == self.EXIT_APPLICATION_PAGE:  
+            logger.write("User chose to exit the application")
             self.page.open(Display_Exit_Dialog(self.page).get_dialog())
             return
         
         # Clear the main content area
         self.main_content_area.controls.clear()
         if page_name == self.CALCULATE_BIOMASS_PAGE:
+            logger.write("User navigated to Calculate Biomass page")
             self.main_content_area.controls.append(self._Setup_Biomass_Calculation())
             
         elif page_name == self.CREATE_SPECIES_PAGE:
-          
+            logger.write("User navigated to Create Species page")
             self.main_content_area.controls.append(self.create_species_view.build())
             
         elif page_name == self.SETTINGS_PAGE:
+            logger.write("User navigated to Settings page")
             self.main_content_area.controls.append(self.settings_view)
             
         elif page_name == self.MODIFY_SPECIES_PAGE:
+            logger.write("User navigated to Modify Species page")
             self.modify_species_view = Modify_Species_View(self.page)
             self.main_content_area.controls.append(self.modify_species_view.build())
             
         elif page_name == self.SELECT_DATA_PAGE:
+            logger.write("User navigated to Select Data page")
             self.main_content_area.controls.append(self.select_data_controller.build())
       
         # Refresh the sidebar to update active item highlighting
         self.Refresh_Sidebar()
-    def _Display_Supported_Species_Dialog(self) -> ft.Control:
-        dialog = ft.AlertDialog(
-            title=ft.Text("Supported Species"),
-            content=ft.Text("List of supported species goes here..."), # get from data source
-            actions=[
-                ft.TextButton("Close", on_click=lambda e: dialog.close())
-            ]
-        )
-        self.page.dialog = dialog
-        self.page.dialog.open = True
-        self.page.update()
-        
+   
     def _Setup_Biomass_Calculation(self) -> ft.Control:
         self.biomass_model = Calculate_Biomass_Model()
         self.biomass_view = Calculate_Biomass_View(None, page = self.page, selected_file_path=None)  # Pass None initially, set controller later
@@ -155,6 +150,7 @@ class SideNavbar_View:
         
         # Update the content (rebuild the control tree with the new state)
         self.sidebar_content.controls = self._build_sidebar_controls(new_expanded_state, e)
+        
         
         # Animate the transition and update the page
         self.page.update()

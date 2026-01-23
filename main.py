@@ -5,7 +5,7 @@ from views.EULA_View import EULA_View
 from views.SideNavbar_View import SideNavbar_View
 from controller.SideNavbar_Controller import SideNavbar_Controller
 from config.App_Config import AppConfig
-
+from widgets.LogFileTxt import logger
 def main(page: ft.Page):
     """Main entry point for the Biomass Calculation Tool application."""
     
@@ -15,12 +15,12 @@ def main(page: ft.Page):
     def handle_eula_result(agreed):
         """Handle the EULA agreement result"""
         if agreed:
-            print("✅ User agreed to EULA - proceeding with application")
+            logger.write("User agreed to EULA - proceeding with application")
             page.clean()
             SideNavbar_Controller(SideNavbar_View(page)).build()
             page.update()
         else:
-            print("❌ User rejected EULA - application cannot proceed")
+            logger.write("User rejected EULA - application cannot proceed")
             page.clean()
             
             eula_controller.get_exit_view()

@@ -1,0 +1,13 @@
+[15:57:22] --- Log Session Started ---
+[15:57:25] User agreed to EULA - proceeding with application
+[15:57:25] User navigated to Select Data page
+[15:57:26] Import text file dialog opened
+[15:57:28] File selection cancelled by user
+[15:57:29] Import text file dialog opened
+[15:57:31] Selected file for import: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\testing_dataset\Client_Testing_Files\S2.txt
+[15:57:33] Text file imported successfully with 10000 records and 0 errors.
+[15:57:41] Successfully connected to database gypsppgp on server DESKTOP-EJ33BVS\SQLEXPRESS
+[15:57:41] Database connection info saved: {'server': 'DESKTOP-EJ33BVS\\SQLEXPRESS', 'database': 'gypsppgp', 'driver': 'ODBC Driver 17 for SQL Server', 'data_folder_path': 'C:\\Program Files\\Microsoft SQL Server\\MSSQL16.SQLEXPRESS\\MSSQL\\DATA'}
+[15:57:41] Connecting to database gypsppgp on server DESKTOP-EJ33BVS\SQLEXPRESS using driver ODBC Driver 17 for SQL Server
+[15:57:43] Database import successful with 10000 records.
+[15:57:43] Database import process completed for gypsppgp

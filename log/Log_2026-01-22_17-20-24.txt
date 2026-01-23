@@ -1,0 +1,31 @@
+[17:20:24] --- Log Session Started ---
+[17:20:26] User agreed to EULA - proceeding with application
+[17:20:26] User navigated to Select Data page
+[17:20:27] User navigated to Settings page
+[17:20:28] User navigated to Create Species page
+[17:20:29] User navigated to Modify Species page
+[17:20:29] Species data loaded successfully.
+[17:20:31] Viewing species: 
+[17:20:32] Species details dialog closed for species: 
+[17:20:44] Editing species: 
+[17:20:47] Dialog closed.
+[17:20:50] Editing species: 
+[17:20:50] Parameter bwood1 updated to 0.0
+[17:20:50] Parameter bwood2 updated to 0.0
+[17:20:50] Parameter bbark1 updated to 0.0
+[17:20:50] Parameter bbark2 updated to 0.0
+[17:20:50] Species data saved successfully.
+[17:20:50] Species '' updated successfully.
+[17:20:55] Confirming deletion of species: 
+[17:21:00] Confirming deletion of species: 
+[17:21:01] Confirming deletion of species: 
+[17:21:01] Species data saved successfully.
+[17:21:01] Species 'sdaads' deleted successfully.
+[17:21:08] User navigated to Select Data page
+[17:21:09] User navigated to Modify Species page
+[17:21:09] Species data loaded successfully.
+[17:21:10] User navigated to Settings page
+[17:21:17] User navigated to Modify Species page
+[17:21:17] Species data loaded successfully.
+[17:21:19] User navigated to Create Species page
+[17:21:21] User navigated to Settings page

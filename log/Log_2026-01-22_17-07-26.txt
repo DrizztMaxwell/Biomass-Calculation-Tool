@@ -1,0 +1,7 @@
+[17:07:26] --- Log Session Started ---
+[17:07:27] User agreed to EULA - proceeding with application
+[17:07:27] User navigated to Select Data page
+[17:07:29] Loaded species data from treeparameters.json
+[17:07:37] User navigated to Settings page
+[17:07:38] Loaded species data from treeparameters.json
+[17:07:59] Loaded species data from treeparameters.json

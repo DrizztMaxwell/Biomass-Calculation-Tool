@@ -1,0 +1,13 @@
+[17:11:45] --- Log Session Started ---
+[17:11:47] User agreed to EULA - proceeding with application
+[17:11:47] User navigated to Select Data page
+[17:11:48] User navigated to Create Species page
+[17:12:01] Checking if species name dasd exists in data/treeparameters.json
+[17:12:01] Checking if species name dasd exists in data/create_species.json
+[17:12:01] Selected components for creation: ['Bark', 'Branch']
+[17:12:01] Current equation type is DBH-based
+[17:12:01] Species dasd created successfully and added to create_species.json
+[17:12:03] Checking if species name dasd exists in data/treeparameters.json
+[17:12:03] Checking if species name dasd exists in data/create_species.json
+[17:12:03] Species code dasd already exists in create_species.json
+[17:12:17] User navigated to Modify Species page

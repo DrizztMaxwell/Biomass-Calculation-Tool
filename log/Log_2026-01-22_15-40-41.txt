@@ -1,0 +1,2 @@
+[15:40:41] --- Log Session Started ---
+[15:40:43] User rejected EULA - application cannot proceed

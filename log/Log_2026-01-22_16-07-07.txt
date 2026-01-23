@@ -1,0 +1,31 @@
+[16:07:07] --- Log Session Started ---
+[16:07:09] User agreed to EULA - proceeding with application
+[16:07:09] User navigated to Select Data page
+[16:07:18] Error connecting to database: ('28000', '[28000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Login failed for user \'DESKTOP-EJ33BVS\\mohib\'. (18456) (SQLDriverConnect); [28000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Cannot open database "psppgp" requested by the login. The login failed. (4060); [28000] [Microsoft][ODBC Driver 17 for SQL Server]Invalid connection string attribute (0); [28000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Login failed for user \'DESKTOP-EJ33BVS\\mohib\'. (18456); [28000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Cannot open database "psppgp" requested by the login. The login failed. (4060); [28000] [Microsoft][ODBC Driver 17 for SQL Server]Invalid connection string attribute (0)')
+[16:07:18] Database connection failed for psppgp
+[16:07:27] Successfully connected to database gypsppgp on server DESKTOP-EJ33BVS\SQLEXPRESS
+[16:07:27] Database connection info saved: {'server': 'DESKTOP-EJ33BVS\\SQLEXPRESS', 'database': 'gypsppgp', 'driver': 'ODBC Driver 17 for SQL Server', 'data_folder_path': 'C:\\Program Files\\Microsoft SQL Server\\MSSQL16.SQLEXPRESS\\MSSQL\\DATA'}
+[16:07:27] Connecting to database gypsppgp on server DESKTOP-EJ33BVS\SQLEXPRESS using driver ODBC Driver 17 for SQL Server
+[16:07:28] Database import successful with 10000 records.
+[16:07:28] Database import process completed for gypsppgp
+[16:07:30] User navigated to Calculate Biomass page
+[16:07:34] Biomass results table created and displayed
+[16:07:47] Generated default export filename: Output_Biomass_Results_20260122_160747.txt
+[16:07:47] Export file dialog opened
+[16:07:53] Exporting data with headers: ['plot', 'year', 'species', 'tree_number', 'dbh', 'height', 'Wood (KG)', 'Bark (KG)', 'Foliage (KG)', 'Branch (KG)', 'Crown (KG)', 'Stem (KG)', 'Total (KG)']
+[16:07:53] Exported 10000 records to C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\testing_dataset\Client_Testing_Files\Output_Biomass_Results_20260122_160747.txt
+[16:07:53] Data exported successfully to C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\testing_dataset\Client_Testing_Files\Output_Biomass_Results_20260122_160747.txt
+[16:08:00] Write to database operation success: True
+[16:08:00] Displayed success dialog for writing to database
+[16:08:05] Biomass chart displayed
+[16:08:05] Biomass chart displayed
+[16:08:17] Biomass results table created and displayed
+[16:08:40] User navigated to Create Species page
+[17:02:18] User navigated to Modify Species page
+[17:02:20] User navigated to Settings page
+[17:02:22] Loaded species data from treeparameters.json
+[17:02:26] Loaded species data from treeparameters.json
+[17:03:13] User navigated to Select Data page
+[17:03:14] User navigated to Settings page
+[17:03:15] User navigated to Modify Species page
+[17:03:15] User navigated to Settings page

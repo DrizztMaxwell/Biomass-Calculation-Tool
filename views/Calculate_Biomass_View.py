@@ -16,6 +16,7 @@ from data.components_data import COMPONENTS_DATA
 from widgets.Calculate_Biomass_Button import Calculate_Biomass_Button
 from widgets.Bar_Chart_Widget import Bar_Chart_Widget
 from widgets.Custom_Alert_Dialog import Custom_Alert_Dialog 
+from widgets.LogFileTxt import logger
 
 class Calculate_Biomass_View:
     def __init__(self, controller, page: ft.Page, selected_file_path):
@@ -149,10 +150,14 @@ class Calculate_Biomass_View:
             # Extract filename from the path
             filename_without_ext = os.path.splitext(os.path.basename(self.selected_file_path))[0]
             print(f"Filename without extension: {filename_without_ext}")
+            logger.write(f"Generated export filename based on selected file: Output_{filename_without_ext}_{date_prefix}_{time_prefix}.txt")
+            
             return f"Output_{filename_without_ext}_{date_prefix}_{time_prefix}.txt"
+        
         else:
             # Use a default name if no file was selected
             print("No file selected, using default name")
+            logger.write(f"Generated default export filename: Output_Biomass_Results_{date_prefix}_{time_prefix}.txt")
             return f"Output_Biomass_Results_{date_prefix}_{time_prefix}.txt"
     
     def _export_to_txt(self, data, file_path: str):
@@ -169,6 +174,7 @@ class Calculate_Biomass_View:
                     headers = list(data[0].keys())
                     print(data)
                     print(f"Headers: {headers}")
+                    logger.write(f"Exporting data with headers: {headers}")
                     # Write header row
                     header_line = "\t".join(headers)
                     f.write(header_line + "\n")
@@ -192,11 +198,12 @@ class Calculate_Biomass_View:
                         
                         f.write("\t".join(row_values) + "\n")
                 
-               
+                    logger.write(f"Exported {len(data)} records to {file_path}")
             
             return True
         except Exception as e:
             print(f"Export error: {str(e)}")
+            logger.write(f"[Error] - Failed to export data to {file_path}: {str(e)}")
             return False
     
     def _on_file_save_result(self, e: ft.FilePickerResultEvent):
@@ -213,18 +220,23 @@ class Calculate_Biomass_View:
                 
                 if success:
                     print(f"Data exported successfully to {e.path}")
+                    logger.write(f"Data exported successfully to {e.path}") 
                 else:
                     print(f"Failed to export data to {e.path}")
+                    logger.write(f"[Error] - Failed to export data to {e.path}: {str(ex)}")
                     
             except Exception as ex:
                 print(f"Error loading data: {str(ex)}")
+                logger.write(f"[Error] - Failed to load biomass results for export: {str(ex)}")
         else:
             # User cancelled the save dialog
             print("Export cancelled by user")
+            logger.write("Export cancelled by user")
         
     async def on_calculate_biomass_click(self, e):
         """Handle calculate biomass button click - delegate to controller."""
         print("Calculate biomass button clicked")
+        logger.write("Calculate biomass button clicked")
         loading_spinner = Loading_Spinner_Widget(self.page)
         loading_spinner.show_dialog()
                
@@ -320,6 +332,7 @@ class Calculate_Biomass_View:
       
         
         self._show_biomass_chart(species_data)
+        logger.write("Biomass chart displayed")
         await loading_spinner.simulate_progressive_loading(1.0, 1.0, 0.1, "Completed...")
         loading_spinner.hide()
 
@@ -332,7 +345,7 @@ class Calculate_Biomass_View:
         await loading_spinner.simulate_progressive_loading(0.0, 0.5, 0.1, "Writing to database...")
 
         success = self.controller.write_results_to_database()
-
+        logger.write(f"Write to database operation success: {success}")
         await loading_spinner.simulate_progressive_loading(1.0, 1.0, 0.1, "Completed...")
         loading_spinner.hide()
 
@@ -347,6 +360,7 @@ class Calculate_Biomass_View:
                 message="Biomass results have been successfully written to the database in a table called dbo.tCalcBiomassOutput.",
                 button_text="OK",
             ).show()
+            logger.write("Displayed success dialog for writing to database")
             self.page.update()
         else:
             print("Failed to write results to database")
@@ -360,12 +374,13 @@ class Calculate_Biomass_View:
                 button_text="OK",
             ).show()
             self.page.update()
-
+            logger.write("Displayed error dialog for writing to database")
         
         
     def _show_biomass_chart(self, species_data):
         """Show biomass chart - delegate to controller."""
         chart = Bar_Chart_Widget(self.page, species_data=species_data).build()
+        logger.write("Biomass chart displayed")
         self.page.overlay.append(chart)
         self.page.update()
         
@@ -532,7 +547,7 @@ class Calculate_Biomass_View:
                 offset=ft.Offset(0, 3),
             ),
         )
-
+        logger.write("Biomass results table created and displayed")
         return table_container
     def _on_export_click(self, e):
         """Handle export button click - open file save dialog."""
@@ -546,6 +561,7 @@ class Calculate_Biomass_View:
             file_type=ft.FilePickerFileType.CUSTOM,
             allowed_extensions=["txt"]
         )
+        logger.write("Export file dialog opened")
 
 # Initialize the file picker event handler
     def initialize_view(controller, page: ft.Page):

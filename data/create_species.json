@@ -1,11 +1,11 @@
 [
     {
-        "SpecCommon": "sdaads",
+        "SpecCommon": "dasd",
         "Origin": "Natural Stand",
         "EquationType": "DBH-based",
-        "bwood1": 0.0,
-        "bwood2": 0.0,
         "bbark1": 0.0,
-        "bbark2": 0.0
+        "bbark2": 0.0,
+        "bbranches1": 0.0,
+        "bbranches2": 0.0
     }
 ]

@@ -11,6 +11,7 @@ from data.components_data_2 import COMPONENTS_DATA_2
 from controller.Create_Species_Controller import Create_Species_Controller
 from widgets.Select_Components_Widget import Select_Components_Widget
 from widgets.Create_Title_And_Description_Widget import Create_Title_And_Description_Widget
+from widgets.LogFileTxt import logger
 
 class Create_Species_View:
     """The main application form, responsible for assembling the UI controls."""
@@ -575,11 +576,13 @@ class Create_Species_View:
    
         does_species_code_exist_in_tree_parameters = self._does_species_code_exist_within_dataset((self.species_textfield.value), "data/treeparameters.json")
         if does_species_code_exist_in_tree_parameters:
+            logger.write(f"Species code {self.species_textfield.value} already exists in treeparameters.json")
             Custom_Alert_Dialog(self.page, title_icon=ft.Icons.ERROR_OUTLINE, title_color=ft.Colors.RED_700, title_icon_color=ft.Colors.RED, title="Error", message="Species Code already exists in the Lamberts et al. (2005) dataset.", solution="Please use a different code.").show()
             return
         
         does_species_code_exist_in_created_species = self._does_species_code_exist_within_dataset((self.species_textfield.value), "data/create_species.json")
         if does_species_code_exist_in_created_species:
+            logger.write(f"Species code {self.species_textfield.value} already exists in create_species.json")
             Custom_Alert_Dialog(self.page, title_icon=ft.Icons.ERROR_OUTLINE, title_color=ft.Colors.RED_700, title_icon_color=ft.Colors.RED, title="Error", message="User has already created a species with this code.", solution="Please use a different code.").show()
             return
         
@@ -595,28 +598,29 @@ class Create_Species_View:
             if species_name_or_code.isdigit():
                 species_name_or_code = int(species_name_or_code)
                 if 'SpeciesCode' in data_set.columns:
+                    logger.write(f"Checking if species code {species_name_or_code} exists in {json_file_path}")
                     return species_name_or_code in data_set['SpeciesCode'].values
             else:
                 species_name_or_code = str(species_name_or_code)
                 if 'SpecCommon' in data_set.columns:
+                    logger.write(f"Checking if species name {species_name_or_code} exists in {json_file_path}")
                     #lowercase comparison
                     return species_name_or_code.lower() in data_set['SpecCommon'].str.lower().values
             return False
           
         except Exception as e:
             print(f"Error reading JSON file: {e}")
+            logger.write(f"Error reading JSON file {json_file_path}: {e}")  
             return False
    
     def _proceed_with_creation(self, e):
         """Proceed with species creation"""
         
         components = self._get_current_selected_components()
-        
+        logger.write(f"Selected components for creation: {components}")
         if self.current_equation_type == "DBH-based":
-            
+            logger.write("Current equation type is DBH-based")
             data_to_be_inserted_into_json = self._collect_parameter_data(components)
-            print("Data to be inserted into JSON:")
-            print(data_to_be_inserted_into_json)
         else:
             data_to_be_inserted_into_json = self._collect_parameter_data(components)
             print("Data to be inserted into JSON:")
@@ -638,7 +642,7 @@ class Create_Species_View:
             json.dump(created_species_json, f, indent=4)
             print("Species data inserted into JSON file successfully.")
             display_alert = Custom_Alert_Dialog(self.page, title_icon=ft.Icons.CHECK_CIRCLE_OUTLINED, title_color=ft.Colors.GREEN_700, title_icon_color=ft.Colors.GREEN, title="Success",  message="Species created successfully!").show()
-
+            logger.write(f"Species {self.species_textfield.value} created successfully and added to create_species.json")
     def _get_equation_prefix(self, equation_type):
         return "bh" if equation_type == "DBH + Height-based" else "b"
     def _collect_parameter_data(self, components):

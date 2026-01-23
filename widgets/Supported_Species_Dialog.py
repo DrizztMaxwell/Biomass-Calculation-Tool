@@ -1,14 +1,18 @@
 import flet as ft
 import json
+from widgets.LogFileTxt import logger
 
 class Supported_Species_Dialog:
     def __init__(self, page: ft.Page):
         self.page = page
         try:
             with open("data/treeparameters.json", "r") as f:
+                
                 self.species_data = json.load(f)
+                logger.write("Loaded species data from treeparameters.json")
         except Exception:
             self.species_data = [{"SpeciesCode": "1", "SpecCommon": "alpine fir"}, {"SpeciesCode": "2", "SpecCommon": "lodgepole pine"}]
+            logger.write("[Error] - Failed to load species data from treeparameters.json, using default data")
 
     def create_species_tile(self, code, name):
         """Creates a clean, modern tile for each species with Title Case formatting."""
@@ -22,18 +26,18 @@ class Supported_Species_Dialog:
                     formatted_name, 
                     weight=ft.FontWeight.W_600, # Slightly heavier for better readability
                     size=16,
-                    color=ft.Colors.BLUE_GREY_900
+                    color=ft.Colors.PRIMARY
                 ),
                 subtitle=ft.Text(
                     f"Code: {code if code else 'N/A'}", 
                     size=12, 
-                    color=ft.Colors.BLUE_GREY_400
+                    color=ft.Colors.PRIMARY
                 ),
                 dense=True,
             ),
             margin=ft.margin.only(bottom=8),
             border_radius=12,
-            bgcolor=ft.Colors.with_opacity(0.05, ft.Colors.ON_SURFACE_VARIANT),
+            bgcolor=ft.Colors.SECONDARY,
             border=ft.border.all(1, ft.Colors.with_opacity(0.1, ft.Colors.OUTLINE)),
         )
 
@@ -104,6 +108,7 @@ class Supported_Species_Dialog:
                             expand=True,
                             padding=ft.padding.only(left=20, right=20, bottom=10),
                             content=ft.ListView(
+                                
                                 controls=[list_container],
                                 spacing=10,
                                 padding=10,

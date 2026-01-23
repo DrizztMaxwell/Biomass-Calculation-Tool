@@ -3,6 +3,7 @@ import flet as ft
 from widgets.TitleTextWidget import TitleTextWidget
 from widgets.Custom_Alert_Dialog import Custom_Alert_Dialog
 from widgets.DescriptionText import DescriptionText
+from widgets.LogFileTxt import logger
 
 class Modify_Species_View:
     """CRUD interface for managing species in created_species.json"""
@@ -202,6 +203,7 @@ class Modify_Species_View:
         try:
             with open("data/create_species.json", "r") as f:
                 self.species_data = json.load(f)
+                logger.write("Species data loaded successfully.")
         except (FileNotFoundError, json.JSONDecodeError):
             self.species_data = []
 
@@ -210,15 +212,18 @@ class Modify_Species_View:
         try:
             with open("data/create_species.json", "w") as f:
                 json.dump(self.species_data, f, indent=4)
+            
+            logger.write("Species data saved successfully.")    
             return True
         except Exception as e:
-            print(f"Error saving data: {e}")
+            logger.write(f"Error saving data: {e}")
             return False
 
     def filter_species(self, e):
         """Filter species based on search text and reset to first page"""
         self.current_page = 1
         self.refresh_data_table()
+        
 
     def get_paginated_species(self):
         """Get species for current page"""
@@ -487,6 +492,7 @@ class Modify_Species_View:
         max_dialog_height = min(650, self.page.height * 0.85)
         
         def close_dialog(e):
+            logger.write(f"Species details dialog closed for species: {species.get('SpeciesCode', '')}")
             dialog.open = False
             self.page.update()
 
@@ -741,6 +747,7 @@ class Modify_Species_View:
         self.page.dialog = dialog
         dialog.open = True
         self.page.open(dialog)
+        logger.write(f"Viewing species: {species.get('SpeciesCode', '')}")
         self.page.update()
 
     def edit_species_dialog(self, index):
@@ -985,12 +992,14 @@ class Modify_Species_View:
                                 text_field.border_color = ft.Colors.RED_500
                                 text_field.update()
                                 has_errors = True
+                                logger.write(f"Validation error for {param_key}: {value} is out of range")
                                 error_messages.append(f"{param_key}: {value} is not between -5 and 5")
                             else:
                                 # Clear any previous error
                                 text_field.error_text = None
                                 text_field.border_color = ft.Colors.GREY_200
                                 text_field.update()
+                                logger.write(f"Parameter {param_key} updated to {value}")
                                 self.species_data[self.current_species_index][param_key] = value
                         except ValueError:
                             # Mark field with error
@@ -998,6 +1007,7 @@ class Modify_Species_View:
                             text_field.border_color = ft.Colors.RED_500
                             text_field.update()
                             has_errors = True
+                            logger.write(f"Validation error for {param_key}: invalid number format")
                             error_messages.append(f"{param_key}: Invalid number format")
                     else:
                         # Handle empty value - show error
@@ -1005,15 +1015,18 @@ class Modify_Species_View:
                         text_field.border_color = ft.Colors.RED_500
                         text_field.update()
                         has_errors = True
+                        logger.write(f"Validation error for {param_key}: field cannot be empty")
                         error_messages.append(f"{param_key}: Field cannot be empty")
                 
                 # If there are errors, show them and don't save
                 if has_errors:
                     error_message = "Please fix the following errors:\n" + "\n".join(f"• {msg}" for msg in error_messages)
+                    self.show_error_dialog(error_message)
                     return
                 
                 # All validations passed, save the data
                 if self.save_species_data():
+                    
                     dialog.open = False
                     self.page.update()
                     Custom_Alert_Dialog(
@@ -1025,11 +1038,14 @@ class Modify_Species_View:
                         message="Species updated successfully!", 
                         button_text="OK"
                     ).show()
+                    logger.write(f"Species '{species.get('SpeciesCode', '')}' updated successfully.")
                     self.refresh_data_table()
                 else:
                     self.show_error_dialog("Failed to save changes.")
+                    logger.write(f"Failed to save changes for species '{species.get('SpeciesCode', '')}'.")
             except Exception as ex:
                 self.show_error_dialog(f"Error saving species: {ex}")
+                logger.write(f"Exception while saving species '{species.get('SpeciesCode', '')}': {ex}")
                 import traceback
                 traceback.print_exc()
         
@@ -1113,6 +1129,7 @@ class Modify_Species_View:
         self.page.dialog = dialog
         dialog.open = True
         self.page.open(dialog)
+        logger.write(f"Editing species: {species.get('SpeciesCode', '')}")
         self.page.update()
     def delete_species_confirmation(self, index):
         """Show professional confirmation dialog for deletion, dynamically sized to content."""
@@ -1142,6 +1159,7 @@ class Modify_Species_View:
         
         if actual_index is None:
             self.show_error_dialog(f"Error: Species '{display_value}' not found in master data.")
+            logger.write(f"Error: Species '{display_value}' not found in master data.")
             return
         
         # Calculate dialog width
@@ -1153,6 +1171,7 @@ class Modify_Species_View:
             self.page.update()
 
         def confirm_delete(e):
+            logger.write(f"Confirming deletion of species: {species.get('SpeciesCode', '')}")
             close_dialog(e)
             
             try:
@@ -1171,6 +1190,7 @@ class Modify_Species_View:
 
                 if current_actual_index is None:
                     self.show_error_dialog(f"Species '{display_value}' not found just before deletion.")
+                    logger.write(f"Error: Species '{display_value}' not found just before deletion.")
                     return
 
                 deleted_species = self.species_data.pop(current_actual_index)
@@ -1185,16 +1205,17 @@ class Modify_Species_View:
                         message=f"Species '{display_value}' deleted successfully!", 
                         button_text="OK"
                     ).show()
-                
+                    logger.write(f"Species '{display_value}' deleted successfully.")
                     self.current_page = 1
                     self.refresh_data_table()
                 else:
                     # Rollback
                     self.species_data.insert(current_actual_index, deleted_species) 
                     self.show_error_dialog("Failed to save data after deleting species. Deletion canceled.")
-            
+                    logger.write(f"Failed to save data after deleting species '{display_value}'. Deletion canceled.")
             except Exception as e:
                 self.show_error_dialog(f"Error deleting species: {e}")
+                logger.write(f"Exception while deleting species '{display_value}': {e}")
             
             self.page.update()
 
@@ -1359,6 +1380,7 @@ class Modify_Species_View:
         self.page.dialog = dialog
         dialog.open = True
         self.page.open(dialog)
+        logger.write(f"Confirming deletion of species: {species.get('SpeciesCode', '')}")
         self.page.update()
 
     def show_success_dialog(self, title, message):
@@ -1393,7 +1415,7 @@ class Modify_Species_View:
         self.page.dialog = dialog
         dialog.open = True
         self.page.open(dialog)
-
+        logger.write(f"Error dialog shown with message: {message}")
     def show_error_dialog(self, message):
         """Show a professional error dialog"""
         dialog = ft.AlertDialog(
@@ -1498,6 +1520,7 @@ class Modify_Species_View:
     def close_dialog(self, dialog):
         """Close dialog"""
         dialog.open = False
+        logger.write("Dialog closed.")
         self.page.update()
 
     def show_dialog(self, title: str, message: str, color: ft.Colors = None):

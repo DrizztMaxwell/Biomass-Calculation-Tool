@@ -10,6 +10,7 @@ from widgets.TitleTextWidget import TitleTextWidget
 from widgets.Display_Error_Dialog import Display_Error_Dialog
 from widgets.Loading_Spinner_Widget import Loading_Spinner_Widget as Loading
 from widgets.Custom_Alert_Dialog import Custom_Alert_Dialog
+from widgets.LogFileTxt import logger
 
 class Select_Data_View:
     def __init__(self, page: ft.Page, controller):

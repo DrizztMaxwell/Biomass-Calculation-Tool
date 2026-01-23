@@ -5,6 +5,7 @@ Handles user interactions and coordinates between Model and View.
 import flet as ft
 from views.import_dataset_view import get_import_dataset_view
 from views.Select_Data_View import ImportDataView
+from widgets.LogFileTxt import logger
 # from model import AppState
 
 class ImportDataController:
@@ -14,7 +15,6 @@ class ImportDataController:
     
     def __init__(self):
         self.view = ImportDataView(self)
-        # self.state = AppState()
 
     def handle_import_click(self, e, title):
         """

@@ -1,3 +1,4 @@
+from widgets.LogFileTxt import logger
 import flet as ft
 
 class About_Dialog_View():
@@ -13,6 +14,7 @@ class About_Dialog_View():
         self.page.overlay.append(self.container)
         self.is_visible = True
         self._update_container_size()  # Update size based on current screen
+        logger.write("Displayed About Dialog")
         self.page.update()
         
     def close(self, e=None):
@@ -20,6 +22,7 @@ class About_Dialog_View():
         self.page.overlay.remove(self.overlay)
         self.page.overlay.remove(self.container)
         self.is_visible = False
+        logger.write("Closed About Dialog")
         self.page.update()
     
     def _update_container_size(self):

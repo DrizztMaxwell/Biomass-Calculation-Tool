@@ -1,0 +1,14 @@
+[16:01:15] --- Log Session Started ---
+[16:01:17] User agreed to EULA - proceeding with application
+[16:01:17] User navigated to Select Data page
+[16:02:23] Error connecting to database: ('28000', '[28000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Login failed for user \'DESKTOP-EJ33BVS\\mohib\'. (18456) (SQLDriverConnect); [28000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Cannot open database "DATA" requested by the login. The login failed. (4060); [28000] [Microsoft][ODBC Driver 17 for SQL Server]Invalid connection string attribute (0); [28000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Login failed for user \'DESKTOP-EJ33BVS\\mohib\'. (18456); [28000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Cannot open database "DATA" requested by the login. The login failed. (4060); [28000] [Microsoft][ODBC Driver 17 for SQL Server]Invalid connection string attribute (0)')
+[16:02:23] Database connection failed for DATA
+[16:02:37] Successfully connected to database gypsppgp on server DESKTOP-EJ33BVS\SQLEXPRESS
+[16:02:37] Database connection info saved: {'server': 'DESKTOP-EJ33BVS\\SQLEXPRESS', 'database': 'gypsppgp', 'driver': 'ODBC Driver 17 for SQL Server', 'data_folder_path': 'C:\\Program Files\\Microsoft SQL Server\\MSSQL16.SQLEXPRESS\\MSSQL\\DATA'}
+[16:02:37] Connecting to database gypsppgp on server DESKTOP-EJ33BVS\SQLEXPRESS using driver ODBC Driver 17 for SQL Server
+[16:02:39] Database import successful with 10000 records.
+[16:02:39] Database import process completed for gypsppgp
+[16:02:45] User navigated to Calculate Biomass page
+[16:02:47] User navigated to Select Data page
+[16:02:48] Import text file dialog opened
+[16:02:49] File selection cancelled by user

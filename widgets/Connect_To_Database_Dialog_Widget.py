@@ -10,7 +10,7 @@ from data.database_config import get_mssql_data_path
 from widgets.Display_Error_Dialog import Display_Error_Dialog
 from widgets.Custom_Alert_Dialog import Custom_Alert_Dialog
 from widgets.Loading_Spinner_Widget import Loading_Spinner_Widget as Loading
-
+from widgets.LogFileTxt import logger
 
 class Connect_To_Database_Dialog_Widget:
     def __init__(self, page: ft.Page, detected_servers: list[str] | None = None):
@@ -30,6 +30,7 @@ class Connect_To_Database_Dialog_Widget:
         self.load_connection_history()
         self._build_ui()
         self._prefill_database_name_from_path()
+        logger.write("Database connection dialog opened")
 
     # -------------------------
     # UI BUILDING
@@ -93,6 +94,7 @@ class Connect_To_Database_Dialog_Widget:
             db_name = os.path.basename(mssql_path)
             self.db_input.value = db_name
             self.db_input.update()
+            logger.write(f"Prefilled database name from MSSQL data path: {db_name}")
 
     # -------------------------
     # HISTORY MANAGEMENT
@@ -102,12 +104,15 @@ class Connect_To_Database_Dialog_Widget:
             try:
                 with open(self.history_file, "r") as f:
                     self.connection_history = json.load(f)
+                    logger.write("Connection history loaded")
             except Exception:
                 self.connection_history = []
+                logger.write("[Error] - Failed to load connection history, starting fresh")
 
     def save_connection_history(self):
         with open(self.history_file, "w") as f:
             json.dump(self.connection_history, f, indent=2)
+            logger.write("Connection history saved")
 
     def add_to_history(self, server: str, database: str):
         now = datetime.now().strftime("%Y-%m-%d %H:%M")
@@ -122,6 +127,7 @@ class Connect_To_Database_Dialog_Widget:
         })
         self.connection_history = self.connection_history[:self.max_history_items]
         self.save_connection_history()
+        logger.write(f"Added connection to history: server={server}, database={database}")
 
     def _initialize_dropdown_options(self):
         self.history_dropdown.options.clear()
@@ -145,12 +151,14 @@ class Connect_To_Database_Dialog_Widget:
             self.db_input.value = conn["database"]
             self.server_input.update()
             self.db_input.update()
+            logger.write(f"Selected connection from history: server={conn['server']}, database={conn['database']}")
 
     def clear_history(self, e):
         self.connection_history.clear()
         self.save_connection_history()
         self._initialize_dropdown_options()
         self.history_dropdown.update()
+        logger.write("Connection history cleared")
 
     # -------------------------
     # DIALOG CONTROL
@@ -173,7 +181,10 @@ class Connect_To_Database_Dialog_Widget:
         server = self.server_input.value.strip()
         database = self.db_input.value.strip()
 
+        logger.write(f"Attempting to connect to database {database} on server {server}")
+
         if not server or not database:
+            logger.write("Missing information: Server and database are required.")
             Display_Error_Dialog(
                 self.page,
                 "Missing Information",
@@ -184,7 +195,8 @@ class Connect_To_Database_Dialog_Widget:
         # Call controller callback
         if self.on_connect_callback:
             await self.on_connect_callback(server, database)
-
+            logger.write(f"Connection attempt to database {database} on server {server} completed")
         # Add to history and close dialog
         self.add_to_history(server, database)
         self.handle_close(e)
+        logger.write(f"Connection dialog closed for database {database} on server {server}")

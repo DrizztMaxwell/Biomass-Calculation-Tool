@@ -1,0 +1,5 @@
+[17:25:43] --- Log Session Started ---
+[17:25:45] User agreed to EULA - proceeding with application
+[17:25:45] User navigated to Select Data page
+[17:25:47] Displayed About Dialog
+[17:25:49] Closed About Dialog

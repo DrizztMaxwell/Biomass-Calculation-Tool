@@ -23,6 +23,7 @@ from data.database_config import get_sql_server_odbc_driver, get_mssql_data_path
 import flet as ft
 from widgets.Loading_Spinner_Widget import Loading_Spinner_Widget
 import json
+from widgets.LogFileTxt import logger
 import pyodbc
 import os
 import uuid
@@ -57,6 +58,7 @@ class Select_Data_Controller:
             if not e.files:
                 print("File selection cancelled")
                 self.selected_file_path = None
+                logger.write("File selection cancelled by user")
                 self.view.update_file_status("No file selected")
                 self.data_imported_callback(False)
                 
@@ -67,6 +69,7 @@ class Select_Data_Controller:
             self.selected_file_path = e.files[0].path
             self.view.update_file_status(f"Processing: {self.selected_file_path}")
             print(f"Selected file: {self.selected_file_path}")
+            logger.write(f"Selected file for import: {self.selected_file_path}")
 
             spinner = Loading_Spinner_Widget(self.page)
             spinner.show_dialog()
@@ -76,6 +79,7 @@ class Select_Data_Controller:
             with concurrent.futures.ThreadPoolExecutor(max_workers=2) as pool:
                 dataframe_future = pool.submit(convert_text_file_into_dataframe, self.selected_file_path)
                 dataframe = dataframe_future.result()
+                
                 if dataframe is None:
                     raise ValueError("Text file may be empty or invalid.")
 
@@ -102,6 +106,7 @@ class Select_Data_Controller:
 
                 # Save processed data to DataManager
                 records = json.loads(original_dataframe.to_json(orient='records'))
+                
                 dm = DataManager()
                 dm.set_all(records)
 
@@ -114,11 +119,12 @@ class Select_Data_Controller:
                 with open("data/selected_database.json", "w") as f:
                     f.write("{}")  # Clear DB info
                 self.data_imported_callback(True)
-
+            logger.write(f"Text file imported successfully with {len(records)} records and {error_count} errors.")
             self.page.update()
 
         except Exception as e:
             print("Error in text file import:", e)
+            logger.write(f"Error importing text file: {str(e)}")
             self.page.open(Display_Error_Dialog(self.page, description=str(e)).show())
             self.is_data_imported = False
             if self.data_imported_callback:
@@ -128,6 +134,7 @@ class Select_Data_Controller:
     def on_import_text_file_click(self, e):
         """Trigger file picker"""
         print("Import text file clicked")
+        logger.write("Import text file dialog opened")
         self.file_picker.pick_files(
             allow_multiple=False,
             allowed_extensions=["txt"],
@@ -151,6 +158,7 @@ class Select_Data_Controller:
         try:
             loop = asyncio.get_running_loop()
             asyncio.create_task(self._connect_and_import_database(server, database))
+            
         except RuntimeError:
             # No loop running, start a temporary loop
             asyncio.run(self._connect_and_import_database(server, database))
@@ -163,10 +171,14 @@ class Select_Data_Controller:
         loop = asyncio.get_running_loop()
         try:
             success = await loop.run_in_executor(None, self._connect_and_save_db_info, server, database)
+            
             if success:
+                
                 self.view.update_file_status(f"Connected to database: {database}")
                 await loop.run_in_executor(None, self.import_from_database, database, None, server)
+                logger.write(f"Database import process completed for {database}")
             else:
+                logger.write(f"Database connection failed for {database}")
                 self.view.update_file_status("Database connection failed.")
                 if self.data_imported_callback:
                     self.data_imported_callback(False)
@@ -190,7 +202,7 @@ class Select_Data_Controller:
             # Test connection
             with pyodbc.connect(conn_str) as conn:
                 conn.cursor().execute("SELECT 1")
-
+            logger.write(f"Successfully connected to database {database} on server {server}")
             data_folder_path = get_mssql_data_path()
             db_config = {
                 "server": server,
@@ -204,11 +216,12 @@ class Select_Data_Controller:
 
             # Save to history
             self.view._add_to_history(server, database)
-
+            logger.write(f"Database connection info saved: {db_config}")
             print(f"Database connection info saved: {db_config}")
             return True
         except Exception as e:
             print("Error connecting to database:", e)
+            logger.write(f"Error connecting to database: {str(e)}")
             if e.args:
                 if e.args[0] == '08001':
                     error_dialog = Display_Error_Dialog(
@@ -238,7 +251,8 @@ class Select_Data_Controller:
                 server = db_info["server"]
                 db_name = db_info["database"]
                 driver = db_info["driver"]
-
+            
+            logger.write(f"Connecting to database {db_name} on server {server} using driver {driver}")
             conn = pyodbc.connect(
                 f"Driver={{{driver}}};"
                 f"Server={server};"
@@ -349,12 +363,14 @@ class Select_Data_Controller:
                 message=f"Data successfully imported from database: {db_name}",
                 button_text="OK",
             ).show()
+            logger.write(f"Database import successful with {len(rows_safe)} records.")
             self.page.update()
             
             return True
 
         except Exception as e:
             print("Error importing from database:", e.args[0])
+            logger.write(f"Error importing from database: {str(e)}")
             if e.args and e.args[0] == '08001':
                 error_dialog = Display_Error_Dialog(
                     self.page,
@@ -391,6 +407,7 @@ class Select_Data_Controller:
                 self.page.open(Display_Error_Dialog(self.page, description=str(e)).show())
             
             self.view.update_file_status("Failed to import data from database.")
+            logger.write(f"Failed to import data from database: {str(e)}")
             self.is_data_imported = False
             if self.data_imported_callback:
                 self.data_imported_callback(False)
@@ -404,12 +421,14 @@ class Select_Data_Controller:
     def on_import_from_database_click(self, e):
         """Trigger database dialog in view"""
         self.view._open_database_dialog(e)
+        logger.write("Database dialog opened")
 
     # -------------------------
     # DATABASE NAME
     # -------------------------
     def set_database_name(self, db_name: str):
         self.database_name = db_name
+        
 
     def get_database_name(self) -> str:
         return self.database_name
