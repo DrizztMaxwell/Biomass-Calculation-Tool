@@ -1,0 +1,6 @@
+[19:29:21] --- Log Session Started ---
+[19:29:22] User agreed to EULA - proceeding with application
+[19:29:22] User navigated to Select Data page
+[19:29:23] User navigated to Settings page
+[19:29:24] Theme toggled to: ThemeMode.DARK
+[19:29:25] User navigated to Create Species page

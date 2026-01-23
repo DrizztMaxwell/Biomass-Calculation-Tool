@@ -55,7 +55,7 @@ class Create_Species_View:
         
         species_container = ft.Container(
             content=ft.Column([
-                Create_Label_With_Icon(label_text="Species (Code or Name)", icon_src="./assets/images/key.png"),
+                Create_Label_With_Icon(self.page, label_text="Species (Code or Name)", icon_src="./assets/images/key.png"),
                 self.species_textfield
             ], width=FORM_ELEMENT_WIDTH),
             padding=ft.padding.only(top=10),
@@ -78,7 +78,7 @@ class Create_Species_View:
         
         origin_container = ft.Container(
             content=ft.Column([
-                Create_Label_With_Icon(label_text="Select Origin", icon_src="./assets/images/origin.png"),
+                Create_Label_With_Icon(self.page, label_text="Select Origin", icon_src="./assets/images/origin.png"),
                 self.origin_dropdown
             ], width=FORM_ELEMENT_WIDTH),
             padding=ft.padding.only(top=10),
@@ -101,7 +101,7 @@ class Create_Species_View:
         
         equation_container = ft.Container(
             content=ft.Column([
-                Create_Label_With_Icon(label_text="Equation Type", icon_src="./assets/images/calculating.png"),
+                Create_Label_With_Icon(self.page, label_text="Equation Type", icon_src="./assets/images/calculating.png"),
                 self.equation_type_dropdown
             ], width=FORM_ELEMENT_WIDTH),
             padding=ft.padding.only(top=10),
@@ -724,8 +724,8 @@ class Create_Species_View:
                             components_card_row=ft.Row(),
                             selected_card_component=self.selected_components_text,
                             components_data=COMPONENTS_DATA_2, # Pass the data,
-                            displayButton=False,
-                            displayShadow=False,
+                            display_button=False,
+                            display_shadow=False,
                             on_selection_change=self.on_component_selection_change,  # Add callback
                             is_alternate_card=True
                         ).get_widget(),

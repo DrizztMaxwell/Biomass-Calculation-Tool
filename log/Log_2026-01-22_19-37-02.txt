@@ -1,0 +1,5 @@
+[19:37:02] --- Log Session Started ---
+[19:37:04] User agreed to EULA - proceeding with application
+[19:37:04] User navigated to Select Data page
+[19:37:06] User navigated to Modify Species page
+[19:37:06] Species data loaded successfully.

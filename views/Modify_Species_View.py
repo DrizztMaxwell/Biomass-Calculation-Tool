@@ -1600,7 +1600,6 @@ class Modify_Species_View:
             expand=True,
             bgcolor=ft.Colors.SECONDARY_CONTAINER,
             border_radius=15,
-            border=ft.border.all(0.5, ft.Colors.PRIMARY),
             shadow=ft.BoxShadow(
                 spread_radius=1,
                 blur_radius=10,

@@ -1,0 +1,20 @@
+[19:38:06] --- Log Session Started ---
+[19:38:08] User agreed to EULA - proceeding with application
+[19:38:08] User navigated to Select Data page
+[19:38:09] User navigated to Settings page
+[19:38:11] Theme toggled to: ThemeMode.DARK
+[19:38:12] Theme toggled to: ThemeMode.LIGHT
+[19:38:12] Theme toggled to: ThemeMode.DARK
+[19:38:13] User navigated to Modify Species page
+[19:38:13] Species data loaded successfully.
+[19:38:17] User navigated to Create Species page
+[19:38:19] User navigated to Modify Species page
+[19:38:19] Species data loaded successfully.
+[19:38:19] User navigated to Settings page
+[19:38:32] User navigated to Select Data page
+[19:38:36] User navigated to Settings page
+[19:38:36] User navigated to Modify Species page
+[19:38:36] Species data loaded successfully.
+[19:38:38] User navigated to Create Species page
+[19:38:40] User navigated to Select Data page
+[19:38:42] User navigated to Create Species page

@@ -1,0 +1,14 @@
+[19:15:48] --- Log Session Started ---
+[19:15:50] User agreed to EULA - proceeding with application
+[19:15:50] User navigated to Select Data page
+[19:15:52] Loaded species data from treeparameters.json
+[19:15:58] User navigated to Select Data page
+[19:16:01] Displayed About Dialog
+[19:16:04] Closed About Dialog
+[19:16:04] Loaded species data from treeparameters.json
+[19:16:07] User navigated to Create Species page
+[19:16:09] User navigated to Select Data page
+[19:16:11] User navigated to Settings page
+[19:16:12] Theme toggled to: ThemeMode.DARK
+[19:16:14] User navigated to Select Data page
+[19:16:15] User navigated to Create Species page

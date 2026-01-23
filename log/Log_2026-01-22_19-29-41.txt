@@ -1,0 +1,96 @@
+[19:29:41] --- Log Session Started ---
+[19:29:42] User agreed to EULA - proceeding with application
+[19:29:42] User navigated to Select Data page
+[19:29:43] User navigated to Settings page
+[19:29:45] Theme toggled to: ThemeMode.DARK
+[19:29:45] User navigated to Create Species page
+[19:29:51] User navigated to Modify Species page
+[19:29:51] Species data loaded successfully.
+[19:29:52] User navigated to Select Data page
+[19:29:57] Successfully connected to database gypsppgp on server DESKTOP-EJ33BVS\SQLEXPRESS
+[19:29:57] Database connection info saved: {'server': 'DESKTOP-EJ33BVS\\SQLEXPRESS', 'database': 'gypsppgp', 'driver': 'ODBC Driver 17 for SQL Server', 'data_folder_path': 'C:\\Program Files\\Microsoft SQL Server\\MSSQL16.SQLEXPRESS\\MSSQL\\DATA'}
+[19:29:57] Connecting to database gypsppgp on server DESKTOP-EJ33BVS\SQLEXPRESS using driver ODBC Driver 17 for SQL Server
+[19:29:58] Database import successful with 10000 records.
+[19:29:58] Database import process completed for gypsppgp
+[19:30:01] User navigated to Calculate Biomass page
+[19:30:08] Calculate biomass button clicked
+[19:30:11] Biomass results table created and displayed
+[19:30:16] Write to database operation success: True
+[19:30:16] Displayed success dialog for writing to database
+[19:30:18] Generated default export filename: Output_Biomass_Results_20260122_193018.txt
+[19:30:18] Export file dialog opened
+[19:30:19] Export cancelled by user
+[19:30:20] Biomass chart displayed
+[19:30:20] Biomass chart displayed
+[19:30:25] User navigated to Select Data page
+[19:30:28] Loaded species data from treeparameters.json
+[19:30:32] Displayed About Dialog
+[19:30:32] Closed About Dialog
+[19:30:34] User navigated to Calculate Biomass page
+[19:30:36] Calculate biomass button clicked
+[19:30:39] Biomass results table created and displayed
+[19:30:58] User navigated to Create Species page
+[19:31:03] User navigated to Modify Species page
+[19:31:03] Species data loaded successfully.
+[19:31:06] User navigated to Settings page
+[19:31:07] User navigated to Select Data page
+[19:31:37] User navigated to Settings page
+[19:31:38] User navigated to Modify Species page
+[19:31:38] Species data loaded successfully.
+[19:31:40] User navigated to Create Species page
+[19:31:41] User navigated to Calculate Biomass page
+[19:31:42] User navigated to Select Data page
+[19:31:43] User navigated to Calculate Biomass page
+[19:31:50] User navigated to Select Data page
+[19:32:05] User navigated to Settings page
+[19:32:07] Theme toggled to: ThemeMode.LIGHT
+[19:32:07] User navigated to Modify Species page
+[19:32:07] Species data loaded successfully.
+[19:32:10] User navigated to Create Species page
+[19:32:14] User navigated to Modify Species page
+[19:32:14] Species data loaded successfully.
+[19:32:15] User navigated to Settings page
+[19:32:16] User navigated to Modify Species page
+[19:32:16] Species data loaded successfully.
+[19:32:17] User navigated to Create Species page
+[19:32:21] User navigated to Modify Species page
+[19:32:21] Species data loaded successfully.
+[19:32:24] User navigated to Settings page
+[19:32:26] Theme toggled to: ThemeMode.DARK
+[19:32:27] Theme toggled to: ThemeMode.LIGHT
+[19:32:29] Displayed About Dialog
+[19:32:33] Closed About Dialog
+[19:32:34] Loaded species data from treeparameters.json
+[19:32:36] User navigated to Select Data page
+[19:32:39] User navigated to Calculate Biomass page
+[19:32:46] User navigated to Create Species page
+[19:33:06] User navigated to Calculate Biomass page
+[19:33:09] User navigated to Create Species page
+[19:33:20] User navigated to Settings page
+[19:33:21] Theme toggled to: ThemeMode.DARK
+[19:33:22] User navigated to Select Data page
+[19:33:26] Successfully connected to database gypsppgp on server DESKTOP-EJ33BVS\SQLEXPRESS
+[19:33:26] Database connection info saved: {'server': 'DESKTOP-EJ33BVS\\SQLEXPRESS', 'database': 'gypsppgp', 'driver': 'ODBC Driver 17 for SQL Server', 'data_folder_path': 'C:\\Program Files\\Microsoft SQL Server\\MSSQL16.SQLEXPRESS\\MSSQL\\DATA'}
+[19:33:26] Connecting to database gypsppgp on server DESKTOP-EJ33BVS\SQLEXPRESS using driver ODBC Driver 17 for SQL Server
+[19:33:28] Database import successful with 10000 records.
+[19:33:28] Database import process completed for gypsppgp
+[19:33:30] User navigated to Settings page
+[19:33:31] User navigated to Modify Species page
+[19:33:31] Species data loaded successfully.
+[19:33:34] User navigated to Create Species page
+[19:33:43] Checking if species name sddassda exists in data/treeparameters.json
+[19:33:43] Checking if species name sddassda exists in data/create_species.json
+[19:33:43] Selected components for creation: ['Wood', 'Bark', 'Branch', 'Foliage']
+[19:33:43] Current equation type is DBH-based
+[19:33:43] Species sddassda created successfully and added to create_species.json
+[19:33:54] Checking if species name sddassda2 exists in data/treeparameters.json
+[19:33:54] Checking if species name sddassda2 exists in data/create_species.json
+[19:33:54] Selected components for creation: ['Wood', 'Bark', 'Branch', 'Foliage']
+[19:33:54] Current equation type is DBH-based
+[19:33:54] Species sddassda2 created successfully and added to create_species.json
+[19:34:08] User navigated to Settings page
+[19:34:09] Theme toggled to: ThemeMode.LIGHT
+[19:34:10] User navigated to Select Data page
+[19:34:12] User navigated to Create Species page
+[19:34:13] User navigated to Modify Species page
+[19:34:13] Species data loaded successfully.
