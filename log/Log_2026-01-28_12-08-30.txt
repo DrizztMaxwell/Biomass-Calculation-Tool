@@ -1,0 +1,36 @@
+[12:08:30] --- Log Session Started ---
+[12:08:30] Splash screen displayed
+[12:08:32] DataManager cleared, proceeding to EULA
+[12:08:33] User agreed to EULA - proceeding with application
+[12:08:33] User navigated to Select Data page
+[12:08:35] Import text file dialog opened
+[12:08:37] Selected file for import: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\testing_dataset\Case_Insensitive_Test.txt
+[12:08:38] Text file imported successfully with 72 records and 0 errors.
+[12:08:41] Import text file dialog opened
+[12:08:42] File selection cancelled by user
+[12:08:44] Import text file dialog opened
+[12:08:46] File selection cancelled by user
+[12:08:55] User navigated to Modify Species page
+[12:08:55] Species data loaded successfully.
+[12:08:56] User navigated to Create Species page
+[12:08:58] User navigated to Select Data page
+[12:09:04] Import text file dialog opened
+[12:09:05] Selected file for import: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\testing_dataset\Case_Insensitive_Test.txt
+[12:09:06] Text file imported successfully with 72 records and 0 errors.
+[12:09:08] User navigated to Create Species page
+[12:09:11] User navigated to Select Data page
+[12:09:13] Import text file dialog opened
+[12:09:14] File selection cancelled by user
+[12:09:18] Successfully connected to database gypsppgp on server DESKTOP-EJ33BVS\SQLEXPRESS
+[12:09:18] Database connection info saved: {'server': 'DESKTOP-EJ33BVS\\SQLEXPRESS', 'database': 'gypsppgp', 'driver': 'ODBC Driver 17 for SQL Server', 'data_folder_path': 'C:\\Program Files\\Microsoft SQL Server\\MSSQL16.SQLEXPRESS\\MSSQL\\DATA'}
+[12:09:18] Connecting to database gypsppgp on server DESKTOP-EJ33BVS\SQLEXPRESS using driver ODBC Driver 17 for SQL Server
+[12:09:20] Database import successful with 10000 records.
+[12:09:20] Database import process completed for gypsppgp
+[12:09:22] User navigated to Create Species page
+[12:09:23] User navigated to Calculate Biomass page
+[12:09:24] User navigated to Create Species page
+[12:09:24] User navigated to Modify Species page
+[12:09:24] Species data loaded successfully.
+[12:09:26] User navigated to Create Species page
+[12:09:27] User navigated to Calculate Biomass page
+[12:09:30] User navigated to Create Species page

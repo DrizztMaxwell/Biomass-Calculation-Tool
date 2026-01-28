@@ -731,7 +731,8 @@ class Create_Species_View:
                             display_button=False,
                             display_shadow=False,
                             on_selection_change=self.on_component_selection_change,  # Add callback
-                            is_alternate_card=True
+                            is_alternate_card=True,
+                            is_in_create_species_page=True
                         ).get_widget(),
                         
                         ft.Divider(height=30, color=ft.Colors.GREY_300),  # More space

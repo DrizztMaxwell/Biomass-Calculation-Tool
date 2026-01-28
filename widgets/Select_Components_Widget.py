@@ -15,7 +15,8 @@ class Select_Components_Widget:
         display_shadow=True,
         on_selection_change=None,
         is_alternate_card=False,
-        is_database_selected=False
+        is_database_selected=False,
+        is_in_create_species_page=False
     ):
         self.page = page
         self.title = title
@@ -28,14 +29,20 @@ class Select_Components_Widget:
         self.on_selection_change = on_selection_change
         self.is_alternate_card = is_alternate_card
         self.is_database_selected = is_database_selected
-        
+        self.is_in_create_species_page = is_in_create_species_page
         self.original_components_data = COMPONENTS_DATA.copy()
         
         self._initialize_widget()
     
     def _initialize_widget(self):
         """Initialize the widget and its components"""
-        self._apply_database_mode()
+        if self.is_in_create_species_page == False:
+            self._apply_database_mode()
+        elif self.is_in_create_species_page:
+            for component in self.components_data:
+                component["is_selected"] = False
+        else:
+            self._apply_database_mode()
         self._create_select_all_button()
         self._build_component_cards()
         self._update_selected_text()

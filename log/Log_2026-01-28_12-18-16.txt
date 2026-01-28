@@ -1,0 +1,45 @@
+[12:18:16] --- Log Session Started ---
+[12:18:16] Splash screen displayed
+[12:18:19] DataManager cleared, proceeding to EULA
+[12:18:24] User agreed to EULA - proceeding with application
+[12:18:24] User navigated to Select Data page
+[12:18:28] User navigated to Create Species page
+[12:18:32] User navigated to Select Data page
+[12:18:34] Import text file dialog opened
+[12:18:36] Selected file for import: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\testing_dataset\Output_Biomass_Results_20260126_164556.txt
+[12:18:36] Error importing text file: Text file may be empty or invalid.
+[12:18:37] Import text file dialog opened
+[12:18:39] Selected file for import: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\testing_dataset\Case_Insensitive_Test.txt
+[12:18:40] Text file imported successfully with 72 records and 0 errors.
+[12:18:42] User navigated to Calculate Biomass page
+[12:18:45] User navigated to Select Data page
+[12:18:46] Import text file dialog opened
+[12:18:49] Selected file for import: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\testing_dataset\Client_Testing_Files\All_Sp_Data_Test_BCT_Jan.txt
+[12:18:50] Text file imported successfully with 1991 records and 1 errors.
+[12:18:54] User navigated to Calculate Biomass page
+[12:18:56] User navigated to Create Species page
+[12:19:00] User navigated to Select Data page
+[12:19:01] Import text file dialog opened
+[12:19:03] Selected file for import: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\testing_dataset\Client_Testing_Files\BCT-test.txt
+[12:19:05] Text file imported successfully with 9634 records and 1204 errors.
+[12:19:08] User navigated to Calculate Biomass page
+[12:19:09] User navigated to Create Species page
+[12:19:11] User navigated to Select Data page
+[12:19:15] Successfully connected to database gypsppgp on server DESKTOP-EJ33BVS\SQLEXPRESS
+[12:19:15] Database connection info saved: {'server': 'DESKTOP-EJ33BVS\\SQLEXPRESS', 'database': 'gypsppgp', 'driver': 'ODBC Driver 17 for SQL Server', 'data_folder_path': 'C:\\Program Files\\Microsoft SQL Server\\MSSQL16.SQLEXPRESS\\MSSQL\\DATA'}
+[12:19:16] Connecting to database gypsppgp on server DESKTOP-EJ33BVS\SQLEXPRESS using driver ODBC Driver 17 for SQL Server
+[12:19:17] Database import successful with 10000 records.
+[12:19:17] Database import process completed for gypsppgp
+[12:19:19] User navigated to Calculate Biomass page
+[12:19:21] User navigated to Create Species page
+[12:19:26] User navigated to Calculate Biomass page
+[12:19:28] Calculate biomass button clicked
+[12:19:31] Biomass results table created and displayed
+[12:19:34] User navigated to Select Data page
+[12:19:35] Import text file dialog opened
+[12:19:37] Selected file for import: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\testing_dataset\Client_Testing_Files\All_Sp_Data_Test_BCT_Jan.txt
+[12:19:38] Text file imported successfully with 1991 records and 1 errors.
+[12:19:42] User navigated to Calculate Biomass page
+[12:19:43] Calculate biomass button clicked
+[12:19:44] Biomass results table created and displayed
+[12:19:48] User navigated to Select Data page

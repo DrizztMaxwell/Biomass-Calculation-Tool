@@ -1,0 +1,53 @@
+[16:39:34] --- Log Session Started ---
+[16:39:35] Splash screen displayed
+[16:39:37] DataManager cleared, proceeding to EULA
+[16:39:41] User agreed to EULA - proceeding with application
+[16:39:41] User navigated to Select Data page
+[16:40:01] Loaded species data from treeparameters.json
+[16:40:09] Loaded species data from treeparameters.json
+[16:40:25] Loaded species data from treeparameters.json
+[16:40:31] Displayed About Dialog
+[16:40:33] Closed About Dialog
+[16:40:35] Import text file dialog opened
+[16:40:41] Selected file for import: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\testing_dataset\Case_Insensitive_Test.txt
+[16:40:43] Text file imported successfully with 72 records and 0 errors.
+[16:40:44] User navigated to Calculate Biomass page
+[16:40:46] User navigated to Select Data page
+[16:40:47] Import text file dialog opened
+[16:40:50] Selected file for import: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\testing_dataset\Case_Insensitive_Test.txt
+[16:40:50] Text file imported successfully with 72 records and 0 errors.
+[16:41:00] Import text file dialog opened
+[16:41:03] Selected file for import: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\testing_dataset\Case_Insensitive_Test.txt
+[16:41:04] Text file imported successfully with 72 records and 0 errors.
+[16:41:16] Import text file dialog opened
+[16:41:19] File selection cancelled by user
+[16:41:23] Successfully connected to database gypsppgp on server DESKTOP-EJ33BVS\SQLEXPRESS
+[16:41:23] Database connection info saved: {'server': 'DESKTOP-EJ33BVS\\SQLEXPRESS', 'database': 'gypsppgp', 'driver': 'ODBC Driver 17 for SQL Server', 'data_folder_path': 'C:\\Program Files\\Microsoft SQL Server\\MSSQL16.SQLEXPRESS\\MSSQL\\DATA'}
+[16:41:23] Connecting to database gypsppgp on server DESKTOP-EJ33BVS\SQLEXPRESS using driver ODBC Driver 17 for SQL Server
+[16:41:25] Database import successful with 10000 records.
+[16:41:25] Database import process completed for gypsppgp
+[16:41:55] User navigated to Calculate Biomass page
+[16:41:58] Calculate biomass button clicked
+[16:42:02] Biomass results table created and displayed
+[16:42:03] User navigated to Create Species page
+[16:42:08] User navigated to Calculate Biomass page
+[16:42:08] User navigated to Create Species page
+[16:42:09] User navigated to Select Data page
+[16:42:10] Import text file dialog opened
+[16:42:11] Selected file for import: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\testing_dataset\Case_Insensitive_Test.txt
+[16:42:12] Text file imported successfully with 72 records and 0 errors.
+[16:42:13] User navigated to Create Species page
+[16:42:15] User navigated to Select Data page
+[16:42:17] User navigated to Create Species page
+[16:42:28] User navigated to Select Data page
+[16:42:29] User navigated to Create Species page
+[16:42:48] User navigated to Modify Species page
+[16:42:48] Species data loaded successfully.
+[16:42:53] User navigated to Settings page
+[16:42:54] Theme toggled to: ThemeMode.DARK
+[16:42:57] User navigated to Modify Species page
+[16:42:57] Species data loaded successfully.
+[16:42:58] User navigated to Create Species page
+[16:43:00] User navigated to Calculate Biomass page
+[16:43:03] User navigated to Select Data page
+[16:43:06] Loaded species data from treeparameters.json

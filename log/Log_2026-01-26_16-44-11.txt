@@ -1,0 +1,63 @@
+[16:44:11] --- Log Session Started ---
+[16:44:11] Splash screen displayed
+[16:44:14] DataManager cleared, proceeding to EULA
+[16:44:18] User agreed to EULA - proceeding with application
+[16:44:18] User navigated to Select Data page
+[16:44:48] Import text file dialog opened
+[16:44:50] Selected file for import: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\testing_dataset\All_Capitalised_Test.txt
+[16:44:51] Text file imported successfully with 72 records and 0 errors.
+[16:45:11] Import text file dialog opened
+[16:45:14] File selection cancelled by user
+[16:45:24] Successfully connected to database gypsppgp on server DESKTOP-EJ33BVS\SQLEXPRESS
+[16:45:24] Database connection info saved: {'server': 'DESKTOP-EJ33BVS\\SQLEXPRESS', 'database': 'gypsppgp', 'driver': 'ODBC Driver 17 for SQL Server', 'data_folder_path': 'C:\\Program Files\\Microsoft SQL Server\\MSSQL16.SQLEXPRESS\\MSSQL\\DATA'}
+[16:45:24] Connecting to database gypsppgp on server DESKTOP-EJ33BVS\SQLEXPRESS using driver ODBC Driver 17 for SQL Server
+[16:45:25] Database import successful with 10000 records.
+[16:45:25] Database import process completed for gypsppgp
+[16:45:33] User navigated to Calculate Biomass page
+[16:45:35] Calculate biomass button clicked
+[16:45:39] Biomass results table created and displayed
+[16:45:47] Write to database operation success: True
+[16:45:47] Displayed success dialog for writing to database
+[16:45:52] Biomass chart displayed
+[16:45:52] Biomass chart displayed
+[16:45:56] Generated default export filename: Output_Biomass_Results_20260126_164556.txt
+[16:45:56] Export file dialog opened
+[16:46:00] Exporting data with headers: ['plot', 'year', 'species', 'tree_number', 'dbh', 'height', 'Wood (KG)', 'Bark (KG)', 'Foliage (KG)', 'Branch (KG)', 'Crown (KG)', 'Stem (KG)', 'Total (KG)']
+[16:46:00] Exported 10000 records to C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\testing_dataset\Output_Biomass_Results_20260126_164556.txt
+[16:46:00] Data exported successfully to C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\testing_dataset\Output_Biomass_Results_20260126_164556.txt
+[16:46:02] User navigated to Create Species page
+[16:46:08] User navigated to Select Data page
+[16:46:09] User navigated to Create Species page
+[16:46:26] User chose to exit the application
+[16:46:28] User navigated to Settings page
+[16:46:30] User navigated to Modify Species page
+[16:46:30] Species data loaded successfully.
+[16:46:32] User navigated to Create Species page
+[16:46:35] User navigated to Calculate Biomass page
+[16:46:36] User navigated to Select Data page
+[16:46:38] User navigated to Calculate Biomass page
+[16:47:12] User navigated to Select Data page
+[16:47:13] Import text file dialog opened
+[16:47:15] Selected file for import: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\testing_dataset\All_Capitalised_Test.txt
+[16:47:16] Text file imported successfully with 72 records and 0 errors.
+[16:47:17] User navigated to Calculate Biomass page
+[16:47:18] Calculate biomass button clicked
+[16:47:19] Biomass results table created and displayed
+[16:47:21] User navigated to Select Data page
+[16:49:50] User navigated to Modify Species page
+[16:49:50] Species data loaded successfully.
+[16:49:59] User navigated to Settings page
+[16:50:00] Theme toggled to: ThemeMode.DARK
+[16:50:01] Theme toggled to: ThemeMode.LIGHT
+[16:50:02] Theme toggled to: ThemeMode.DARK
+[16:50:03] User navigated to Modify Species page
+[16:50:03] Species data loaded successfully.
+[16:50:04] User navigated to Create Species page
+[16:50:09] User navigated to Calculate Biomass page
+[16:50:14] User navigated to Select Data page
+[16:50:17] Loaded species data from treeparameters.json
+[16:50:18] Displayed About Dialog
+[16:50:21] Closed About Dialog
+[16:50:22] Loaded species data from treeparameters.json
+[16:50:25] Displayed About Dialog
+[16:50:26] Closed About Dialog

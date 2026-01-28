@@ -1,0 +1,34 @@
+[11:34:18] --- Log Session Started ---
+[11:34:19] Splash screen displayed
+[11:34:21] DataManager cleared, proceeding to EULA
+[11:34:22] User agreed to EULA - proceeding with application
+[11:34:22] User navigated to Select Data page
+[11:34:28] Successfully connected to database gypsppgp on server DESKTOP-EJ33BVS\SQLEXPRESS
+[11:34:28] Database connection info saved: {'server': 'DESKTOP-EJ33BVS\\SQLEXPRESS', 'database': 'gypsppgp', 'driver': 'ODBC Driver 17 for SQL Server', 'data_folder_path': 'C:\\Program Files\\Microsoft SQL Server\\MSSQL16.SQLEXPRESS\\MSSQL\\DATA'}
+[11:34:28] Connecting to database gypsppgp on server DESKTOP-EJ33BVS\SQLEXPRESS using driver ODBC Driver 17 for SQL Server
+[11:34:30] Database import successful with 10000 records.
+[11:34:30] Database import process completed for gypsppgp
+[11:34:31] User navigated to Calculate Biomass page
+[11:34:33] Calculate biomass button clicked
+[11:34:35] Biomass results table created and displayed
+[11:34:37] User navigated to Settings page
+[11:34:38] Theme toggled to: ThemeMode.DARK
+[11:34:38] User navigated to Calculate Biomass page
+[11:34:40] Calculate biomass button clicked
+[11:34:43] Biomass results table created and displayed
+[11:34:46] Write to database operation success: True
+[11:34:46] Displayed success dialog for writing to database
+[11:34:50] Biomass chart displayed
+[11:34:50] Biomass chart displayed
+[11:34:52] Generated default export filename: Output_Biomass_Results_20260123_113452.txt
+[11:34:52] Export file dialog opened
+[11:34:55] Export cancelled by user
+[11:34:55] User navigated to Select Data page
+[11:34:57] Import text file dialog opened
+[11:35:01] Selected file for import: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\testing_dataset\Case_Insensitive_Test.txt
+[11:35:01] Text file imported successfully with 72 records and 0 errors.
+[11:35:03] User navigated to Calculate Biomass page
+[11:35:04] Calculate biomass button clicked
+[11:35:04] Biomass results table created and displayed
+[11:35:08] User navigated to Select Data page
+[11:35:11] Loaded species data from treeparameters.json
