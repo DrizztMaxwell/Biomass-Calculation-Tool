@@ -1,0 +1,33 @@
+[12:24:03] --- Log Session Started ---
+[12:24:03] Splash screen displayed
+[12:24:06] DataManager cleared, proceeding to EULA
+[12:24:07] User agreed to EULA - proceeding with application
+[12:24:07] User navigated to Select Data page
+[12:24:08] User navigated to Create Species page
+[12:24:10] User navigated to Modify Species page
+[12:24:10] Species data loaded successfully.
+[12:24:11] User navigated to Settings page
+[12:24:12] User navigated to Select Data page
+[12:24:17] Successfully connected to database gypsppgp on server DESKTOP-EJ33BVS\SQLEXPRESS
+[12:24:17] Database connection info saved: {'server': 'DESKTOP-EJ33BVS\\SQLEXPRESS', 'database': 'gypsppgp', 'driver': 'ODBC Driver 17 for SQL Server', 'data_folder_path': 'C:\\Program Files\\Microsoft SQL Server\\MSSQL16.SQLEXPRESS\\MSSQL\\DATA'}
+[12:24:17] Connecting to database gypsppgp on server DESKTOP-EJ33BVS\SQLEXPRESS using driver ODBC Driver 17 for SQL Server
+[12:24:18] Database import successful with 10000 records.
+[12:24:18] Database import process completed for gypsppgp
+[12:24:21] User navigated to Calculate Biomass page
+[12:24:22] Calculate biomass button clicked
+[12:24:24] Biomass results table created and displayed
+[12:24:28] Calculate biomass button clicked
+[12:24:31] Biomass results table created and displayed
+[12:24:35] Write to database operation success: True
+[12:24:35] Displayed success dialog for writing to database
+[12:24:39] Biomass chart displayed
+[12:24:39] Biomass chart displayed
+[12:24:48] User navigated to Select Data page
+[12:24:49] Import text file dialog opened
+[12:24:51] Selected file for import: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\testing_dataset\Client_Testing_Files\BCT-test.txt
+[12:24:53] Text file imported successfully with 9634 records and 1204 errors.
+[12:24:55] User navigated to Calculate Biomass page
+[12:25:00] Calculate biomass button clicked
+[12:25:06] Biomass results table created and displayed
+[12:25:09] Biomass chart displayed
+[12:25:09] Biomass chart displayed
