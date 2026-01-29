@@ -1,0 +1,433 @@
+Species,Parameter,Estimate
+Alpine fir,b_wood1,0.0268
+Alpine fir,b_wood2,1.7579
+Alpine fir,b_wood3,0.9871
+Alpine fir,b_bark1,0.0009
+Alpine fir,b_bark2,1.446
+Alpine fir,b_bark3,1.8839
+Alpine fir,b_branches1,0.047
+Alpine fir,b_branches2,2.9288
+Alpine fir,b_branches3,-1.1588
+Alpine fir,b_foliage1,0.0551
+Alpine fir,b_foliage2,1.7585
+Alpine fir,b_foliage3,0
+Balsam fir,b_wood1,0.0294
+Balsam fir,b_wood2,1.8357
+Balsam fir,b_wood3,0.864
+Balsam fir,b_bark1,0.0053
+Balsam fir,b_bark2,2.0876
+Balsam fir,b_bark3,0.5842
+Balsam fir,b_branches1,0.0117
+Balsam fir,b_branches2,3.5097
+Balsam fir,b_branches3,-1.3006
+Balsam fir,b_foliage1,0.1245
+Balsam fir,b_foliage2,2.523
+Balsam fir,b_foliage3,-1.123
+Balsam poplar,b_wood1,0.0117
+Balsam poplar,b_wood2,1.7757
+Balsam poplar,b_wood3,1.2555
+Balsam poplar,b_bark1,0.018
+Balsam poplar,b_bark2,1.8131
+Balsam poplar,b_bark3,0.5144
+Balsam poplar,b_branches1,0.0112
+Balsam poplar,b_branches2,3.0861
+Balsam poplar,b_branches3,-0.7164
+Balsam poplar,b_foliage1,0.0617
+Balsam poplar,b_foliage2,1.8615
+Balsam poplar,b_foliage3,-0.5375
+Basswood,b_wood1,0.0168
+Basswood,b_wood2,1.9844
+Basswood,b_wood3,0.8989
+Basswood,b_bark1,0.0057
+Basswood,b_bark2,1.5881
+Basswood,b_bark3,1.1472
+Basswood,b_branches1,0.0039
+Basswood,b_branches2,2.0084
+Basswood,b_branches3,0.8588
+Basswood,b_foliage1,0.0147
+Basswood,b_foliage2,1.83
+Basswood,b_foliage3,0
+Beech,b_wood1,0.0432
+Beech,b_wood2,2.0378
+Beech,b_wood3,0.7
+Beech,b_bark1,0.0049
+Beech,b_bark2,1.9057
+Beech,b_bark3,0.677
+Beech,b_branches1,0.0355
+Beech,b_branches2,2.3749
+Beech,b_branches3,0
+Beech,b_foliage1,0.0452
+Beech,b_foliage2,1.5567
+Beech,b_foliage3,0
+Black ash,b_wood1,0.0306
+Black ash,b_wood2,2.1836
+Black ash,b_wood3,0.574
+Black ash,b_bark1,0.0897
+Black ash,b_bark2,2.2634
+Black ash,b_bark3,-0.567
+Black ash,b_branches1,0.0994
+Black ash,b_branches2,2.163
+Black ash,b_branches3,-0.4809
+Black ash,b_foliage1,0.0124
+Black ash,b_foliage2,1.0325
+Black ash,b_foliage3,0.8747
+Black cherry,b_wood1,0.0181
+Black cherry,b_wood2,1.7013
+Black cherry,b_wood3,1.3057
+Black cherry,b_bark1,0.0101
+Black cherry,b_bark2,1.5956
+Black cherry,b_bark3,0.919
+Black cherry,b_branches1,0.0005
+Black cherry,b_branches2,2.8004
+Black cherry,b_branches3,0.8603
+Black cherry,b_foliage1,0.1976
+Black cherry,b_foliage2,1.4421
+Black cherry,b_foliage3,-0.5264
+Black spruce,b_wood1,0.0309
+Black spruce,b_wood2,1.7527
+Black spruce,b_wood3,1.0014
+Black spruce,b_bark1,0.0115
+Black spruce,b_bark2,1.7405
+Black spruce,b_bark3,0.6589
+Black spruce,b_branches1,0.038
+Black spruce,b_branches2,3.2558
+Black spruce,b_branches3,-1.4218
+Black spruce,b_foliage1,0.2048
+Black spruce,b_foliage2,2.5754
+Black spruce,b_foliage3,-1.3704
+Eastern hemlock,b_wood1,0.0257
+Eastern hemlock,b_wood2,1.9277
+Eastern hemlock,b_wood3,0.8576
+Eastern hemlock,b_bark1,0.0118
+Eastern hemlock,b_bark2,1.9893
+Eastern hemlock,b_bark3,0.47
+Eastern hemlock,b_branches1,0.0215
+Eastern hemlock,b_branches2,2.6553
+Eastern hemlock,b_branches3,-0.4682
+Eastern hemlock,b_foliage1,0.1471
+Eastern hemlock,b_foliage2,2.0108
+Eastern hemlock,b_foliage3,-0.608
+Eastern redcedar,b_wood1,0.052
+Eastern redcedar,b_wood2,1.7731
+Eastern redcedar,b_wood3,0.7054
+Eastern redcedar,b_bark1,0.0283
+Eastern redcedar,b_bark2,1.7079
+Eastern redcedar,b_bark3,0
+Eastern redcedar,b_branches1,0.0219
+Eastern redcedar,b_branches2,2.3585
+Eastern redcedar,b_branches3,0
+Eastern redcedar,b_foliage1,0.2575
+Eastern redcedar,b_foliage2,2.5136
+Eastern redcedar,b_foliage3,-1.5565
+Eastern white-cedar,b_wood1,0.0295
+Eastern white-cedar,b_wood2,1.7026
+Eastern white-cedar,b_wood3,0.9428
+Eastern white-cedar,b_bark1,0.0076
+Eastern white-cedar,b_bark2,1.7861
+Eastern white-cedar,b_bark3,0.6132
+Eastern white-cedar,b_branches1,0.0501
+Eastern white-cedar,b_branches2,2.5165
+Eastern white-cedar,b_branches3,-0.8774
+Eastern white-cedar,b_foliage1,0.0813
+Eastern white-cedar,b_foliage2,2.218
+Eastern white-cedar,b_foliage3,-0.7907
+Eastern white pine,b_wood1,0.017
+Eastern white pine,b_wood2,1.7779
+Eastern white pine,b_wood3,1.137
+Eastern white pine,b_bark1,0.0069
+Eastern white pine,b_bark2,1.6589
+Eastern white pine,b_bark3,0.9582
+Eastern white pine,b_branches1,0.0184
+Eastern white pine,b_branches2,3.1968
+Eastern white pine,b_branches3,-1.0876
+Eastern white pine,b_foliage1,0.0584
+Eastern white pine,b_foliage2,2.2389
+Eastern white pine,b_foliage3,-0.5968
+Grey birch,b_wood1,0.0295
+Grey birch,b_wood2,1.9064
+Grey birch,b_wood3,0.9139
+Grey birch,b_bark1,0.0148
+Grey birch,b_bark2,1.8433
+Grey birch,b_bark3,0.5021
+Grey birch,b_branches1,0.015
+Grey birch,b_branches2,3.0347
+Grey birch,b_branches3,-0.7629
+Grey birch,b_foliage1,0.0455
+Grey birch,b_foliage2,2.6447
+Grey birch,b_foliage3,-1.4955
+Hickory,b_wood1,0.0139
+Hickory,b_wood2,1.5913
+Hickory,b_wood3,1.508
+Hickory,b_bark1,0.0081
+Hickory,b_bark2,1.4943
+Hickory,b_bark3,1.1324
+Hickory,b_branches1,0.005
+Hickory,b_branches2,3.0463
+Hickory,b_branches3,0
+Hickory,b_foliage1,0.0121
+Hickory,b_foliage2,2.0865
+Hickory,b_foliage3,0
+Hop-hornbeam,b_wood1,0.0083
+Hop-hornbeam,b_wood2,1.6534
+Hop-hornbeam,b_wood3,1.7479
+Hop-hornbeam,b_bark1,0.0012
+Hop-hornbeam,b_bark2,1.1486
+Hop-hornbeam,b_bark3,2.2903
+Hop-hornbeam,b_branches1,0.0009
+Hop-hornbeam,b_branches2,1.9152
+Hop-hornbeam,b_branches3,1.7769
+Hop-hornbeam,b_foliage1,0.0247
+Hop-hornbeam,b_foliage2,2.0056
+Hop-hornbeam,b_foliage3,0
+Jack pine,b_wood1,0.0199
+Jack pine,b_wood2,1.6883
+Jack pine,b_wood3,1.2456
+Jack pine,b_bark1,0.0141
+Jack pine,b_bark2,1.5994
+Jack pine,b_bark3,0.5957
+Jack pine,b_branches1,0.0185
+Jack pine,b_branches2,3.0584
+Jack pine,b_branches3,-0.9816
+Jack pine,b_foliage1,0.0325
+Jack pine,b_foliage2,1.7879
+Jack pine,b_foliage3,0
+Largetooth aspen,b_wood1,0.0128
+Largetooth aspen,b_wood2,2.0633
+Largetooth aspen,b_wood3,0.9516
+Largetooth aspen,b_bark1,0.024
+Largetooth aspen,b_bark2,2.3055
+Largetooth aspen,b_bark3,0
+Largetooth aspen,b_branches1,0.0131
+Largetooth aspen,b_branches2,3.1274
+Largetooth aspen,b_branches3,-0.8379
+Largetooth aspen,b_foliage1,0.0382
+Largetooth aspen,b_foliage2,2.1673
+Largetooth aspen,b_foliage3,-0.6842
+Lodgepole pine,b_wood1,0.0202
+Lodgepole pine,b_wood2,1.7179
+Lodgepole pine,b_wood3,1.2078
+Lodgepole pine,b_bark1,0.0099
+Lodgepole pine,b_bark2,1.6049
+Lodgepole pine,b_bark3,0.7456
+Lodgepole pine,b_branches1,0.044
+Lodgepole pine,b_branches2,3.719
+Lodgepole pine,b_branches3,-2.0399
+Lodgepole pine,b_foliage1,0.0785
+Lodgepole pine,b_foliage2,2.5377
+Lodgepole pine,b_foliage3,-1.1213
+Red ash,b_wood1,0.0224
+Red ash,b_wood2,1.7845
+Red ash,b_wood3,1.066
+Red ash,b_bark1,0.0219
+Red ash,b_bark2,1.4190
+Red ash,b_bark3,0.8963
+Red ash,b_branches1,0.0176
+Red ash,b_branches2,2.3313
+Red ash,b_branches3,0
+Red ash,b_foliage1,0.0761
+Red ash,b_foliage2,1.3077
+Red ash,b_foliage3,0
+Red maple,b_wood1,0.0315
+Red maple,b_wood2,2.0342
+Red maple,b_wood3,0.7485
+Red maple,b_bark1,0.0283
+Red maple,b_bark2,2.0907
+Red maple,b_bark3,0
+Red maple,b_branches1,0.0225
+Red maple,b_branches2,2.4106
+Red maple,b_branches3,0
+Red maple,b_foliage1,0.0571
+Red maple,b_foliage2,1.4898
+Red maple,b_foliage3,0
+Red oak,b_wood1,0.0285
+Red oak,b_wood2,1.8501
+Red oak,b_wood3,1.0204
+Red oak,b_bark1,0.0326
+Red oak,b_bark2,1.81
+Red oak,b_bark3,0.4153
+Red oak,b_branches1,0.0013
+Red oak,b_branches2,3.0637
+Red oak,b_branches3,0.3153
+Red oak,b_foliage1,0.0582
+Red oak,b_foliage2,1.5438
+Red oak,b_foliage3,0
+Red pine,b_wood1,0.0106
+Red pine,b_wood2,1.7725
+Red pine,b_wood3,1.3285
+Red pine,b_bark1,0.0277
+Red pine,b_bark2,1.5192
+Red pine,b_bark3,0.4645
+Red pine,b_branches1,0.0125
+Red pine,b_branches2,3.3865
+Red pine,b_branches3,-1.1939
+Red pine,b_foliage1,0.0731
+Red pine,b_foliage2,2.3439
+Red pine,b_foliage3,-0.7378
+Red spruce,b_wood1,0.0143
+Red spruce,b_wood2,1.6441
+Red spruce,b_wood3,1.4065
+Red spruce,b_bark1,0.0274
+Red spruce,b_bark2,2.0188
+Red spruce,b_bark3,0
+Red spruce,b_branches1,0.0005
+Red spruce,b_branches2,3.3136
+Red spruce,b_branches3,0
+Red spruce,b_foliage1,0.0106
+Red spruce,b_foliage2,2.2709
+Red spruce,b_foliage3,0
+Silver maple,b_wood1,0.0274
+Silver maple,b_wood2,1.7126
+Silver maple,b_wood3,1.1086
+Silver maple,b_bark1,0.0123
+Silver maple,b_bark2,1.825
+Silver maple,b_bark3,0.501
+Silver maple,b_branches1,0.0543
+Silver maple,b_branches2,3.7343
+Silver maple,b_branches3,-1.6497
+Silver maple,b_foliage1,6.6808
+Silver maple,b_foliage2,2.1092
+Silver maple,b_foliage3,-2.1697
+Sugar maple,b_wood1,0.0301
+Sugar maple,b_wood2,2.0313
+Sugar maple,b_wood3,0.8171
+Sugar maple,b_bark1,0.0103
+Sugar maple,b_bark2,1.7111
+Sugar maple,b_bark3,0.8509
+Sugar maple,b_branches1,0.0661
+Sugar maple,b_branches2,2.594
+Sugar maple,b_branches3,-0.4933
+Sugar maple,b_foliage1,2.5019
+Sugar maple,b_foliage2,2.4527
+Sugar maple,b_foliage3,-2.3008
+Tamarack larch,b_wood1,0.0276
+Tamarack larch,b_wood2,1.6724
+Tamarack larch,b_wood3,1.1443
+Tamarack larch,b_bark1,0.012
+Tamarack larch,b_bark2,1.7059
+Tamarack larch,b_bark3,0.5811
+Tamarack larch,b_branches1,0.0336
+Tamarack larch,b_branches2,3.1335
+Tamarack larch,b_branches3,-1.1559
+Tamarack larch,b_foliage1,0.1324
+Tamarack larch,b_foliage2,2.114
+Tamarack larch,b_foliage3,-0.8781
+Trembling aspen,b_wood1,0.0142
+Trembling aspen,b_wood2,1.9389
+Trembling aspen,b_wood3,1.0572
+Trembling aspen,b_bark1,0.0063
+Trembling aspen,b_bark2,2.0819
+Trembling aspen,b_bark3,0.6617
+Trembling aspen,b_branches1,0.0137
+Trembling aspen,b_branches2,2.927
+Trembling aspen,b_branches3,-0.6221
+Trembling aspen,b_foliage1,0.027
+Trembling aspen,b_foliage2,1.6183
+Trembling aspen,b_foliage3,0
+White ash,b_wood1,0.0224
+White ash,b_wood2,1.7438
+White ash,b_wood3,1.1899
+White ash,b_bark1,0.0126
+White ash,b_bark2,1.6456
+White ash,b_bark3,0.7893
+White ash,b_branches1,0.0354
+White ash,b_branches2,2.3046
+White ash,b_branches3,0
+White ash,b_foliage1,0.0195
+White ash,b_foliage2,1.0509
+White ash,b_foliage3,0.7836
+White birch,b_wood1,0.0338
+White birch,b_wood2,2.0702
+White birch,b_wood3,0.6876
+White birch,b_bark1,0.008
+White birch,b_bark2,1.9754
+White birch,b_bark3,0.6659
+White birch,b_branches1,0.0257
+White birch,b_branches2,3.1754
+White birch,b_branches3,-0.9417
+White birch,b_foliage1,0.1415
+White birch,b_foliage2,2.3074
+White birch,b_foliage3,-1.1189
+White elm,b_wood1,0.0207
+White elm,b_wood2,2.2276
+White elm,b_wood3,0.6488
+White elm,b_bark1,0.0078
+White elm,b_bark2,2.454
+White elm,b_bark3,0
+White elm,b_branches1,0.0393
+White elm,b_branches2,2.188
+White elm,b_branches3,0
+White elm,b_foliage1,0.0516
+White elm,b_foliage2,1.4511
+White elm,b_foliage3,0
+White oak,b_wood1,0.0442
+White oak,b_wood2,1.6818
+White oak,b_wood3,1.031
+White oak,b_bark1,0.0308
+White oak,b_bark2,1.7479
+White oak,b_bark3,0.3504
+White oak,b_branches1,0.0022
+White oak,b_branches2,2.0165
+White oak,b_branches3,1.3953
+White oak,b_foliage1,0.0053
+White oak,b_foliage2,1.2822
+White oak,b_foliage3,1.1323
+White spruce,b_wood1,0.0265
+White spruce,b_wood2,1.7952
+White spruce,b_wood3,0.9733
+White spruce,b_bark1,0.0124
+White spruce,b_bark2,1.6962
+White spruce,b_bark3,0.6489
+White spruce,b_branches1,0.0325
+White spruce,b_branches2,2.8573
+White spruce,b_branches3,-0.9127
+White spruce,b_foliage1,0.202
+White spruce,b_foliage2,2.3802
+White spruce,b_foliage3,-1.1103
+Yellow birch,b_wood1,0.0259
+Yellow birch,b_wood2,1.9044
+Yellow birch,b_wood3,0.9715
+Yellow birch,b_bark1,0.0069
+Yellow birch,b_bark2,2.0834
+Yellow birch,b_bark3,0.5371
+Yellow birch,b_branches1,0.0325
+Yellow birch,b_branches2,2.3851
+Yellow birch,b_branches3,0
+Yellow birch,b_foliage1,0.1683
+Yellow birch,b_foliage2,1.2764
+Yellow birch,b_foliage3,0
+Hardwood,b_wood1,0.0359
+Hardwood,b_wood2,2.0263
+Hardwood,b_wood3,0.6987
+Hardwood,b_bark1,0.0094
+Hardwood,b_bark2,1.8677
+Hardwood,b_bark3,0.6985
+Hardwood,b_branches1,0.0433
+Hardwood,b_branches2,2.6817
+Hardwood,b_branches3,-0.5731
+Hardwood,b_foliage1,0.0859
+Hardwood,b_foliage2,1.8485
+Hardwood,b_foliage3,-0.5383
+Softwood,b_wood1,0.0284
+Softwood,b_wood2,1.6894
+Softwood,b_wood3,1.0857
+Softwood,b_bark1,0.01
+Softwood,b_bark2,1.8463
+Softwood,b_bark3,0.5616
+Softwood,b_branches1,0.0301
+Softwood,b_branches2,3.0038
+Softwood,b_branches3,-1.052
+Softwood,b_foliage1,0.1554
+Softwood,b_foliage2,2.4021
+Softwood,b_foliage3,-1.1043
+All,b_wood1,0.0348
+All,b_wood2,1.9235
+All,b_wood3,0.7829
+All,b_bark1,0.0139
+All,b_bark2,1.5429
+All,b_bark3,0.8189
+All,b_branches1,0.0346
+All,b_branches2,2.6706
+All,b_branches3,-0.6033
+All,b_foliage1,0.1822
+All,b_foliage2,2.2864
+All,b_foliage3,-1.1203
