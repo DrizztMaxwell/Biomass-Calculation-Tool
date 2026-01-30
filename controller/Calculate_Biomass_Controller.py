@@ -1,20 +1,22 @@
 #Calculate_Biomass_Controller
 import json
 import os
-import pandas as pd
-import pyodbc
 from datetime import datetime
-from data.data_manager import DataManager
 from model.Calculate_Biomass_Model import Calculate_Biomass_Model
-from widgets.Bar_Chart_Widget import Bar_Chart_Widget
 
 
 class Calculate_Biomass_Controller:
     """Controller for calculating tree biomass based on selected components and equation types."""
     
-    
+    def lazy_imports(self):
+        global pd, pyodbc, Bar_Chart_Widget
+        import pandas as pd
+        import pyodbc
+        from widgets.Bar_Chart_Widget import Bar_Chart_Widget
     
     def __init__(self, model: Calculate_Biomass_Model, view):
+        self.lazy_imports()
+        
         self.model = model
         self.view = view
         self.equation_type = "DBH-based"
@@ -22,6 +24,7 @@ class Calculate_Biomass_Controller:
         self.tree_params_data = pd.read_json("data/treeparameters.json")
         self.selected_components = []
         self.hardwood_and_softwood_species_code_mapping = []
+       
         # check to see if database is selected
         selected_db_path = 'data/selected_database.json'
         if os.path.exists(selected_db_path):
@@ -781,6 +784,8 @@ class Calculate_Biomass_Controller:
     def write_results_to_database(self):
         """Write the biomass results from JSON to SQL Server database using new schema."""
         try:
+            from data.data_manager import DataManager
+
             dm = DataManager()
             db_path = dm.get_database_path()
             conn = pyodbc.connect(db_path)
