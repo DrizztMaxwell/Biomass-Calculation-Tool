@@ -1,6 +1,5 @@
 # from helper_functions import do_mandatory_columns_exist
 #select_data_controller.py
-import asyncio
 from helper_functions.convert_columns_to_specific_types import convert_columns_to_specific_types
 from helper_functions.convert_text_file_into_dataframe import convert_text_file_into_dataframe
 from views.Select_Data_View import Select_Data_View
@@ -21,16 +20,12 @@ from helper_functions.do_mandatory_columns_exist import do_mandatory_columns_exi
 from data.data_manager import DataManager
 from widgets.Custom_Alert_Dialog import Custom_Alert_Dialog
 from data.database_config import get_sql_server_odbc_driver, get_mssql_data_path
-import flet as ft
 from widgets.Loading_Spinner_Widget import Loading_Spinner_Widget
 import json
 from widgets.LogFileTxt import logger
-import pyodbc
 import os
-import uuid
-import time
 import decimal
-import concurrent.futures
+import flet as ft
 from widgets.Custom_Alert_Dialog import Custom_Alert_Dialog
 
 class Select_Data_Controller:
@@ -42,7 +37,8 @@ class Select_Data_Controller:
         self.error_messages = []
         self.data_imported_callback = data_imported_callback
         self.is_data_imported = False
-
+        
+            
         # File picker setup
         self.file_picker = ft.FilePicker(on_result=self.on_file_selected)
         self.page.overlay.append(self.file_picker)
@@ -50,6 +46,10 @@ class Select_Data_Controller:
         # Bind the view callback
         self.view.controller = self
 
+    
+   
+
+    
     # -------------------------
     # TEXT FILE IMPORT
     # -------------------------
@@ -75,7 +75,7 @@ class Select_Data_Controller:
             spinner = Loading_Spinner_Widget(self.page)
             spinner.show_dialog()
             await spinner.simulate_progressive_loading(0.0, 0.2, 0.1, "Processing the file...")
-
+            import concurrent.futures
             # Use ThreadPoolExecutor for CPU-bound processing
             with concurrent.futures.ThreadPoolExecutor(max_workers=2) as pool:
                 dataframe_future = pool.submit(convert_text_file_into_dataframe, self.selected_file_path)
@@ -166,6 +166,8 @@ class Select_Data_Controller:
 
         # Schedule async task without blocking Flet
         try:
+            import asyncio
+            
             loop = asyncio.get_running_loop()
             asyncio.create_task(self._connect_and_import_database(server, database))
             
@@ -177,6 +179,7 @@ class Select_Data_Controller:
         spinner = Loading_Spinner_Widget(self.page)
         spinner.show_dialog()
         await spinner.simulate_progressive_loading(0.0, 0.3, 0.05, "Initializing connection...")
+        import asyncio
 
         loop = asyncio.get_running_loop()
         try:
@@ -209,6 +212,8 @@ class Select_Data_Controller:
                 "TrustServerCertificate=yes;"
                 "Connection Timeout=5;"
             )
+            import pyodbc
+
             # Test connection
             with pyodbc.connect(conn_str) as conn:
                 conn.cursor().execute("SELECT 1")
@@ -263,6 +268,8 @@ class Select_Data_Controller:
                 driver = db_info["driver"]
             
             logger.write(f"Connecting to database {db_name} on server {server} using driver {driver}")
+            import pyodbc
+            
             conn = pyodbc.connect(
                 f"Driver={{{driver}}};"
                 f"Server={server};"
