@@ -1,4 +1,0 @@
-{
-    "db_name": "gypsppgp",
-    "db_path": "Driver={ODBC Driver 17 for SQL Server};Server=.\\SQLEXPRESS;Database=gypsppgp;Trusted_Connection=yes;Encrypt=no;TrustServerCertificate=yes;"
-}
