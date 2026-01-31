@@ -1,0 +1,17 @@
+[17:01:24] --- Log Session Started ---
+[17:01:24] Splash screen displayed
+[17:01:27] DataManager cleared, proceeding to EULA
+[17:01:28] User agreed to EULA - proceeding with application
+[17:01:28] User navigated to Select Data page
+[17:01:48] Error connecting to database: ('08001', '[08001] [Microsoft][ODBC Driver 17 for SQL Server]SQL Server Network Interfaces: Error Locating Server/Instance Specified [xFFFFFFFF].  (-1) (SQLDriverConnect); [08001] [Microsoft][ODBC Driver 17 for SQL Server]Login timeout expired (0); [08001] [Microsoft][ODBC Driver 17 for SQL Server]Invalid connection string attribute (0); [08001] [Microsoft][ODBC Driver 17 for SQL Server]A network-related or instance-specific error has occurred while establishing a connection to SQL Server. Server is not found or not accessible. Check if instance name is correct and if SQL Server is configured to allow remote connections. For more information see SQL Server Books Online. (-1)')
+[17:01:48] Database connection failed for DATA
+[17:06:30] Error connecting to database: ('08001', '[08001] [Microsoft][ODBC Driver 17 for SQL Server]SQL Server Network Interfaces: Error Locating Server/Instance Specified [xFFFFFFFF].  (-1) (SQLDriverConnect); [08001] [Microsoft][ODBC Driver 17 for SQL Server]Login timeout expired (0); [08001] [Microsoft][ODBC Driver 17 for SQL Server]Invalid connection string attribute (0); [08001] [Microsoft][ODBC Driver 17 for SQL Server]A network-related or instance-specific error has occurred while establishing a connection to SQL Server. Server is not found or not accessible. Check if instance name is correct and if SQL Server is configured to allow remote connections. For more information see SQL Server Books Online. (-1)')
+[17:06:30] Database connection failed for DATA
+[17:06:37] Successfully connected to database gypsppgp on server DESKTOP-EJ33BVS\SQLEXPRESS
+[17:06:37] Database connection info saved: {'server': 'DESKTOP-EJ33BVS\\SQLEXPRESS', 'database': 'gypsppgp', 'driver': 'ODBC Driver 17 for SQL Server', 'data_folder_path': 'C:\\Program Files\\Microsoft SQL Server\\MSSQL16.SQLEXPRESS\\MSSQL\\DATA'}
+[17:06:37] Connecting to database gypsppgp on server DESKTOP-EJ33BVS\SQLEXPRESS using driver ODBC Driver 17 for SQL Server
+[17:06:38] Database import successful with 10000 records.
+[17:06:38] Database import process completed for gypsppgp
+[17:06:40] User navigated to Calculate Biomass page
+[17:06:41] Calculate biomass button clicked
+[17:06:45] Biomass results table created and displayed
