@@ -1,0 +1,17 @@
+[17:33:22] --- Log Session Started ---
+[17:33:23] Splash screen displayed
+[17:33:26] DataManager cleared, proceeding to EULA
+[17:33:27] User agreed to EULA - proceeding with application
+[17:33:27] User navigated to Select Data page
+[17:33:37] Successfully connected to database gypsppgp on server DESKTOP-EJ33BVS\SQLEXPRESS
+[17:33:37] Database connection info saved: {'server': 'DESKTOP-EJ33BVS\\SQLEXPRESS', 'database': 'gypsppgp', 'driver': 'ODBC Driver 17 for SQL Server', 'data_folder_path': 'C:\\Program Files\\Microsoft SQL Server\\MSSQL16.SQLEXPRESS\\MSSQL\\DATA'}
+[17:33:37] Connecting to database gypsppgp on server DESKTOP-EJ33BVS\SQLEXPRESS using driver ODBC Driver 17 for SQL Server
+[17:33:38] Database import successful with 10000 records.
+[17:33:38] Database import process completed for gypsppgp
+[17:33:40] User navigated to Calculate Biomass page
+[17:33:41] Calculate biomass button clicked
+[17:33:44] Biomass results table created and displayed
+[17:33:47] Write to database operation success: True
+[17:33:47] Displayed success dialog for writing to database
+[17:34:20] Write to database operation success: True
+[17:34:20] Displayed success dialog for writing to database
