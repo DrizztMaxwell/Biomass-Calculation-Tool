@@ -1,0 +1,39 @@
+[16:49:48] --- Log Session Started ---
+[16:49:49] Splash screen displayed
+[16:49:51] DataManager cleared, proceeding to EULA
+[16:49:52] User agreed to EULA - proceeding with application
+[16:49:52] User navigated to Select Data page
+[16:50:04] User navigated to Modify Species page
+[16:50:04] Species data loaded successfully.
+[16:50:05] User navigated to Create Species page
+[16:50:06] User navigated to Select Data page
+[16:50:15] Import text file dialog opened
+[16:50:17] Selected file for import: C:\Users\mohib\Documents\BIOMASS\Biomass-Calculation-Tool\All_Sp_Data_Test_BCT_Dec - Copy.txt
+[16:50:18] Text file imported successfully with 1991 records and 1 errors.
+[16:50:30] User navigated to Modify Species page
+[16:50:30] Species data loaded successfully.
+[16:50:31] User navigated to Create Species page
+[16:50:31] User navigated to Select Data page
+[16:50:35] Successfully connected to database gypsppgp on server DESKTOP-EJ33BVS\SQLEXPRESS
+[16:50:35] Database connection info saved: {'server': 'DESKTOP-EJ33BVS\\SQLEXPRESS', 'database': 'gypsppgp', 'driver': 'ODBC Driver 17 for SQL Server', 'data_folder_path': 'C:\\Program Files\\Microsoft SQL Server\\MSSQL16.SQLEXPRESS\\MSSQL\\DATA'}
+[16:50:35] Connecting to database gypsppgp on server DESKTOP-EJ33BVS\SQLEXPRESS using driver ODBC Driver 17 for SQL Server
+[16:50:36] Database import successful with 10000 records.
+[16:50:36] Database import process completed for gypsppgp
+[16:50:38] User navigated to Create Species page
+[16:54:50] User navigated to Calculate Biomass page
+[16:54:52] Calculate biomass button clicked
+[16:54:55] Biomass results table created and displayed
+[16:55:08] User navigated to Select Data page
+[16:55:24] User navigated to Calculate Biomass page
+[16:55:40] Displayed About Dialog
+[16:55:49] Closed About Dialog
+[16:55:50] User navigated to Settings page
+[16:55:59] User navigated to Modify Species page
+[16:55:59] Species data loaded successfully.
+[16:56:07] User navigated to Create Species page
+[16:56:08] User navigated to Calculate Biomass page
+[16:56:08] User navigated to Select Data page
+[16:56:10] Loaded species data from treeparameters.json
+[16:56:18] User chose to exit the application
+[17:40:34] User navigated to Modify Species page
+[17:40:34] Species data loaded successfully.

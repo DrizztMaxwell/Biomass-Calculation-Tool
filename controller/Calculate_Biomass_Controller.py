@@ -790,9 +790,10 @@ class Calculate_Biomass_Controller:
             db_path = dm.get_database_path()
             conn = pyodbc.connect(db_path)
             cursor = conn.cursor()
-
+#  use gyPSPPGP; => make it dynamic not fixed
             # Ensure output table exists (new schema)
             create_table_sql = """
+           
             IF NOT EXISTS (
                 SELECT 1 FROM sys.tables t
                 JOIN sys.schemas s ON t.schema_id = s.schema_id
