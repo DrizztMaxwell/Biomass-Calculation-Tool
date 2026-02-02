@@ -42,11 +42,12 @@ class DataManager:
         Save the database connection info and generate a full ODBC connection string.
         """
         driver = get_sql_server_odbc_driver()
-
+        with open("data/selected_database.json", "r", encoding="utf-8") as f:
+            db_info = json.load(f)
         connection_string = (
             f"Driver={{{driver}}};"
-            "Server=.\\SQLEXPRESS;"
-            f"Database={db_name};"
+            f"Server={db_info['server']};"
+            f"Database={db_info['database']};"
             "Trusted_Connection=yes;"
             "Encrypt=no;"
             "TrustServerCertificate=yes;"
