@@ -5,7 +5,6 @@ from helper_functions.convert_text_file_into_dataframe import convert_text_file_
 from views.Select_Data_View import Select_Data_View
 from widgets.Display_Error_Dialog import Display_Error_Dialog
 from widgets.Display_Warning_Dialog import Display_Warning_Dialog
-from controller.import_dataset_menu import show_import_dataset_page
 from helper_functions import do_mandatory_columns_exist
 from helper_functions.convert_columns_to_lowercase import convert_columns_to_lowercase
 from widgets.Display_Warning_Dialog import Display_Warning_Dialog

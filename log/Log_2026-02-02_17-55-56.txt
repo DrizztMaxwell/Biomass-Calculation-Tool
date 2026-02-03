@@ -1,0 +1,25 @@
+[17:55:56] --- Log Session Started ---
+[17:55:56] Splash screen displayed
+[17:55:59] DataManager cleared, proceeding to EULA
+[17:56:00] User agreed to EULA - proceeding with application
+[17:56:00] User navigated to Select Data page
+[17:56:06] Successfully connected to database gypsppgp on server DESKTOP-EJ33BVS\SQLEXPRESS
+[17:56:06] Database connection info saved: {'server': 'DESKTOP-EJ33BVS\\SQLEXPRESS', 'database': 'gypsppgp', 'driver': 'ODBC Driver 17 for SQL Server', 'data_folder_path': 'C:\\Program Files\\Microsoft SQL Server\\MSSQL16.SQLEXPRESS\\MSSQL\\DATA'}
+[17:56:06] Connecting to database gypsppgp on server DESKTOP-EJ33BVS\SQLEXPRESS using driver ODBC Driver 17 for SQL Server
+[17:56:07] Database import successful with 10000 records.
+[17:56:07] Database import process completed for gypsppgp
+[17:56:10] User navigated to Calculate Biomass page
+[17:56:11] Calculate biomass button clicked
+[17:56:14] Biomass results table created and displayed
+[17:56:16] User navigated to Select Data page
+[17:56:17] Import text file dialog opened
+[17:56:19] Selected file for import: C:\Users\mohib\Documents\BIOMASS\Biomass-Calculation-Tool\All_Sp_Data_Test_BCT_Dec - Copy.txt
+[17:56:21] Text file imported successfully with 1991 records and 1 errors.
+[17:56:24] User navigated to Calculate Biomass page
+[17:56:30] Calculate biomass button clicked
+[17:56:33] Biomass results table created and displayed
+[17:56:34] User navigated to Create Species page
+[17:56:35] User navigated to Modify Species page
+[17:56:35] Species data loaded successfully.
+[17:56:36] User navigated to Settings page
+[17:56:36] User chose to exit the application

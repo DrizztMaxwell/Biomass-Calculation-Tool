@@ -18,6 +18,7 @@ from views.Settings_View import SettingsView
 from helper_functions.Remove_Underscores_And_Add_Space_And_Capitalise_Words import Remove_Underscores_And_Add_Space_And_Capitalise_Words
 from widgets.Supported_Species_Dialog import Supported_Species_Dialog
 from widgets.LogFileTxt import logger
+from controller.Settings_Controller import Settings_Controller
 class SideNavbar_View:
     
     """Main application class for the Biomass Calculator"""
@@ -70,8 +71,9 @@ class SideNavbar_View:
         self.create_species_controller.view = self.create_species_view
         
         
+        self.settings_controller = Settings_Controller(self.page)
+        self.settings_view = SettingsView(self.page, self.settings_controller).build()
         
-        self.settings_view = SettingsView(self.page).build()
    
            
     def Set_Data_Imported_Flag(self, imported: bool):
