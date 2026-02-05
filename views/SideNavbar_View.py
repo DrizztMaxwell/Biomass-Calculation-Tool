@@ -5,7 +5,6 @@ from controller.Select_Data_Controller import Select_Data_Controller
 from views import Select_Data_View
 from views.Modify_Species_View import Modify_Species_View
 from views.Calculate_Biomass_View import  Calculate_Biomass_View
-from model.Calculate_Biomass_Model import Calculate_Biomass_Model
 from views.Create_Species_View import Create_Species_View
 from controller.Create_Species_Controller import Create_Species_Controller
 from controller.Calculate_Biomass_Controller import Calculate_Biomass_Controller
@@ -66,7 +65,7 @@ class SideNavbar_View:
         self.select_data_controller = Select_Data_Controller(self.page, self.Callback_To_Update_Sidebar_UI, self.select_data_view)
         self.select_data_view.controller = self.select_data_controller
         
-        self.create_species_controller = Create_Species_Controller()
+        self.create_species_controller = Create_Species_Controller( self.page, None)
         self.create_species_view = Create_Species_View(self.page, self.create_species_controller)
         self.create_species_controller.view = self.create_species_view
         
@@ -133,10 +132,11 @@ class SideNavbar_View:
         self.Refresh_Sidebar()
    
     def _Setup_Biomass_Calculation(self) -> ft.Control:
-        self.biomass_model = Calculate_Biomass_Model()
+        self.biomass_controller = Calculate_Biomass_Controller(None)
         self.biomass_view = Calculate_Biomass_View(None, page = self.page, selected_file_path=None)  # Pass None initially, set controller later
-        self.biomass_controller = Calculate_Biomass_Controller(self.biomass_model, self.biomass_view, )
+        self.biomass_controller.view = self.biomass_view
         self.biomass_view.controller = self.biomass_controller
+        # self.biomass_controller.check_database_selected()
         self.biomass_view.selected_file_path = self.select_data_controller.selected_file_path
         self.biomass_view_content = self.biomass_controller.build()
         return self.biomass_view_content

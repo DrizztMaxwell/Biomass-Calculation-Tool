@@ -1,0 +1,17 @@
+[17:46:07] --- Log Session Started ---
+[17:46:09] Splash screen displayed
+[17:46:12] DataManager cleared, proceeding to EULA
+[17:46:13] User agreed to EULA - proceeding with application
+[17:46:13] User navigated to Select Data page
+[17:46:14] User navigated to Create Species page
+[17:46:26] Checking if species code 212 exists in data/treeparameters.json
+[17:46:26] Checking if species code 212 exists in data/create_species.json
+[17:46:26] Selected components for creation: ['Wood', 'Bark']
+[17:46:26] Current equation type is DBH-based
+[17:46:26] Species 212 created successfully and added to create_species.json
+[17:46:28] User navigated to Modify Species page
+[17:46:28] Species data loaded successfully.
+[17:46:31] Editing species: 212
+[17:46:35] Dialog closed.
+[17:46:35] Viewing species: 212
+[17:46:37] Species details dialog closed for species: 212

@@ -1,30 +1,32 @@
 #Calculate_Biomass_Controller
+from ast import Dict, List
 import json
 import os
 from datetime import datetime
-from model.Calculate_Biomass_Model import Calculate_Biomass_Model
-
+import flet as ft
+import pandas as pd
+import pyodbc
+from sklearn import logger
+from widgets.Bar_Chart_Widget import Bar_Chart_Widget
 
 class Calculate_Biomass_Controller:
     """Controller for calculating tree biomass based on selected components and equation types."""
     
-    def lazy_imports(self):
-        global pd, pyodbc, Bar_Chart_Widget
-        import pandas as pd
-        import pyodbc
-        from widgets.Bar_Chart_Widget import Bar_Chart_Widget
+  
     
-    def __init__(self, model: Calculate_Biomass_Model, view):
-        self.lazy_imports()
+    def __init__(self, view):
         
-        self.model = model
         self.view = view
         self.equation_type = "DBH-based"
         self.local_storage_data = pd.read_json("storage/localstorage.json")
         self.tree_params_data = pd.read_json("data/treeparameters.json")
         self.selected_components = []
+        self.is_database_selected = False
         self.hardwood_and_softwood_species_code_mapping = []
-       
+        self.did_user_import_from_database()
+        
+    def did_user_import_from_database(self):
+        """Check if a database is selected for calculations."""
         # check to see if database is selected
         selected_db_path = 'data/selected_database.json'
         if os.path.exists(selected_db_path):
@@ -32,11 +34,128 @@ class Calculate_Biomass_Controller:
                 content = f.read().strip()
                 if content and content != "{}":
                     print("Database selected for calculations.")
-                    self.view.is_database_selected = True
+                    self.is_database_selected = True
                 else:
                     print("No database selected for calculations.")
-                    self.view.is_database_selected = False
-                    
+                    self.is_database_selected = False
+    
+    def get_database_selected_flag(self) -> bool:
+        """Return whether a database is selected."""
+        return self.is_database_selected
+    
+    
+    async def _on_write_database_click(self, event):
+        """Handle write to database button click."""
+        from widgets.Loading_Spinner_Widget import Loading_Spinner_Widget
+        from widgets.LogFileTxt import logger
+        print("Write to database button clicked")
+        
+        loading_spinner = Loading_Spinner_Widget(self.view.page)
+        loading_spinner.show_dialog()
+        
+        await loading_spinner.simulate_progressive_loading(
+            0.0, 0.5, 0.1, "Writing to database..."
+        )
+        
+        success = self.write_results_to_database()
+        logger.write(f"Write to database operation success: {success}")
+        
+        await loading_spinner.simulate_progressive_loading(
+            1.0, 1.0, 0.1, "Completed..."
+        )
+        loading_spinner.hide()
+        if not success:
+            self.view.show_error_dialog( title="Error", message="Failed to write results to database.")
+        from data.constants import TABLE_OUTPUT_NAME
+        self.view.show_success_dialog( title="Success", message=f"Successfully exported data to {TABLE_OUTPUT_NAME}.")
+    
+    def _export_to_text(self, data: List[Dict], file_path: str) -> bool:
+        """Export data to a formatted text file."""
+        try:
+            with open(file_path, 'w') as file:
+                self._write_export_header(file, len(data))
+                
+                if data:
+                    headers = list(data[0].keys())
+                    self._write_export_data(file, data, headers)
+            
+            return True
+        
+        except Exception as error:
+            print(f"Export error: {error}")
+            logger.write(f"[Error] - Failed to export to {file_path}: {error}")
+            return False
+    
+    def _write_export_header(self, file, record_count: int):
+        """Write export file header."""
+        import datetime
+        file.write("BIOMASS CALCULATION RESULTS\n")
+        file.write(f"Generated on: {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
+        file.write(f"Total records: {record_count}\n\n")
+    
+   
+    
+    
+    
+    def _write_export_data(self, file, data: List[Dict], headers: List[str]):
+        """Write data rows to export file."""
+        # Write header row
+        header_line = "\t".join(headers)
+        file.write(header_line + "\n")
+        
+        # Write data rows
+        for item in data:
+            row_values = []
+            for header in headers:
+                value = item.get(header, "")
+                if isinstance(value, (int, float)) and value is not None:
+                    if header in self.view._BIOMASS_COLUMNS:
+                        display_value = f"{value:.4f}" if value is not None else "N/A"
+                    else:
+                        display_value = str(value)
+                else:
+                    display_value = str(value) if value is not None else "N/A"
+                row_values.append(display_value)
+            
+            file.write("\t".join(row_values) + "\n")
+    
+    
+    async def on_calculate_biomass_click(self, event):
+        """Handle calculate biomass button click."""
+        from widgets.Loading_Spinner_Widget import Loading_Spinner_Widget
+        from widgets.LogFileTxt import logger
+       
+        logger.write("Calculate biomass button clicked")
+        
+        # Show loading spinner
+        loading_spinner = Loading_Spinner_Widget(self.view.page)
+        loading_spinner.show_dialog()
+        
+        # Disable button
+        self.view._disable_calculation_button(event.control)
+        
+        # Perform calculation
+        await loading_spinner.simulate_progressive_loading(
+            0.0, 0.2, 0.1, "Beginning Calculation..."
+        )
+        
+        calculation_success = await self.calculate_biomass()
+        
+        if not calculation_success:
+            self.view._enable_calculation_button(event.control)
+            loading_spinner.hide()
+            return
+        
+        # Show results
+        await loading_spinner.simulate_progressive_loading(
+            1.0, 1.0, 0.1, "Completed..."
+        )
+        loading_spinner.hide()
+        
+        self.view._show_results_table()
+        self.view._enable_calculation_button(event.control)
+    
+                 
     def json_to_dataframe_basic(self, json_file_path):
         """Convert JSON file to DataFrame (basic approach)"""
         try:
@@ -119,17 +238,7 @@ class Calculate_Biomass_Controller:
         """Build the main view."""
         return self.view.build()
 
-#     ###
-#     # when i press calculate biomass button,
 
-#  if not species code does not exist in both json data/treeparameters.json and data/created_species.json files then 
-# display alert dialog box where user has to select which of the non existent species code is hard wood or softwood
-#     display a checkbox list (select species for hardwood)
-#     display a checkbox list (select species for softwood)
-# based on those values set the parameters to the prefixed value depending what is selected
-# Note at bottom: If you have parameters then please cancel this and add it in  the create species
-#     # ###
-#     def 
     def checkbox(self):
         pass
     def check_if_species_code_exists_within_the_json_files(self, species_code:int, json_file_path_1:str, json_file_path_2:str) -> bool:

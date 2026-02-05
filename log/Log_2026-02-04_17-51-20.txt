@@ -1,0 +1,20 @@
+[17:51:20] --- Log Session Started ---
+[17:51:22] Splash screen displayed
+[17:51:25] DataManager cleared, proceeding to EULA
+[17:51:26] User agreed to EULA - proceeding with application
+[17:51:26] User navigated to Select Data page
+[17:51:28] User navigated to Create Species page
+[17:51:40] Checking if species name dw exists in data/treeparameters.json
+[17:51:40] Checking if species name dw exists in data/create_species.json
+[17:51:40] Creating species with components: ['Wood', 'Bark', 'Branch']
+[17:51:40] Using DBH-based equation parameters
+[17:51:40] Species data saved to data/create_species.json
+[17:51:40] Species 'dw' created successfully
+[17:51:41] User navigated to Modify Species page
+[17:51:41] Species data loaded successfully.
+[17:51:44] Viewing species: 
+[17:51:46] Species details dialog closed for species: 
+[17:51:47] Confirming deletion of species: 
+[17:51:48] Confirming deletion of species: 
+[17:51:48] Species data saved successfully.
+[17:51:48] Species 'dw' deleted successfully.

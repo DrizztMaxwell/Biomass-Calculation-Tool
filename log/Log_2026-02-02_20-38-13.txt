@@ -1,0 +1,9 @@
+[20:38:13] --- Log Session Started ---
+[20:38:14] Splash screen displayed
+[20:38:16] DataManager cleared, proceeding to EULA
+[20:38:17] User agreed to EULA - proceeding with application
+[20:38:17] User navigated to Select Data page
+[20:38:22] Import text file dialog opened
+[20:38:25] Selected file for import: C:\Users\mohib\Documents\BIOMASS\Biomass-Calculation-Tool\data_set.txt
+[20:38:26] Text file imported successfully with 12 records and 2 errors.
+[20:38:28] User navigated to Calculate Biomass page

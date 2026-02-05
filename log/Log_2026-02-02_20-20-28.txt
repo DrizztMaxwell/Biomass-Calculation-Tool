@@ -1,0 +1,27 @@
+[20:20:28] --- Log Session Started ---
+[20:20:29] Splash screen displayed
+[20:20:31] DataManager cleared, proceeding to EULA
+[20:20:33] User agreed to EULA - proceeding with application
+[20:20:33] User navigated to Select Data page
+[20:20:35] Import text file dialog opened
+[20:20:38] Selected file for import: C:\Users\mohib\Documents\BIOMASS\Biomass-Calculation-Tool\BCT.txt
+[20:20:39] Text file imported successfully with 5 records and 0 errors.
+[20:20:40] User navigated to Calculate Biomass page
+[20:20:43] Calculate biomass button clicked
+[20:20:45] Biomass results table created and displayed
+[20:20:48] User navigated to Select Data page
+[20:20:52] Successfully connected to database gypsppgp on server DESKTOP-EJ33BVS\SQLEXPRESS
+[20:20:52] Database connection info saved: {'server': 'DESKTOP-EJ33BVS\\SQLEXPRESS', 'database': 'gypsppgp', 'driver': 'ODBC Driver 17 for SQL Server', 'data_folder_path': 'C:\\Program Files\\Microsoft SQL Server\\MSSQL16.SQLEXPRESS\\MSSQL\\DATA'}
+[20:20:52] Connecting to database gypsppgp on server DESKTOP-EJ33BVS\SQLEXPRESS using driver ODBC Driver 17 for SQL Server
+[20:20:54] Database import successful with 10000 records.
+[20:20:54] Database import process completed for gypsppgp
+[20:20:55] User navigated to Calculate Biomass page
+[20:20:57] Calculate biomass button clicked
+[20:21:00] Biomass results table created and displayed
+[20:21:01] User navigated to Select Data page
+[20:21:02] Import text file dialog opened
+[20:21:04] Selected file for import: C:\Users\mohib\Documents\BIOMASS\Biomass-Calculation-Tool\BCT.txt
+[20:21:05] Text file imported successfully with 5 records and 0 errors.
+[20:21:07] User navigated to Calculate Biomass page
+[20:21:09] Calculate biomass button clicked
+[20:21:11] Biomass results table created and displayed

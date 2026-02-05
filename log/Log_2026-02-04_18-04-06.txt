@@ -1,0 +1,16 @@
+[18:04:06] --- Log Session Started ---
+[18:04:08] Splash screen displayed
+[18:04:10] DataManager cleared, proceeding to EULA
+[18:04:12] User agreed to EULA - proceeding with application
+[18:04:12] User navigated to Select Data page
+[18:04:14] User navigated to Create Species page
+[18:04:25] Checking if species name weeqw exists in data/treeparameters.json
+[18:04:25] Checking if species name weeqw exists in data/create_species.json
+[18:04:25] Selected components for creation: ['Bark']
+[18:04:25] Current equation type is DBH-based
+[18:04:25] Species weeqw created successfully and added to create_species.json
+[18:04:28] User navigated to Modify Species page
+[18:04:28] Species data loaded successfully.
+[18:04:31] Viewing species: 
+[18:04:33] Species details dialog closed for species: 
+[18:04:35] User navigated to Create Species page
