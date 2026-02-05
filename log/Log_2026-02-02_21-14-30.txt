@@ -1,0 +1,21 @@
+[21:14:30] --- Log Session Started ---
+[21:14:30] Splash screen displayed
+[21:14:32] DataManager cleared, proceeding to EULA
+[21:14:34] User agreed to EULA - proceeding with application
+[21:14:34] User navigated to Select Data page
+[21:14:35] Import text file dialog opened
+[21:14:37] Selected file for import: C:\Users\mohib\Documents\BIOMASS\Biomass-Calculation-Tool\All_Sp_Data_Test_BCT_Dec - Copy.txt
+[21:14:38] Text file imported successfully with 1991 records and 1 errors.
+[21:14:41] User navigated to Calculate Biomass page
+[21:14:43] Calculate biomass button clicked
+[21:14:48] User navigated to Create Species page
+[21:14:49] User navigated to Select Data page
+[21:15:09] Error connecting to database: ('08001', '[08001] [Microsoft][ODBC Driver 17 for SQL Server]SQL Server Network Interfaces: Error Locating Server/Instance Specified [xFFFFFFFF].  (-1) (SQLDriverConnect); [08001] [Microsoft][ODBC Driver 17 for SQL Server]Login timeout expired (0); [08001] [Microsoft][ODBC Driver 17 for SQL Server]Invalid connection string attribute (0); [08001] [Microsoft][ODBC Driver 17 for SQL Server]A network-related or instance-specific error has occurred while establishing a connection to SQL Server. Server is not found or not accessible. Check if instance name is correct and if SQL Server is configured to allow remote connections. For more information see SQL Server Books Online. (-1)')
+[21:15:09] Database connection failed for DATA
+[21:15:15] Successfully connected to database gypsppgp on server DESKTOP-EJ33BVS\SQLEXPRESS
+[21:15:15] Database connection info saved: {'server': 'DESKTOP-EJ33BVS\\SQLEXPRESS', 'database': 'gypsppgp', 'driver': 'ODBC Driver 17 for SQL Server', 'data_folder_path': 'C:\\Program Files\\Microsoft SQL Server\\MSSQL16.SQLEXPRESS\\MSSQL\\DATA'}
+[21:15:15] Connecting to database gypsppgp on server DESKTOP-EJ33BVS\SQLEXPRESS using driver ODBC Driver 17 for SQL Server
+[21:15:17] Database import successful with 10000 records.
+[21:15:17] Database import process completed for gypsppgp
+[21:15:19] User navigated to Calculate Biomass page
+[21:15:21] Calculate biomass button clicked

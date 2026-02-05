@@ -33,5 +33,63 @@
         "bbranches2": 0.0,
         "bfoliage1": 0.0,
         "bfoliage2": 0.0
+    },
+    {
+        "SpeciesCode": 251,
+        "Origin": "Natural Stand",
+        "EquationType": "DBH-based",
+        "bwood1": 0.02,
+        "bwood2": 0.03,
+        "bbark1": 0.01,
+        "bbark2": 0.04,
+        "bbranches1": 0.05,
+        "bbranches2": 0.0,
+        "bfoliage1": 0.0,
+        "bfoliage2": 0.0
+    },
+    {
+        "SpeciesCode": 212,
+        "Origin": "Natural Stand",
+        "EquationType": "DBH-based",
+        "bwoodb1": 2.0,
+        "bwoodb2": 2.0,
+        "bbarkb1": 3.0,
+        "bbarkb2": 0.03
+    },
+    {
+        "SpecCommon": "waddw",
+        "Origin": "Natural Stand",
+        "EquationType": "DBH-based",
+        "bwoodb1": 222.0,
+        "bwoodb2": 0.0,
+        "bbarkb1": 0.0,
+        "bbarkb2": 0.0,
+        "bbranchesb1": 0.0,
+        "bbranchesb2": 0.0,
+        "bfoliageb1": 0.0,
+        "bfoliageb2": 0.0
+    },
+    {
+        "SpecCommon": "weeqw",
+        "Origin": "Natural Stand",
+        "EquationType": "DBH-based",
+        "bbarkb1": 0.0,
+        "bbarkb2": 22.0
+    },
+    {
+        "SpeciesCode": 2222333,
+        "Origin": "Natural Stand",
+        "EquationType": "DBH-based",
+        "bwoodb1": 22.0,
+        "bwoodb2": 0.0,
+        "bbarkb1": 0.0,
+        "bbarkb2": 0.0
+    },
+    {
+        "SpecCommon": "dsdawddddddddddddddddddddddd",
+        "Origin": "Natural Stand",
+        "EquationType": "DBH-based",
+        "bbarkb1": 2.0,
+        "bbarkb2": 2.0
     }
 ]

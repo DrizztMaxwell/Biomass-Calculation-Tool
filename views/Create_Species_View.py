@@ -1,57 +1,45 @@
-import json
-from sys import prefix
 import flet as ft
-import pandas as pd
 from widgets.Create_Species_Preview_Modal import Create_Species_Preview_Modal
 from widgets.Custom_Alert_Dialog import Custom_Alert_Dialog
 from widgets.Create_Label_With_Icon import Create_Label_With_Icon
 from widgets.TitleTextWidget import TitleTextWidget
 from widgets.DescriptionText import DescriptionText
-from data.components_data_2 import COMPONENTS_DATA_2
-from controller.Create_Species_Controller import Create_Species_Controller
 from widgets.Select_Components_Widget import Select_Components_Widget
-from widgets.Create_Title_And_Description_Widget import Create_Title_And_Description_Widget
-from widgets.LogFileTxt import logger
 from widgets.Title_With_Icon import Title_With_Icon
 
 class Create_Species_View:
     """The main application form, responsible for assembling the UI controls."""
     
-    def __init__(self, page:ft.Page, controller: Create_Species_Controller):
+    def __init__(self, page:ft.Page, controller):
         self.page = page
         self._controller = controller
-        self.selected_components_text = ft.Text(
-            value="",
-            color=ft.Colors.PRIMARY,
-            weight=ft.FontWeight.W_500
-        )
+        
         # Store parameter controls for dynamic visibility
         self.param_controls = {}
         self.parameters_section = None
         
-        # Track current equation type
-        self.current_equation_type = "DBH-based"
-        
         # Store references for dialog
-        self.page_ref = None
-        self.dialog = None
-        self.error_messages = []
         self.species_textfield = None
         self.origin_dropdown = None
         self.equation_type_dropdown = None
-        self.create_species_preview_modal = Create_Species_Preview_Modal(page,{}, callback=self._handle_create_species_button_click)
+        
+        # Initialize preview modal
+        self.create_species_preview_modal = Create_Species_Preview_Modal(
+            page, 
+            {}, 
+            callback=self._controller.handle_create_species_button_click
+        )
 
     def _create_species_metadata_row(self) -> ft.Row:
-        """Creates the Code, Origin, and Equation Type row and stores controls in the controller."""
+        """Creates the Code, Origin, and Equation Type row."""
         
-        # Common width for all form elements to ensure equal sizing
         FORM_ELEMENT_WIDTH = 300
         
-        # Species Code Control with expanded width for error text
+        # Species Code Control
         self.species_textfield = ft.TextField(
             hint_text="Alpine fir or 123",
-            width=FORM_ELEMENT_WIDTH,  # Fixed width
-             border_color=ft.Colors.PRIMARY,
+            width=FORM_ELEMENT_WIDTH,
+            border_color=ft.Colors.PRIMARY,
         )
         
         species_container = ft.Container(
@@ -69,12 +57,11 @@ class Create_Species_View:
                 ft.dropdown.Option("Natural Stand"),
                 ft.dropdown.Option("Plantation"),
             ],
-            value="Natural Stand",  # Default Value
+            value="Natural Stand",
             content_padding=ft.padding.only(left=8, right=8),
             border_radius=5,
             border_color=ft.Colors.PRIMARY,
-            width=FORM_ELEMENT_WIDTH,  # Same width
-         
+            width=FORM_ELEMENT_WIDTH,
         )
         
         origin_container = ft.Container(
@@ -94,11 +81,10 @@ class Create_Species_View:
             value="DBH-based",
             content_padding=ft.padding.only(left=8, right=8),
             border_radius=5,
-            on_change=self._on_equation_type_change,  # Add change handler
-            width=FORM_ELEMENT_WIDTH,  # Same width
+            on_change=self._controller.handle_equation_type_change,
+            width=FORM_ELEMENT_WIDTH,
             border_color=ft.Colors.PRIMARY,
         )
-        self._controller.equation_type_control = self.equation_type_dropdown  # Store in controller
         
         equation_container = ft.Container(
             content=ft.Column([
@@ -115,169 +101,10 @@ class Create_Species_View:
                 equation_container,
             ],
             spacing=20,
-           
         )
-    
-    def _on_equation_type_change(self, e):
-        """Handle equation type change and update parameters visibility"""
-        self.current_equation_type = e.control.value
-        # Update parameters based on current selection
-        selected_components = self._get_current_selected_components()
-        self.selected_components = selected_components
-        self.update_parameters_visibility(selected_components)
-    
-    def _get_current_selected_components(self):
-        """Get currently selected components from the widget"""
-        selected_components = []
-        for component in COMPONENTS_DATA_2:
-            if component.get("is_selected", False):
-                selected_components.append(component["title"])
-        return selected_components
-    
-    def create_component_card_view(self, item: dict, on_hover_handler: callable, on_click_handler: callable) -> ft.Container:
-        """
-        Creates and returns the Flet Container control for a single component card.
-        It links the visual component to the Controller's event handlers.
-        """
-        
-        title = item.get("title", "Unknown")
-        image_src = item.get("image_src", "./assets/images/default.png")
-        is_selected = item.get("is_selected", False) # Get current state from Model data
 
-        # Initial appearance based on state
-        initial_bgcolor = "#A3FFDA" if is_selected else "white" 
-
-        # Create and configure the ft.Container
-        return ft.Container(
-            # The data property is crucial for the controller to identify which card was clicked/hovered
-            data=title,
-            # Set initial visual state
-            bgcolor=initial_bgcolor, 
-            
-            margin=10,
-            padding=10,
-            width=150,
-            height=150,
-            
-            # Attach controller methods
-            on_hover=on_hover_handler,
-            on_click=on_click_handler, # <-- This is where the Controller's logic is attached
-            
-            # Styling and animation
-            border_radius=10,
-            shadow=ft.BoxShadow(
-                spread_radius=1,
-                blur_radius=5,
-                color=ft.Colors.with_opacity(0.15, ft.Colors.BLUE_GREY_900),
-                offset=ft.Offset(0, 3),
-            ),
-            animate=ft.Animation(150, ft.AnimationCurve.EASE_IN_OUT),
-            animate_scale=ft.Animation(150, ft.AnimationCurve.EASE_IN_OUT),
-
-            # Card Content Layout
-            content=ft.Column(
-                horizontal_alignment=ft.CrossAxisAlignment.CENTER,
-                alignment=ft.MainAxisAlignment.CENTER,
-                spacing=10,
-                controls=[
-                    ft.Image(
-                        src=image_src,
-                        width=50,
-                        height=50,
-                        fit=ft.ImageFit.CONTAIN,
-                        repeat=ft.ImageRepeat.NO_REPEAT,
-                        border_radius=ft.border_radius.all(10),
-                    ),
-                    ft.Text(title, color="black", font_family="Arial", size=18, weight=ft.FontWeight.W_600)
-                ]
-            )
-        )
-    
-    def _create_components_section(self):
-        """Creates the component selection row using the functional component."""
-        
-        components_header = ft.Row([
-            ft.Text("Tree Components", size=16, weight=ft.FontWeight.BOLD),
-            ft.Icon(ft.Icons.APPS_OUTLINED)
-        ], spacing=5)
-        
-        card_controls = []
-        
-        # Get the component data list (the Model state) from the controller
-        component_data_list = self._controller.get_component_data() # Assuming this method exists
-        
-        # Iterate over the data dictionary, not a separate controller object
-        for item in component_data_list: 
-            
-            # Use the imported function (renamed to create_component_card_view)
-            card_view = self.create_component_card_view(
-                item=item,
-                # Attach the controller's event handlers directly
-                on_click_handler=self._controller.handle_component_click, 
-                on_hover_handler=self._controller.handle_component_hover
-            )
-            card_controls.append(card_view)
-            
-        components_row = ft.Row(
-            controls=card_controls,
-            spacing=10,
-            wrap=True
-        )
-        
-        return ft.Column(
-            controls=[
-                components_header,
-                components_row
-            ],
-            spacing=10
-        )
-    
-    def _create_components_section_alt(self):
-        """Creates the component selection row using ComponentCardView."""
-        
-        components_header = ft.Row([
-            ft.Text("Tree Components", size=16, weight=ft.FontWeight.BOLD),
-            ft.Icon(ft.Icons.APPS_OUTLINED)
-        ], spacing=5)
-        
-        card_controls = []
-        for item in self._controller.get_initial_component_data():
-            label = item["title"]
-            icon = item["image_src"]
-            initial_selected = label in self._controller.selected_components
-            
-            # 1. Create the ComponentCardController instance
-            card_controller = self._controller.create_card_controller(
-                label=label, 
-                icon=icon, 
-                initial_selected=initial_selected
-            )
-            
-            # 2. Get the Flet control (View) and link it to the Controller
-            card_view = self.create_component_card_view(
-                item=item,
-                # Attach the controller's event handlers directly
-                on_click_handler=self._controller._handle_component_click, 
-                on_hover_handler=self._controller._handle_component_click
-            )
-            card_controls.append(card_view)
-            
-        components_row = ft.Row(
-            controls=card_controls,
-            spacing=10,
-            wrap=True
-        )
-        
-        return ft.Column(
-            controls=[
-                components_header,
-                components_row
-            ],
-            spacing=10
-        )
-    
     def _param_input(self, label: str):
-        """Helper for parameter input fields with validation."""
+        """Helper for parameter input fields."""
         
         control = ft.TextField(
             label=label,
@@ -291,26 +118,20 @@ class Create_Species_View:
             error_text=None,
             max_lines=1,
             text_align=ft.TextAlign.CENTER,
-            # Styling
             bgcolor=ft.Colors.SECONDARY_CONTAINER,
-           
             border_color=ft.Colors.PRIMARY,
             focused_border_color=ft.Colors.PRIMARY,
             focused_border_width=2,
             border_width=1,
-       
-            # Label styling
             label_style=ft.TextStyle(
                 size=12,
                 weight=ft.FontWeight.W_500,
                 color=ft.Colors.PRIMARY,
             ),
-            # Error styling
             error_style=ft.TextStyle(
                 size=11,
                 color=ft.Colors.RED_600
             ),
-            # Hint text
             hint_text="0.00",
             hint_style=ft.TextStyle(
                 size=13,
@@ -318,7 +139,7 @@ class Create_Species_View:
             ),
         )
         
-        # Store a reference to the Flet control in the Controller for state/validation access
+        # Store a reference to the Flet control
         self.param_controls[label] = control
         return control
 
@@ -497,12 +318,11 @@ class Create_Species_View:
             spacing=5
         )
 
-    def update_parameters_visibility(self, selected_components):
+    def update_parameters_visibility(self, selected_components, current_equation_type):
         """Update parameter visibility based on selected components and equation type."""
-        print(f"Updating parameters for: {selected_components} with equation: {self.current_equation_type}")
         
         # Determine which equation type to use
-        equation_key = "DBH-based" if "DBH-based" in self.current_equation_type else "DBH + Height-based"
+        equation_key = "DBH-based" if current_equation_type == "DBH-based" else "DBH + Height-based"
         
         # Hide all parameters and labels first
         any_visible = False
@@ -533,151 +353,8 @@ class Create_Species_View:
         if self.parameters_section:
             self.parameters_section.update()
 
-
-    def _show_confirmation_dialog(self, e, page:ft.Page):
-        """Show confirmation dialog with preview of selected items"""
-        print("Create Species button clicked!")
-        
-        
-        # Get selected components
-        selected_components = self._get_current_selected_components()
-        
-        # Get equation type
-        equation_type = self.current_equation_type
-        
-        # Get parameter values
-        param_values = {}
-
-
-
-        if equation_type in self.param_controls:
-            components = self.param_controls[equation_type]
-            for component_name, controls_list in components.items():
-                for control in controls_list:
-                    if control.visible:
-                        param_key = f"{equation_type}_{component_name}_{control.label}"
-                        param_values[param_key] = control.value
-                        print(f"Parameter {param_key}: {control.value}")
-        
-        if not self._controller._is_form_valid():
-            print("Form is not valid, cannot show preview modal.")
-            return
-        ###
-        self.create_species_preview_modal.species_data = {
-             "species_code": self.species_textfield.value,
-            "origin": self.origin_dropdown.value,
-            "equation_type": equation_type,
-            "selected_components": selected_components,
-            "parameters": param_values
-            } 
-        self.create_species_preview_modal.show()
-     
-    def _handle_create_species_button_click(self, e):
-        """Handle Create Species button click - show confirmation dialog."""
-   
-        does_species_code_exist_in_tree_parameters = self._does_species_code_exist_within_dataset((self.species_textfield.value), "data/treeparameters.json")
-        if does_species_code_exist_in_tree_parameters:
-            logger.write(f"Species code {self.species_textfield.value} already exists in treeparameters.json")
-            Custom_Alert_Dialog(self.page, title_icon=ft.Icons.ERROR_OUTLINE, title_color=ft.Colors.RED_700, title_icon_color=ft.Colors.RED, title="Error", message="Species Code already exists in the Lamberts et al. (2005) dataset.", solution="Please use a different code.").show()
-            return
-        
-        does_species_code_exist_in_created_species = self._does_species_code_exist_within_dataset((self.species_textfield.value), "data/create_species.json")
-        if does_species_code_exist_in_created_species:
-            logger.write(f"Species code {self.species_textfield.value} already exists in create_species.json")
-            Custom_Alert_Dialog(self.page, title_icon=ft.Icons.ERROR_OUTLINE, title_color=ft.Colors.RED_700, title_icon_color=ft.Colors.RED, title="Error", message="User has already created a species with this code.", solution="Please use a different code.").show()
-            return
-        
-        # If everything checks out then proceed
-        self._proceed_with_creation(e)
-       
-    
-    def _does_species_code_exist_within_dataset(self, species_name_or_code, json_file_path: str) -> bool:
-        """Check if the species code already exists in the given JSON dataset."""
-        try:
-            data_set = pd.read_json(json_file_path)
-            # try to convert species_code to int
-            if species_name_or_code.isdigit():
-                species_name_or_code = int(species_name_or_code)
-                if 'SpeciesCode' in data_set.columns:
-                    logger.write(f"Checking if species code {species_name_or_code} exists in {json_file_path}")
-                    return species_name_or_code in data_set['SpeciesCode'].values
-            else:
-                species_name_or_code = str(species_name_or_code)
-                if 'SpecCommon' in data_set.columns:
-                    logger.write(f"Checking if species name {species_name_or_code} exists in {json_file_path}")
-                    #lowercase comparison
-                    return species_name_or_code.lower() in data_set['SpecCommon'].str.lower().values
-            return False
-          
-        except Exception as e:
-            print(f"Error reading JSON file: {e}")
-            logger.write(f"Error reading JSON file {json_file_path}: {e}")  
-            return False
-   
-    def _proceed_with_creation(self, e):
-        """Proceed with species creation"""
-        
-        components = self._get_current_selected_components()
-        logger.write(f"Selected components for creation: {components}")
-        if self.current_equation_type == "DBH-based":
-            logger.write("Current equation type is DBH-based")
-            data_to_be_inserted_into_json = self._collect_parameter_data(components)
-        else:
-            data_to_be_inserted_into_json = self._collect_parameter_data(components)
-            print("Data to be inserted into JSON:")
-            print(data_to_be_inserted_into_json)  
-            
-                # print(param.value)
-        # insert the data into the json called storage/created_species.json
-        # insert
-        
-        created_species_json = json.loads(open("data/create_species.json").read())
-        if self.species_textfield.value.isdigit():
-            created_species_json.append({"SpeciesCode": int(self.species_textfield.value),
-            **data_to_be_inserted_into_json})
-        else:
-            created_species_json.append({"SpecCommon": self.species_textfield.value,
-            **data_to_be_inserted_into_json})
-            
-        with open("data/create_species.json", "w") as f:
-            json.dump(created_species_json, f, indent=4)
-            print("Species data inserted into JSON file successfully.")
-            display_alert = Custom_Alert_Dialog(self.page, title_icon=ft.Icons.CHECK_CIRCLE_OUTLINED, title_color=ft.Colors.GREEN_700, title_icon_color=ft.Colors.GREEN, title="Success",  message="Species created successfully!").show()
-            logger.write(f"Species {self.species_textfield.value} created successfully and added to create_species.json")
-    def _get_equation_prefix(self, equation_type):
-        return "bh" if equation_type == "DBH + Height-based" else "b"
-    def _collect_parameter_data(self, components):
-        # Select b for DBH + Height-based
-        # Select bh for DBH-Based (Look at the tree_paramaters json for reference)
-        data_to_be_inserted_into_json = {"Origin": self.origin_dropdown.value, 
-                                         "EquationType": self.current_equation_type}
-        
-        
-        
-        prefix = self._get_equation_prefix(self.current_equation_type)
-
-        param_label  = ["b1", "b2", "b3"]
-        print(components)
-        print("Collecting parameter data...")
-        for component in components:
-            for param in self.param_controls.get(self.current_equation_type).get(component):
-                if prefix == "bh":
-                    for _,index in param_label[0:len(param_label)]:    
-                        if component.lower() == "branch":
-                            data_to_be_inserted_into_json[f"{prefix}branches{index}"] = float(param.value)
-                        else:
-                            data_to_be_inserted_into_json[f"{prefix}{component.lower()}{index}"] = float(param.value)
-                else:
-                    for _,index in param_label[0:len(param_label)-1]:
-                        if component.lower() == "branch":
-                            data_to_be_inserted_into_json[f"{prefix}branches{index}"] = float(param.value)
-                        else:
-                            data_to_be_inserted_into_json[f"{prefix}{component.lower()}{index}"] = float(param.value)                    
-           
-        return data_to_be_inserted_into_json
-    
     def _create_submit_button(self, page: ft.Page):
-        """Creates the submit button, linked to the confirmation dialog."""
+        """Creates the submit button."""
         return ft.Row(
             [
                 ft.ElevatedButton(
@@ -685,8 +362,7 @@ class Create_Species_View:
                         ft.Text("Create Species", size=16, weight=ft.FontWeight.BOLD),
                         ft.Icon(ft.Icons.ADD, size=20)
                     ], spacing=5, alignment=ft.MainAxisAlignment.CENTER),
-                    # Link to confirmation dialog instead of direct submit
-                    on_click=lambda e: self._show_confirmation_dialog(e, page), 
+                    on_click=lambda e: self._controller.show_confirmation_dialog(e, page),
                     bgcolor=ft.Colors.TERTIARY,
                     color=ft.Colors.WHITE,
                     height=40,
@@ -696,14 +372,9 @@ class Create_Species_View:
             alignment=ft.MainAxisAlignment.CENTER
         )
 
-    def on_component_selection_change(self, selected_components):
-        """Callback function when component selection changes"""
-        self.update_parameters_visibility(selected_components)
-
-    def build(self)-> ft.Container:
-        """Build the form and store page reference for dialogs"""
+    def build(self) -> ft.Container:
+        """Build the form."""
         
-     
         self.parameters_section = self._create_parameters_section()
         
         return ft.Container(
@@ -712,41 +383,40 @@ class Create_Species_View:
             content=ft.Container(
                 content=ft.Column(
                     controls=[
-                        ft.Column( [
-                        Title_With_Icon("Create Species", ft.Icons.ADD_BOX),
-                        DescriptionText("Define a new tree species by specifying its parameters and components."),
+                        ft.Column([
+                            Title_With_Icon("Create Species", ft.Icons.ADD_BOX),
+                            DescriptionText("Define a new tree species by specifying its parameters and components."),
                         ], spacing=8),
-                        ft.Divider(color=ft.Colors.GREY_300, height=30),  # More space
+                        ft.Divider(color=ft.Colors.GREY_300, height=30),
 
                         self._create_species_metadata_row(),
-                        ft.Divider(height=30, color=ft.Colors.GREY_300),  # More space
+                        ft.Divider(height=30, color=ft.Colors.GREY_300),
                         
                         Select_Components_Widget(
                             page=self.page,
                             title=TitleTextWidget("Select Tree Component"),
                             description_text=DescriptionText("Select tree components for biomass calculation"),
                             components_card_row=ft.Row(),
-                            selected_card_component=self.selected_components_text,
-                            components_data=COMPONENTS_DATA_2, # Pass the data,
+                            selected_card_component=ft.Text(value=""),
+                            components_data=self._controller.get_component_data(),
                             display_button=False,
                             display_shadow=False,
-                            on_selection_change=self.on_component_selection_change,  # Add callback
+                            on_selection_change=self._controller.on_component_selection_change,
                             is_alternate_card=True,
                             is_in_create_species_page=True
                         ).get_widget(),
                         
-                        ft.Divider(height=30, color=ft.Colors.GREY_300),  # More space
-                        self.parameters_section,  # Use the stored reference
-                        ft.Divider(height=30, color=ft.Colors.GREY_300),  # More space
+                        ft.Divider(height=30, color=ft.Colors.GREY_300),
+                        self.parameters_section,
+                        ft.Divider(height=30, color=ft.Colors.GREY_300),
                         self._create_submit_button(page=self.page),
-                        ft.Container(height=20)  # Extra space at bottom
+                        ft.Container(height=20)
                     ],
                     scroll=ft.ScrollMode.AUTO,
                 ),
                 margin=30,
                 padding=40,
                 border_radius=15,
-               
                 bgcolor=ft.Colors.SECONDARY_CONTAINER,
                 shadow=ft.BoxShadow(
                     spread_radius=1,
@@ -756,3 +426,19 @@ class Create_Species_View:
                 ),
             )
         )
+
+    # Getters for controller to access UI controls
+    def get_species_textfield(self):
+        return self.species_textfield
+    
+    def get_origin_dropdown(self):
+        return self.origin_dropdown
+    
+    def get_equation_type_dropdown(self):
+        return self.equation_type_dropdown
+    
+    def get_parameter_controls(self):
+        return self.param_controls
+    
+    def get_preview_modal(self):
+        return self.create_species_preview_modal

@@ -1,0 +1,16 @@
+[21:24:06] --- Log Session Started ---
+[21:24:06] Splash screen displayed
+[21:24:08] DataManager cleared, proceeding to EULA
+[21:24:09] User agreed to EULA - proceeding with application
+[21:24:09] User navigated to Select Data page
+[21:24:10] Import text file dialog opened
+[21:24:13] Selected file for import: C:\Users\mohib\Documents\BIOMASS\Biomass-Calculation-Tool\data_set.txt
+[21:24:13] Text file imported successfully with 12 records and 2 errors.
+[21:24:17] User navigated to Calculate Biomass page
+[21:24:20] Calculate biomass button clicked
+[21:24:24] Generated export filename: Output_data_set_20260202_212424.txt
+[21:24:24] Export file dialog opened
+[21:24:27] Data exported successfully to C:\Users\mohib\Documents\BIOMASS\Biomass-Calculation-Tool\Output_data_set_20260202_212424.txt
+[21:24:53] Generated export filename: Output_data_set_20260202_212453.txt
+[21:24:53] Export file dialog opened
+[21:25:04] Data exported successfully to C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\Output_data_set_20260202_212453.txt

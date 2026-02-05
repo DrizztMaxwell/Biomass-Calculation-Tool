@@ -1,0 +1,143 @@
+[12:00:07] --- Log Session Started ---
+[12:00:08] Splash screen displayed
+[12:00:11] DataManager cleared, proceeding to EULA
+[12:00:13] User agreed to EULA - proceeding with application
+[12:00:13] User navigated to Select Data page
+[12:01:11] Import text file dialog opened
+[12:01:15] Selected file for import: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\testing_dataset\All_Capitalised_Test.txt
+[12:01:16] Text file imported successfully with 72 records and 0 errors.
+[12:01:24] Import text file dialog opened
+[12:01:26] File selection cancelled by user
+[12:01:29] Import text file dialog opened
+[12:01:32] Selected file for import: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\testing_dataset\All_Capitalised_Test.txt
+[12:01:33] Text file imported successfully with 72 records and 0 errors.
+[12:01:38] User navigated to Calculate Biomass page
+[12:02:03] Calculate biomass button clicked
+[12:02:34] Biomass chart displayed
+[12:02:34] Biomass chart displayed
+[12:02:54] Generated export filename: Output_All_Capitalised_Test_20260203_120254.txt
+[12:02:54] Export file dialog opened
+[12:03:00] Data exported successfully to C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\Output_All_Capitalised_Test_20260203_120254.txt
+[12:03:47] User navigated to Select Data page
+[12:04:00] Successfully connected to database gypsppgp on server DESKTOP-EJ33BVS\SQLEXPRESS
+[12:04:00] Database connection info saved: {'server': 'DESKTOP-EJ33BVS\\SQLEXPRESS', 'database': 'gypsppgp', 'driver': 'ODBC Driver 17 for SQL Server', 'data_folder_path': 'C:\\Program Files\\Microsoft SQL Server\\MSSQL16.SQLEXPRESS\\MSSQL\\DATA'}
+[12:04:00] Connecting to database gypsppgp on server DESKTOP-EJ33BVS\SQLEXPRESS using driver ODBC Driver 17 for SQL Server
+[12:04:02] Database import successful with 10000 records.
+[12:04:02] Database import process completed for gypsppgp
+[12:04:26] Error connecting to database: ('08001', '[08001] [Microsoft][ODBC Driver 17 for SQL Server]SQL Server Network Interfaces: Error Locating Server/Instance Specified [xFFFFFFFF].  (-1) (SQLDriverConnect); [08001] [Microsoft][ODBC Driver 17 for SQL Server]Login timeout expired (0); [08001] [Microsoft][ODBC Driver 17 for SQL Server]Invalid connection string attribute (0); [08001] [Microsoft][ODBC Driver 17 for SQL Server]A network-related or instance-specific error has occurred while establishing a connection to SQL Server. Server is not found or not accessible. Check if instance name is correct and if SQL Server is configured to allow remote connections. For more information see SQL Server Books Online. (-1)')
+[12:04:26] Database connection failed for DATA
+[12:04:37] Successfully connected to database gypsppgp on server DESKTOP-EJ33BVS\SQLEXPRESS
+[12:04:37] Database connection info saved: {'server': 'DESKTOP-EJ33BVS\\SQLEXPRESS', 'database': 'gypsppgp', 'driver': 'ODBC Driver 17 for SQL Server', 'data_folder_path': 'C:\\Program Files\\Microsoft SQL Server\\MSSQL16.SQLEXPRESS\\MSSQL\\DATA'}
+[12:04:37] Connecting to database gypsppgp on server DESKTOP-EJ33BVS\SQLEXPRESS using driver ODBC Driver 17 for SQL Server
+[12:04:39] Database import successful with 10000 records.
+[12:04:39] Database import process completed for gypsppgp
+[12:04:44] User navigated to Calculate Biomass page
+[12:04:53] Calculate biomass button clicked
+[12:05:06] Write to database operation success: True
+[12:05:54] User navigated to Select Data page
+[12:05:55] Import text file dialog opened
+[12:05:58] Selected file for import: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\All_Sp_Data_Test_BCT_Dec - Copy.txt
+[12:06:00] Text file imported successfully with 1991 records and 1 errors.
+[12:06:25] User navigated to Calculate Biomass page
+[12:06:27] User navigated to Select Data page
+[12:06:29] User navigated to Calculate Biomass page
+[12:06:30] Calculate biomass button clicked
+[12:06:42] User navigated to Select Data page
+[12:06:50] Import text file dialog opened
+[12:06:55] Selected file for import: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\Data_Test_BCT(in)(in).txt
+[12:06:55] Error importing text file: Missing required columns: ['species']
+Available columns: ['Plot', 'PlotKey', 'Year', 'Origin', 'TrEe Status', 'Tree Number', 'SpecCode', 'DBH', 'Height']
+[12:07:00] Import text file dialog opened
+[12:07:06] Selected file for import: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\data_set.txt
+[12:07:07] Text file imported successfully with 12 records and 2 errors.
+[12:07:10] User navigated to Calculate Biomass page
+[12:07:11] Calculate biomass button clicked
+[12:07:20] Calculate biomass button clicked
+[12:07:24] User navigated to Select Data page
+[12:10:20] User navigated to Calculate Biomass page
+[12:10:27] Loaded species data from treeparameters.json
+[12:10:36] Calculate biomass button clicked
+[12:11:11] User navigated to Create Species page
+[12:11:28] Checking if species code 251 exists in data/treeparameters.json
+[12:11:28] Selected components for creation: ['Wood', 'Bark', 'Branch', 'Foliage']
+[12:11:28] Current equation type is DBH-based
+[12:11:28] Species 251 created successfully and added to create_species.json
+[12:11:32] User navigated to Modify Species page
+[12:11:32] Species data loaded successfully.
+[12:11:35] Viewing species: 251
+[12:11:36] Species details dialog closed for species: 251
+[12:11:37] Editing species: 251
+[12:11:39] Dialog closed.
+[12:11:40] Confirming deletion of species: 251
+[12:11:41] User navigated to Create Species page
+[12:11:43] User navigated to Calculate Biomass page
+[12:11:45] Calculate biomass button clicked
+[12:11:54] User navigated to Modify Species page
+[12:11:54] Species data loaded successfully.
+[12:11:56] User navigated to Calculate Biomass page
+[12:11:57] Calculate biomass button clicked
+[12:12:25] User navigated to Modify Species page
+[12:12:25] Species data loaded successfully.
+[12:12:27] Editing species: 251
+[12:12:34] Parameter bwood1 updated to 0.02
+[12:12:34] Parameter bwood2 updated to 0.03
+[12:12:34] Parameter bbark1 updated to 0.01
+[12:12:34] Parameter bbark2 updated to 0.04
+[12:12:34] Parameter bbranches1 updated to 0.05
+[12:12:34] Parameter bbranches2 updated to 0.0
+[12:12:34] Parameter bfoliage1 updated to 0.0
+[12:12:34] Parameter bfoliage2 updated to 0.0
+[12:12:34] Species data saved successfully.
+[12:12:34] Species '251' updated successfully.
+[12:12:36] User navigated to Create Species page
+[12:12:37] User navigated to Calculate Biomass page
+[12:12:38] Calculate biomass button clicked
+[12:13:04] User navigated to Select Data page
+[12:13:05] Import text file dialog opened
+[12:13:08] Selected file for import: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\data_set.txt
+[12:13:09] Text file imported successfully with 12 records and 2 errors.
+[12:13:24] User navigated to Calculate Biomass page
+[12:13:25] Calculate biomass button clicked
+[12:13:30] User navigated to Select Data page
+[12:13:32] Import text file dialog opened
+[12:13:35] Selected file for import: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\data_set.txt
+[12:13:36] Text file imported successfully with 12 records and 2 errors.
+[12:14:17] User navigated to Calculate Biomass page
+[12:14:18] User navigated to Create Species page
+[12:14:22] User navigated to Modify Species page
+[12:14:22] Species data loaded successfully.
+[12:14:24] User navigated to Settings page
+[12:14:25] User navigated to Modify Species page
+[12:14:25] Species data loaded successfully.
+[12:14:33] User navigated to Create Species page
+[12:14:58] User navigated to Modify Species page
+[12:14:58] Species data loaded successfully.
+[12:15:00] User navigated to Settings page
+[12:15:01] Theme toggled to: ThemeMode.DARK
+[12:15:03] User navigated to Select Data page
+[12:15:05] User navigated to Calculate Biomass page
+[12:15:10] User navigated to Create Species page
+[12:15:12] User navigated to Modify Species page
+[12:15:12] Species data loaded successfully.
+[12:15:15] User navigated to Settings page
+[12:15:16] User chose to exit the application
+[12:15:18] Displayed About Dialog
+[12:15:51] Closed About Dialog
+[12:15:52] Theme toggled to: ThemeMode.LIGHT
+[12:15:53] Loaded species data from treeparameters.json
+[12:16:04] Displayed About Dialog
+[12:16:08] Closed About Dialog
+[12:16:09] Loaded species data from treeparameters.json
+[12:16:16] User navigated to Select Data page
+[12:16:55] User navigated to Calculate Biomass page
+[12:16:56] User navigated to Select Data page
+[12:16:57] User navigated to Calculate Biomass page
+[12:16:57] User navigated to Create Species page
+[12:16:59] User navigated to Modify Species page
+[12:16:59] Species data loaded successfully.
+[12:17:00] User navigated to Settings page
+[12:17:03] User navigated to Modify Species page
+[12:17:03] Species data loaded successfully.
+[12:17:06] User navigated to Settings page
+[12:17:12] User navigated to Select Data page
+[12:17:43] User chose to exit the application

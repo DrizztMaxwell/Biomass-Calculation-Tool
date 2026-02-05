@@ -1,0 +1,19 @@
+[18:16:27] --- Log Session Started ---
+[18:16:28] Splash screen displayed
+[18:16:31] DataManager cleared, proceeding to EULA
+[18:16:32] User agreed to EULA - proceeding with application
+[18:16:32] User navigated to Select Data page
+[18:16:34] Import text file dialog opened
+[18:16:36] File selection cancelled by user
+[18:16:36] User navigated to Create Species page
+[18:17:14] Checking if species name dsdawddddddddddddddddddddddd exists in data/treeparameters.json
+[18:17:14] Checking if species name dsdawddddddddddddddddddddddd exists in data/create_species.json
+[18:17:14] Selected components for creation: ['Bark']
+[18:17:14] Current equation type is DBH-based
+[18:17:14] Species dsdawddddddddddddddddddddddd created successfully and added to create_species.json
+[18:17:15] User navigated to Modify Species page
+[18:17:15] Species data loaded successfully.
+[18:17:28] User navigated to Create Species page
+[18:17:57] User navigated to Settings page
+[18:17:58] Theme toggled to: ThemeMode.DARK
+[18:17:59] User navigated to Create Species page

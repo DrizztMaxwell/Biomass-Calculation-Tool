@@ -1,0 +1,12 @@
+[18:03:09] --- Log Session Started ---
+[18:03:10] Splash screen displayed
+[18:03:13] DataManager cleared, proceeding to EULA
+[18:03:13] User agreed to EULA - proceeding with application
+[18:03:13] User navigated to Select Data page
+[18:03:14] User navigated to Modify Species page
+[18:03:14] Species data loaded successfully.
+[18:03:15] User navigated to Create Species page
+[18:03:36] Checking if species name waddw exists in data/treeparameters.json
+[18:03:36] Checking if species name waddw exists in data/create_species.json
+[18:03:36] Selected components for creation: ['Wood', 'Bark', 'Branch', 'Foliage']
+[18:03:36] Current equation type is DBH-based
