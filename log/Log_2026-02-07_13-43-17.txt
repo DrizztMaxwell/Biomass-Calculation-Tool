@@ -1,0 +1,30 @@
+[13:43:17] --- Log Session Started ---
+[13:43:19] Splash screen displayed
+[13:43:21] DataManager cleared, proceeding to EULA
+[13:43:22] User agreed to EULA - proceeding with application
+[13:43:22] User navigated to Select Data page
+[13:43:23] User navigated to Create Species page
+[13:43:33] Checking if species name sa2 exists in data/treeparameters.json
+[13:43:34] Checking if species name sa2 exists in data/create_species.json
+[13:43:38] Checking if species name sa2 exists in data/treeparameters.json
+[13:43:38] Checking if species name sa2 exists in data/create_species.json
+[13:43:39] Selected components for creation: ['Bark']
+[13:43:39] Current equation type is DBH-based
+[13:43:39] Species sa2 created successfully and added to create_species.json
+[13:43:41] User navigated to Modify Species page
+[13:43:41] Species data loaded successfully.
+[13:43:48] Editing species: 
+[13:43:50] Dialog closed.
+[13:43:51] Viewing species: 
+[13:43:52] Species details dialog closed for species: 
+[13:43:53] User navigated to Create Species page
+[13:44:10] Checking if species name saeswqe2 exists in data/treeparameters.json
+[13:44:10] Checking if species name saeswqe2 exists in data/create_species.json
+[13:44:12] Selected components for creation: ['Wood', 'Bark']
+[13:44:12] Current equation type is DBH-based
+[13:44:12] Species saeswqe2 created successfully and added to create_species.json
+[13:44:13] User navigated to Modify Species page
+[13:44:13] Species data loaded successfully.
+[13:44:26] Viewing species: 
+[13:44:28] Species details dialog closed for species: 
+[13:44:30] User navigated to Create Species page

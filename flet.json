@@ -1,0 +1,29 @@
+{
+  "name": "BiomassCalculator",
+  "version": "1.0.0",
+  "description": "Biomass Calculation Tool",
+  "company": "Ontario Ministry of Natural Resources and Forestry",
+  "author": "Your Name",
+  "web_renderer": "canvaskit",
+  "use_color_emoji": true,
+  "assets_dir": "assets",
+  "windows": {
+    "console": false,
+    "company_name": "Ontario Ministry of Natural Resources and Forestry",
+    "file_description": "Biomass Calculation Tool",
+    "product_name": "Biomass Calculator",
+    "product_version": "1.0.0"
+  },
+  "macos": {
+    "app_name": "Biomass Calculator",
+    "bundle_identifier": "ca.on.mnrf.biomasscalculator"
+  },
+  "linux": {
+    "app_name": "biomass-calculator",
+    "categories": [
+      "Science",
+      "Education",
+      "Utility"
+    ]
+  }
+}
