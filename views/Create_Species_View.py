@@ -38,7 +38,7 @@ class Create_Species_View:
         """
         try:
             # Pass to controller and get result
-            result = self.__controller.handle_create_species_button_click
+            result = self.__controller._proceed_with_creation()
             
             if result:
                 print (result)
@@ -94,6 +94,7 @@ class Create_Species_View:
         param_values = {}
         
         param_controls = self.__controller.get_param_controls()
+        
         if equation_type in param_controls:
             components = param_controls[equation_type]
             for component_name, controls_list in components.items():
@@ -114,14 +115,16 @@ class Create_Species_View:
             "__selected_components": self.__controller.get_selected_components(),
             "parameters": param_values
         }
+        
         preview_modal.show()
     
     def _handle_create_create_button_click(self, e):
         """Handle the create button click event."""
         # Gather all input values
         try:
-            
-            self.show_preview_modal()
+            if self.__controller.handle_create_species_button_click() == True:
+                
+                self.show_preview_modal()
               
         except Exception as e:
             
@@ -213,8 +216,15 @@ class Create_Species_View:
             ],
             spacing=20,
         )
-        
+    
+    def on_component_selection_change(self, __selected_components):
+        """Callback function when component selection changes."""
+        self.__controller.set_selected_components(__selected_components)
+        print(f"Component selection changed: {self.__controller.get_selected_components()}")
+        self.update_parameters_visibility(self.__controller.get_selected_components(), self.__controller.get_current_equation_type())
+       
     def on_equation_type_change(self, e):
+        self.__controller.set_current_equation_type(e.control.value)
         self.update_parameters_visibility(self.__controller.get_selected_components(), e.control.value)
     
     def _param_input(self, label: str):
@@ -515,7 +525,7 @@ class Create_Species_View:
                             components_data=self.__controller.get_component_data(),
                             display_button=False,
                             display_shadow=False,
-                            on_selection_change=self.__controller.on_component_selection_change,
+                            on_selection_change= lambda e: self.on_component_selection_change(e),
                             is_alternate_card=True,
                             is_in_create_species_page=True
                         ).get_widget(),

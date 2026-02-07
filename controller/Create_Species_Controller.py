@@ -47,10 +47,17 @@ class Create_Species_Controller:
     def get_selected_components(self):
         """Get currently selected components."""
         return self.__selected_components
+    
+    def set_selected_components(self, selected_components):
+        """Set selected components."""
+        self.__selected_components = selected_components
+    
     def get_current_equation_type(self):
         """Get current equation type."""
         return self.current_equation_type
-    
+    def set_current_equation_type(self, equation_type):
+        """Set current equation type."""
+        self.current_equation_type = equation_type
     def get_component_data(self):
         """Get component data."""
         return self.component_data
@@ -202,17 +209,16 @@ class Create_Species_Controller:
     
     def _proceed_with_creation(self):
         """Proceed with species creation."""
-        species_textfield = self.get_species_code_or_name()
-        origin_dropdown = self.get_origin_type()
         
         logger.write(f"Selected components for creation: {self.get_selected_components()}")
         
-        if self.current_equation_type == "DBH-based":
+        if self.get_current_equation_type() == "DBH-based":
             logger.write("Current equation type is DBH-based")
             data_to_be_inserted_into_json = self._collect_parameter_data(self.get_selected_components())
         else:
             data_to_be_inserted_into_json = self._collect_parameter_data(self.get_selected_components())
             print("Data to be inserted into JSON:")
+            
             print(data_to_be_inserted_into_json)
             
         # Insert the data into the JSON file
@@ -235,13 +241,14 @@ class Create_Species_Controller:
             
             logger.write(f"Species {self.get_species_code_or_name()} created successfully and added to create_species.json")
             return True
+        return False
     def _get_equation_prefix(self, equation_type):
         """Get equation prefix based on equation type."""
         return "bh" if equation_type == "DBH + Height-based" else "b"
     
     def _collect_parameter_data(self, components):
         """Collect parameter data for selected components and equation type."""
-        prefix = self._get_equation_prefix(self.current_equation_type)
+        prefix = self._get_equation_prefix(self.get_current_equation_type())
         is_bh_equation = (prefix == "bh")
         param_count = 3 if is_bh_equation else 2
         
@@ -251,7 +258,7 @@ class Create_Species_Controller:
         # Build the data dictionary
         data = {
             "Origin": self.view.get_origin_dropdown().value,
-            "EquationType": self.current_equation_type,
+            "EquationType": self.get_current_equation_type(),
             **self._collect_component_params(components, prefix, param_count)
         }
         
@@ -264,7 +271,7 @@ class Create_Species_Controller:
         
         param_controls = self.get_param_controls()
         for component in components:
-            params = param_controls.get(self.current_equation_type, {}).get(component, [])
+            params = param_controls.get(self.get_current_equation_type(), {}).get(component, [])
             
             for idx, param in enumerate(params[:param_count]):
                 label = param_labels[idx]
