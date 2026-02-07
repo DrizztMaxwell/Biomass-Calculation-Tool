@@ -864,6 +864,7 @@ class Calculate_Biomass_Controller:
             print(f"Error saving to text file: {e}")
 
     def _normalize_biomass_row(self, row: dict) -> dict:
+        print(row)
         plot = row.get("Plot") or row.get("plot")
         year = row.get("Year") or row.get("year")
         tree_number = row.get("Tree_number") or row.get("Tree Number") or row.get("tree_number")
@@ -886,7 +887,7 @@ class Calculate_Biomass_Controller:
             "crown_kg": row.get("Crown_kg") or row.get("Crown (KG)") or row.get("crown_kg"),
             "stem_kg": row.get("Stem_kg") or row.get("Stem (KG)") or row.get("stem_kg"),
             "total_kg": row.get("Total_kg") or row.get("Total (KG)") or row.get("total_kg"),
-            "coefficient_source": row.get("CoefficientSource") or row.get("coefficient_source")
+            "coefficient_source": self.get_equation_type()
         }
 
 

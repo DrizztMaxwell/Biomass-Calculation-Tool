@@ -5,7 +5,7 @@ class About_Dialog_View():
     def __init__(self, page: ft.Page):
         self.page = page
         self.container = self._create_about_container()
-        self.overlay =  self._create_overlay()
+        self.overlay = self._create_overlay()
         self.is_visible = False
 
     def show(self):
@@ -31,10 +31,9 @@ class About_Dialog_View():
         screen_width = self.page.width
         screen_height = self.page.height
         
-        # Use 80% of screen width (with min and max limits)
-        dialog_width = min(max(screen_width * 0.8, 700), 1200)  # Between 700px and 1200px
-        # Use 85% of screen height (with min and max limits)
-        dialog_height = min(max(screen_height * 0.85, 600), 900)  # Between 600px and 900px
+        # Make the dialog larger to fit more content without scrolling
+        dialog_width = min(max(screen_width * 0.85, 800), 1400)  # Increased max width
+        dialog_height = min(max(screen_height * 0.90, 700), 1000)  # Increased height
         
         # Update container dimensions
         self.container.width = dialog_width
@@ -54,7 +53,6 @@ class About_Dialog_View():
 
     def _create_about_header(self):
         return ft.Container(
-            
             content=ft.Row([
                 # Info icon and title with elegant styling
                 ft.Row([
@@ -110,24 +108,24 @@ class About_Dialog_View():
         )
 
     def _create_about_content(self):
-        """Create scrollable content section"""
+        """Create compact content section with reduced spacing"""
         return ft.Column(
             [
-                # Introduction
+                # Introduction - reduced line spacing and smaller text
                 ft.Text(
                     "This tool provides a reliable way to estimate the aboveground biomass of Canadian tree species by applying the national biomass equations developed by Lambert et al. (2005). "
                     "These equations were designed to support carbon accounting and forest management by converting standard forest inventory measurements into biomass estimates. The tool calculates biomass for individual tree components—wood, bark, branches, and foliage—and ensures that the sum of these components equals the total aboveground biomass. It uses species-specific allometric models based on diameter at breast height (DBH) and, when available, tree height, offering two levels of precision:",
-                    size=14,
+                    size=13,  # Reduced from 14
                     color=ft.Colors.PRIMARY,
                     text_align=ft.TextAlign.JUSTIFY
                 ),
             
-                ft.Divider(height=30, color=ft.Colors.GREY_200),
+                ft.Divider(height=20, color=ft.Colors.GREY_200),  # Reduced from 30
             
                 # Precision levels section
                 ft.Text(
                     "Precision Types",
-                    size=16,
+                    size=15,  # Reduced from 16
                     weight=ft.FontWeight.BOLD,
                     color=ft.Colors.PRIMARY
                 ),
@@ -136,19 +134,19 @@ class About_Dialog_View():
                     content=ft.Column([
                         self._create_icon_with_text(ft.Icons.STRAIGHTEN, "DBH-based equations for situations where height data are unavailable.", "#10B981"),
                         self._create_icon_with_text(ft.Icons.HEIGHT, "DBH + height-based equations for improved accuracy when both measurements are provided.", "#3B82F6"),
-                    ], spacing=6),
-                    padding=ft.padding.only(left=15, top=15, bottom=15, right=15),
+                    ], spacing=4),  # Reduced spacing
+                    padding=ft.padding.only(left=12, top=10, bottom=10, right=12),  # Reduced padding
                     bgcolor=ft.Colors.SECONDARY_CONTAINER,
                     border_radius=ft.border_radius.all(10),
-                    margin=ft.margin.symmetric(vertical=12)
+                    margin=ft.margin.symmetric(vertical=8)  # Reduced margin
                 ),
             
-                ft.Divider(height=30, color=ft.Colors.GREY_200),
+                ft.Divider(height=20, color=ft.Colors.GREY_200),  # Reduced from 30
             
                 # Key features section
                 ft.Text(
                     "Key Features",
-                    size=16,
+                    size=15,  # Reduced from 16
                     weight=ft.FontWeight.BOLD,
                     color=ft.Colors.PRIMARY
                 ),
@@ -157,70 +155,70 @@ class About_Dialog_View():
                     content=ft.Column([
                         self._create_icon_with_text(ft.Icons.PARK, "Covers 33 Canadian tree species, plus grouped equations for hardwoods, softwoods, and all species combined.", "#8B5CF6"),
                         self._create_icon_with_text(ft.Icons.ANALYTICS, "Provides outputs suitable for forest carbon budget estimation, ecological modeling, and operational planning.", "#F59E0B"),
-                    ], spacing=6),
-                    padding=ft.padding.only(left=15, top=15, bottom=15, right=15),
+                    ], spacing=4),  # Reduced spacing
+                    padding=ft.padding.only(left=12, top=10, bottom=10, right=12),  # Reduced padding
                     bgcolor=ft.Colors.SECONDARY_CONTAINER,
                     border_radius=ft.border_radius.all(10),
-                    margin=ft.margin.symmetric(vertical=12)
+                    margin=ft.margin.symmetric(vertical=8)  # Reduced margin
                 ),
             
-                ft.Divider(height=30, color=ft.Colors.GREY_200),
+                ft.Divider(height=20, color=ft.Colors.GREY_200),  # Reduced from 30
             
-                # Target audience
+                # Target audience - made more compact
                 ft.Container(
                     content=ft.Column([
                         ft.Text(
                             "Intended For",
-                            size=16,
+                            size=15,  # Reduced from 16
                             weight=ft.FontWeight.BOLD,
                             color=ft.Colors.BLACK
                         ),
                         ft.Text(
                             "Researchers, forest managers, and policy analysts who require consistent and scientifically robust biomass estimates across Canada.",
-                            size=14,
+                            size=13,  # Reduced from 14
                             color=ft.Colors.BLACK,
                             text_align=ft.TextAlign.JUSTIFY
                         ),
-                    ], spacing=10),
-                    padding=ft.padding.all(20),
-                    margin=ft.margin.only(top=30),
+                    ], spacing=6),  # Reduced spacing
+                    padding=ft.padding.all(15),  # Reduced padding
+                    margin=ft.margin.only(top=15),  # Reduced margin
                     bgcolor=ft.Colors.BLUE_50,
                     border_radius=ft.border_radius.all(10),
                     border=ft.border.all(1, ft.Colors.BLUE_100)
                 ),
                 
-                ft.Divider(height=30, color=ft.Colors.GREY_200),
+                ft.Divider(height=20, color=ft.Colors.GREY_200),  # Reduced from 30
                 
-                # Development and Contact section
+                # Development and Contact section - made more compact
                 ft.Container(
                     content=ft.Column([
                         ft.Text(
                             "Development & Contact",
-                            size=16,
+                            size=15,  # Reduced from 16
                             weight=ft.FontWeight.BOLD,
                             color=ft.Colors.PRIMARY
                         ),
                         ft.Text(
                             "This biomass calculation tool was developed by the Ontario Ministry of Natural Resources and Forestry in collaboration with Trent University. For more information, please contact:",
-                            size=14,
+                            size=13,  # Reduced from 14
                             color=ft.Colors.PRIMARY,
                             text_align=ft.TextAlign.JUSTIFY
                         ),
                         
-                        # Email links container
+                        # Email links container with reduced spacing
                         ft.Container(
                             content=ft.Column([
                                 ft.Container(
                                     content=ft.Row([
-                                        ft.Icon(ft.Icons.MAIL_OUTLINED, color="#EA580C", size=18),
+                                        ft.Icon(ft.Icons.MAIL_OUTLINED, color="#EA580C", size=16),  # Reduced icon size
                                         ft.Text(
                                             "Jamshid Eslamdoust",
-                                            size=14,
+                                            size=13,  # Reduced from 14
                                             color=ft.Colors.BLACK,
                                             weight=ft.FontWeight.W_500
                                         ),
-                                    ], spacing=10),
-                                    padding=ft.padding.symmetric(vertical=8, horizontal=15),
+                                    ], spacing=8),  # Reduced spacing
+                                    padding=ft.padding.symmetric(vertical=6, horizontal=12),  # Reduced padding
                                     border_radius=ft.border_radius.all(8),
                                     bgcolor=ft.Colors.ORANGE_50,
                                     border=ft.border.all(1, ft.Colors.ORANGE_100),
@@ -231,15 +229,15 @@ class About_Dialog_View():
                                 
                                 ft.Container(
                                     content=ft.Row([
-                                        ft.Icon(ft.Icons.MAIL_OUTLINED, color="#0284C7", size=18),
+                                        ft.Icon(ft.Icons.MAIL_OUTLINED, color="#0284C7", size=16),  # Reduced icon size
                                         ft.Text(
                                             "Christopher Stratton",
-                                            size=14,
+                                            size=13,  # Reduced from 14
                                             color=ft.Colors.BLACK,
                                             weight=ft.FontWeight.W_500
                                         ),
-                                    ], spacing=10),
-                                    padding=ft.padding.symmetric(vertical=8, horizontal=15),
+                                    ], spacing=8),  # Reduced spacing
+                                    padding=ft.padding.symmetric(vertical=6, horizontal=12),  # Reduced padding
                                     border_radius=ft.border_radius.all(8),
                                     bgcolor=ft.Colors.BLUE_50,
                                     border=ft.border.all(1, ft.Colors.BLUE_100),
@@ -247,27 +245,27 @@ class About_Dialog_View():
                                     data="Christopher.Stratton@ontario.ca",
                                     ink=True,
                                 ),
-                            ], spacing=8),
-                            margin=ft.margin.only(top=15),
+                            ], spacing=6),  # Reduced spacing
+                            margin=ft.margin.only(top=10),  # Reduced margin
                         ),
                         
                         ft.Text(
                             "Click on any email address above to open your default email client.",
-                            size=12,
+                            size=11,  # Reduced from 12
                             color=ft.Colors.GREY_600,
                             italic=True,
                             text_align=ft.TextAlign.CENTER
                         ),
-                    ], spacing=12),
-                    padding=ft.padding.all(20),
-                    margin=ft.margin.only(top=20),
+                    ], spacing=8),  # Reduced spacing between sections
+                    padding=ft.padding.all(15),  # Reduced padding
+                    margin=ft.margin.only(top=15),  # Reduced margin
                     bgcolor=ft.Colors.SECONDARY_CONTAINER,
                     border_radius=ft.border_radius.all(10),
                     border=ft.border.all(1, ft.Colors.GREY_200)
                 ),
             ], 
-            spacing=0,
-            scroll=ft.ScrollMode.AUTO,
+            spacing=0,  # No spacing between main sections
+            scroll=ft.ScrollMode.AUTO,  # Keep AUTO scroll just in case, but with compact layout it shouldn't be needed
             expand=True,
         )
     
@@ -278,10 +276,10 @@ class About_Dialog_View():
     def _create_icon_with_text(self, icon, text, color):
         return ft.Container(
             content=ft.Row([
-                ft.Icon(icon, color=color, size=18),
-                ft.Text(text, size=14, color=ft.Colors.PRIMARY, expand=True),
-            ], spacing=12),
-            padding=ft.padding.symmetric(vertical=8),
+                ft.Icon(icon, color=color, size=16),  # Reduced icon size
+                ft.Text(text, size=13, color=ft.Colors.PRIMARY, expand=True),  # Reduced text size
+            ], spacing=10),  # Reduced spacing
+            padding=ft.padding.symmetric(vertical=6),  # Reduced padding
         )
 
     def _create_about_container(self):
@@ -291,7 +289,7 @@ class About_Dialog_View():
                 [
                     self._create_about_header(),
                     ft.Container(
-                        padding=30,
+                        padding=ft.padding.symmetric(horizontal=25, vertical=20),  # Reduced padding
                         content=self._create_about_content(),
                         expand=True,
                     ),
