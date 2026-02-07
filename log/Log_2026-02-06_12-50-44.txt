@@ -1,0 +1,8 @@
+[12:50:44] --- Log Session Started ---
+[12:50:46] Splash screen displayed
+[12:50:48] DataManager cleared, proceeding to EULA
+[12:50:50] User agreed to EULA - proceeding with application
+[12:50:50] User navigated to Select Data page
+[12:50:52] User navigated to Create Species page
+[12:50:54] Form is not valid, cannot create species.
+[12:50:54] Error validating form: Form is not valid, cannot create species.

@@ -65,7 +65,7 @@ class SideNavbar_View:
         self.select_data_controller = Select_Data_Controller(self.page, self.Callback_To_Update_Sidebar_UI, self.select_data_view)
         self.select_data_view.controller = self.select_data_controller
         
-        self.create_species_controller = Create_Species_Controller( self.page, None)
+        self.create_species_controller = Create_Species_Controller()
         self.create_species_view = Create_Species_View(self.page, self.create_species_controller)
         self.create_species_controller.view = self.create_species_view
         

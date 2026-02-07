@@ -1,0 +1,4 @@
+[16:37:05] --- Log Session Started ---
+[16:37:07] Splash screen displayed
+[16:37:09] DataManager cleared, proceeding to EULA
+[16:37:10] User rejected EULA - application cannot proceed

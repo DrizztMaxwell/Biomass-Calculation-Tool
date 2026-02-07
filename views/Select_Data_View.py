@@ -190,7 +190,7 @@ class Select_Data_View:
         )
         db_input = ft.TextField(
             label="Database Name",
-            value=os.path.basename(detected_path) if detected_path else "",
+            value="",
             prefix_icon=ft.Icons.TABLE_CHART,
             filled=True,
             bgcolor=ft.Colors.SECONDARY_CONTAINER,
@@ -248,6 +248,7 @@ class Select_Data_View:
             self.page.update()
 
             # Notify controller
+            
             if hasattr(self.controller, "on_database_selected"):
                 self.controller.on_database_selected(server, database)
 
