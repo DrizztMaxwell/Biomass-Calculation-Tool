@@ -1,47 +1,69 @@
+from widgets.LogFileTxt import logger
 import flet as ft
 import widgets.text_widget as text_widget
 import widgets.container_widget as container_widget
 import widgets.button_widget as button_widget
+from controller.SideNavbar_Controller import SideNavbar_Controller
+from views.SideNavbar_View import SideNavbar_View
+from constants.EULA_Constants import EULA_Constants
 
 class EULA_View:
-     # Define the custom color and constants for clarity
-   
-    """
-    A class to display the EULA/disclaimer page with Agree/Disagree options.
-    """
     def __init__(self, page: ft.Page, controller):
         self.page = page
         self.controller = controller
+        self.constants = EULA_Constants()
+    
+    def get_eula_view(self) -> None:
+        """Display the EULA view with terms and acceptance buttons."""
+        layout = self._create_eula_layout()
+        self._display_on_page(layout)
+    
+    def _create_eula_layout(self) -> ft.Container:
+        """Create the main EULA layout."""
+        return ft.Container(
+            bgcolor=self.constants.PRIMARY_COLOR,
+            content=ft.Column(
+                controls=[
+                    self._create_header(),
+                    ft.Divider(height=1, color=self.constants.BORDER_COLOR),
+                    self._create_scrollable_content(),
+                    ft.Divider(height=1, color=self.constants.BORDER_COLOR),
+                    self._create_button_row(),
+                ],
+                spacing=0,
+                horizontal_alignment=ft.CrossAxisAlignment.STRETCH,
+                alignment=ft.MainAxisAlignment.START
+            ),
+            padding=ft.padding.all(self.constants.CONTENT_PADDING),
+            margin=ft.margin.all(self.constants.MARGIN),
+            border_radius=self.constants.BORDER_RADIUS,
+            border=ft.border.all(1, self.constants.BORDER_COLOR),
 
-    def get_eula_view(self):
-        """
-        Returns a Column layout showing the EULA/disclaimer
-        and two buttons: Agree or Disagree.
-        Buttons are styled for a modern, beautiful look.
-        """
-        # Header with icon
-        header = ft.Container(
-            bgcolor=ft.Colors.SECONDARY_CONTAINER,
+            expand=True
+        )
+    
+    def _create_header(self) -> ft.Container:
+        """Create the EULA header with icon and title."""
+        return ft.Container(
+            bgcolor=self.constants.PRIMARY_COLOR,
             content=ft.Row(
                 controls=[
                     ft.Icon(
-                        name=ft.Icons.SECURITY,
-                        size=32,
-                        color=ft.Colors.GREEN_700
+                        name=self.constants.HEADER_ICON,
+                        size=self.constants.HEADER_SIZE,
+                        color=self.constants.HEADER_COLOR
                     ),
                     ft.Column(
                         controls=[
-                            text_widget.TextWidget.create_description_text(
-                                "End User License Agreement",
-                                size=24,
-                                color=ft.Colors.GREEN_700,
-                                font_family="Arial"
+                            self._create_text(
+                                self.constants.TITLE,
+                                size=self.constants.TITLE_SIZE,
+                                color=self.constants.HEADER_COLOR
                             ),
-                            text_widget.TextWidget.create_description_text(
-                                "Please read the following terms carefully",
-                                size=14,
-                                color=ft.Colors.PRIMARY,
-                                font_family="Arial"
+                            self._create_text(
+                                self.constants.SUBTITLE,
+                                size=self.constants.SUBTITLE_SIZE,
+                                color=self.constants.TEXT_COLOR
                             )
                         ],
                         spacing=2
@@ -51,229 +73,221 @@ class EULA_View:
             ),
             padding=ft.padding.only(bottom=20)
         )
-
-        # Section containers (no significant change needed here)
-        def create_section(heading_text, content_text, icon_name):
-            return ft.Container(
-                bgcolor=ft.Colors.SECONDARY_CONTAINER,
-                content=ft.Column(
-                    controls=[
-                        ft.Row(
-                            controls=[
-                                ft.Icon(
-                                    name=icon_name,
-                                    size=20,
-                                    color=ft.Colors.GREEN_700
-                                ),
-                                text_widget.TextWidget.create_description_text(
-                                    heading_text,
-                                    size=16,
-                                    color=ft.Colors.GREEN_700,
-                                    font_family="Arial"
-                                )
-                            ],
-                            spacing=10
-                        ),
-                        ft.Container(
-                            content=text_widget.TextWidget.create_description_text(
-                                content_text,
-                                size=14,
-                                color=ft.Colors.PRIMARY
-                            ),
-                            margin=ft.margin.only(left=30, top=10, bottom=10),
-                            padding=ft.padding.all(15),
-                            bgcolor=ft.Colors.SECONDARY_CONTAINER,
-                            border_radius=8,
-                            border=ft.border.all(1, ft.Colors.GREY_300)
-                        )
-                    ],
-                    spacing=5,
-                    horizontal_alignment=ft.CrossAxisAlignment.START
-                
-                ),
-               
-                padding=ft.padding.symmetric(vertical=10)
+    
+    def _create_scrollable_content(self) -> ft.Container:
+        """Create the scrollable content area with all EULA sections."""
+        sections = [
+            self._create_section(
+                self.constants.TERMS_HEADING,
+                self.constants.TERMS_CONTENT,
+                self.constants.TERMS_ICON
+            ),
+            self._create_section(
+                self.constants.ACCEPTANCE_HEADING,
+                self.constants.ACCEPTANCE_CONTENT,
+                self.constants.ACCEPTANCE_ICON
+            ),
+            self._create_section(
+                self.constants.DISCLAIMER_HEADING,
+                self.constants.DISCLAIMER_CONTENT,
+                self.constants.DISCLAIMER_ICON
             )
-
-        # Content sections (unchanged)
-        terms_section = create_section(
-            "Terms of Use",
-            "This tool was created by the Science and Research Branch of the Ontario Ministry of Natural Resources (MNR). "
-            "Use of this tool is governed by the terms and conditions set out below and implies acceptance of these terms.",
-            ft.Icons.DESCRIPTION
-        )
+        ]
         
-        disclaimer_section = create_section(
-            "Important Disclaimers",
-            """
-    This tool is made available by MNR as a public service on an "as is, with all defects" and "as available" basis, without any warranties, representations or conditions of any kind, express or implied, arising by law or otherwise, including, without limitation, that the user's use of this tool will be uninterrupted, that the operation of this tool will be error free, or that this tool will be meet the user's requirements.\n\n MNR specifically disclaims any implied warranties or conditions of merchantable quality, fitness for a particular purpose, non-infringement of third-party rights, or those arising by law or by usage of trade or course of dealing.\n\n Use of this tool is at the user's sole risk and the entire risk as to the results from, and performance of, this tool is assumed by the user.\n\n Under no circumstances will His Majesty the King in Right of Ontario or the members of the Executive Council and their employees, agents and independent contractors have any responsibility or liability for any loss, damage or injury whatsoever, regardless of cause, arising from access to, use of, inability to use, failure of, any errors or omissions in, or reliance on this tool (including, without limitation, direct, indirect, special, incidental, consequential, punitive, exemplary or other damages, and including, without limitation, any loss of profit, costs, expenses, harm to business or reputation, business interruption, loss of information or programs or data, loss of savings, loss of revenue, loss of goodwill, loss of tangible or intangible property, legal fees or legal costs, wasted management or office time or damages of any kind whatsoever), whether based in contract, tort, negligence or on any other legal basis, arising out of or in connection with the use of this tool, even if the Government of Ontario has been specifically advised of the possibility of such loss, damage or injury or if such loss, damage or injury was foreseeable.
-    """,
-            ft.Icons.WARNING_AMBER
-        )
-
-        acceptance_section = create_section(
-            "Acceptance of Terms",
-            "By clicking 'Agree', you acknowledge that you have read, understood, and agree to be bound by all terms and conditions outlined in this agreement.",
-            ft.Icons.CHECK_CIRCLE_OUTLINE
-        )
-        
-        # --- ENHANCED BUTTONS FOR BETTER LOOK ---
-        # Assuming create_button is flexible, we pass styling arguments for a FilledButton look
-        agree_btn = button_widget.ButtonWidget.create_button(
-            label="Agree", 
-            on_click=self.controller.on_agree,
-            # Modern filled/elevated style
-        )
-        
-        disagree_btn = button_widget.ButtonWidget.create_button(
-            label="Disagree", 
-            on_click=self.controller.on_disagree,
-            color=ft.Colors.RED_400,
-            # Modern outlined style for contrast
-        )
-
-        btn_row = ft.Row(
-            controls=[disagree_btn, agree_btn],
-            spacing=20,
-            alignment=ft.MainAxisAlignment.CENTER
-        )
-
-        # Scrollable content area
-        scrollable_content = ft.Container(
-            bgcolor=ft.Colors.SECONDARY_CONTAINER,
-            content=ft.ListView( # Changed to ListView for built-in scrolling
-                controls=[
-                    terms_section,
-                    acceptance_section,
-                    disclaimer_section
-                ],
-                spacing=5,
+        return ft.Container(
+            bgcolor=self.constants.PRIMARY_COLOR,
+            content=ft.ListView(
+                controls=sections,
+                spacing=self.constants.SECTION_SPACING,
             ),
+            padding=ft.padding.symmetric(vertical=15),
             expand=True
         )
-
-        # --- FIX: Main layout alignment ---
-        layout = ft.Container(
-            bgcolor=ft.Colors.SECONDARY_CONTAINER,
+    
+    def _create_section(self, heading: str, content: str, icon: str) -> ft.Container:
+        """Create a consistent section with heading and content."""
+        return ft.Container(
+            bgcolor=self.constants.PRIMARY_COLOR,
             content=ft.Column(
                 controls=[
-                    header,
-                    ft.Divider(height=1, color=ft.Colors.GREY_300),
-                    ft.Container(
-                        content=scrollable_content,
-                        padding=ft.padding.symmetric(vertical=15),
-                        expand=True # This container takes all remaining vertical space
-                    ),
-                    ft.Divider(height=1, color=ft.Colors.GREY_300),
-                    ft.Container(
-                        content=btn_row,
-                        padding=ft.padding.only(top=20)
-                    )
+                    self._create_section_heading(heading, icon),
+                    self._create_section_content(content)
                 ],
-                spacing=0,
-                horizontal_alignment=ft.CrossAxisAlignment.STRETCH,
-                # IMPORTANT: Set main_axis_alignment to center the column's children
-                # within the whole page height when maximized (if the outer container expands).
-                # This is key for the spacing fix.
-                alignment=ft.MainAxisAlignment.START 
+                spacing=self.constants.SECTION_SPACING,
+                horizontal_alignment=ft.CrossAxisAlignment.START
             ),
-            padding=ft.padding.all(30),
-            margin=ft.margin.all(20),
-           
-            border_radius=12,
-            border=ft.border.all(1, ft.Colors.GREY_300),
-            shadow=ft.BoxShadow(
-                spread_radius=1,
-                blur_radius=15,
-                color=ft.Colors.BLACK38,
-                offset=ft.Offset(0, 4)
-            ),
-            expand=True # Ensures the card takes up available space
+            padding=ft.padding.symmetric(vertical=10)
         )
-
-        # CHANGED: Removed gradient, set to white background
-        self.page.add(ft.Container(
-            margin=30,
-            content=layout,
-            bgcolor=ft.Colors.SECONDARY_CONTAINER,  # Changed from gradient to solid white
-            expand=True
-        ))
-
-    def get_exit_view(self):
-        """
-        Returns a Column layout shown when the user disagrees with the EULA.
-        Displays an exit message instructing them to close the application manually.
-        """
-        exit_content = ft.Container(
-            padding=ft.padding.all(30),
-            bgcolor=ft.Colors.SECONDARY_CONTAINER,
-            content=ft.Column(
+    
+    def _create_section_heading(self, heading: str, icon: str) -> ft.Row:
+        """Create section heading with icon."""
+        return ft.Row(
+            controls=[
+                ft.Icon(
+                    name=icon,
+                    size=20,
+                    color=self.constants.HEADER_COLOR
+                ),
+                self._create_text(
+                    heading,
+                    size=self.constants.SECTION_HEADING_SIZE,
+                    color=self.constants.HEADER_COLOR
+                )
+            ],
+            spacing=10
+        )
+    
+    def _create_section_content(self, content: str) -> ft.Container:
+        """Create styled section content container."""
+        return ft.Container(
+            content=self._create_text(
+                content,
+                size=self.constants.SECTION_TEXT_SIZE,
+                color=self.constants.TEXT_COLOR
+            ),
+            margin=ft.margin.only(left=30, top=10, bottom=10),
+            padding=ft.padding.all(15),
+            bgcolor=self.constants.PRIMARY_COLOR,
+            border_radius=self.constants.CONTENT_BORDER_RADIUS,
+            border=ft.border.all(1, self.constants.BORDER_COLOR)
+        )
+    
+    def _create_button_row(self) -> ft.Container:
+        """Create row with agree/disagree buttons."""
+        return ft.Container(
+            content=ft.Row(
                 controls=[
-                    ft.Icon(
-                        name=ft.Icons.EXIT_TO_APP,
-                        size=64,
-                        color=ft.Colors.RED_600
+                    self._create_disagree_button(),
+                    self._create_agree_button()
+                ],
+                spacing=self.constants.BUTTON_SPACING,
+                alignment=ft.MainAxisAlignment.CENTER
+            ),
+            padding=ft.padding.only(top=20)
+        )
+    
+    def _create_agree_button(self) -> ft.ElevatedButton:
+        """Create the 'Agree' button."""
+        return button_widget.ButtonWidget.create_button(
+            label=self.constants.AGREE_BUTTON,
+            on_click=lambda e: self._handle_user_choice(e, agreed=True),
+            color=ft.Colors.GREEN_400
+        )
+    
+    def _create_disagree_button(self) -> ft.ElevatedButton:
+        """Create the 'Disagree' button."""
+        return button_widget.ButtonWidget.create_button(
+            label=self.constants.DISAGREE_BUTTON,
+            on_click=lambda e: self._handle_user_choice(e, agreed=False),
+            color=ft.Colors.RED_400
+        )
+    
+    def _handle_user_choice(self, event: ft.ControlEvent, agreed: bool) -> None:
+        """Handle user's EULA choice (agree or disagree)."""
+        button_text = self.constants.AGREE_BUTTON if agreed else self.constants.DISAGREE_BUTTON
+        print(f"Button clicked: {button_text}")
+        
+        if agreed:
+            logger.write("User agreed to EULA - proceeding with application")
+            self._proceed_to_application()
+        else:
+            logger.write("User rejected EULA - application cannot proceed")
+            self._show_exit_view()
+    
+    def _proceed_to_application(self) -> None:
+        """Proceed to the main application."""
+        self.page.clean()
+        SideNavbar_Controller(SideNavbar_View(self.page)).build()
+        self.page.update()
+    
+    def _show_exit_view(self) -> None:
+        """Show exit view when user disagrees."""
+        self.page.clean()
+        self._display_exit_view()
+        self.page.update()
+    
+    def _display_exit_view(self) -> None:
+        """Display the exit view."""
+        self.page.add(self._create_exit_layout())
+    
+    def _create_exit_layout(self) -> ft.Container:
+        """Create exit view layout."""
+        return ft.Container(
+            content=ft.Container(
+             
+                 
+                        self._create_exit_content(),
+                       
+                 
+             
+                border_radius=self.constants.BORDER_RADIUS,
+                border=ft.border.all(1, self.constants.BORDER_COLOR),
+
+                height=400,
+                expand=True
+            ),
+            expand=True,
+            alignment=ft.alignment.center
+        )
+    
+    def _create_exit_content(self) -> ft.Column:
+        """Create exit view content."""
+        return container_widget.ContainerWidget.create_column(
+            widgets=[
+                ft.Icon(
+                    name=self.constants.EXIT_ICON,
+                    size=64,
+                    color=self.constants.ERROR_COLOR
+                ),
+                self._create_text(
+                    self.constants.EXIT_TITLE,
+                    size=self.constants.TITLE_SIZE,
+                    color=self.constants.ERROR_COLOR
+                ),
+                ft.Container(
+                    content=self._create_text(
+                        self.constants.EXIT_MESSAGE,
+                        size=self.constants.EXIT_MESSAGE_SIZE,
+                        color=self.constants.TEXT_COLOR
                     ),
-                    text_widget.TextWidget.create_description_text(
-                        "EULA Not Accepted",
-                        size=24,
-                        color=ft.Colors.RED_700,
-                        font_family="Arial"
-                    ),
-                    ft.Container(
-                        content=text_widget.TextWidget.create_description_text(
-                            "You must agree to the EULA to use this application.\n\n"
-                            "Please close the application manually.",
-                            size=16,
-                            color=ft.Colors.PRIMARY
+                    padding=ft.padding.all(20),
+                    margin=ft.margin.symmetric(horizontal=20, vertical=10),
+                    bgcolor=self.constants.PRIMARY_COLOR,
+                    border_radius=self.constants.CONTENT_BORDER_RADIUS,
+                    border=ft.border.all(1, self.constants.BORDER_COLOR)
+                ),
+                 ft.ElevatedButton(
+                            text="Exit Application",
+                            bgcolor=self.constants.ERROR_COLOR,
+                            color="white",
+                            
+                            on_click=lambda e: self.page.window.close()
                         ),
-                        padding=ft.padding.all(20),
-                        margin=ft.margin.symmetric(vertical=10),
-                        bgcolor=ft.Colors.SECONDARY_CONTAINER,
-                        border_radius=8,
-                        border=ft.border.all(1, ft.Colors.GREY_300)
-                    )
-                ],
-                horizontal_alignment=ft.CrossAxisAlignment.CENTER,
-                spacing=20
                 
-            ),
-            # padding=ft.padding.all(40)
-            height=400,
-        )
-
-        layout = container_widget.ContainerWidget.create_column(
-            widgets=[exit_content],
-            
-            spacing=0,
+            ],
+            spacing=20,
             alignment=ft.MainAxisAlignment.CENTER,
             horizontal_alignment=ft.CrossAxisAlignment.CENTER,
             expand=True
+            
         )
-
-        # CHANGED: Card with shadow, no gradient, centered both horizontally and vertically
-        return self.page.add(
+    
+    def _display_on_page(self, layout: ft.Container) -> None:
+        """Display the layout on the page."""
+        self.page.add(
             ft.Container(
-                content=ft.Container(
-                    content=layout,
-                  
-                    border_radius=12,
-                    border=ft.border.all(1, ft.Colors.GREY_300),
-                    shadow=ft.BoxShadow(
-                        spread_radius=1,
-                        blur_radius=15,
-                        color=ft.Colors.BLACK38,
-                        offset=ft.Offset(0, 4)
-                    ),
-             
-                expand=True,
-                height=400
-          
-                    # margin=ft.margin.all(20)
-                ),
-             
-                # bgcolor=ft.Colors.SECONDARY,  # Solid white background
-                expand=True,  # This allows the container to take full available space
-                alignment=ft.alignment.center  # Centers the card both horizontally and vertically
+                margin=30,
+                content=layout,
+                bgcolor=self.constants.PRIMARY_COLOR,
+                expand=True
             )
         )
+    
+    def _create_text(self, text: str, size: int = 14, color: str = None) -> ft.Text:
+        """Helper method to create consistent text widgets."""
+        return text_widget.TextWidget.create_description_text(
+            text,
+            size=size,
+            color=color or self.constants.TEXT_COLOR,
+        )
+    
