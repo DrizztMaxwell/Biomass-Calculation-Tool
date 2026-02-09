@@ -65,11 +65,12 @@ class View_Dialog:
         self.PARAMETER_CATEGORIES["bh"]["color"] = self.secondary_color
         self.PARAMETER_CATEGORIES["b"]["color"] = self.accent_color
         
-        if filtered_species and index >= len(filtered_species):
-            return
-        print("Filtere Species in View Dialog:", filtered_species)
+        # if filtered_species and index >= len(filtered_species):
+        #     return
+        # print("Filtere Species in View Dialog:", filtered_species)
         
-        species = filtered_species[index] if filtered_species else species_data[index]
+        species = filtered_spe
+        cies[index] if filtered_species else species_data[index]
         
         # Calculate dialog dimensions
         dialog_width = min(self.DIALOG_WIDTH_MAX, self.page.width * self.DIALOG_WIDTH_RATIO)
