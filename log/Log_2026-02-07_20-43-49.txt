@@ -1,0 +1,17 @@
+[20:43:49] --- Log Session Started ---
+[20:43:52] Splash screen displayed
+[20:43:54] DataManager cleared, proceeding to EULA
+[20:43:55] User agreed to EULA - proceeding with application
+[20:43:55] User navigated to Select Data page
+[20:43:57] User navigated to Modify Species page
+[20:43:57] Species data loaded successfully.
+[20:43:58] Confirming deletion of species: 
+[20:43:58] Confirming deletion of species: 
+[20:44:00] Confirming deletion of species: 
+[20:44:00] Exception while deleting species 'dasd': 'Modify_Species_View' object has no attribute 'save_species_data'
+[20:44:01] Dialog closed.
+[20:44:02] Confirming deletion of species: 
+[20:44:02] Error: Species 'dasd' not found in master data.
+[20:44:03] Dialog closed.
+[20:44:39] Confirming deletion of species: 
+[20:44:39] Confirming deletion of species: 

@@ -18,6 +18,7 @@ from helper_functions.Remove_Underscores_And_Add_Space_And_Capitalise_Words impo
 from widgets.Supported_Species_Dialog import Supported_Species_Dialog
 from widgets.LogFileTxt import logger
 from controller.Settings_Controller import Settings_Controller
+from controller.Modify_Species_Controller import Modify_Species_Controller
 class SideNavbar_View:
     
     """Main application class for the Biomass Calculator"""
@@ -121,7 +122,9 @@ class SideNavbar_View:
             
         elif page_name == self.MODIFY_SPECIES_PAGE:
             logger.write("User navigated to Modify Species page")
-            self.modify_species_view = Modify_Species_View(self.page)
+            self.modify_species_controller = Modify_Species_Controller()
+            self.modify_species_view = Modify_Species_View(self.page, self.modify_species_controller)
+            
             self.main_content_area.controls.append(self.modify_species_view.build())
             
         elif page_name == self.SELECT_DATA_PAGE:

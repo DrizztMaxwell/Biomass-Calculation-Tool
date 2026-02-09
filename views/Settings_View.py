@@ -3,31 +3,26 @@ from widgets.LogFileTxt import logger
 from widgets.DescriptionText import DescriptionText
 from widgets.Title_With_Icon import Title_With_Icon
 from controller.Settings_Controller import Settings_Controller
+from constants.Settings_Constants import SettingsConstants
 
 
 class SettingsView:
     """View for application settings and preferences."""
     
-    # Constants for styling
-    _CONTENT_PADDING = 40
-    _CONTAINER_MARGIN = 20
-    _CARD_BORDER_RADIUS = 12
-    _SHADOW_COLOR = ft.Colors.with_opacity(0.08, ft.Colors.BLACK)
-    _SHADOW_OFFSET = ft.Offset(0, 2)
-    
     def __init__(self, page: ft.Page, controller: Settings_Controller):
         self.page = page
         self.controller = controller
+        self.cnst = SettingsConstants()
 
     def _build_header(self) -> ft.Container:
         """Build the header section with title and description."""
         return ft.Container(
             content=ft.Column([
-                Title_With_Icon("Settings", ft.Icons.SETTINGS_OUTLINED),
-                DescriptionText("Customize your experience and application preferences"),
-                ft.Divider(color=ft.Colors.GREY_300, height=30),
+                Title_With_Icon(self.cnst.TITLE, self.cnst.SETTINGS_ICON),
+                DescriptionText(self.cnst.DESCRIPTION),
+                ft.Divider(color=self.cnst.GREY_300, height=self.cnst.DIVIDER_HEIGHT),
             ]),
-            margin=ft.margin.only(bottom=30)
+            margin=ft.margin.only(bottom=self.cnst.HEADER_BOTTOM_MARGIN)
         )
 
     def _build_theme_switch_row(self) -> ft.Row:
@@ -35,17 +30,17 @@ class SettingsView:
         return ft.Row(
             [
                 ft.Icon(
-                    ft.Icons.DARK_MODE_OUTLINED,
-                    size=20,
-                    color=ft.Colors.GREY_700,
+                    self.cnst.DARK_MODE_ICON,
+                    size=self.cnst.DARK_MODE_ICON_SIZE,
+                    color=self.cnst.GREY_700,
                 ),
-                ft.Container(width=12),
+                ft.Container(width=self.cnst.ICON_CONTAINER_WIDTH),
                 ft.Switch(
-                    label="Dark Theme",
-                    label_style=ft.TextStyle(color=ft.Colors.PRIMARY),
+                    label=self.cnst.THEME_SWITCH_LABEL,
+                    label_style=ft.TextStyle(color=self.cnst.PRIMARY),
                     value=self.page.theme_mode == ft.ThemeMode.DARK,
                     on_change=self.controller.toggle_theme,
-                    active_color=ft.Colors.TERTIARY,
+                    active_color=self.cnst.TERTIARY,
                 ),
             ],
             alignment=ft.MainAxisAlignment.START,
@@ -56,12 +51,16 @@ class SettingsView:
         return ft.Container(
             content=ft.Column([
                 self._build_appearance_header(),
-                ft.Divider(height=1, thickness=1, color=ft.Colors.GREY_300),
+                ft.Divider(
+                    height=1, 
+                    thickness=self.cnst.DIVIDER_THICKNESS, 
+                    color=self.cnst.BORDER_COLOR
+                ),
                 self._build_appearance_content(),
-            ], spacing=0),
-            border_radius=self._CARD_BORDER_RADIUS,
-            border=ft.border.all(1, ft.Colors.GREY_300),
-            bgcolor=ft.Colors.SECONDARY_CONTAINER,
+            ], spacing=self.cnst.CARD_SPACING),
+            border_radius=self.cnst.CARD_BORDER_RADIUS,
+            border=ft.border.all(self.cnst.BORDER_THICKNESS, self.cnst.BORDER_COLOR),
+            bgcolor=self.cnst.SECONDARY_CONTAINER,
             shadow=self._build_card_shadow(),
         )
 
@@ -69,22 +68,22 @@ class SettingsView:
         """Build the appearance card header."""
         return ft.ListTile(
             leading=ft.Icon(
-                ft.Icons.PALETTE_OUTLINED,
-                color=ft.Colors.BLUE_700,
-                size=28
+                self.cnst.PALETTE_ICON,
+                color=self.cnst.BLUE_700,
+                size=self.cnst.PALETTE_ICON_SIZE
             ),
             title=ft.Text(
-                "Appearance",
-                color=ft.Colors.ON_PRIMARY_CONTAINER,
-                size=18,
-                weight=ft.FontWeight.W_600,
+                self.cnst.APPEARANCE_TITLE,
+                color=self.cnst.ON_PRIMARY_CONTAINER,
+                size=self.cnst.APPEARANCE_TITLE_SIZE,
+                weight=self.cnst.APPEARANCE_TITLE_WEIGHT,
             ),
             subtitle=ft.Text(
-                "Change the look and feel of the app",
-                color=ft.Colors.ON_PRIMARY_CONTAINER,
-                size=13,
+                self.cnst.APPEARANCE_SUBTITLE,
+                color=self.cnst.ON_PRIMARY_CONTAINER,
+                size=self.cnst.APPEARANCE_SUBTITLE_SIZE,
             ),
-            content_padding=ft.padding.all(16),
+            content_padding=self.cnst.HEADER_PADDING,
         )
 
     def _build_appearance_content(self) -> ft.Container:
@@ -92,30 +91,30 @@ class SettingsView:
         return ft.Container(
             content=ft.Column([
                 self._build_theme_switch_row(),
-                ft.Container(height=16),
-            ], spacing=12),
-            padding=ft.padding.all(20),
+                ft.Container(height=self.cnst.EXTRA_SPACING),
+            ], spacing=self.cnst.CONTENT_SPACING),
+            padding=self.cnst.CONTENT_PADDING_OBJ,
         )
 
     def _build_card_shadow(self) -> ft.BoxShadow:
         """Create consistent card shadow."""
         return ft.BoxShadow(
-            spread_radius=0,
-            blur_radius=10,
-            color=self._SHADOW_COLOR,
-            offset=self._SHADOW_OFFSET,
+            spread_radius=self.cnst.SHADOW_SPREAD_RADIUS,
+            blur_radius=self.cnst.SHADOW_BLUR_RADIUS,
+            color=self.cnst.SHADOW_COLOR,
+            offset=self.cnst.SHADOW_OFFSET,
         )
 
     def _build_main_content(self) -> ft.Container:
         """Build the main content area."""
         return ft.Container(
-            bgcolor=ft.Colors.SECONDARY,
+            bgcolor=self.cnst.SECONDARY,
             content=ft.Column([
                 self._build_header(),
                 self._build_appearance_card(),
-                ft.Container(height=20),
-            ], spacing=0),
-            padding=ft.padding.all(self._CONTENT_PADDING),
+                ft.Container(height=self.cnst.BOTTOM_SPACING),
+            ], spacing=self.cnst.CARD_SPACING),
+            padding=ft.padding.all(self.cnst.CONTENT_PADDING),
             expand=True,
         )
 
@@ -124,11 +123,11 @@ class SettingsView:
         main_content = self._build_main_content()
         
         return ft.Container(
-            bgcolor=ft.Colors.SECONDARY_CONTAINER,
-            margin=ft.margin.all(self._CONTAINER_MARGIN),
+            bgcolor=self.cnst.SECONDARY_CONTAINER,
+            margin=ft.margin.all(self.cnst.CONTAINER_MARGIN),
             content=ft.Column(
                 [main_content],
-                scroll=ft.ScrollMode.ADAPTIVE,
+                scroll=self.cnst.SCROLL_MODE,
                 expand=True
             ),
             expand=True,

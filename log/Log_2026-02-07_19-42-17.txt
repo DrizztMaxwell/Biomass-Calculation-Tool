@@ -1,0 +1,8 @@
+[19:42:17] --- Log Session Started ---
+[19:42:19] Splash screen displayed
+[19:42:22] DataManager cleared, proceeding to EULA
+[19:42:23] User agreed to EULA - proceeding with application
+[19:42:23] User navigated to Select Data page
+[19:42:24] User navigated to Create Species page
+[19:42:25] User navigated to Select Data page
+[19:42:27] Loaded species data from treeparameters.json

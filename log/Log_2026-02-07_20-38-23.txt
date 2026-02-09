@@ -1,0 +1,12 @@
+[20:38:23] --- Log Session Started ---
+[20:38:25] Splash screen displayed
+[20:38:27] DataManager cleared, proceeding to EULA
+[20:38:28] User agreed to EULA - proceeding with application
+[20:38:28] User navigated to Select Data page
+[20:38:29] User navigated to Settings page
+[20:38:30] User navigated to Modify Species page
+[20:38:30] Species data loaded successfully.
+[20:38:32] Editing species: 
+[20:38:40] Confirming deletion of species: 
+[20:40:38] Editing species: 
+[20:40:39] Exception while saving species '': 'Colors' object has no attribute 'get_species_data'
