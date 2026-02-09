@@ -1,0 +1,35 @@
+[11:52:42] --- Log Session Started ---
+[11:52:45] Splash screen displayed
+[11:52:47] DataManager cleared, proceeding to EULA
+[11:52:48] User agreed to EULA - proceeding with application
+[11:52:48] User navigated to Select Data page
+[11:52:53] User navigated to Settings page
+[11:52:54] Theme toggled to: ThemeMode.DARK
+[11:52:55] Theme toggled to: ThemeMode.LIGHT
+[11:52:56] Loaded species data from treeparameters.json
+[11:52:58] Displayed About Dialog
+[11:52:59] Closed About Dialog
+[11:53:02] User navigated to Select Data page
+[11:53:04] User navigated to Create Species page
+[11:53:19] User navigated to Modify Species page
+[11:53:19] Species data loaded successfully.
+[11:53:20] User navigated to Create Species page
+[11:53:26] Checking if species name dasd exists in data/treeparameters.json
+[11:53:26] Checking if species name dasd exists in data/create_species.json
+[11:53:26] Species code or name 'dasd' already exists in create_species.json
+[11:53:31] User navigated to Modify Species page
+[11:53:31] Species data loaded successfully.
+[11:53:34] User navigated to Create Species page
+[11:53:40] Checking if species name alpine fir exists in data/treeparameters.json
+[11:53:40] Species code or name 'alpine fir' already exists in treeparameters.json
+[11:53:44] User navigated to Select Data page
+[11:53:49] User navigated to Create Species page
+[11:53:49] User navigated to Modify Species page
+[11:53:49] Species data loaded successfully.
+[11:53:52] User navigated to Settings page
+[11:53:55] User navigated to Create Species page
+[11:53:56] User navigated to Select Data page
+[11:55:55] User navigated to Modify Species page
+[11:55:55] Species data loaded successfully.
+[11:55:57] Editing species: 
+[11:56:04] Editing species: 251

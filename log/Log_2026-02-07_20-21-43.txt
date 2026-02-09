@@ -1,0 +1,7 @@
+[20:21:43] --- Log Session Started ---
+[20:21:45] Splash screen displayed
+[20:21:48] DataManager cleared, proceeding to EULA
+[20:21:49] User agreed to EULA - proceeding with application
+[20:21:49] User navigated to Select Data page
+[20:21:50] User navigated to Modify Species page
+[20:21:50] Species data loaded successfully.
