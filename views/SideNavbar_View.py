@@ -1,4 +1,5 @@
 import os
+import shutil
 import sys
 import flet as ft
 from controller.Select_Data_Controller import Select_Data_Controller
@@ -52,8 +53,8 @@ class SideNavbar_View:
         
         self.active__nav_item = self.SELECT_DATA_PAGE  # Default active item
         self.is_expanded_state = {'value': True}  # Initialize as True (expanded)
-        
-        
+        self.file_picker = ft.FilePicker(on_result=self._on_save_manual_result)
+        self.page.overlay.append(self.file_picker)
         self.Set_Data_Imported_Flag(False)
        
 
@@ -204,7 +205,27 @@ class SideNavbar_View:
             ),
             padding=ft.padding.only(left=20, right=10, top=10, bottom=10)
         )
+    def _on_save_manual_result(self, e: ft.FilePickerResultEvent):
+                if e.path:
+                    # Determine source based on OS (matching your previous logic)
+                    source = "manual/MANUAL SOFTWARE EXAMPLE.pdf" if sys.platform.startswith("win") else "manual/MANUAL SOFTWARE EXAMPLE.pdf"
+                    if not os.path.exists(source):
+                        # Fallback for the other filename mentioned in your code
+                        source = "../manual/MANUAL SOFTWARE EXAMPLE.pdf"
 
+                    try:
+                        shutil.copy(source, e.path)
+                        self.page.snack_bar = ft.SnackBar(
+                            ft.Text(f"Manual saved successfully to {e.path}"),
+                            bgcolor=ft.Colors.GREEN_700
+                        )
+                    except Exception as ex:
+                        self.page.snack_bar = ft.SnackBar(
+                            ft.Text(f"Error saving file: {str(ex)}"),
+                            bgcolor=ft.Colors.RED_700
+                        )
+                    self.page.snack_bar.open = True
+                    self.page.update()
     def _build_sidebar_controls(self, is_expanded, e):
         """Builds all navigation items and footer buttons."""
         
@@ -299,6 +320,23 @@ class SideNavbar_View:
                 on_click=lambda e: Supported_Species_Dialog(self.page).show(),
             )
             
+            manual_button = ft.Container(
+                content=ft.Row(
+                    [
+                        ft.Icon(ft.Icons.MENU_BOOK, color=ft.Colors.WHITE, size=
+20),                        ft.Text("User Manual", color=ft.Colors.WHITE, weight=ft.FontWeight.BOLD, visible=is_expanded)
+                    ],  
+                    spacing=10,
+                    alignment=ft.MainAxisAlignment.START
+                ),
+                bgcolor=ft.Colors.BLUE,
+                border_radius=10,
+                padding=ft.padding.symmetric(vertical=12, horizontal=20),
+              on_click=lambda _: self.file_picker.save_file(
+        file_name="MANUAL SOFTWARE EXAMPLE.pdf",
+        allowed_extensions=["pdf"]
+    ),
+            )
             
             # Place buttons in a Column
             return ft.Column(
@@ -312,6 +350,11 @@ class SideNavbar_View:
                     ),
                     ft.Container(
                         content=supported_species,
+                        width=self.SIDEBAR_EXPANDED_WIDTH - 20 if is_expanded else self.SIDEBAR_COLLAPSED_WIDTH,
+                        alignment=ft.alignment.center
+                    ),
+                    ft.Container(
+                        content=manual_button,
                         width=self.SIDEBAR_EXPANDED_WIDTH - 20 if is_expanded else self.SIDEBAR_COLLAPSED_WIDTH,
                         alignment=ft.alignment.center
                     )
