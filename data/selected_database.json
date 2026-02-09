@@ -1,6 +1,6 @@
 {
-    "server": "DESKTOP-EJ33BVS\\SQLEXPRESS",
+    "server": "DESKTOP-U42I8SP\\SQLEXPRESS",
     "database": "gypsppgp",
-    "driver": "ODBC Driver 17 for SQL Server",
-    "data_folder_path": "C:\\Program Files\\Microsoft SQL Server\\MSSQL16.SQLEXPRESS\\MSSQL\\DATA"
+    "driver": "ODBC Driver 18 for SQL Server",
+    "data_folder_path": "C:\\Program Files\\Microsoft SQL Server\\MSSQL15.SQLEXPRESS\\MSSQL\\DATA"
 }

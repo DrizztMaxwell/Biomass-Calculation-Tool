@@ -1,0 +1,23 @@
+[15:28:29] --- Log Session Started ---
+[15:28:35] Splash screen displayed
+[15:28:37] DataManager cleared, proceeding to EULA
+[15:28:42] User agreed to EULA - proceeding with application
+[15:28:42] User navigated to Select Data page
+[15:28:46] User navigated to Create Species page
+[15:28:47] User navigated to Modify Species page
+[15:28:48] Species data loaded successfully.
+[15:28:50] User navigated to Settings page
+[15:28:51] User navigated to Modify Species page
+[15:28:51] Species data loaded successfully.
+[15:28:58] User navigated to Create Species page
+[15:29:03] User navigated to Select Data page
+[15:29:04] User navigated to Create Species page
+[15:29:05] User navigated to Modify Species page
+[15:29:05] Species data loaded successfully.
+[15:29:09] User navigated to Settings page
+[15:29:11] Displayed About Dialog
+[15:29:13] Closed About Dialog
+[15:29:15] User navigated to Select Data page
+[15:29:27] Successfully connected to database gypsppgp on server DESKTOP-U42I8SP\SQLEXPRESS
+[15:29:27] Database connection info saved: {'server': 'DESKTOP-U42I8SP\\SQLEXPRESS', 'database': 'gypsppgp', 'driver': 'ODBC Driver 18 for SQL Server', 'data_folder_path': 'C:\\Program Files\\Microsoft SQL Server\\MSSQL15.SQLEXPRESS\\MSSQL\\DATA'}
+[15:29:27] Connecting to database gypsppgp on server DESKTOP-U42I8SP\SQLEXPRESS using driver ODBC Driver 18 for SQL Server
