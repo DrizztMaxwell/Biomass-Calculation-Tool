@@ -820,7 +820,7 @@ class Modify_Species_View:
         # Build the main content without calling refresh_data_table
         content = ft.Container(
             margin=ft.margin.all(20),
-            padding=ft.padding.all(20),
+            padding=ft.padding.all(30),
             expand=True,
             bgcolor=ft.Colors.SECONDARY_CONTAINER,
             border_radius=15,

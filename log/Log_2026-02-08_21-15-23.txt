@@ -1,0 +1,12 @@
+[21:15:23] --- Log Session Started ---
+[21:15:27] Splash screen displayed
+[21:15:30] DataManager cleared, proceeding to EULA
+[21:15:33] User agreed to EULA - proceeding with application
+[21:15:33] User navigated to Select Data page
+[21:15:34] User navigated to Modify Species page
+[21:15:34] Species data loaded successfully.
+[21:15:36] Viewing species: 
+[21:15:46] Species details dialog closed for species: 
+[21:15:48] Viewing species: 212
+[21:15:51] Species details dialog closed for species: 212
+[21:15:52] Viewing species: 
