@@ -14,7 +14,7 @@ from views.About_Dialog_View import About_Dialog_View
 from widgets.Display_Nav_Item import Display_Nav_Item
 from widgets.Display_Version_Number import Display_Version_Number
 from widgets.Display_Exit_Dialog import Display_Exit_Dialog
-from views.Settings_View import SettingsView
+from views.Settings.Settings_View import SettingsView
 from helper_functions.Remove_Underscores_And_Add_Space_And_Capitalise_Words import Remove_Underscores_And_Add_Space_And_Capitalise_Words
 from widgets.Supported_Species_Dialog import Supported_Species_Dialog
 from widgets.LogFileTxt import logger

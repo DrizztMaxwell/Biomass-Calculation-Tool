@@ -1,0 +1,17 @@
+[12:44:09] --- Log Session Started ---
+[12:44:13] Splash screen displayed
+[12:44:15] DataManager cleared, proceeding to EULA
+[12:44:16] User agreed to EULA - proceeding with application
+[12:44:16] User navigated to Select Data page
+[12:44:17] User navigated to Settings page
+[12:44:18] Theme toggled to: ThemeMode.DARK
+[12:44:19] User navigated to Modify Species page
+[12:44:19] Species data loaded successfully.
+[12:44:20] Displayed About Dialog
+[12:44:26] Closed About Dialog
+[12:44:27] User navigated to Settings page
+[12:44:30] Theme toggled to: ThemeMode.LIGHT
+[12:44:31] User navigated to Modify Species page
+[12:44:31] Species data loaded successfully.
+[12:44:32] Displayed About Dialog
+[12:44:36] Closed About Dialog

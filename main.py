@@ -1,13 +1,21 @@
 import flet as ft
 import asyncio
 from data.data_manager import DataManager
-from views.EULA_View import EULA_View
+from views.EULA.EULA_View import EULA_View
 from views.SideNavbar_View import SideNavbar_View
 from controller.SideNavbar_Controller import SideNavbar_Controller
 from config.App_Config import AppConfig
 from widgets.LogFileTxt import logger
+import sys
+import os
+from pathlib import Path
+
+# Get the project root directory (2 levels up from this file)
+
 
 def main(page: ft.Page):
+    project_root = Path(__file__).parent.parent.parent
+    sys.path.insert(0, str(project_root))
     """Main entry point for the Biomass Calculation Tool application."""
     
     # First, configure the page with AppConfig

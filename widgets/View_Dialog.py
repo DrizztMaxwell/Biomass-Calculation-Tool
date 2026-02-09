@@ -141,7 +141,7 @@ class View_Dialog:
                 ft.Container(height=24),
                 self._create_basic_info_card(species),
                 ft.Container(height=24),
-                *self._create_parameter_cards(species),
+                *[card for card in self._create_parameter_cards(species) if card is not None],
                 ft.Container(height=24),
             ], scroll=ft.ScrollMode.AUTO, spacing=0, tight=True),
             padding=ft.padding.symmetric(horizontal=30, vertical=20),
@@ -150,28 +150,45 @@ class View_Dialog:
     
     def _create_basic_info_card(self, species):
         """Create basic information card."""
+        # Build the content list
+        content_widgets = [
+            ft.Row([
+                ft.Icon(ft.Icons.INFO_OUTLINE, color=self.primary_color, size=20),
+                ft.Text(
+                    "Basic Information", 
+                    size=17, 
+                    weight=ft.FontWeight.W_600, 
+                    color=self.PRIMARY
+                ),
+            ], spacing=12),
+            ft.Container(height=20),
+        ]
+        
+        # Helper to add a row if value exists
+        def add_row_if_exists(title, value, icon):
+            row = self._create_detail_row(title, value, icon)
+            if row:
+                content_widgets.append(row)
+                content_widgets.append(ft.Container(height=12))
+        
+        # Add rows conditionally
+        add_row_if_exists("Species Code", species.get("SpeciesCode", ""), ft.Icons.CODE)
+        add_row_if_exists("Common Name", species.get("SpecCommon", ""), ft.Icons.TEXT_SNIPPET)
+        add_row_if_exists("Origin", species.get("Origin", ""), ft.Icons.LOCATION_ON)
+        
+        # Add equation type (might have default value)
+        equation_type_row = self._create_detail_row("Equation Type", species.get("EquationType", "Height-based"), ft.Icons.FUNCTIONS)
+        if equation_type_row:
+            content_widgets.append(equation_type_row)
+        
+        # Remove the last spacing container if it exists
+        if content_widgets and isinstance(content_widgets[-1], ft.Container) and content_widgets[-1].height == 12:
+            content_widgets.pop()
+        
+        content_widgets.append(ft.Container(height=5))
+        
         return ft.Container(
-            content=ft.Column([
-                ft.Row([
-                    ft.Icon(ft.Icons.INFO_OUTLINE, color=self.primary_color, size=20),
-                    ft.Text(
-                        "Basic Information", 
-                        size=17, 
-                        weight=ft.FontWeight.W_600, 
-                        color=self.PRIMARY
-                    ),
-                ], spacing=12),
-                
-                ft.Container(height=20),
-                self._create_detail_row("Species Code", str(species.get("SpeciesCode", "")), ft.Icons.TAG),
-                ft.Container(height=12),
-                self._create_detail_row("Common Name", species.get("SpecCommon", "N/A"), ft.Icons.TEXT_SNIPPET),
-                ft.Container(height=12),
-                self._create_detail_row("Origin", species.get("Origin", ""), ft.Icons.LOCATION_ON),
-                ft.Container(height=12),
-                self._create_detail_row("Equation Type", species.get("EquationType", "Height-based"), ft.Icons.FUNCTIONS),
-                ft.Container(height=5),
-            ], spacing=0),
+            content=ft.Column(content_widgets, spacing=0),
             padding=ft.padding.all(24),
             bgcolor=self.SECONDARY_CONTAINER,
             border_radius=12,
@@ -182,14 +199,22 @@ class View_Dialog:
                 color=ft.Colors.with_opacity(0.08, self.BLACK)
             )
         )
-    
+
+
     def _create_detail_row(self, title, value, icon):
-        """Helper to create a detail row with icon."""
+        """Helper to create a detail row with icon. Returns None if value is empty."""
+        # Convert value to string and check if it's empty
+        str_value = str(value) if value is not None else ""
+        
+        # Return None if value is empty/None/whitespace only
+        if not str_value.strip():
+            return None
+        
         return ft.Row([
             ft.Icon(icon, color=self.text_secondary, size=18),
-            ft.Text(title + ":", size=14, weight=ft.FontWeight.W_500, color=self.text_secondary),
+            ft.Text(title + ":", size=14, weight=ft.FontWeight.W_500, color=ft.Colors.PRIMARY),
             ft.Container(expand=True),
-            ft.Text(str(value), size=14, weight=ft.FontWeight.W_600, color=self.text_primary),
+            ft.Text(str_value, size=14, weight=ft.FontWeight.W_600, color=ft.Colors.PRIMARY),
         ], alignment=ft.MainAxisAlignment.START)
     
     def _create_parameter_cards(self, species):
@@ -280,8 +305,10 @@ class View_Dialog:
             padding=ft.padding.symmetric(horizontal=15, vertical=8),
             bgcolor=self.SECONDARY_CONTAINER,
             border_radius=6,
-            border=ft.border.all(0.5, self.GREY_200)
+            border=ft.border.all(0.5, self.GREY_200),
+            
         )
+        
         
         return ft.Container(
             content=ft.Column([
@@ -296,12 +323,12 @@ class View_Dialog:
             padding=24,
             bgcolor=self.SECONDARY_CONTAINER,
             border_radius=12,
-            border=ft.border.all(1, self.PRIMARY),
             shadow=ft.BoxShadow(
                 spread_radius=0,
                 blur_radius=12,
                 color=ft.Colors.with_opacity(0.08, self.BLACK)
-            )
+            ),
+           border=ft.border.all(0.5, self.GREY_200)
         )
     
     def _create_parameter_row(self, param_key, param_value):
