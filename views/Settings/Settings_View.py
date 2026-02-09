@@ -4,8 +4,9 @@ from widgets.DescriptionText import DescriptionText
 from widgets.Title_With_Icon import Title_With_Icon
 from controller.Settings_Controller import Settings_Controller
 from constants.Settings_Constants import SettingsConstants
-
-
+from .components.Build_Header import Build_Header
+from .components.Build_Appearance_Header import Build_Appearance_Header
+from .components.Build_Theme_Toggle_Switch import Build_Theme_Toggle_Switch
 class SettingsView:
     """View for application settings and preferences."""
     
@@ -14,16 +15,7 @@ class SettingsView:
         self.controller = controller
         self.cnst = SettingsConstants()
 
-    def _build_header(self) -> ft.Container:
-        """Build the header section with title and description."""
-        return ft.Container(
-            content=ft.Column([
-                Title_With_Icon(self.cnst.TITLE, self.cnst.SETTINGS_ICON),
-                DescriptionText(self.cnst.DESCRIPTION),
-                ft.Divider(color=self.cnst.GREY_300, height=self.cnst.DIVIDER_HEIGHT),
-            ]),
-            margin=ft.margin.only(bottom=self.cnst.HEADER_BOTTOM_MARGIN)
-        )
+   
 
     def _build_theme_switch_row(self) -> ft.Row:
         """Build the theme toggle switch row."""
@@ -35,13 +27,7 @@ class SettingsView:
                     color=self.cnst.GREY_700,
                 ),
                 ft.Container(width=self.cnst.ICON_CONTAINER_WIDTH),
-                ft.Switch(
-                    label=self.cnst.THEME_SWITCH_LABEL,
-                    label_style=ft.TextStyle(color=self.cnst.PRIMARY),
-                    value=self.page.theme_mode == ft.ThemeMode.DARK,
-                    on_change=self.controller.toggle_theme,
-                    active_color=self.cnst.TERTIARY,
-                ),
+                Build_Theme_Toggle_Switch(self.controller.toggle_theme, self.page),
             ],
             alignment=ft.MainAxisAlignment.START,
         )
@@ -50,7 +36,7 @@ class SettingsView:
         """Build the appearance settings card."""
         return ft.Container(
             content=ft.Column([
-                self._build_appearance_header(),
+                            Build_Appearance_Header(),
                 ft.Divider(
                     height=1, 
                     thickness=self.cnst.DIVIDER_THICKNESS, 
@@ -64,28 +50,7 @@ class SettingsView:
             shadow=self._build_card_shadow(),
         )
 
-    def _build_appearance_header(self) -> ft.ListTile:
-        """Build the appearance card header."""
-        return ft.ListTile(
-            leading=ft.Icon(
-                self.cnst.PALETTE_ICON,
-                color=self.cnst.BLUE_700,
-                size=self.cnst.PALETTE_ICON_SIZE
-            ),
-            title=ft.Text(
-                self.cnst.APPEARANCE_TITLE,
-                color=self.cnst.ON_PRIMARY_CONTAINER,
-                size=self.cnst.APPEARANCE_TITLE_SIZE,
-                weight=self.cnst.APPEARANCE_TITLE_WEIGHT,
-            ),
-            subtitle=ft.Text(
-                self.cnst.APPEARANCE_SUBTITLE,
-                color=self.cnst.ON_PRIMARY_CONTAINER,
-                size=self.cnst.APPEARANCE_SUBTITLE_SIZE,
-            ),
-            content_padding=self.cnst.HEADER_PADDING,
-        )
-
+    
     def _build_appearance_content(self) -> ft.Container:
         """Build the appearance card content section."""
         return ft.Container(
@@ -110,7 +75,7 @@ class SettingsView:
         return ft.Container(
             bgcolor=self.cnst.SECONDARY,
             content=ft.Column([
-                self._build_header(),
+               Build_Header(),
                 self._build_appearance_card(),
                 ft.Container(height=self.cnst.BOTTOM_SPACING),
             ], spacing=self.cnst.CARD_SPACING),

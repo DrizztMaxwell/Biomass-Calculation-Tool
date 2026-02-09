@@ -1,0 +1,20 @@
+[08:43:32] --- Log Session Started ---
+[08:43:36] Splash screen displayed
+[08:43:39] DataManager cleared, proceeding to EULA
+[08:43:41] User agreed to EULA - proceeding with application
+[08:43:41] User navigated to Select Data page
+[08:43:43] User navigated to Modify Species page
+[08:43:43] Species data loaded successfully.
+[08:43:45] Viewing species: 
+[08:43:50] Species details dialog closed for species: 
+[08:43:51] User navigated to Settings page
+[08:43:52] Theme toggled to: ThemeMode.DARK
+[08:43:53] User navigated to Modify Species page
+[08:43:53] Species data loaded successfully.
+[08:43:54] Viewing species: 
+[08:44:01] Species details dialog closed for species: 
+[08:44:02] Viewing species: 
+[08:44:03] Species details dialog closed for species: 
+[08:44:05] Viewing species: 
+[08:44:06] Species details dialog closed for species: 
+[08:44:07] Viewing species: 
