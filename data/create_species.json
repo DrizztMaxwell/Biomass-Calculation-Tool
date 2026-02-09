@@ -121,5 +121,16 @@
         "bwoodb2": 3.0,
         "bbarkb1": 0.0,
         "bbarkb2": 0.0
+    },
+    {
+        "SpecCommon": "thyjjk",
+        "Origin": "Natural Stand",
+        "EquationType": "DBH + Height-based",
+        "bhwoodb1": 0.0,
+        "bhwoodb2": 0.0,
+        "bhwoodb3": 0.0,
+        "bhbarkb1": 0.0,
+        "bhbarkb2": 0.0,
+        "bhbarkb3": 0.0
     }
 ]

@@ -69,8 +69,7 @@ class View_Dialog:
         #     return
         # print("Filtere Species in View Dialog:", filtered_species)
         
-        species = filtered_spe
-        cies[index] if filtered_species else species_data[index]
+        species = filtered_species[index] if filtered_species else species_data[index]
         
         # Calculate dialog dimensions
         dialog_width = min(self.DIALOG_WIDTH_MAX, self.page.width * self.DIALOG_WIDTH_RATIO)
