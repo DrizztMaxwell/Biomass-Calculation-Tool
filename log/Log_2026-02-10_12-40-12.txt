@@ -1,0 +1,18 @@
+[12:40:12] --- Log Session Started ---
+[12:40:15] Splash screen displayed
+[12:40:17] DataManager cleared, proceeding to EULA
+[12:40:18] User agreed to EULA - proceeding with application
+[12:40:18] User navigated to Select Data page
+[12:40:19] Import text file dialog opened
+[12:40:21] Selected file for import: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\requirements.txt
+[12:40:22] Error importing text file: Missing required columns: ['plot', 'year', 'species', 'tree number', 'dbh', 'height']
+Available columns: ['flet>=0.22.0']
+[12:40:24] Import text file dialog opened
+[12:40:27] Selected file for import: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\data_set.txt
+[12:40:28] Text file imported successfully with 12 records and 2 errors.
+[12:40:30] User navigated to Calculate Biomass page
+[12:40:33] Calculate biomass button clicked
+[12:40:38] User navigated to Select Data page
+[12:40:46] Successfully connected to database gyPSPPGP on server DESKTOP-EJ33BVS\SQLEXPRESS
+[12:40:46] Error connecting to database: 'Select_Data_View' object has no attribute '_add_to_history'
+[12:40:46] Database connection failed for gyPSPPGP

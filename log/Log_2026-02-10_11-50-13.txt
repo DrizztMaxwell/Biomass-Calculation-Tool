@@ -1,0 +1,7 @@
+[11:50:13] --- Log Session Started ---
+[11:50:15] Splash screen displayed
+[11:50:18] DataManager cleared, proceeding to EULA
+[11:50:19] User agreed to EULA - proceeding with application
+[11:50:19] User navigated to Select Data page
+[11:50:20] Import text file dialog opened
+[11:50:22] Error importing text file: 'Select_Data_View' object has no attribute 'update_file_status'

@@ -1,0 +1,16 @@
+[17:18:48] --- Log Session Started ---
+[17:18:50] Splash screen displayed
+[17:18:53] DataManager cleared, proceeding to EULA
+[17:18:55] User agreed to EULA - proceeding with application
+[17:18:55] User navigated to Select Data page
+[17:19:00] User navigated to Create Species page
+[17:19:02] User navigated to Settings page
+[17:19:03] User navigated to Modify Species page
+[17:19:03] Species data loaded successfully.
+[17:19:05] User navigated to Create Species page
+[17:19:06] User navigated to Select Data page
+[17:19:16] Successfully connected to database gyPSPPGP on server .\SQLEXPRESS
+[17:19:16] Database connection info saved: {'server': '.\\SQLEXPRESS', 'database': 'gyPSPPGP', 'driver': 'ODBC Driver 17 for SQL Server', 'data_folder_path': 'C:\\Program Files\\Microsoft SQL Server\\MSSQL16.SQLEXPRESS\\MSSQL\\DATA'}
+[17:19:16] Connecting to database gyPSPPGP on server .\SQLEXPRESS using driver ODBC Driver 17 for SQL Server
+[17:19:17] Database import successful with 10000 records.
+[17:19:17] Database import process completed for gyPSPPGP

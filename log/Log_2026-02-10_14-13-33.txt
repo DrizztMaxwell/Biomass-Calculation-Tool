@@ -1,0 +1,23 @@
+[14:13:33] --- Log Session Started ---
+[14:13:35] Splash screen displayed
+[14:13:37] DataManager cleared, proceeding to EULA
+[14:13:39] User agreed to EULA - proceeding with application
+[14:13:39] User navigated to Select Data page
+[14:13:40] User navigated to Modify Species page
+[14:13:40] Species data loaded successfully.
+[14:13:42] Confirming deletion of species: 
+[14:13:44] Confirming deletion of species: 
+[14:13:44] Species data saved successfully.
+[14:13:44] Species 'dasd' deleted successfully.
+[14:13:47] Confirming deletion of species: 
+[14:13:48] Confirming deletion of species: 
+[14:13:48] Species data saved successfully.
+[14:13:48] Species 'sddassda' deleted successfully.
+[14:13:52] Confirming deletion of species: 
+[14:13:53] Confirming deletion of species: 
+[14:13:53] Species data saved successfully.
+[14:13:53] Species 'sa2' deleted successfully.
+[14:13:55] Confirming deletion of species: 
+[14:13:56] Confirming deletion of species: 
+[14:13:56] Species data saved successfully.
+[14:13:56] Species 'saeswqe2' deleted successfully.

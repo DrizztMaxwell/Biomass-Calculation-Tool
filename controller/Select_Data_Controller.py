@@ -2,7 +2,7 @@
 #select_data_controller.py
 from helper_functions.convert_columns_to_specific_types import convert_columns_to_specific_types
 from helper_functions.convert_text_file_into_dataframe import convert_text_file_into_dataframe
-from views.Select_Data_View import Select_Data_View
+# from views.Select_Data.Select_Data_View import Select_Data_View
 from widgets.Display_Error_Dialog import Display_Error_Dialog
 from widgets.Display_Warning_Dialog import Display_Warning_Dialog
 from helper_functions import do_mandatory_columns_exist
@@ -132,6 +132,8 @@ class Select_Data_Controller:
             self.page.update()
 
         except Exception as e:
+            self.view.update_file_status(f"Error processing file: {os.path.basename(self.selected_file_path) if self.selected_file_path else 'No file'}")
+            
             print("Error in text file import:", e)
             logger.write(f"Error importing text file: {str(e)}")
             self.page.open(Display_Error_Dialog(self.page, description=str(e)).show())
@@ -229,7 +231,7 @@ class Select_Data_Controller:
                 json.dump(db_config, f, indent=4)
 
             # Save to history
-            self.view._add_to_history(server, database)
+            self.view.add_to_history(server, database)
             logger.write(f"Database connection info saved: {db_config}")
             print(f"Database connection info saved: {db_config}")
             return True

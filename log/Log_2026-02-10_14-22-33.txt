@@ -1,0 +1,25 @@
+[14:22:33] --- Log Session Started ---
+[14:22:36] Splash screen displayed
+[14:22:38] DataManager cleared, proceeding to EULA
+[14:22:39] User agreed to EULA - proceeding with application
+[14:22:39] User navigated to Select Data page
+[14:22:40] User navigated to Settings page
+[14:22:41] User navigated to Modify Species page
+[14:22:41] Species data loaded successfully.
+[14:22:42] User navigated to Settings page
+[14:22:44] Theme toggled to: ThemeMode.DARK
+[14:22:45] User navigated to Modify Species page
+[14:22:45] Species data loaded successfully.
+[14:22:55] User navigated to Create Species page
+[14:23:01] Checking if species name aa exists in data/treeparameters.json
+[14:23:02] Selected components for creation: ['Wood', 'Bark']
+[14:23:02] Current equation type is DBH-based
+[14:23:02] Species aa created successfully and added to create_species.json
+[14:23:04] User navigated to Modify Species page
+[14:23:04] Species data loaded successfully.
+[14:23:10] User navigated to Settings page
+[14:23:12] Theme toggled to: ThemeMode.LIGHT
+[14:23:13] User navigated to Modify Species page
+[14:23:13] Species data loaded successfully.
+[14:23:13] User navigated to Create Species page
+[14:23:14] User navigated to Select Data page

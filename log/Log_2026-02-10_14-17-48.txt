@@ -1,0 +1,11 @@
+[14:17:48] --- Log Session Started ---
+[14:17:50] Splash screen displayed
+[14:17:52] DataManager cleared, proceeding to EULA
+[14:18:04] User agreed to EULA - proceeding with application
+[14:18:04] User navigated to Select Data page
+[14:18:06] User navigated to Modify Species page
+[14:18:06] Species data loaded successfully.
+[14:18:08] Editing species: 251
+[14:18:16] Editing species: 251
+[14:18:23] Species data saved successfully.
+[14:18:23] Exception while saving species '251': Edit_Dialog._close_dialog() takes 1 positional argument but 2 were given
