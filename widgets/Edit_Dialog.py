@@ -377,7 +377,7 @@ class Edit_Dialog:
             
             # All validations passed, save the data
             if self._save_species_data():
-                self._close_dialog(dialog)
+                self._close_dialog()
                 self._show_success_message(species)
                 
                 # Refresh data table if callback provided
@@ -499,6 +499,7 @@ class Edit_Dialog:
     def _close_dialog(self):
         """Close the main dialog."""
         self.page.dialog.open = False
+        
         self.page.update()
     
     def _create_dialog(self, species, content, width):

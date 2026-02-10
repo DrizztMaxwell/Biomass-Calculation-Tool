@@ -1,0 +1,5 @@
+[12:26:23] --- Log Session Started ---
+[12:26:25] Splash screen displayed
+[12:26:28] DataManager cleared, proceeding to EULA
+[12:26:30] User agreed to EULA - proceeding with application
+[12:26:30] User navigated to Select Data page

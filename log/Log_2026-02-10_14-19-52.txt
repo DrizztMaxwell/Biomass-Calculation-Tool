@@ -1,0 +1,51 @@
+[14:19:52] --- Log Session Started ---
+[14:19:54] Splash screen displayed
+[14:19:56] DataManager cleared, proceeding to EULA
+[14:19:57] User agreed to EULA - proceeding with application
+[14:19:57] User navigated to Select Data page
+[14:19:58] User navigated to Modify Species page
+[14:19:58] Species data loaded successfully.
+[14:20:00] Editing species: 251
+[14:20:01] Species data saved successfully.
+[14:20:01] Species '251' updated successfully.
+[14:20:03] Editing species: 251
+[14:20:11] Species data saved successfully.
+[14:20:11] Species '251' updated successfully.
+[14:20:14] Viewing species: 251
+[14:20:17] Species details dialog closed for species: 251
+[14:20:18] Confirming deletion of species: 251
+[14:20:19] Confirming deletion of species: 251
+[14:20:19] Species data saved successfully.
+[14:20:19] Species '251' deleted successfully.
+[14:20:22] Confirming deletion of species: 
+[14:20:23] Confirming deletion of species: 
+[14:20:23] Species data saved successfully.
+[14:20:23] Species 'thyjjk' deleted successfully.
+[14:20:25] Confirming deletion of species: 
+[14:20:25] Confirming deletion of species: 
+[14:20:25] Species data saved successfully.
+[14:20:26] Species 'as' deleted successfully.
+[14:20:27] Confirming deletion of species: 
+[14:20:28] Confirming deletion of species: 
+[14:20:28] Species data saved successfully.
+[14:20:28] Species 'a' deleted successfully.
+[14:20:30] Confirming deletion of species: 
+[14:20:31] Confirming deletion of species: 
+[14:20:31] Species data saved successfully.
+[14:20:31] Species 'dsdawddddddddddddddddddddddd' deleted successfully.
+[14:20:32] Confirming deletion of species: 2222333
+[14:20:33] Confirming deletion of species: 2222333
+[14:20:33] Species data saved successfully.
+[14:20:33] Species '2222333' deleted successfully.
+[14:20:35] Confirming deletion of species: 
+[14:20:36] Confirming deletion of species: 
+[14:20:36] Species data saved successfully.
+[14:20:36] Species 'weeqw' deleted successfully.
+[14:20:38] Confirming deletion of species: 
+[14:20:38] Confirming deletion of species: 
+[14:20:38] Species data saved successfully.
+[14:20:38] Species 'waddw' deleted successfully.
+[14:20:40] Confirming deletion of species: 212
+[14:20:41] Confirming deletion of species: 212
+[14:20:41] Species data saved successfully.
+[14:20:41] Species '212' deleted successfully.

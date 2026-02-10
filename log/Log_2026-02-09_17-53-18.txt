@@ -1,0 +1,40 @@
+[17:53:18] --- Log Session Started ---
+[17:53:21] Splash screen displayed
+[17:53:23] DataManager cleared, proceeding to EULA
+[17:53:24] User agreed to EULA - proceeding with application
+[17:53:24] User navigated to Select Data page
+[17:53:25] Import text file dialog opened
+[17:53:27] File selection cancelled by user
+[17:53:33] Import text file dialog opened
+[17:53:35] Selected file for import: C:\Users\mohib\Desktop\notesssss.txt
+[17:53:36] Error importing text file: Missing required columns: ['plot', 'year', 'species', 'tree number', 'dbh', 'height']
+Available columns: ['Add the success verification for the select data thing like if successful']
+[17:53:38] Import text file dialog opened
+[17:53:48] Selected file for import: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\All_Sp_Data_Test_BCT_Dec - Copy.txt
+[17:53:49] Error importing text file: Invalid value for dtype 'str'. Value should be a string or missing value (or array of those).
+[17:53:51] Import text file dialog opened
+[17:54:04] Selected file for import: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\storage\output.txt
+[17:54:05] Error importing text file: Missing required columns: ['tree number']
+Available columns: ['plot', 'year', 'species', 'tree_number', 'dbh', 'height', 'Wood (KG)', 'Bark (KG)', 'Branch (KG)', 'Foliage (KG)', 'Stem (KG)', 'Crown (KG)', 'Total (KG)']
+[17:54:07] Import text file dialog opened
+[17:54:31] Selected file for import: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\data_set.txt
+[17:54:32] Error importing text file: Invalid value for dtype 'str'. Value should be a string or missing value (or array of those).
+[17:54:36] Import text file dialog opened
+[17:54:49] File selection cancelled by user
+[17:54:50] Import text file dialog opened
+[17:54:55] Selected file for import: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\testing_dataset\Case_Insensitive_Test.txt
+[17:54:55] Error importing text file: Invalid value for dtype 'str'. Value should be a string or missing value (or array of those).
+[17:55:56] Import text file dialog opened
+[17:55:58] Selected file for import: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\testing_dataset\All_Capitalised_Test.txt
+[17:55:58] Error importing text file: Invalid value for dtype 'str'. Value should be a string or missing value (or array of those).
+[17:56:51] Import text file dialog opened
+[17:56:53] Selected file for import: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\testing_dataset\Lowercase_Test_BCT.txt
+[17:56:54] Error importing text file: Invalid value for dtype 'str'. Value should be a string or missing value (or array of those).
+[17:57:04] Import text file dialog opened
+[17:57:06] File selection cancelled by user
+[11:12:16] Import text file dialog opened
+[11:12:18] Selected file for import: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\testing_dataset\All_Capitalised_Test.txt
+[11:12:18] Error importing text file: Invalid value for dtype 'str'. Value should be a string or missing value (or array of those).
+[11:13:02] Import text file dialog opened
+[11:13:04] Selected file for import: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\testing_dataset\Client_Testing_Files\All_Sp_Data_Test_BCT_Jan.txt
+[11:13:05] Error importing text file: Invalid value for dtype 'str'. Value should be a string or missing value (or array of those).

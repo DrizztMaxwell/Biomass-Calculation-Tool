@@ -1,0 +1,8 @@
+[12:42:16] --- Log Session Started ---
+[12:42:18] Splash screen displayed
+[12:42:20] DataManager cleared, proceeding to EULA
+[12:42:21] User agreed to EULA - proceeding with application
+[12:42:21] User navigated to Select Data page
+[12:42:25] Successfully connected to database gyPSPPGP on server DESKTOP-EJ33BVS\SQLEXPRESS
+[12:42:25] Error connecting to database: 'Select_Data_View' object has no attribute '_add_to_history'
+[12:42:25] Database connection failed for gyPSPPGP

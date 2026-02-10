@@ -1,0 +1,12 @@
+[14:05:05] --- Log Session Started ---
+[14:05:08] Splash screen displayed
+[14:05:10] DataManager cleared, proceeding to EULA
+[14:05:11] User agreed to EULA - proceeding with application
+[14:05:11] User navigated to Select Data page
+[14:05:12] User navigated to Modify Species page
+[14:05:12] Species data loaded successfully.
+[14:05:13] Confirming deletion of species: 251
+[14:05:19] Confirming deletion of species: 
+[14:05:22] Confirming deletion of species: 
+[14:05:22] Exception while deleting species 'sddassda2': 'Colors' object has no attribute 'get_species_data'
+[14:06:03] Confirming deletion of species: 

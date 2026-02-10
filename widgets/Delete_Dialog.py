@@ -23,8 +23,9 @@ class Delete_Dialog:
     BLACK = ft.Colors.BLACK
     TEXT_SECONDARY = ft.Colors.GREY_600
     
-    def __init__(self, page):
+    def __init__(self, page, controller):
         self.page = page
+        self.controller = controller
     
     def delete_species_confirmation(self, index, filtered_species, species_data, 
                                    controller, text_secondary=None, 
@@ -85,10 +86,10 @@ class Delete_Dialog:
         dialog_width = self._calculate_dialog_width()
         
         def close_dialog(e):
-            self._close_dialog(dialog)
+            self._close_dialog(self.page.dialog)
         
         def confirm_delete_wrapper(e):
-            self._confirm_delete(dialog)
+            self._confirm_delete(self.page.dialog)
         
         # Main container
         main_container = ft.Container(
@@ -181,22 +182,14 @@ class Delete_Dialog:
         return ft.Container(
             content=ft.Column([
                 ft.Container(height=30),
-                self._create_warning_icon(),
+           
                 self._create_warning_text(),
                 ft.Container(height=30),
             ], spacing=0),
             padding=ft.padding.symmetric(horizontal=30),
         )
     
-    def _create_warning_icon(self):
-        """Create warning icon container."""
-        return ft.Container(
-            content=ft.Icon(ft.Icons.ERROR_OUTLINE, size=60, color=self.RED_400),
-            padding=20,
-            bgcolor=ft.Colors.with_opacity(0.1, self.RED_400),
-            border_radius=50,
-            margin=ft.margin.only(bottom=20)
-        )
+    
     
     def _create_warning_text(self):
         """Create warning text content."""

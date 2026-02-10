@@ -1,0 +1,12 @@
+[12:39:16] --- Log Session Started ---
+[12:39:18] Splash screen displayed
+[12:39:20] DataManager cleared, proceeding to EULA
+[12:39:21] User agreed to EULA - proceeding with application
+[12:39:21] User navigated to Select Data page
+[12:39:23] Import text file dialog opened
+[12:39:24] Selected file for import: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\testing_dataset\Client_Testing_Files\All_Sp_Data_Test_BCT_Jan.txt
+[12:39:25] Text file imported successfully with 1991 records and 1 errors.
+[12:39:29] Import text file dialog opened
+[12:39:34] Selected file for import: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\requirements.txt
+[12:39:34] Error importing text file: Missing required columns: ['plot', 'year', 'species', 'tree number', 'dbh', 'height']
+Available columns: ['flet>=0.22.0']

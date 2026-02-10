@@ -1,0 +1,52 @@
+[16:16:19] --- Log Session Started ---
+[16:16:21] Splash screen displayed
+[16:16:24] DataManager cleared, proceeding to EULA
+[16:16:24] User agreed to EULA - proceeding with application
+[16:16:24] User navigated to Select Data page
+[16:16:26] Displayed About Dialog
+[16:16:50] Closed About Dialog
+[16:17:37] Successfully connected to database gyPSPPGP on server .\SQLEXPRESS
+[16:17:37] Database connection info saved: {'server': '.\\SQLEXPRESS', 'database': 'gyPSPPGP', 'driver': 'ODBC Driver 17 for SQL Server', 'data_folder_path': 'C:\\Program Files\\Microsoft SQL Server\\MSSQL16.SQLEXPRESS\\MSSQL\\DATA'}
+[16:17:37] Connecting to database gyPSPPGP on server .\SQLEXPRESS using driver ODBC Driver 17 for SQL Server
+[16:17:38] Database import successful with 10000 records.
+[16:17:38] Database import process completed for gyPSPPGP
+[16:17:40] User navigated to Create Species page
+[16:17:41] User navigated to Calculate Biomass page
+[16:17:44] Calculate biomass button clicked
+[16:19:03] User navigated to Select Data page
+[16:19:08] Successfully connected to database gyPSPPGP on server .\SQLEXPRESS
+[16:19:08] Database connection info saved: {'server': '.\\SQLEXPRESS', 'database': 'gyPSPPGP', 'driver': 'ODBC Driver 17 for SQL Server', 'data_folder_path': 'C:\\Program Files\\Microsoft SQL Server\\MSSQL16.SQLEXPRESS\\MSSQL\\DATA'}
+[16:19:08] Connecting to database gyPSPPGP on server .\SQLEXPRESS using driver ODBC Driver 17 for SQL Server
+[16:19:09] Database import successful with 10000 records.
+[16:19:09] Database import process completed for gyPSPPGP
+[16:19:12] User navigated to Calculate Biomass page
+[16:19:17] Calculate biomass button clicked
+[16:19:31] Write to database operation success: True
+[16:20:14] Calculate biomass button clicked
+[16:20:25] Write to database operation success: True
+[16:25:11] User navigated to Modify Species page
+[16:25:11] Species data loaded successfully.
+[16:25:38] Displayed About Dialog
+[16:26:11] Closed About Dialog
+[16:30:18] User navigated to Select Data page
+[16:42:42] User navigated to Settings page
+[16:42:44] User navigated to Modify Species page
+[16:42:44] Species data loaded successfully.
+[16:42:45] User navigated to Create Species page
+[16:42:46] User navigated to Calculate Biomass page
+[16:42:47] User navigated to Create Species page
+[16:42:47] User navigated to Calculate Biomass page
+[16:42:48] User navigated to Create Species page
+[16:43:40] User navigated to Modify Species page
+[16:43:40] Species data loaded successfully.
+[16:43:42] Viewing species: 
+[16:43:44] Species details dialog closed for species: 
+[16:44:19] User navigated to Create Species page
+[16:44:40] User navigated to Modify Species page
+[16:44:40] Species data loaded successfully.
+[16:44:47] User navigated to Create Species page
+[16:44:48] User navigated to Modify Species page
+[16:44:48] Species data loaded successfully.
+[16:44:49] Viewing species: 
+[16:44:56] Species details dialog closed for species: 
+[16:44:58] Confirming deletion of species: 

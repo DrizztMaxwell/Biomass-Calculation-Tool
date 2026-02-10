@@ -19,6 +19,7 @@ def convert_columns_to_specific_types(data_frame: pd.DataFrame) -> pd.DataFrame:
             if col in col_mapping:
                 original_col = col_mapping[col]
                 before_dtype = data_frame[original_col].dtype
+        
                 
                 # Convert only valid values, keep original for invalid ones
                 converted = pd.to_numeric(data_frame[original_col], errors='coerce')
@@ -27,7 +28,7 @@ def convert_columns_to_specific_types(data_frame: pd.DataFrame) -> pd.DataFrame:
                 
                 after_dtype = data_frame[original_col].dtype
                 conversion_results[original_col] = f"{before_dtype} → {after_dtype}"
-        
+                print(f"Converted column '{original_col}' to Int16 where possible. Invalid entries preserved as original.")
         # Species as alphanumeric
         if 'species' in col_mapping:
             original_col = col_mapping['species']
@@ -42,11 +43,15 @@ def convert_columns_to_specific_types(data_frame: pd.DataFrame) -> pd.DataFrame:
 
         # String columns
         string_columns = [ 'plot']
+        print("CHECKING FOR PLOT")
         for col in string_columns:
+            print("AFTYER PLOT")
+            print("Coluimns plot detected: ", col)
             if col in col_mapping:
                 original_col = col_mapping[col]
+                print(f"Converting column '{original_col}' to string...")
                 before_dtype = data_frame[original_col].dtype
-                data_frame[original_col] = data_frame[original_col].astype(str)
+                data_frame[original_col] = data_frame[original_col].astype('str')
                 after_dtype = data_frame[original_col].dtype
                 conversion_results[original_col] = f"{before_dtype} → {after_dtype}"
 

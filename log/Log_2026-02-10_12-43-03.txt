@@ -1,0 +1,32 @@
+[12:43:03] --- Log Session Started ---
+[12:43:06] Splash screen displayed
+[12:43:08] DataManager cleared, proceeding to EULA
+[12:43:09] User agreed to EULA - proceeding with application
+[12:43:09] User navigated to Select Data page
+[12:43:10] Import text file dialog opened
+[12:43:12] File selection cancelled by user
+[12:43:15] Successfully connected to database gyPSPPGP on server DESKTOP-EJ33BVS\SQLEXPRESS
+[12:43:15] Database connection info saved: {'server': 'DESKTOP-EJ33BVS\\SQLEXPRESS', 'database': 'gyPSPPGP', 'driver': 'ODBC Driver 17 for SQL Server', 'data_folder_path': 'C:\\Program Files\\Microsoft SQL Server\\MSSQL16.SQLEXPRESS\\MSSQL\\DATA'}
+[12:43:15] Connecting to database gyPSPPGP on server DESKTOP-EJ33BVS\SQLEXPRESS using driver ODBC Driver 17 for SQL Server
+[12:43:17] Database import successful with 10000 records.
+[12:43:17] Database import process completed for gyPSPPGP
+[12:43:23] Successfully connected to database gyPSPPGP on server DESKTOP-EJ33BVS\SQLEXPRESS
+[12:43:23] Database connection info saved: {'server': 'DESKTOP-EJ33BVS\\SQLEXPRESS', 'database': 'gyPSPPGP', 'driver': 'ODBC Driver 17 for SQL Server', 'data_folder_path': 'C:\\Program Files\\Microsoft SQL Server\\MSSQL16.SQLEXPRESS\\MSSQL\\DATA'}
+[12:43:23] Connecting to database gyPSPPGP on server DESKTOP-EJ33BVS\SQLEXPRESS using driver ODBC Driver 17 for SQL Server
+[12:43:25] Database import successful with 10000 records.
+[12:43:25] Database import process completed for gyPSPPGP
+[12:43:34] Import text file dialog opened
+[12:43:36] Selected file for import: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\Output_All_Sp_Data_Test_BCT_Dec - Copy_20260202_212800.txt
+[12:43:36] Error importing text file: Missing required columns: ['plot', 'year', 'species', 'tree number', 'dbh', 'height']
+Available columns: ['BIOMASS CALCULATION RESULTS']
+[12:43:38] Import text file dialog opened
+[12:43:41] Selected file for import: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\BCT.txt
+[12:43:42] Text file imported successfully with 5 records and 0 errors.
+[12:43:43] User navigated to Calculate Biomass page
+[12:44:11] User navigated to Create Species page
+[12:44:13] User navigated to Settings page
+[12:44:13] User navigated to Modify Species page
+[12:44:13] Species data loaded successfully.
+[12:44:14] User chose to exit the application
+[12:44:16] User navigated to Select Data page
+[12:44:17] User navigated to Calculate Biomass page

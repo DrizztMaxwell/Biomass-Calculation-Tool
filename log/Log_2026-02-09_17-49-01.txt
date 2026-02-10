@@ -1,0 +1,12 @@
+[17:49:01] --- Log Session Started ---
+[17:49:03] Splash screen displayed
+[17:49:05] DataManager cleared, proceeding to EULA
+[17:49:07] User agreed to EULA - proceeding with application
+[17:49:07] User navigated to Select Data page
+[17:49:09] Import text file dialog opened
+[17:49:10] File selection cancelled by user
+[17:49:16] Successfully connected to database gyPSPPGP on server .\SQLEXPRESS
+[17:49:16] Database connection info saved: {'server': '.\\SQLEXPRESS', 'database': 'gyPSPPGP', 'driver': 'ODBC Driver 17 for SQL Server', 'data_folder_path': 'C:\\Program Files\\Microsoft SQL Server\\MSSQL16.SQLEXPRESS\\MSSQL\\DATA'}
+[17:49:16] Connecting to database gyPSPPGP on server .\SQLEXPRESS using driver ODBC Driver 17 for SQL Server
+[17:49:16] Database import successful with 10000 records.
+[17:49:16] Database import process completed for gyPSPPGP

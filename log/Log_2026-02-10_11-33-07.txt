@@ -1,0 +1,10 @@
+[11:33:07] --- Log Session Started ---
+[11:33:09] Splash screen displayed
+[11:33:11] DataManager cleared, proceeding to EULA
+[11:33:17] User agreed to EULA - proceeding with application
+[11:33:17] User navigated to Select Data page
+[11:33:19] User navigated to Settings page
+[11:33:22] User navigated to Select Data page
+[11:33:23] Import text file dialog opened
+[11:33:25] Selected file for import: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\testing_dataset\Client_Testing_Files\All_Sp_Data_Test_BCT_Jan.txt
+[11:33:25] Error importing text file: Invalid value for dtype 'str'. Value should be a string or missing value (or array of those).

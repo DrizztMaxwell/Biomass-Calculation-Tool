@@ -3,13 +3,12 @@ import shutil
 import sys
 import flet as ft
 from controller.Select_Data_Controller import Select_Data_Controller
-from views import Select_Data_View
-from views.Modify_Species_View import Modify_Species_View
+from views.Modify_Species.Modify_Species_View import Modify_Species_View
 from views.Calculate_Biomass_View import  Calculate_Biomass_View
 from views.Create_Species_View import Create_Species_View
 from controller.Create_Species_Controller import Create_Species_Controller
 from controller.Calculate_Biomass_Controller import Calculate_Biomass_Controller
-from views.Select_Data_View import Select_Data_View
+from views.Select_Data.Select_Data_View import Select_Data_View
 from views.About_Dialog_View import About_Dialog_View
 from widgets.Display_Nav_Item import Display_Nav_Item
 from widgets.Display_Version_Number import Display_Version_Number
@@ -64,7 +63,8 @@ class SideNavbar_View:
         
         
         self.select_data_view = Select_Data_View(page=self.page, controller=None)
-        self.select_data_controller = Select_Data_Controller(self.page, self.Callback_To_Update_Sidebar_UI, self.select_data_view)
+        
+        self.select_data_controller = Select_Data_Controller(self.page ,self.Callback_To_Update_Sidebar_UI,view=self.select_data_view)
         self.select_data_view.controller = self.select_data_controller
         
         self.create_species_controller = Create_Species_Controller()
@@ -130,7 +130,7 @@ class SideNavbar_View:
             
         elif page_name == self.SELECT_DATA_PAGE:
             logger.write("User navigated to Select Data page")
-            self.main_content_area.controls.append(self.select_data_controller.build())
+            self.main_content_area.controls.append(self.select_data_view.create_main_layout())
       
         # Refresh the sidebar to update active item highlighting
         self.Refresh_Sidebar()

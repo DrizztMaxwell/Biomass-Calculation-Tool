@@ -1,0 +1,12 @@
+[14:09:34] --- Log Session Started ---
+[14:09:37] Splash screen displayed
+[14:09:39] DataManager cleared, proceeding to EULA
+[14:09:40] User agreed to EULA - proceeding with application
+[14:09:40] User navigated to Select Data page
+[14:09:42] User navigated to Modify Species page
+[14:09:42] Species data loaded successfully.
+[14:09:43] Confirming deletion of species: 
+[14:09:44] Confirming deletion of species: 
+[14:09:44] Exception while deleting species 'dasd': 'Colors' object has no attribute 'get_species_data'
+[14:09:48] Editing species: 
+[14:09:48] Exception while saving species '': 'Colors' object has no attribute 'get_species_data'
