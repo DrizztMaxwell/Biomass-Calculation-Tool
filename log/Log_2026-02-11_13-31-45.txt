@@ -1,0 +1,8 @@
+[13:31:45] --- Log Session Started ---
+[13:31:47] Splash screen displayed
+[13:31:49] DataManager cleared, proceeding to EULA
+[13:31:50] User agreed to EULA - proceeding with application
+[13:31:50] User navigated to Select Data page
+[13:31:51] User navigated to Create Species page
+[13:32:04] Checking if species name aa22 exists in data/treeparameters.json
+[13:32:04] Checking if species name aa22 exists in data/create_species.json

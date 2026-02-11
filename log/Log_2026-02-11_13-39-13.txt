@@ -1,0 +1,26 @@
+[13:39:13] --- Log Session Started ---
+[13:39:15] Splash screen displayed
+[13:39:17] DataManager cleared, proceeding to EULA
+[13:39:18] User agreed to EULA - proceeding with application
+[13:39:18] User navigated to Select Data page
+[13:39:19] User navigated to Create Species page
+[13:39:26] Checking if species name dsa exists in data/treeparameters.json
+[13:39:26] Checking if species name dsa exists in data/create_species.json
+[13:39:28] User navigated to Create Species page
+[13:39:28] User navigated to Modify Species page
+[13:39:28] Species data loaded successfully.
+[13:39:29] User navigated to Create Species page
+[13:39:36] Checking if species name das exists in data/treeparameters.json
+[13:39:36] Checking if species name das exists in data/create_species.json
+[13:39:40] User navigated to Settings page
+[13:39:41] Theme toggled to: ThemeMode.DARK
+[13:39:42] User navigated to Create Species page
+[13:39:44] User navigated to Modify Species page
+[13:39:44] Species data loaded successfully.
+[13:39:45] User navigated to Create Species page
+[13:39:47] User navigated to Settings page
+[13:39:49] User navigated to Modify Species page
+[13:39:49] Species data loaded successfully.
+[13:39:50] User navigated to Create Species page
+[13:39:56] Checking if species name ed exists in data/treeparameters.json
+[13:39:56] Checking if species name ed exists in data/create_species.json
