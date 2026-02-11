@@ -4,12 +4,12 @@ import sys
 import flet as ft
 from controller.Select_Data_Controller import Select_Data_Controller
 from views.Modify_Species.Modify_Species_View import Modify_Species_View
-from views.Calculate_Biomass_View import  Calculate_Biomass_View
+from views.Calculate_Biomass.Calculate_Biomass_View import  Calculate_Biomass_View
 from views.Create_Species_View import Create_Species_View
 from controller.Create_Species_Controller import Create_Species_Controller
 from controller.Calculate_Biomass_Controller import Calculate_Biomass_Controller
 from views.Select_Data.Select_Data_View import Select_Data_View
-from views.About_Dialog_View import About_Dialog_View
+from views.About.About_Dialog_View import About_Dialog_View
 from widgets.Display_Nav_Item import Display_Nav_Item
 from widgets.Display_Version_Number import Display_Version_Number
 from widgets.Display_Exit_Dialog import Display_Exit_Dialog
@@ -137,7 +137,7 @@ class SideNavbar_View:
    
     def _Setup_Biomass_Calculation(self) -> ft.Control:
         self.biomass_controller = Calculate_Biomass_Controller(None)
-        self.biomass_view = Calculate_Biomass_View(None, page = self.page, selected_file_path=None)  # Pass None initially, set controller later
+        self.biomass_view = Calculate_Biomass_View(self.biomass_controller, page = self.page, selected_file_path=None)  # Pass None initially, set controller later
         self.biomass_controller.view = self.biomass_view
         self.biomass_view.controller = self.biomass_controller
         # self.biomass_controller.check_database_selected()

@@ -1,0 +1,13 @@
+[12:45:46] --- Log Session Started ---
+[12:45:49] Splash screen displayed
+[12:45:51] DataManager cleared, proceeding to EULA
+[12:45:53] User agreed to EULA - proceeding with application
+[12:45:53] User navigated to Select Data page
+[12:45:55] Import text file dialog opened
+[12:46:02] Selected file for import: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\data_set.txt
+[12:46:03] Text file imported successfully with 12 records and 2 errors.
+[12:46:05] User navigated to Calculate Biomass page
+[12:46:09] Calculate biomass button clicked
+[12:46:11] Generated default export filename: Output_Biomass_Results_20260211_124611.txt
+[12:46:11] Export file dialog opened
+[12:46:22] [Error] - Failed to export data: Calculate_Biomass_Controller._export_to_text() missing 1 required positional argument: 'file_path'
