@@ -69,21 +69,28 @@ class Calculate_Biomass_Controller:
         from data.constants import TABLE_OUTPUT_NAME
         self.view.show_success_dialog( title="Success", message=f"Successfully exported data to {TABLE_OUTPUT_NAME}.")
     
-    def _export_to_text(self, data: List[Dict], file_path: str) -> bool:
+    def _export_to_text(self, file_path: str) -> bool:
         """Export data to a formatted text file."""
+        # open the storage/biomass_results.json file and load the data
         try:
+            with open(self.view._RESULTS_JSON_PATH, "r") as file:
+                data = json.load(file)
+
+       
             with open(file_path, 'w') as file:
                 self._write_export_header(file, len(data))
                 
                 if data:
                     headers = list(data[0].keys())
                     self._write_export_data(file, data, headers)
-            
+            self.view.display_success_message(f"Data exported successfully to {file_path}")
             return True
         
         except Exception as error:
             print(f"Export error: {error}")
             logger.write(f"[Error] - Failed to export to {file_path}: {error}")
+            
+            self.view.show_error_message(f"Failed to export data to {file_path}")
             return False
     
     def _write_export_header(self, file, record_count: int):
@@ -132,7 +139,7 @@ class Calculate_Biomass_Controller:
         loading_spinner.show_dialog()
         
         # Disable button
-        self.view._disable_calculation_button(event.control)
+        self.view.disable_calculation_button(event.control)
         
         # Perform calculation
         await loading_spinner.simulate_progressive_loading(
@@ -142,7 +149,7 @@ class Calculate_Biomass_Controller:
         calculation_success = await self.calculate_biomass()
         
         if not calculation_success:
-            self.view._enable_calculation_button(event.control)
+            self.view.enable_calculation_button(event.control)
             loading_spinner.hide()
             return
         
@@ -152,8 +159,8 @@ class Calculate_Biomass_Controller:
         )
         loading_spinner.hide()
         
-        self.view._show_results_table()
-        self.view._enable_calculation_button(event.control)
+        self.view.show_results()
+        self.view.enable_calculation_button(event.control)
     
                  
     def json_to_dataframe_basic(self, json_file_path):
@@ -430,7 +437,7 @@ class Calculate_Biomass_Controller:
                 # Now you can use the mapping to set parameters
                 self._apply_species_type_mapping(species_type_mapping)
                 #print(f"Hardwood and Softwood Species Code Mapping: {self.hardwood_and_softwood_species_code_mapping}")
-            print(self.hardwood_and_softwood_species_code_mapping)
+            # print(self.hardwood_and_softwood_species_code_mapping)
             self._lower_column_names(self.local_storage_data, self.tree_params_data)
             self._process_biomass_calculations(self.local_storage_data, self.tree_params_data)
             self._save_results(self.local_storage_data)
@@ -539,9 +546,9 @@ class Calculate_Biomass_Controller:
                         hardwood_and_softwood_species_code_mapping_lookup[(code)] = species
                 except (ValueError, TypeError):
                     continue
-        print("Hardwood and Softwood Species Code Mapping Lookup:")
-        print(hardwood_and_softwood_species_code_mapping_lookup)
-        # 2. Vectorized filtering of valid rows\
+        # print("Hardwood and Softwood Species Code Mapping Lookup:")
+        # print(hardwood_and_softwood_species_code_mapping_lookup)
+        # # 2. Vectorized filtering of valid rows\
             #check alphanumeric species codes and name
             
         for idx, row in local_data.iterrows():
@@ -864,7 +871,7 @@ class Calculate_Biomass_Controller:
             print(f"Error saving to text file: {e}")
 
     def _normalize_biomass_row(self, row: dict) -> dict:
-        print(row)
+        # print(row)
         plot = row.get("Plot") or row.get("plot")
         year = row.get("Year") or row.get("year")
         tree_number = row.get("Tree_number") or row.get("Tree Number") or row.get("tree_number")

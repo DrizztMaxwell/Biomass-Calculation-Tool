@@ -1,0 +1,43 @@
+[13:03:10] --- Log Session Started ---
+[13:03:12] Splash screen displayed
+[13:03:15] DataManager cleared, proceeding to EULA
+[13:03:15] User agreed to EULA - proceeding with application
+[13:03:15] User navigated to Select Data page
+[13:03:17] Import text file dialog opened
+[13:03:23] Selected file for import: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\data_set.txt
+[13:03:24] Text file imported successfully with 12 records and 2 errors.
+[13:03:27] User navigated to Calculate Biomass page
+[13:03:30] Calculate biomass button clicked
+[13:03:33] Generated default export filename: Output_Biomass_Results_20260211_130333.txt
+[13:03:33] Export file dialog opened
+[13:03:35] Data exported successfully to C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\Output_Biomass_Results_20260211_130333.txt
+[13:03:39] View Chart button clicked
+[13:03:39] Biomass chart displayed
+[13:03:39] Biomass chart displayed
+[13:03:52] User navigated to Create Species page
+[13:03:53] User navigated to Modify Species page
+[13:03:53] Species data loaded successfully.
+[13:03:56] User navigated to Calculate Biomass page
+[13:03:57] Calculate biomass button clicked
+[13:04:01] View Chart button clicked
+[13:04:01] Biomass chart displayed
+[13:04:01] Biomass chart displayed
+[13:04:03] Generated default export filename: Output_Biomass_Results_20260211_130403.txt
+[13:04:03] Export file dialog opened
+[13:04:04] Export cancelled by user
+[13:04:08] User navigated to Select Data page
+[13:04:11] Successfully connected to database gypsppgp on server DESKTOP-EJ33BVS\SQLEXPRESS
+[13:04:11] Database connection info saved: {'server': 'DESKTOP-EJ33BVS\\SQLEXPRESS', 'database': 'gypsppgp', 'driver': 'ODBC Driver 17 for SQL Server', 'data_folder_path': 'C:\\Program Files\\Microsoft SQL Server\\MSSQL16.SQLEXPRESS\\MSSQL\\DATA'}
+[13:04:11] Connecting to database gypsppgp on server DESKTOP-EJ33BVS\SQLEXPRESS using driver ODBC Driver 17 for SQL Server
+[13:04:13] Database import successful with 10000 records.
+[13:04:13] Database import process completed for gypsppgp
+[13:04:14] User navigated to Calculate Biomass page
+[13:04:16] Calculate biomass button clicked
+[13:04:20] Generated default export filename: Output_Biomass_Results_20260211_130420.txt
+[13:04:20] Export file dialog opened
+[13:04:25] Data exported successfully to C:\Users\mohib\Desktop\Output_Biomass_Results_20260211_130420.txt
+[13:05:02] User navigated to Create Species page
+[13:05:03] User navigated to Calculate Biomass page
+[13:06:03] Calculate biomass button clicked
+[13:06:17] Write to database operation success: True
+[13:06:35] Write to database operation success: True

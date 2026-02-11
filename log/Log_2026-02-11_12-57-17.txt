@@ -1,0 +1,13 @@
+[12:57:17] --- Log Session Started ---
+[12:57:20] Splash screen displayed
+[12:57:22] DataManager cleared, proceeding to EULA
+[12:57:22] User agreed to EULA - proceeding with application
+[12:57:23] User navigated to Select Data page
+[12:57:24] Import text file dialog opened
+[12:57:40] Selected file for import: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\testing_dataset\Lowercase_Test_BCT.txt
+[12:57:40] Text file imported successfully with 72 records and 0 errors.
+[12:57:42] User navigated to Calculate Biomass page
+[12:57:44] Calculate biomass button clicked
+[12:57:46] Generated default export filename: Output_Biomass_Results_20260211_125746.txt
+[12:57:46] Export file dialog opened
+[12:57:51] [Error] - Failed to export data: 'Logger' object has no attribute 'write'
