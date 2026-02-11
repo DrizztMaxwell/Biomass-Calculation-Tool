@@ -1,0 +1,31 @@
+[13:47:29] --- Log Session Started ---
+[13:47:31] Splash screen displayed
+[13:47:33] DataManager cleared, proceeding to EULA
+[13:47:35] User agreed to EULA - proceeding with application
+[13:47:35] User navigated to Select Data page
+[13:47:36] User navigated to Create Species page
+[13:47:47] Checking if species name dsa d exists in data/treeparameters.json
+[13:47:47] Checking if species name dsa d exists in data/create_species.json
+[13:47:49] Selected components for creation: ['Bark']
+[13:47:49] Current equation type is DBH-based
+[13:47:49] Species dsa d created successfully and added to create_species.json
+[13:47:51] User navigated to Modify Species page
+[13:47:51] Species data loaded successfully.
+[13:47:53] User navigated to Settings page
+[13:47:54] Theme toggled to: ThemeMode.DARK
+[13:47:55] User navigated to Create Species page
+[13:48:04] Checking if species name sddas exists in data/treeparameters.json
+[13:48:04] Checking if species name sddas exists in data/create_species.json
+[13:48:09] Selected components for creation: ['Wood', 'Bark', 'Branch', 'Foliage']
+[13:48:09] Current equation type is DBH-based
+[13:48:09] Species sddas created successfully and added to create_species.json
+[13:48:11] Checking if species name sddas exists in data/treeparameters.json
+[13:48:12] Checking if species name sddas exists in data/create_species.json
+[13:48:12] Species code or name 'sddas' already exists in create_species.json
+[13:48:14] Checking if species name sddasds exists in data/treeparameters.json
+[13:48:14] Checking if species name sddasds exists in data/create_species.json
+[13:48:17] User navigated to Modify Species page
+[13:48:17] Species data loaded successfully.
+[13:48:19] User navigated to Settings page
+[13:48:22] Displayed About Dialog
+[13:48:25] Closed About Dialog

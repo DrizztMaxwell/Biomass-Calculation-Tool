@@ -5,7 +5,7 @@ import flet as ft
 from controller.Select_Data_Controller import Select_Data_Controller
 from views.Modify_Species.Modify_Species_View import Modify_Species_View
 from views.Calculate_Biomass.Calculate_Biomass_View import  Calculate_Biomass_View
-from views.Create_Species_View import Create_Species_View
+from views.Create_Species.Create_Species_View import Create_Species_View
 from controller.Create_Species_Controller import Create_Species_Controller
 from controller.Calculate_Biomass_Controller import Calculate_Biomass_Controller
 from views.Select_Data.Select_Data_View import Select_Data_View
@@ -115,6 +115,10 @@ class SideNavbar_View:
             
         elif page_name == self.CREATE_SPECIES_PAGE:
             logger.write("User navigated to Create Species page")
+             
+            self.create_species_controller = Create_Species_Controller()
+            self.create_species_view = Create_Species_View(self.page, self.create_species_controller)
+            self.create_species_controller.view = self.create_species_view
             self.main_content_area.controls.append(self.create_species_view.build())
             
         elif page_name == self.SETTINGS_PAGE:

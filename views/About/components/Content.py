@@ -6,135 +6,81 @@ class Content:
         
     def create(self):
         return ft.Column([
-            # Introduction
-            self._create_section(
-                "This tool provides a reliable way to estimate the aboveground biomass of Canadian tree species by applying the national biomass equations developed by Lambert et al. (2005). "
-                "These equations were designed to support carbon accounting and forest management by converting standard forest inventory measurements into biomass estimates. The tool calculates biomass for individual tree components—wood, bark, branches, and foliage—and ensures that the sum of these components equals the total aboveground biomass. It uses species-specific allometric models based on diameter at breast height (DBH) and, when available, tree height, offering two levels of precision:",
-                None,
-                bgcolor=ft.Colors.SECONDARY_CONTAINER
+            # Section 1: Intro (The "Lead")
+            self._create_stack_item(
+                "Overview",
+                "This tool estimates aboveground biomass for Canadian tree species using national equations (Lambert et al. 2005). It converts standard forest inventory measurements into biomass estimates for carbon accounting and forest management. Biomass is calculated for individual tree components—wood, bark, branches, and foliage—with the sum equaling total aboveground biomass. Species-specific allometric models offer two precision levels: DBH-based equations (when height is unavailable) and more accurate DBH + height-based equations (when both measurements are provided).",
+                ft.Icons.ANALYTICS_ROUNDED,
+                ft.Colors.BLUE_50
             ),
             
-            # Precision levels section
-            self._create_section(
-                None,
-                ft.Column([
-                    ft.Text("Precision Types", size=14, weight=ft.FontWeight.BOLD, color=ft.Colors.PRIMARY),
-                    self._create_icon_with_text(ft.Icons.STRAIGHTEN, "DBH-based equations for situations where height data are unavailable.", "#10B981"),
-                    self._create_icon_with_text(ft.Icons.HEIGHT, "DBH + height-based equations for improved accuracy when both measurements are provided.", "#3B82F6"),
-                ], spacing=2),
-                bgcolor=ft.Colors.SECONDARY_CONTAINER
+            # Section 2: Precision & Features (Combined for height efficiency)
+            self._create_stack_item(
+                "Precision & Features",
+                "Estimates aboveground biomass for 33 Canadian tree species using national equations (Lambert et al. 2005). Calculates biomass for wood, bark, branches, and foliage—summing to total biomass. Choose between DBH-based or more accurate DBH + height-based equations.",
+                ft.Icons.SPEED_ROUNDED,
+                ft.Colors.GREEN_50
+            ),
+           
+
+            # Section 3: Target Audience
+            self._create_stack_item(
+                "Intended For",
+                "Researchers, forest managers, and policy analysts requiring robust biomass estimates across Canada.",
+                ft.Icons.GROUPS_ROUNDED,
+                ft.Colors.GREY_50
             ),
             
-            # Key features section
-            self._create_section(
-                None,
-                ft.Column([
-                    ft.Text("Key Features", size=14, weight=ft.FontWeight.BOLD, color=ft.Colors.PRIMARY),
-                    self._create_icon_with_text(ft.Icons.PARK, "Covers 33 Canadian tree species, plus grouped equations for hardwoods, softwoods, and all species combined.", "#8B5CF6"),
-                    self._create_icon_with_text(ft.Icons.ANALYTICS, "Provides outputs suitable for forest carbon budget estimation, ecological modeling, and operational planning.", "#F59E0B"),
-                ], spacing=2),
-                bgcolor=ft.Colors.SECONDARY_CONTAINER
+            # Section 4: Contact (Streamlined)
+            ft.Container(
+                content=ft.Column([
+                    ft.Text("Development & Contact", size=13, weight=ft.FontWeight.BOLD, color=ft.Colors.BLUE_GREY_900),
+                    ft.Row([
+                        self._create_email_pill("Jamshid Eslamdoust", "Jamshid.Eslamdoust@ontario.ca", ft.Colors.ORANGE_800),
+                        self._create_email_pill("Christopher Stratton", "Christopher.Stratton@ontario.ca", ft.Colors.BLUE_800),
+                    ], spacing=10, alignment=ft.MainAxisAlignment.START),
+                ], spacing=8),
+                padding=12,
+                bgcolor=ft.Colors.BLUE_GREY_50,
+                border_radius=10,
             ),
-            
-            # Target audience
-            self._create_section(
-                "Researchers, forest managers, and policy analysts who require consistent and scientifically robust biomass estimates across Canada.",
-                ft.Text("Intended For", size=14, weight=ft.FontWeight.BOLD, color=ft.Colors.BLACK),
-                bgcolor=ft.Colors.BLUE_50,
-                border=ft.border.all(1, ft.Colors.BLUE_100),
-                text_color=ft.Colors.BLACK
-            ),
-            
-            # Development and Contact section
-            self._create_contact_section(),
-            
-        ], spacing=4, expand=True)
-    
-    def _create_section(self, text_content, header_content, **kwargs):
-        bgcolor = kwargs.get('bgcolor', ft.Colors.SECONDARY_CONTAINER)
-        border = kwargs.get('border', None)
-        text_color = kwargs.get('text_color', ft.Colors.PRIMARY)
-        
-        content = []
-        
-        if header_content:
-            content.append(header_content)
-            
-        if text_content:
-            content.append(
-                ft.Text(
-                    text_content,
-                    size=12,
-                    color=text_color,
-                    text_align=ft.TextAlign.JUSTIFY
-                )
-            )
-        
+        ], spacing=12, alignment=ft.MainAxisAlignment.START, expand=True)
+
+    def _create_stack_item(self, title, text, icon, bgcolor):
         return ft.Container(
-            content=ft.Column(content, spacing=4 if text_content and header_content else 0),
-            padding=ft.padding.all(12),
-            margin=ft.margin.only(bottom=8),
+            content=ft.Row([
+                ft.Icon(icon, size=20, color=ft.Colors.BLUE_GREY_400),
+                ft.Column([
+                    ft.Text(title, size=13, weight=ft.FontWeight.BOLD, color=ft.Colors.BLUE_900),
+                    ft.Text(text, size=11, color=ft.Colors.BLUE_GREY_800, width=700),
+                ], spacing=2, expand=True)
+            ], vertical_alignment=ft.CrossAxisAlignment.START),
+            padding=12,
             bgcolor=bgcolor,
-            border_radius=ft.border_radius.all(8),
-            border=border
+            border_radius=10,
         )
-    
-    def _create_icon_with_text(self, icon, text, color):
+
+    def _create_info_chip(self, icon, label, color):
         return ft.Container(
             content=ft.Row([
-                ft.Icon(icon, color=color, size=14),
-                ft.Text(text, size=11, color=ft.Colors.PRIMARY, expand=True),
-            ], spacing=6, vertical_alignment=ft.CrossAxisAlignment.START),
-            padding=ft.padding.symmetric(vertical=3),
+                ft.Icon(icon, size=14, color=color),
+                ft.Text(label, size=10, weight=ft.FontWeight.W_500, color=ft.Colors.BLUE_GREY_900),
+            ], spacing=5),
+            padding=ft.padding.symmetric(horizontal=12, vertical=6),
+            border=ft.border.all(1, ft.Colors.BLACK12),
+            border_radius=20,
         )
-    
-    def _create_email_item(self, name, email, color):
+
+    def _create_email_pill(self, name, email, color):
         return ft.Container(
             content=ft.Row([
-                ft.Icon(ft.Icons.MAIL_OUTLINED, color=color, size=14),
-                ft.Column([
-                    ft.Text(name, size=11, color=ft.Colors.PRIMARY, weight=ft.FontWeight.W_500),
-                    ft.Text(email, size=10, color=ft.Colors.GREY_600),
-                ], spacing=1)
-            ], spacing=10),
-            padding=ft.padding.symmetric(vertical=5, horizontal=10),
-            border_radius=ft.border_radius.all(6),
-            bgcolor=ft.Colors.with_opacity(0.1, color),
-            border=ft.border.all(1, ft.Colors.with_opacity(0.3, color)),
-            on_click=lambda e: self.email_callback(email),
-            margin=ft.margin.only(bottom=4),
+                ft.Icon(ft.Icons.MAIL_ROUNDED, size=14, color=color),
+                ft.Text(f"{name} ({email})", size=10, weight=ft.FontWeight.W_500),
+            ], spacing=8),
+            on_click=lambda _: self.email_callback(email),
+            padding=ft.padding.symmetric(horizontal=12, vertical=8),
+            bgcolor=ft.Colors.WHITE,
+            border=ft.border.all(1, ft.Colors.with_opacity(0.1, color)),
+            border_radius=8,
             ink=True,
-        )
-    
-    def _create_contact_section(self):
-        return ft.Container(
-            content=ft.Column([
-                ft.Text("Development & Contact", size=14, weight=ft.FontWeight.BOLD, color=ft.Colors.PRIMARY),
-                ft.Container(height=4),
-                ft.Text(
-                    "This biomass calculation tool was developed by the Ontario Ministry of Natural Resources and Forestry in collaboration with Trent University. For more information, please contact:",
-                    size=12,
-                    color=ft.Colors.PRIMARY,
-                    text_align=ft.TextAlign.JUSTIFY,
-                ),
-                ft.Container(height=8),
-                
-                ft.Column([
-                    self._create_email_item("Jamshid Eslamdoust", "Jamshid.Eslamdoust@ontario.ca", "#EA580C"),
-                    self._create_email_item("Christopher Stratton", "Christopher.Stratton@ontario.ca", "#0284C7"),
-                ], spacing=4),
-                
-                ft.Text(
-                    "Click on any email address above to open your default email client.",
-                    size=10,
-                    color=ft.Colors.GREY_600,
-                    italic=True,
-                    text_align=ft.TextAlign.CENTER,
-                ),
-                ft.Container(height=4),
-            ], spacing=4),
-            padding=ft.padding.all(12),
-            bgcolor=ft.Colors.SECONDARY_CONTAINER,
-            border_radius=ft.border_radius.all(8),
-            border=ft.border.all(1, ft.Colors.GREY_200)
         )
