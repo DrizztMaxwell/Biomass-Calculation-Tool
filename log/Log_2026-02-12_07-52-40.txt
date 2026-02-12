@@ -1,0 +1,13 @@
+[07:52:40] --- Log Session Started ---
+[07:52:42] Splash screen displayed
+[07:52:44] DataManager cleared, proceeding to EULA
+[07:52:45] User agreed to EULA - proceeding with application
+[07:52:45] User navigated to Select Data page
+[07:52:47] Import text file dialog opened
+[07:52:50] Selected file for import: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\data_set_final.txt
+[07:52:52] Error importing text file: Missing required columns: ['plot', 'year', 'species', 'tree number', 'height']
+Available columns: ['PlotName', 'PlotKey', 'FieldSeasonYear', 'StandOriginCode', 'TreeStatusCode', 'TreeNum', 'SpecCode', 'DBH', 'HtTot']
+[07:52:54] Import text file dialog opened
+[07:52:56] Selected file for import: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\BCT.txt
+[07:52:57] Text file imported successfully with 5 records and 0 errors.
+[07:52:59] User navigated to Calculate Biomass page

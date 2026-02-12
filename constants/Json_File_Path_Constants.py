@@ -3,4 +3,8 @@ class Json_File_Path_Constants:
     
     CREATED_SPECIES_PATH = "data/create_species.json"
     BIOMASS_CALCULATIONS_PATH = "data/biomass_calculations.json"
+    LOCAL_STORAGE_PATH = "storage/localstorage.json"
+    SELECTED_DATABASE_PATH = "data/selected_database.json"
+    BIOMASS_RESULTS_PATH = "storage/biomass_results.json"
+    TREE_PARAMS_PATH = "data/treeparameters.json"
     

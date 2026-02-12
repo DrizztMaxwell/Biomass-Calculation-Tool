@@ -66,7 +66,7 @@ class File_Exporter_Handler:
         
         try:
             print(f"Attempting to export data to: {event.path}")
-            success = self.controller._export_to_text(event.path)
+            success = self.controller.export_results_to_text_file(event.path)
             print(f"Export success: {success}")
             if success:
                 logger.write(f"Data exported successfully to {event.path}")

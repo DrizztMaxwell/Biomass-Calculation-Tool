@@ -7,7 +7,7 @@ from .components.Layout import Layout
 from .components.Results_Table import Results_Table
 from .components.File_Exporter_Handler import File_Exporter_Handler
 from helper_functions.Results_Data_Loader import Results_Data_Loader
-
+from constants.Biomass_Config import Biomass_Config
 class Calculate_Biomass_View:
     """Main view for calculating and displaying biomass results."""
     
@@ -22,10 +22,7 @@ class Calculate_Biomass_View:
         self._RESULTS_JSON_PATH = 'storage/biomass_results.json'
         self._STORAGE_DIR = 'storage'
         self._MAX_DISPLAY_ROWS = 10
-        self._BIOMASS_COLUMNS = {
-            "Wood (KG)", "Bark (KG)", "Branch (KG)", "Foliage (KG)",
-            "Stem (KG)", "Crown (KG)", "Total (KG)"
-        }
+        self._BIOMASS_COLUMNS = set(Biomass_Config.BIOMASS_COLUMNS)
         
         # Initialize components
         self.results_loader = Results_Data_Loader()

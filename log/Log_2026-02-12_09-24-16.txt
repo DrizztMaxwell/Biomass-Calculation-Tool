@@ -1,0 +1,48 @@
+[09:24:16] --- Log Session Started ---
+[09:24:17] Splash screen displayed
+[09:24:19] DataManager cleared, proceeding to EULA
+[09:24:20] User agreed to EULA - proceeding with application
+[09:24:20] User navigated to Select Data page
+[09:24:22] Import text file dialog opened
+[09:24:24] Selected file for import: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\testing_dataset\Lowercase_Test_BCT.txt
+[09:24:24] Text file imported successfully with 72 records and 0 errors.
+[09:24:26] User navigated to Calculate Biomass page
+[09:24:28] Calculate biomass button clicked
+[09:24:30] View Chart button clicked
+[09:24:31] Biomass chart displayed
+[09:24:31] Biomass chart displayed
+[09:24:50] User navigated to Settings page
+[09:24:51] Theme toggled to: ThemeMode.DARK
+[09:24:52] Theme toggled to: ThemeMode.LIGHT
+[09:24:52] User navigated to Modify Species page
+[09:24:52] Species data loaded successfully.
+[09:24:53] User navigated to Create Species page
+[09:24:54] User navigated to Calculate Biomass page
+[09:24:57] User navigated to Select Data page
+[09:25:06] User navigated to Calculate Biomass page
+[09:25:09] User navigated to Settings page
+[09:25:10] Theme toggled to: ThemeMode.DARK
+[09:25:14] User navigated to Create Species page
+[09:25:15] User navigated to Calculate Biomass page
+[09:25:16] Calculate biomass button clicked
+[09:25:18] View Chart button clicked
+[09:25:18] Biomass chart displayed
+[09:25:18] Biomass chart displayed
+[09:25:26] User navigated to Select Data page
+[09:25:30] Successfully connected to database gypsppgp on server DESKTOP-EJ33BVS\SQLEXPRESS
+[09:25:30] Database connection info saved: {'server': 'DESKTOP-EJ33BVS\\SQLEXPRESS', 'database': 'gypsppgp', 'driver': 'ODBC Driver 17 for SQL Server', 'data_folder_path': 'C:\\Program Files\\Microsoft SQL Server\\MSSQL16.SQLEXPRESS\\MSSQL\\DATA'}
+[09:25:30] Connecting to database gypsppgp on server DESKTOP-EJ33BVS\SQLEXPRESS using driver ODBC Driver 17 for SQL Server
+[09:25:32] Database import successful with 10000 records.
+[09:25:32] Database import process completed for gypsppgp
+[09:25:34] User navigated to Calculate Biomass page
+[09:25:35] Calculate biomass button clicked
+[09:25:46] Write to database operation success: True
+[09:25:48] View Chart button clicked
+[09:25:49] Biomass chart displayed
+[09:25:49] Biomass chart displayed
+[09:25:56] View Chart button clicked
+[09:25:57] Biomass chart displayed
+[09:25:57] Biomass chart displayed
+[09:25:59] Generated default export filename: Output_Biomass_Results_20260212_092559.txt
+[09:25:59] Export file dialog opened
+[09:26:08] Data exported successfully to C:\Users\mohib\Downloads\Output_Biomass_Results_20260212_092559.txt

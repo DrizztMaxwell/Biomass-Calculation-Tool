@@ -10,12 +10,34 @@ import sys
 import os
 from pathlib import Path
 
-# Get the project root directory (2 levels up from this file)
+# Add this helper function
+def get_base_path():
+    """Get the base path for the application (works for both dev and PyInstaller)"""
+    if getattr(sys, 'frozen', False):
+        # Running as compiled executable
+        return sys._MEIPASS
+    else:
+        # Running as script
+        return os.path.dirname(os.path.abspath(__file__))
 
+def get_project_root():
+    """Get project root (works in both dev and compiled mode)"""
+    if getattr(sys, 'frozen', False):
+        # When frozen, the root is the _MEIPASS directory
+        return Path(sys._MEIPASS)
+    else:
+        # When in development, go up 2 levels from this file
+        return Path(__file__).parent.parent.parent
 
 def main(page: ft.Page):
-    project_root = Path(__file__).parent.parent.parent
+    # Set the project root correctly for frozen environment
+    if getattr(sys, 'frozen', False):
+        project_root = Path(sys._MEIPASS)
+    else:
+        project_root = Path(__file__).parent.parent.parent
+    
     sys.path.insert(0, str(project_root))
+    
     """Main entry point for the Biomass Calculation Tool application."""
     
     # First, configure the page with AppConfig
@@ -30,7 +52,7 @@ def main(page: ft.Page):
                     # App Logo/Icon
                     ft.Container(
                         content=ft.Icon(
-                            ft.Icons.NATURE,  # Using a nature icon for biomass app
+                            ft.Icons.NATURE,
                             size=80,
                             color=ft.Colors.GREEN_700
                         ),
@@ -107,7 +129,7 @@ def main(page: ft.Page):
         # Fade out animation
         splash_content.opacity = 0
         page.update()
-        await asyncio.sleep(0.3)  # Wait for fade animation
+        await asyncio.sleep(0.3)
         
         # Clear splash screen
         page.controls.clear()
@@ -117,7 +139,6 @@ def main(page: ft.Page):
         logger.write("DataManager cleared, proceeding to EULA")
 
         eula_view = EULA_View(page=page, controller=None)
-       
         eula_view.get_eula_view()
         page.update()
     

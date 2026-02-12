@@ -1,0 +1,13 @@
+[08:26:03] --- Log Session Started ---
+[08:26:04] Splash screen displayed
+[08:26:06] DataManager cleared, proceeding to EULA
+[08:26:07] User agreed to EULA - proceeding with application
+[08:26:07] User navigated to Select Data page
+[08:26:09] Import text file dialog opened
+[08:26:11] Selected file for import: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\BCT.txt
+[08:26:12] Text file imported successfully with 5 records and 0 errors.
+[08:26:13] User navigated to Calculate Biomass page
+[08:26:15] Calculate biomass button clicked
+[08:26:17] Generated default export filename: Output_Biomass_Results_20260212_082617.txt
+[08:26:17] Export file dialog opened
+[08:26:19] [Error] - Failed to export data: 'Calculate_Biomass_Controller' object has no attribute '_export_to_text'
