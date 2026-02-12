@@ -1,0 +1,10 @@
+[08:13:40] --- Log Session Started ---
+[08:13:41] Splash screen displayed
+[08:13:43] DataManager cleared, proceeding to EULA
+[08:13:44] User agreed to EULA - proceeding with application
+[08:13:44] User navigated to Select Data page
+[08:13:45] Import text file dialog opened
+[08:13:47] Selected file for import: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\BCT.txt
+[08:13:48] Text file imported successfully with 5 records and 0 errors.
+[08:13:49] User navigated to Calculate Biomass page
+[08:13:52] Calculate biomass button clicked

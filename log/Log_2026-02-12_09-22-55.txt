@@ -1,0 +1,20 @@
+[09:22:55] --- Log Session Started ---
+[09:22:56] Splash screen displayed
+[09:22:58] DataManager cleared, proceeding to EULA
+[09:23:10] User agreed to EULA - proceeding with application
+[09:23:10] User navigated to Select Data page
+[09:23:24] Import text file dialog opened
+[09:23:27] Selected file for import: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\testing_dataset\Case_Insensitive_Test.txt
+[09:23:27] Text file imported successfully with 72 records and 0 errors.
+[09:23:29] User navigated to Calculate Biomass page
+[09:23:32] Calculate biomass button clicked
+[09:23:34] View Chart button clicked
+[09:23:34] Biomass chart displayed
+[09:23:34] Biomass chart displayed
+[09:23:57] User navigated to Settings page
+[09:23:58] Theme toggled to: ThemeMode.DARK
+[09:23:59] User navigated to Calculate Biomass page
+[09:24:01] Calculate biomass button clicked
+[09:24:02] View Chart button clicked
+[09:24:03] Biomass chart displayed
+[09:24:03] Biomass chart displayed

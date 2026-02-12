@@ -27,7 +27,7 @@ class Components_Section:
             components_card_row=self.component_cards_row,
             selected_card_component=self.selected_components_text,
             components_data=COMPONENTS_DATA,
-            is_database_selected=self.controller.is_database_selected,
+            is_database_selected=self.controller.get_database_selected_flag(),
         ).get_widget()
     
     def get_selected_components(self):

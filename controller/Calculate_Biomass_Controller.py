@@ -6,9 +6,15 @@ from datetime import datetime
 import flet as ft
 import pandas as pd
 import pyodbc
-from sklearn import logger
+from widgets.LogFileTxt import logger
 from widgets.Bar_Chart_Widget import Bar_Chart_Widget
-
+from constants.Biomass_Config import Biomass_Config
+from helper_functions.Biomass_Calculator.did_user_import_from_database import did_user_import_from_database
+from helper_functions.Biomass_Calculator.export_to_text_file import export_to_text_file
+from helper_functions.Biomass_Calculator.convert_json_to_dataframe import convert_json_to_dataframe
+from helper_functions.Biomass_Calculator.reorder_by_species_code import reorder_by_species_code
+from helper_functions.Biomass_Calculator.extract_all_species_code_from_local_storage_json import extract_all_species_codes_from_local_storage_json
+from helper_functions.Biomass_Calculator.extract_all_the_species_code_from_the_json_files import extract_all_the_species_code_from_the_json_files
 class Calculate_Biomass_Controller:
     """Controller for calculating tree biomass based on selected components and equation types."""
     
@@ -18,26 +24,12 @@ class Calculate_Biomass_Controller:
         
         self.view = view
         self.equation_type = "DBH-based"
-        self.local_storage_data = pd.read_json("storage/localstorage.json")
-        self.tree_params_data = pd.read_json("data/treeparameters.json")
+        self.local_storage_data = pd.read_json(Biomass_Config.LOCAL_STORAGE_PATH)
+        self.tree_params_data = pd.read_json(Biomass_Config.TREE_PARAMS_PATH)
         self.selected_components = []
         self.is_database_selected = False
         self.hardwood_and_softwood_species_code_mapping = []
-        self.did_user_import_from_database()
-        
-    def did_user_import_from_database(self):
-        """Check if a database is selected for calculations."""
-        # check to see if database is selected
-        selected_db_path = 'data/selected_database.json'
-        if os.path.exists(selected_db_path):
-            with open(selected_db_path, 'r') as f:
-                content = f.read().strip()
-                if content and content != "{}":
-                    print("Database selected for calculations.")
-                    self.is_database_selected = True
-                else:
-                    print("No database selected for calculations.")
-                    self.is_database_selected = False
+        self.is_database_selected = did_user_import_from_database()
     
     def get_database_selected_flag(self) -> bool:
         """Return whether a database is selected."""
@@ -69,63 +61,14 @@ class Calculate_Biomass_Controller:
         from data.constants import TABLE_OUTPUT_NAME
         self.view.show_success_dialog( title="Success", message=f"Successfully exported data to {TABLE_OUTPUT_NAME}.")
     
-    def _export_to_text(self, file_path: str) -> bool:
-        """Export data to a formatted text file."""
-        # open the storage/biomass_results.json file and load the data
-        try:
-            with open(self.view._RESULTS_JSON_PATH, "r") as file:
-                data = json.load(file)
-
-       
-            with open(file_path, 'w') as file:
-                self._write_export_header(file, len(data))
-                
-                if data:
-                    headers = list(data[0].keys())
-                    self._write_export_data(file, data, headers)
-            self.view.display_success_message(f"Data exported successfully to {file_path}")
+    def export_results_to_text_file(self, file_path: str) -> bool:
+        """Export results to a text file."""
+        if export_to_text_file(file_path):
+            self.view.show_success_dialog(title="Export Successful", message=f"Data exported successfully to {file_path}")
             return True
-        
-        except Exception as error:
-            print(f"Export error: {error}")
-            logger.write(f"[Error] - Failed to export to {file_path}: {error}")
-            
-            self.view.show_error_message(f"Failed to export data to {file_path}")
-            return False
-    
-    def _write_export_header(self, file, record_count: int):
-        """Write export file header."""
-        import datetime
-        file.write("BIOMASS CALCULATION RESULTS\n")
-        file.write(f"Generated on: {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
-        file.write(f"Total records: {record_count}\n\n")
-    
+        self.view.show_error_dialog(title="Export Failed", message=f"Failed to export data to {file_path}")
+        return False    
    
-    
-    
-    
-    def _write_export_data(self, file, data: List[Dict], headers: List[str]):
-        """Write data rows to export file."""
-        # Write header row
-        header_line = "\t".join(headers)
-        file.write(header_line + "\n")
-        
-        # Write data rows
-        for item in data:
-            row_values = []
-            for header in headers:
-                value = item.get(header, "")
-                if isinstance(value, (int, float)) and value is not None:
-                    if header in self.view._BIOMASS_COLUMNS:
-                        display_value = f"{value:.4f}" if value is not None else "N/A"
-                    else:
-                        display_value = str(value)
-                else:
-                    display_value = str(value) if value is not None else "N/A"
-                row_values.append(display_value)
-            
-            file.write("\t".join(row_values) + "\n")
-    
     
     async def on_calculate_biomass_click(self, event):
         """Handle calculate biomass button click."""
@@ -162,24 +105,11 @@ class Calculate_Biomass_Controller:
         self.view.show_results()
         self.view.enable_calculation_button(event.control)
     
-                 
-    def json_to_dataframe_basic(self, json_file_path):
-        """Convert JSON file to DataFrame (basic approach)"""
-        try:
-            with open(json_file_path, 'r') as f:
-                data = json.load(f)
-            
-            # Convert to DataFrame
-            df = pd.DataFrame(data)
-            return df
-        except Exception as e:
-            print(f"Error converting JSON to DataFrame: {e}")
-            return pd.DataFrame()
-    def reorder_by_species_code(self, data: pd.DataFrame) -> pd.DataFrame:
-        """Reorder the DataFrame by 'speciescode' in ascending order."""
-        if 'species' in data.columns:
-            return data.sort_values(by='species').reset_index(drop=True)
-        return data
+    # def reorder_by_species_code(self, data: pd.DataFrame) -> pd.DataFrame:
+    #     """Reorder the DataFrame by 'speciescode' in ascending order."""
+    #     if 'species' in data.columns:
+    #         return data.sort_values(by='species').reset_index(drop=True)
+    #     return data
     def _get_sum_of_component_for_specific_species(self, data: pd.DataFrame, species_code: int, component: str) -> float:
         """Get the sum of a specific component for a given species code."""
         #print(type(data["species"]))
@@ -194,12 +124,10 @@ class Calculate_Biomass_Controller:
         """Handle the click event for the 'Show Chart' button."""
         #print("Show Chart button clicked.")
         species_data_for_chart = []
-        data = self.json_to_dataframe_basic("storage/biomass_results.json")
+        data = convert_json_to_dataframe(Biomass_Config.BIOMASS_RESULTS_PATH)
        
-        data = self.reorder_by_species_code(data)
-        #print(f"Data loaded for chart: {data.head()}")
+        data = reorder_by_species_code(data)
         species_codes = self._extract_all_species_codes(data)
-        #print(f"Extracted species codes: {species_codes}")
         for species_code in species_codes:
             wood_sum = self._get_sum_of_component_for_specific_species(data, species_code, "Wood")
             bark_sum = self._get_sum_of_component_for_specific_species(data, species_code, "Bark")
@@ -263,52 +191,29 @@ class Calculate_Biomass_Controller:
             print(f"Error checking species code existence: {e}")
             return False
     
-    def _extract_all_the_species_code_from_the_json_files(self, json_file_path_1:str, json_file_path_2:str) -> list:
-        """Extract all unique species codes from two JSON files."""
-        species_codes = set()
-        try:
-            with open(json_file_path_1, 'r') as f1, open(json_file_path_2, 'r') as f2:
-                data1 = json.load(f1)
-                data2 = json.load(f2)
-                # soem speciescode is ""
-                species_codes.update((item['SpecCommon']) for item in data1 if 'SpecCommon' in item and item['SpecCommon'] != "")
-                species_codes.update((item['SpecCommon']) for item in data2 if 'SpecCommon' in item and item['SpecCommon'] != "")
-                species_codes.update((item['SpeciesCode']) for item in data1 if 'SpeciesCode' in item and item['SpeciesCode'] != "")
-                species_codes.update((item['SpeciesCode']) for item in data2 if 'SpeciesCode' in item and item['SpeciesCode'] != "") 
+    # def _extract_all_the_species_code_from_the_json_files(self, json_file_path_1:str, json_file_path_2:str) -> list:
+    #     """Extract all unique species codes from two JSON files."""
+    #     species_codes = set()
+    #     try:
+    #         with open(json_file_path_1, 'r') as f1, open(json_file_path_2, 'r') as f2:
+    #             data1 = json.load(f1)
+    #             data2 = json.load(f2)
+    #             # soem speciescode is ""
+    #             species_codes.update((item['SpecCommon']) for item in data1 if 'SpecCommon' in item and item['SpecCommon'] != "")
+    #             species_codes.update((item['SpecCommon']) for item in data2 if 'SpecCommon' in item and item['SpecCommon'] != "")
+    #             species_codes.update((item['SpeciesCode']) for item in data1 if 'SpeciesCode' in item and item['SpeciesCode'] != "")
+    #             species_codes.update((item['SpeciesCode']) for item in data2 if 'SpeciesCode' in item and item['SpeciesCode'] != "") 
                 
                 
-        except Exception as e:
-            print(f"Error extracting species codes: {e}")
+    #     except Exception as e:
+    #         print(f"Error extracting species codes: {e}")
         
-        #reorder species codes before returning
-        # species_codes = sorted(species_codes)
-        #print(f"Species Codes Extracted: {species_codes}")
-        return list(species_codes)
+    #     #reorder species codes before returning
+    #     # species_codes = sorted(species_codes)
+    #     #print(f"Species Codes Extracted: {species_codes}")
+    #     return list(species_codes)
     
-    def _extract_all_species_codes_from_local_storage_json(self, local_storage_data: pd.DataFrame) -> list:
-        """Extract all unique species codes from the local storage DataFrame."""
-        species_codes = set()
-        #print("----------------------------------------------------------------------------------------------------------------------")
-        
-        try:
-            for item in local_storage_data['Species']:
-                # print(item)
-                if item != "" and pd.notna(item):  # Also check for NaN
-                    try:
-                        # Try to convert to int
-                        int_value = int(item)
-                        # print("INT FOUND")
-                        species_codes.add(int_value)  # Use add() for single values
-                    except ValueError:
-                        # If conversion fails, keep as string
-                        # print("STRING FOUND")
-                        species_codes.add(str(item))  # Use add() for single values
-        except Exception as e:
-            print(f"Error extracting species codes from local storage: {e}")
-        
-        # Sort the species codes before returning
-        species_codes = sorted(species_codes, key=lambda x: str(x))  # Convert to string for mixed type sorting
-        return list(species_codes)
+# THIS WASNT USED CHECK IF NEEDED LATER
     def _create_hardwood_softwood_species_code_mapping(self, hardwood_species_codes: list, softwood_species_codes: list) -> dict:
         """Create a mapping of species codes to their type (hardwood or softwood)."""
         mapping = {}
@@ -323,14 +228,9 @@ class Calculate_Biomass_Controller:
     
     def _apply_species_type_mapping(self, species_type_mapping):
         """Apply the species type mapping to set parameters."""
-        #print("Applying species type mapping...")
-        #print(f"Species Type Mapping: {species_type_mapping}")
-        # Example: For each species code in the mapping, set appropriate parameters
+      
         for species_code, wood_type in species_type_mapping.items():
-            #print(f"Setting species code {species_code} as {wood_type}")
             
-            # Here you would add logic to set the parameters based on wood type
-            # For example, you might set default parameters for hardwood vs softwood
             if wood_type == "Hardwood":
                 # Set hardwood parameters
                 self._set_hardwood_parameters(species_code)
@@ -343,10 +243,7 @@ class Calculate_Biomass_Controller:
 
     def _set_hardwood_parameters(self, species_code):
         """Set default parameters for hardwood species."""
-        
-        # First, let's see what we're working with
-        #print(f"Setting hardwood parameters for species code {species_code}")
-        
+       
         # Get hardwood records from tree_params_data
         hardwood_records = self.tree_params_data.loc[self.tree_params_data['SpecCommon'] == 'Hardwood'].to_dict('records')
         
@@ -361,15 +258,11 @@ class Calculate_Biomass_Controller:
         # Append the updated records to the mapping
         self.hardwood_and_softwood_species_code_mapping.append(hardwood_records)
         
-        #print(f"Added {len(hardwood_records)} hardwood record(s) for species code {species_code}")
-        #print(f"Updated mapping: {self.hardwood_and_softwood_species_code_mapping}")
+    
     def _set_softwood_parameters(self, species_code):
         """Set default parameters for softwood species."""
         
-        # First, let's see what we're working with
-        #print(f"Setting softwood parameters for species code {species_code}")
-        
-        # Get softwood records from tree_params_data
+    
         softwood_records = self.tree_params_data.loc[self.tree_params_data['SpecCommon'] == 'Softwood'].to_dict('records')
         
         if not softwood_records:
@@ -383,8 +276,7 @@ class Calculate_Biomass_Controller:
         # Append the updated records to the mapping
         self.hardwood_and_softwood_species_code_mapping.append(softwood_records)
         
-        #print(f"Added {len(softwood_records)} softwood record(s) for species code {species_code}")
-        #print(f"Updated mapping: {self.hardwood_and_softwood_species_code_mapping}")
+      
     
     
     
@@ -393,38 +285,26 @@ class Calculate_Biomass_Controller:
     
     async def calculate_biomass(self) -> None:
         """Calculate biomass based on selected parameters and equation type."""
-        #print("Calculate Biomass button clicked.")
         self.hardwood_and_softwood_species_code_mapping = []
         
         self.selected_components = self.view.get_selected_components()
         self.equation_type = self.get_equation_type()
-        #print(f"Selected Components: {self.selected_components}")
-        #print(f"Equation Type: {self.equation_type}")
-
+       
         try:
-            self.local_storage_data = pd.read_json("storage/localstorage.json")
-            self.tree_params_data = pd.read_json("data/treeparameters.json")
+            self.local_storage_data = pd.read_json(Biomass_Config.LOCAL_STORAGE_PATH)
+            self.tree_params_data = pd.read_json(Biomass_Config.TREE_PARAMS_PATH)
             # if not self.check_if_species_code_exists_within_the_json_files(101, "data/treeparameters.json", "data/create_species.json"):
             #print("Checking for missing species codes...")
-            datasets_species_code_list = self._extract_all_the_species_code_from_the_json_files("data/treeparameters.json", "data/create_species.json")
-            
-            #print(f"Datasets Species Code List: {datasets_species_code_list}")
-            #Get the dataset species code list from the local storage data
-            local_storage_species_code_list = self._extract_all_species_codes_from_local_storage_json(self.local_storage_data)
-            #print(f"Local Storage Species Code List: {local_storage_species_code_list}")
-                # Compare both lists to find missing species codes
-            #convert to lower string if possible
+            datasets_species_code_list = extract_all_the_species_code_from_the_json_files(Biomass_Config.TREE_PARAMS_PATH,Biomass_Config.CREATED_SPECIES_PATH)
+            local_storage_species_code_list = extract_all_species_codes_from_local_storage_json(self.local_storage_data)
+           
             datasets_species_code_list = [str(code).lower() for code in datasets_species_code_list]
-            #print(f"Datasets Species Code List (Lowercase): {datasets_species_code_list}")
+           
             local_storage_species_code_list = [str(code).lower() for code in local_storage_species_code_list]
-            #print(f"Local Storage Species Code List (Lowercase): {local_storage_species_code_list}")
-        
+           
             missing_species_codes = set(local_storage_species_code_list) - set(datasets_species_code_list)
-            #print(f"Missing Species Codes: {missing_species_codes}")
-            
             if missing_species_codes:
-                # Display dialog to user to select hardwood or softwood for missing species codes
-                # This will wait until the user clicks submit
+               
                 species_type_mapping = await self.view.show_species_code_dialog(missing_species_codes)
                 
                 if species_type_mapping is None:
@@ -437,7 +317,7 @@ class Calculate_Biomass_Controller:
                 # Now you can use the mapping to set parameters
                 self._apply_species_type_mapping(species_type_mapping)
                 #print(f"Hardwood and Softwood Species Code Mapping: {self.hardwood_and_softwood_species_code_mapping}")
-            # print(self.hardwood_and_softwood_species_code_mapping)
+            print(self.hardwood_and_softwood_species_code_mapping)
             self._lower_column_names(self.local_storage_data, self.tree_params_data)
             self._process_biomass_calculations(self.local_storage_data, self.tree_params_data)
             self._save_results(self.local_storage_data)
@@ -546,9 +426,9 @@ class Calculate_Biomass_Controller:
                         hardwood_and_softwood_species_code_mapping_lookup[(code)] = species
                 except (ValueError, TypeError):
                     continue
-        # print("Hardwood and Softwood Species Code Mapping Lookup:")
-        # print(hardwood_and_softwood_species_code_mapping_lookup)
-        # # 2. Vectorized filtering of valid rows\
+        print("Hardwood and Softwood Species Code Mapping Lookup:")
+        print(hardwood_and_softwood_species_code_mapping_lookup)
+        # 2. Vectorized filtering of valid rows\
             #check alphanumeric species codes and name
             
         for idx, row in local_data.iterrows():
@@ -871,7 +751,7 @@ class Calculate_Biomass_Controller:
             print(f"Error saving to text file: {e}")
 
     def _normalize_biomass_row(self, row: dict) -> dict:
-        # print(row)
+        print(row)
         plot = row.get("Plot") or row.get("plot")
         year = row.get("Year") or row.get("year")
         tree_number = row.get("Tree_number") or row.get("Tree Number") or row.get("tree_number")

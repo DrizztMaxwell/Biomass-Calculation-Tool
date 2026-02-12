@@ -1,5 +1,0 @@
-BIOMASS CALCULATION RESULTS
-Generated on: 2026-02-11 12:54:31
-Total records: 12
-
-plot	subplot	year	origin	tree status	species	tree number	dbh	height	Wood (KG)	Bark (KG)	Foliage (KG)	Branch (KG)	Crown (KG)	Stem (KG)	Total (KG)
