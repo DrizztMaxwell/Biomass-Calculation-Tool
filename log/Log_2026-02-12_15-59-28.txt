@@ -1,0 +1,7 @@
+[15:59:28] --- Log Session Started ---
+[15:59:29] Running as script. Base path: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool
+[15:59:29] Application starting...
+[15:59:29] Page configured
+[15:59:29] Splash screen displayed
+[15:59:31] Splash screen cleared
+[15:59:31] Error in splash_and_proceed: 'DataManager' object has no attribute '_load_create_species_data'

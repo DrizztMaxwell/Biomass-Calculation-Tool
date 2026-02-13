@@ -423,7 +423,7 @@ class Select_Data_Controller:
                 self.page.open(error_dialog.show())
             else:    
                 self.page.open(Display_Error_Dialog(self.page, description=str(e)).show())
-            
+                print("Error details:", e)
             self.view.update_file_status("Failed to import data from database.")
             logger.write(f"Failed to import data from database: {str(e)}")
             self.is_data_imported = False

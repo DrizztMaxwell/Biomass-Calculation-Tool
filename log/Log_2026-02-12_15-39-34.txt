@@ -1,0 +1,15 @@
+[15:39:34] --- Log Session Started ---
+[15:39:35] Running as script. Base path: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool
+[15:39:35] Application starting...
+[15:39:35] Page configured
+[15:39:35] Splash screen displayed
+[15:39:37] Splash screen cleared
+[15:39:37] DataManager cleared, proceeding to EULA
+[15:39:37] EULA view displayed
+[15:39:38] User agreed to EULA - proceeding with application
+[15:39:38] User navigated to Select Data page
+[15:39:42] Successfully connected to database gypsppgp on server .\SQLEXPRESS
+[15:39:42] Database connection info saved: {'server': '.\\SQLEXPRESS', 'database': 'gypsppgp', 'driver': 'ODBC Driver 17 for SQL Server', 'data_folder_path': 'C:\\Program Files\\Microsoft SQL Server\\MSSQL16.SQLEXPRESS\\MSSQL\\DATA'}
+[15:39:42] Connecting to database gypsppgp on server .\SQLEXPRESS using driver ODBC Driver 17 for SQL Server
+[15:39:44] Database import successful with 10000 records.
+[15:39:44] Database import process completed for gypsppgp

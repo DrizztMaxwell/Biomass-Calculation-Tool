@@ -1,0 +1,36 @@
+[11:16:56] --- Log Session Started ---
+[11:16:57] Running as script. Base path: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool
+[11:16:57] Application starting...
+[11:16:57] Page configured
+[11:16:57] Splash screen displayed
+[11:17:00] Splash screen cleared
+[11:17:00] DataManager cleared, proceeding to EULA
+[11:17:00] EULA view displayed
+[11:17:01] User agreed to EULA - proceeding with application
+[11:17:01] User navigated to Select Data page
+[11:17:06] User navigated to Modify Species page
+[11:17:06] Species data loaded successfully.
+[11:17:08] User navigated to Create Species page
+[11:17:10] User navigated to Modify Species page
+[11:17:10] Species data loaded successfully.
+[11:17:10] User navigated to Select Data page
+[11:17:15] Successfully connected to database gypsppgp on server .\SQLEXPRESS
+[11:17:15] Database connection info saved: {'server': '.\\SQLEXPRESS', 'database': 'gypsppgp', 'driver': 'ODBC Driver 17 for SQL Server', 'data_folder_path': 'C:\\Program Files\\Microsoft SQL Server\\MSSQL16.SQLEXPRESS\\MSSQL\\DATA'}
+[11:17:15] Connecting to database gypsppgp on server .\SQLEXPRESS using driver ODBC Driver 17 for SQL Server
+[11:17:17] Database import successful with 10000 records.
+[11:17:17] Database import process completed for gypsppgp
+[11:17:18] User navigated to Calculate Biomass page
+[11:17:22] Calculate biomass button clicked
+[11:17:26] View Chart button clicked
+[11:17:27] Biomass chart displayed
+[11:17:27] Biomass chart displayed
+[11:17:35] Write to database operation success: True
+[11:17:37] Generated default export filename: Output_Biomass_Results_20260213_111737.txt
+[11:17:37] Export file dialog opened
+[11:17:39] Export cancelled by user
+[11:17:40] User navigated to Create Species page
+[11:17:40] User navigated to Modify Species page
+[11:17:40] Species data loaded successfully.
+[11:17:41] User navigated to Calculate Biomass page
+[11:17:42] User navigated to Select Data page
+[11:17:45] Loaded species data from treeparameters.json
