@@ -1,0 +1,31 @@
+[14:40:43] --- Log Session Started ---
+[14:40:44] Running as script. Base path: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool
+[14:40:44] Application starting...
+[14:40:44] Page configured
+[14:40:44] Splash screen displayed
+[14:40:46] Splash screen cleared
+[14:40:46] DataManager cleared, proceeding to EULA
+[14:40:46] EULA view displayed
+[14:40:48] User agreed to EULA - proceeding with application
+[14:40:48] User navigated to Select Data page
+[14:40:54] Successfully connected to database gypsppgp on server DESKTOP-EJ33BVS\SQLEXPRESS
+[14:40:54] Database connection info saved: {'server': 'DESKTOP-EJ33BVS\\SQLEXPRESS', 'database': 'gypsppgp', 'driver': 'ODBC Driver 17 for SQL Server', 'data_folder_path': 'C:\\Program Files\\Microsoft SQL Server\\MSSQL16.SQLEXPRESS\\MSSQL\\DATA'}
+[14:40:54] Connecting to database gypsppgp on server DESKTOP-EJ33BVS\SQLEXPRESS using driver ODBC Driver 17 for SQL Server
+[14:40:55] Error importing from database: list indices must be integers or slices, not str
+[14:40:55] Failed to import data from database: list indices must be integers or slices, not str
+[14:40:55] Database import process completed for gypsppgp
+[14:41:02] Import text file dialog opened
+[14:41:05] Selected file for import: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\data_set.txt
+[14:41:06] Text file imported successfully with 12 records and 2 errors.
+[14:41:17] Successfully connected to database gypsppgp on server .\SQLEXPRESS
+[14:41:17] Database connection info saved: {'server': '.\\SQLEXPRESS', 'database': 'gypsppgp', 'driver': 'ODBC Driver 17 for SQL Server', 'data_folder_path': 'C:\\Program Files\\Microsoft SQL Server\\MSSQL16.SQLEXPRESS\\MSSQL\\DATA'}
+[14:41:17] Connecting to database gypsppgp on server .\SQLEXPRESS using driver ODBC Driver 17 for SQL Server
+[14:41:18] Error importing from database: list indices must be integers or slices, not str
+[14:41:18] Failed to import data from database: list indices must be integers or slices, not str
+[14:41:18] Database import process completed for gypsppgp
+[15:23:27] Successfully connected to database gypsppgp on server .\SQLEXPRESS
+[15:23:27] Database connection info saved: {'server': '.\\SQLEXPRESS', 'database': 'gypsppgp', 'driver': 'ODBC Driver 17 for SQL Server', 'data_folder_path': 'C:\\Program Files\\Microsoft SQL Server\\MSSQL16.SQLEXPRESS\\MSSQL\\DATA'}
+[15:23:27] Connecting to database gypsppgp on server .\SQLEXPRESS using driver ODBC Driver 17 for SQL Server
+[15:23:28] Error importing from database: list indices must be integers or slices, not str
+[15:23:28] Failed to import data from database: list indices must be integers or slices, not str
+[15:23:29] Database import process completed for gypsppgp

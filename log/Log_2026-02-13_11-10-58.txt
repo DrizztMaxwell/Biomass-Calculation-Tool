@@ -1,0 +1,10 @@
+[11:10:58] --- Log Session Started ---
+[11:11:03] Running as script. Base path: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool
+[11:11:03] Application starting...
+[11:11:03] Page configured
+[11:11:03] Splash screen displayed
+[11:11:05] Splash screen cleared
+[11:11:05] DataManager cleared, proceeding to EULA
+[11:11:05] EULA view displayed
+[11:11:44] User agreed to EULA - proceeding with application
+[11:11:44] User navigated to Select Data page

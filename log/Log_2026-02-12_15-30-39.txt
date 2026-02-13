@@ -1,0 +1,22 @@
+[15:30:39] --- Log Session Started ---
+[15:30:40] Running as script. Base path: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool
+[15:30:40] Application starting...
+[15:30:40] Page configured
+[15:30:40] Splash screen displayed
+[15:30:43] Splash screen cleared
+[15:30:43] DataManager cleared, proceeding to EULA
+[15:30:43] EULA view displayed
+[15:30:43] User agreed to EULA - proceeding with application
+[15:30:43] User navigated to Select Data page
+[15:30:48] Successfully connected to database gypsppgp on server .\SQLEXPRESS
+[15:30:48] Database connection info saved: {'server': '.\\SQLEXPRESS', 'database': 'gypsppgp', 'driver': 'ODBC Driver 17 for SQL Server', 'data_folder_path': 'C:\\Program Files\\Microsoft SQL Server\\MSSQL16.SQLEXPRESS\\MSSQL\\DATA'}
+[15:30:48] Connecting to database gypsppgp on server .\SQLEXPRESS using driver ODBC Driver 17 for SQL Server
+[15:30:50] Error importing from database: list indices must be integers or slices, not str
+[15:30:50] Failed to import data from database: list indices must be integers or slices, not str
+[15:30:50] Database import process completed for gypsppgp
+[15:33:35] Successfully connected to database gypsppgp on server .\SQLEXPRESS
+[15:33:35] Database connection info saved: {'server': '.\\SQLEXPRESS', 'database': 'gypsppgp', 'driver': 'ODBC Driver 17 for SQL Server', 'data_folder_path': 'C:\\Program Files\\Microsoft SQL Server\\MSSQL16.SQLEXPRESS\\MSSQL\\DATA'}
+[15:33:35] Connecting to database gypsppgp on server .\SQLEXPRESS using driver ODBC Driver 17 for SQL Server
+[15:33:36] Error importing from database: list indices must be integers or slices, not str
+[15:33:36] Failed to import data from database: list indices must be integers or slices, not str
+[15:33:36] Database import process completed for gypsppgp
