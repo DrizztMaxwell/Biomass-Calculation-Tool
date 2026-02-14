@@ -1,0 +1,5 @@
+[09:48:31] --- Log Session Started ---
+[09:48:32] Running as script. Base path: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool
+[09:48:32] Application starting...
+[09:48:32] Page configured
+[09:48:32] Splash screen displayed

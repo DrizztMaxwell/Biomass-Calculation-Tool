@@ -1,0 +1,17 @@
+[10:39:25] --- Log Session Started ---
+[10:39:26] Running as script
+[10:39:26]    Program path: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool
+[10:39:26]    Data path: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\app_data
+[10:39:26] Initializing JSON files...
+[10:39:26]    Already exists: storage/localstorage.json
+[10:39:26]    Already exists: data/create_species.json
+[10:39:26]    Already exists: data/selected_database.json
+[10:39:26]    Already exists: data/treeparameters.json
+[10:39:26] All JSON files already exist
+[10:39:26] Application starting...
+[10:39:26] Loaded settings: {'theme': 'light', 'auto_save': True, 'recent_files': []}
+[10:39:26] Page configured
+[10:39:26] Splash screen displayed
+[10:39:28] Splash screen cleared
+[10:39:28] DataManager cleared, proceeding to EULA
+[10:39:28] EULA view displayed

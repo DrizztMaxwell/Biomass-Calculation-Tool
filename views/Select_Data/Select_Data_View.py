@@ -6,6 +6,7 @@ from .components.Import_Buttons import Import_Buttons
 from .components.Database_Dialog import Database_Dialog
 from .components.Connection_History_Manager import Connection_History_Manager
 from .components.Page_Header import Page_Header
+from constants.Json_File_Path_Constants import json_paths
 
 class Select_Data_View:
     """Main view for selecting data import method"""
@@ -22,7 +23,7 @@ class Select_Data_View:
         self.page = page
         
         # Initialize components
-        self.history_manager = Connection_History_Manager()
+        self.history_manager = Connection_History_Manager(json_paths.CONNECTION_HISTORY_PATH)
         self.database_dialog = Database_Dialog(
             page=self.page,
             history_manager=self.history_manager,

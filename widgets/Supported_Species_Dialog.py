@@ -1,18 +1,18 @@
 import flet as ft
 import json
 from widgets.LogFileTxt import logger
-
+from constants.Json_File_Path_Constants import json_paths
 class Supported_Species_Dialog:
     def __init__(self, page: ft.Page):
         self.page = page
         try:
-            with open("data/treeparameters.json", "r") as f:
+            with open(json_paths.TREE_PARAMS_PATH, "r") as f:
                 
                 self.species_data = json.load(f)
-                logger.write("Loaded species data from treeparameters.json")
+                logger.write(f"Loaded species data from {json_paths.TREE_PARAMS_PATH} successfully.")
         except Exception:
             self.species_data = [{"SpeciesCode": "1", "SpecCommon": "alpine fir"}, {"SpeciesCode": "2", "SpecCommon": "lodgepole pine"}]
-            logger.write("[Error] - Failed to load species data from treeparameters.json, using default data")
+            logger.write(f"[Error] - Failed to load species data from {json_paths.TREE_PARAMS_PATH}, using default data")
 
     def create_species_tile(self, code, name):
         """Creates a clean, modern tile for each species with Title Case formatting."""

@@ -1,0 +1,13 @@
+{
+  "species": [
+    {
+      "id": 1,
+      "name": "Default Species",
+      "parameters": {
+        "density": 0.5,
+        "moisture_content": 0.2
+      }
+    }
+  ],
+  "last_updated": "2024-01-01"
+}

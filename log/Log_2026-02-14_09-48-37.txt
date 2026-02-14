@@ -1,0 +1,10 @@
+[09:48:37] --- Log Session Started ---
+[09:48:38] Running as script
+[09:48:38]    Program path: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool
+[09:48:38]    Data path: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\app_data
+[09:48:38] Initializing JSON files...
+[09:48:38]    Already exists: storage/localstorage.json
+[09:48:38]    Already exists: data/create_species.json
+[09:48:38]    Already exists: data/selected_database.json
+[09:48:38]    Already exists: data/treeparameters.json
+[09:48:38] Error in main: 'charmap' codec can't encode character '\u2705' in position 11: character maps to <undefined>

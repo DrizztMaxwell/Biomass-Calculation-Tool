@@ -1,11 +1,11 @@
 import json
 import os
 from widgets.LogFileTxt import logger
-
+from constants.Json_File_Path_Constants import json_paths
 class Results_Data_Loader:
     """Load results data from JSON file."""
     
-    _RESULTS_JSON_PATH = 'storage/biomass_results.json'
+    _RESULTS_JSON_PATH = json_paths.BIOMASS_RESULTS_PATH
     
     def load(self):
         """Load results from JSON file."""

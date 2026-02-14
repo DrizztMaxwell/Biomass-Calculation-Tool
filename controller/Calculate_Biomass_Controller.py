@@ -15,6 +15,7 @@ from helper_functions.Biomass_Calculator.convert_json_to_dataframe import conver
 from helper_functions.Biomass_Calculator.reorder_by_species_code import reorder_by_species_code
 from helper_functions.Biomass_Calculator.extract_all_species_code_from_local_storage_json import extract_all_species_codes_from_local_storage_json
 from helper_functions.Biomass_Calculator.extract_all_the_species_code_from_the_json_files import extract_all_the_species_code_from_the_json_files
+from constants.Json_File_Path_Constants import json_paths
 class Calculate_Biomass_Controller:
     """Controller for calculating tree biomass based on selected components and equation types."""
     
@@ -24,8 +25,8 @@ class Calculate_Biomass_Controller:
         
         self.view = view
         self.equation_type = "DBH-based"
-        self.local_storage_data = pd.read_json(Biomass_Config.LOCAL_STORAGE_PATH)
-        self.tree_params_data = pd.read_json(Biomass_Config.TREE_PARAMS_PATH)
+        self.local_storage_data = pd.read_json(json_paths.LOCAL_STORAGE_PATH)
+        self.tree_params_data = pd.read_json(json_paths.TREE_PARAMS_PATH)
         self.selected_components = []
         self.is_database_selected = False
         self.hardwood_and_softwood_species_code_mapping = []
@@ -371,7 +372,7 @@ class Calculate_Biomass_Controller:
         
         # Load from created_species.json (new)
         try:
-            with open("data/create_species.json", "r") as f:
+            with open(json_paths.CREATED_SPECIES_PATH, "r") as f:
                 created_species_data = json.load(f)
             # print("Created Species Data Loaded:")
             # print(created_species_data)
@@ -725,7 +726,7 @@ class Calculate_Biomass_Controller:
     def _save_results(self, data: pd.DataFrame) -> None:
         """Save calculation results to JSON and text files."""
         # Save to JSON
-        data.to_json("storage/biomass_results.json", orient='records')
+        data.to_json(json_paths.BIOMASS_RESULTS_PATH, orient='records')
         # print("Biomass results saved to biomass_results.json")
         
         # Save to text file
@@ -736,7 +737,7 @@ class Calculate_Biomass_Controller:
         try:
             records = data.to_dict('records')
             
-            with open('storage/output.txt', 'w') as file:
+            with open(json_paths.OUTPUT_TEXT_PATH, 'w') as file:
                 if records:
                     headers = list(records[0].keys())
                     file.write('\t'.join(headers) + '\n')
@@ -825,7 +826,7 @@ class Calculate_Biomass_Controller:
             
             
             # Load JSON results
-            with open('storage/biomass_results.json', 'r') as f:
+            with open(json_paths.BIOMASS_RESULTS_PATH, 'r') as f:
                 data = json.load(f)
 
             # Insert SQL matching new schema
