@@ -20,6 +20,7 @@ from data.data_manager import DataManager
 from widgets.Custom_Alert_Dialog import Custom_Alert_Dialog
 from data.database_config import get_sql_server_odbc_driver, get_mssql_data_path
 from widgets.Loading_Spinner_Widget import Loading_Spinner_Widget
+from constants.Json_File_Path_Constants import json_paths
 import json
 from widgets.LogFileTxt import logger
 import os
@@ -116,7 +117,7 @@ class Select_Data_Controller:
             self.is_data_imported = True
             self.view.update_file_status(f"File processed: {os.path.basename(self.selected_file_path)}")
             if self.data_imported_callback:
-                with open("data/selected_database.json", "w") as f:
+                with open(json_paths.SELECTED_DATABASE_PATH, "w") as f:
                     f.write("{}")  # Clear DB info
                 self.data_imported_callback(True)
             Custom_Alert_Dialog(
@@ -227,7 +228,7 @@ class Select_Data_Controller:
                 "data_folder_path": data_folder_path,
             }
             os.makedirs("data", exist_ok=True)
-            with open("data/selected_database.json", "w") as f:
+            with open(json_paths.SELECTED_DATABASE_PATH, "w") as f:
                 json.dump(db_config, f, indent=4)
 
             # Save to history
@@ -262,7 +263,7 @@ class Select_Data_Controller:
     def import_from_database(self, db_name: str = None, driver: str = None, server: str = None):
         try:
             if not all([db_name, driver, server]):
-                with open("data/selected_database.json", "r") as f:
+                with open(json_paths.SELECTED_DATABASE_PATH, "r") as f:
                     db_info = json.load(f)
                 server = db_info["server"]
                 db_name = db_info["database"]

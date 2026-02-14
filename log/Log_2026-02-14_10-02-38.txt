@@ -1,0 +1,16 @@
+[10:02:38] --- Log Session Started ---
+[10:02:40] Running as compiled executable
+[10:02:40]    Program path: C:\Users\mohib\AppData\Local\Temp\_MEI203602
+[10:02:40]    Data path: C:\Users\mohib\AppData\Roaming\BiomassCalculationTool
+[10:02:40] Initializing JSON files...
+[10:02:40]    Created: storage/localstorage.json
+[10:02:40]    Created: data/create_species.json
+[10:02:40]    Created: data/selected_database.json
+[10:02:40]    Created: data/treeparameters.json
+[10:02:40] Created 4 new JSON files
+[10:02:40] Application starting...
+[10:02:40] Loaded settings: {'theme': 'light', 'auto_save': True, 'recent_files': []}
+[10:02:40] Page configured
+[10:02:40] Splash screen displayed
+[10:02:42] Splash screen cleared
+[10:02:42] Error in splash_and_proceed: [Errno 2] No such file or directory: 'storage\\localstorage.json'

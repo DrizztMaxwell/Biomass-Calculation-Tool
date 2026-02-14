@@ -1,0 +1,27 @@
+[10:49:40] --- Log Session Started ---
+[10:49:41] Running as script
+[10:49:41]    Program path: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool
+[10:49:41]    Data path: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\app_data
+[10:49:41] Initializing JSON files...
+[10:49:41]    Created/Updated: storage/localstorage.json
+[10:49:41]    Created/Updated: data/selected_database.json
+[10:49:41]    Created/Updated: data/treeparameters.json
+[10:49:41]    Preserved existing: data/create_species.json
+[10:49:41] Initialized 3 JSON files
+[10:49:41] Application starting...
+[10:49:41] Page configured
+[10:49:41] Splash screen displayed
+[10:49:44] Splash screen cleared
+[10:49:44] DataManager cleared, proceeding to EULA
+[10:49:44] EULA view displayed
+[10:49:44] User agreed to EULA - proceeding with application
+[10:49:44] User navigated to Select Data page
+[10:49:46] User navigated to Create Species page
+[10:49:51] Checking if species name dasd exists in data/treeparameters.json
+[10:49:51] Checking if species name dasd exists in data/create_species.json
+[10:49:52] Selected components for creation: ['Wood', 'Bark', 'Branch']
+[10:49:52] Current equation type is DBH-based
+[10:49:52] Species dasd created successfully and added to create_species.json
+[10:49:54] User navigated to Modify Species page
+[10:49:55] User navigated to Modify Species page
+[10:49:56] User navigated to Modify Species page

@@ -8,6 +8,7 @@ from .components.Results_Table import Results_Table
 from .components.File_Exporter_Handler import File_Exporter_Handler
 from helper_functions.Results_Data_Loader import Results_Data_Loader
 from constants.Biomass_Config import Biomass_Config
+from constants.Json_File_Path_Constants import json_paths
 class Calculate_Biomass_View:
     """Main view for calculating and displaying biomass results."""
     
@@ -19,7 +20,7 @@ class Calculate_Biomass_View:
         self.is_database_selected = False
         self.hardwood_softwood_dialog = None
         # Constants
-        self._RESULTS_JSON_PATH = 'storage/biomass_results.json'
+        self._RESULTS_JSON_PATH = json_paths.BIOMASS_RESULTS_PATH
         self._STORAGE_DIR = 'storage'
         self._MAX_DISPLAY_ROWS = 10
         self._BIOMASS_COLUMNS = set(Biomass_Config.BIOMASS_COLUMNS)

@@ -3,7 +3,7 @@ import pandas as pd
 from data.components_data_2 import COMPONENTS_DATA_2
 from widgets.LogFileTxt import logger
 from widgets.Custom_Alert_Dialog import Custom_Alert_Dialog
-
+from constants.Json_File_Path_Constants import json_paths
 import flet as ft
 
 class Create_Species_Controller:
@@ -132,11 +132,11 @@ class Create_Species_Controller:
             raise ValueError("Form is not valid, cannot create species.")
         print("Form is valid, proceeding with species creation.")
         # Check if species code already exists in datasets
-        if self._does_species_code_exist_within_dataset(self.get_species_code_or_name(), "data/treeparameters.json"):
+        if self._does_species_code_exist_within_dataset(self.get_species_code_or_name(), json_paths.TREE_PARAMS_PATH):
             logger.write(f"Species code or name '{self.get_species_code_or_name()}' already exists in treeparameters.json")
             raise ValueError(f"Species code or name '{self.get_species_code_or_name()}' already exists in the Lamberts et al. (2005) dataset. Please use a different code or name.")
         print("Species code or name does not exist in treeparameters.json, checking create_species.json...")
-        if self._does_species_code_exist_within_dataset(self.get_species_code_or_name(), "data/create_species.json"):
+        if self._does_species_code_exist_within_dataset(self.get_species_code_or_name(), json_paths.CREATED_SPECIES_PATH):
             logger.write(f"Species code or name '{self.get_species_code_or_name()}' already exists in create_species.json")
             raise ValueError(f"Species code or name '{self.get_species_code_or_name()}' already exists in create_species.json. Please use a different code or name.")
         print("Species code or name does not exist in create_species.json, proceeding with creation...")
@@ -222,7 +222,7 @@ class Create_Species_Controller:
             print(data_to_be_inserted_into_json)
             
         # Insert the data into the JSON file
-        created_species_json = json.loads(open("data/create_species.json").read())
+        created_species_json = json.loads(open(json_paths.CREATED_SPECIES_PATH).read())
         
         if self.get_species_code_or_name().isdigit():
             created_species_json.append({
@@ -235,7 +235,7 @@ class Create_Species_Controller:
                 **data_to_be_inserted_into_json
             })
             
-        with open("data/create_species.json", "w") as f:
+        with open(json_paths.CREATED_SPECIES_PATH, "w") as f:
             json.dump(created_species_json, f, indent=4)
             print("Species data inserted into JSON file successfully.")
             

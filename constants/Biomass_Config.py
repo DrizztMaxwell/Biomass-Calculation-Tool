@@ -1,15 +1,15 @@
 from typing import Dict, List, Tuple
-from .Json_File_Path_Constants import Json_File_Path_Constants
+from .Json_File_Path_Constants import json_paths
 class Biomass_Config:
     """Configuration constants for biomass calculations."""
     
     # File paths
-    LOCAL_STORAGE_PATH = Json_File_Path_Constants.LOCAL_STORAGE_PATH
-    TREE_PARAMS_PATH = Json_File_Path_Constants.TREE_PARAMS_PATH
-    CREATED_SPECIES_PATH = Json_File_Path_Constants.CREATED_SPECIES_PATH
-    BIOMASS_RESULTS_PATH = Json_File_Path_Constants.BIOMASS_RESULTS_PATH
+    LOCAL_STORAGE_PATH = json_paths.LOCAL_STORAGE_PATH
+    TREE_PARAMS_PATH = json_paths.TREE_PARAMS_PATH
+    CREATED_SPECIES_PATH = json_paths.CREATED_SPECIES_PATH
+    BIOMASS_RESULTS_PATH = json_paths.BIOMASS_RESULTS_PATH
     OUTPUT_TEXT_PATH = "storage/output.txt"
-    SELECTED_DB_PATH = Json_File_Path_Constants.SELECTED_DATABASE_PATH
+    SELECTED_DB_PATH = json_paths.SELECTED_DATABASE_PATH
     
     # Database
     OUTPUT_TABLE_NAME = "tCalcBiomassOutput"

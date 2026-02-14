@@ -1,0 +1,6 @@
+[10:24:09] --- Log Session Started ---
+[10:24:10] Running as script
+[10:24:10]    Program path: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool
+[10:24:10]    Data path: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\app_data
+[10:24:10] Initializing JSON files...
+[10:24:10] Error in main: cannot use 'list' as a set element (unhashable type: 'list')

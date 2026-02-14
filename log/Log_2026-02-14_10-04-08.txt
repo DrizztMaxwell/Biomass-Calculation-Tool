@@ -1,0 +1,30 @@
+[10:04:08] --- Log Session Started ---
+[10:04:09] Running as compiled executable
+[10:04:09]    Program path: C:\Users\mohib\AppData\Local\Temp\_MEI121002
+[10:04:09]    Data path: C:\Users\mohib\AppData\Roaming\BiomassCalculationTool
+[10:04:09] Initializing JSON files...
+[10:04:09]    Already exists: storage/localstorage.json
+[10:04:09]    Already exists: data/create_species.json
+[10:04:09]    Already exists: data/selected_database.json
+[10:04:09]    Already exists: data/treeparameters.json
+[10:04:09] All JSON files already exist
+[10:04:09] Application starting...
+[10:04:09] Loaded settings: {'theme': 'light', 'auto_save': True, 'recent_files': []}
+[10:04:09] Page configured
+[10:04:09] Splash screen displayed
+[10:04:12] Splash screen cleared
+[10:04:12] DataManager cleared, proceeding to EULA
+[10:04:12] EULA view displayed
+[10:04:12] User agreed to EULA - proceeding with application
+[10:04:12] User navigated to Select Data page
+[10:04:14] User navigated to Create Species page
+[10:04:14] User navigated to Modify Species page
+[10:04:14] Species data loaded successfully.
+[10:04:15] User navigated to Settings page
+[10:04:16] User navigated to Create Species page
+[10:04:17] User navigated to Select Data page
+[10:04:20] Import text file dialog opened
+[10:04:26] Selected file for import: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\BCT.txt
+[10:04:27] Text file imported successfully with 5 records and 0 errors.
+[10:04:28] User navigated to Calculate Biomass page
+[10:04:30] Calculate biomass button clicked

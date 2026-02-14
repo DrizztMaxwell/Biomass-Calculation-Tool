@@ -1,11 +1,11 @@
 import os
 import json
 from datetime import datetime
-
+from constants.Json_File_Path_Constants import json_paths
 class Connection_History_Manager:
     """Manages database connection history persistence"""
     
-    def __init__(self, history_file="data/connection_history.json"):
+    def __init__(self, history_file=json_paths.CONNECTION_HISTORY_PATH):
         self.history_file = history_file
         self.connection_history = []
         self._load_history()

@@ -1,6 +1,6 @@
 import flet as ft
 from data.components_data import COMPONENTS_DATA
-
+from helper_functions.Assets_Helper import asset_helper  # Import the asset helper
 
 class Select_Components_Widget:
     def __init__(
@@ -23,16 +23,23 @@ class Select_Components_Widget:
         self.description_text = description_text
         self.components_card_row = components_card_row
         self.selected_card_component = selected_card_component
-        self.components_data = components_data or COMPONENTS_DATA.copy()
+        self.components_data = components_data or self._prepare_component_data(COMPONENTS_DATA.copy())
         self.display_button = display_button
         self.display_shadow = display_shadow
         self.on_selection_change = on_selection_change
         self.is_alternate_card = is_alternate_card
         self.is_database_selected = is_database_selected
         self.is_in_create_species_page = is_in_create_species_page
-        self.original_components_data = COMPONENTS_DATA.copy()
+        self.original_components_data = self._prepare_component_data(COMPONENTS_DATA.copy())
         
         self._initialize_widget()
+    
+    def _prepare_component_data(self, components):
+        """Update image paths in component data for current environment"""
+        for component in components:
+            if "image_src" in component:
+                component["image_src"] = asset_helper.get_asset_path(component["image_src"])
+        return components
     
     def _initialize_widget(self):
         """Initialize the widget and its components"""
@@ -92,7 +99,6 @@ class Select_Components_Widget:
             bgcolor = ft.Colors.WHITE if is_light_mode else ft.Colors.GREY_300
             border_color = ft.Colors.GREY_300 if is_light_mode else ft.Colors.BLACK
         
-        
         return bgcolor, border_color
     
     def _create_component_card(self, component):
@@ -140,7 +146,8 @@ class Select_Components_Widget:
             content=ft.Image(
                 src=component["image_src"],
                 fit=ft.ImageFit.CONTAIN,
-                color=ft.Colors.GREY_400 if is_disabled else None
+                color=ft.Colors.GREY_400 if is_disabled else None,
+                error_content=ft.Icon(ft.Icons.IMAGE_NOT_SUPPORTED, size=30)  # Fallback if image fails to load
             )
         )
     
@@ -322,3 +329,10 @@ class Select_Components_Widget:
         self._build_component_cards()
         self._update_selected_text()
         self._update_controls()
+
+    def refresh_asset_paths(self):
+        """Refresh all asset paths (useful if theme changes or after rebuild)"""
+        for component in self.components_data:
+            if "image_src" in component:
+                component["image_src"] = asset_helper.get_asset_path(component["image_src"])
+        self._build_component_cards()

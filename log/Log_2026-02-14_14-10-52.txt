@@ -1,0 +1,47 @@
+[14:10:52] --- Log Session Started ---
+[14:10:53] Running as script
+[14:10:53]    Program path: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool
+[14:10:53]    Data path: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\app_data
+[14:10:53] Initializing JSON files...
+[14:10:53]    Created/Updated: storage/localstorage.json
+[14:10:53]    Created/Updated: data/treeparameters.json
+[14:10:53]    Preserved existing: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\data/create_species.json
+[14:10:53] Initialized 2 JSON files
+[14:10:53]    Preserved existing: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\data/selected_database.json
+[14:10:53]    Preserved existing: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\data/connection_history.json
+[14:10:53] Application starting...
+[14:10:53] Page configured
+[14:10:53] Splash screen displayed
+[14:10:55] Splash screen cleared
+[14:10:55] DataManager cleared, proceeding to EULA
+[14:10:55] EULA view displayed
+[14:10:56] User agreed to EULA - proceeding with application
+[14:10:56] User navigated to Select Data page
+[14:11:01] Successfully connected to database gypsppgp on server .\SQLEXPRESS
+[14:11:01] Database connection info saved: {'server': '.\\SQLEXPRESS', 'database': 'gypsppgp', 'driver': 'ODBC Driver 17 for SQL Server', 'data_folder_path': 'C:\\Program Files\\Microsoft SQL Server\\MSSQL16.SQLEXPRESS\\MSSQL\\DATA'}
+[14:11:01] Connecting to database gypsppgp on server .\SQLEXPRESS using driver ODBC Driver 17 for SQL Server
+[14:11:03] Database import successful with 10000 records.
+[14:11:03] Database import process completed for gypsppgp
+[14:11:04] User navigated to Calculate Biomass page
+[14:11:07] Calculate biomass button clicked
+[14:11:17] Write to database operation success: True
+[14:11:19] Generated default export filename: Output_Biomass_Results_20260214_141119.txt
+[14:11:19] Export file dialog opened
+[14:11:22] Data exported successfully to C:\Users\mohib\Documents\Biomass-Calculation-Tool\Output_Biomass_Results_20260214_141119.txt
+[14:11:24] View Chart button clicked
+[14:11:25] Biomass chart displayed
+[14:11:25] Biomass chart displayed
+[14:11:27] User navigated to Create Species page
+[14:11:31] Checking if species name sdadsa exists in C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\data/treeparameters.json
+[14:11:31] Checking if species name sdadsa exists in C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\data/create_species.json
+[14:11:32] Selected components for creation: ['Wood', 'Bark']
+[14:11:32] Current equation type is DBH-based
+[14:11:32] Species sdadsa created successfully and added to create_species.json
+[14:11:33] User navigated to Modify Species page
+[14:11:33] Species data loaded successfully.
+[14:11:35] User navigated to Settings page
+[14:11:36] Theme toggled to: ThemeMode.DARK
+[14:11:38] Loaded species data from C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\data/treeparameters.json successfully.
+[14:11:42] Loaded species data from C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\data/treeparameters.json successfully.
+[14:11:45] User navigated to Create Species page
+[14:11:46] User navigated to Calculate Biomass page
