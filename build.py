@@ -135,43 +135,47 @@ def collect_bundle_files(base_dir):
     """
     Collect files that need to be BUNDLED INSIDE the executable.
     Returns a list of tuples: (source_path, destination_path)
+    This version recursively collects ALL files in assets, preserving folder structure.
     """
     print("📦 Collecting files to BUNDLE inside executable...")
     
     data_files = []
     base_path = Path(base_dir)
     
-    # Bundle assets folders
+    # Bundle assets folders recursively
     print("   Bundling asset folders INSIDE executable:")
     for src_folder, dest_folder in ASSETS_TO_BUNDLE.items():
-        full_src_path = os.path.join(base_dir, src_folder)
-        if os.path.exists(full_src_path) and os.path.isdir(full_src_path):
-            # Walk through the folder to add all files
-            for root, dirs, files in os.walk(full_src_path):
-                if files:  # Only add if there are files
-                    rel_path = os.path.relpath(root, base_dir)
-                    data_files.append((root, rel_path))
-                    print(f"      Bundled: {rel_path}/ ({len(files)} files)")
+        full_src_path = base_path / src_folder
+        if full_src_path.exists() and full_src_path.is_dir():
+            # Walk through all files recursively
+            for file_path in full_src_path.rglob("*"):
+                if file_path.is_file():
+                    # Relative path inside project for destination
+                    rel_path = file_path.relative_to(base_path).parent
+                    data_files.append((str(file_path), str(rel_path)))
+                    print(f"      ✔ {file_path.relative_to(base_path)}")
+        else:
+            print(f"   ⚠️  Warning: '{src_folder}/' not found - will not be bundled")
     
     # Bundle Python packages
     print("   Bundling Python packages:")
     for package in REQUIRED_PACKAGES:
-        package_path = os.path.join(base_dir, package.replace('.', os.sep))
-        if os.path.exists(package_path) and os.path.isdir(package_path):
-            # Count Python files
-            py_files = list(Path(package_path).rglob("*.py"))
+        package_path = base_path / Path(package.replace('.', os.sep))
+        if package_path.exists() and package_path.is_dir():
+            py_files = list(package_path.rglob("*.py"))
             if py_files:
-                data_files.append((package_path, package))
+                data_files.append((str(package_path), package))
                 print(f"      Bundled package: {package}/ ({len(py_files)} files)")
     
     # Also add important root files
     important_root_files = ["requirements.txt", ".gitignore"]
     for filename in important_root_files:
-        filepath = os.path.join(base_dir, filename)
-        if os.path.exists(filepath) and os.path.isfile(filepath):
-            data_files.append((filepath, "."))
+        filepath = base_path / filename
+        if filepath.exists() and filepath.is_file():
+            data_files.append((str(filepath), "."))
             print(f"      Bundled file: {filename}")
     
+    print(f"\n   Total items bundled inside executable: {len(data_files)}")
     return data_files
 
 
@@ -246,7 +250,7 @@ def build_pyinstaller_command(data_files, hidden_imports):
     cmd = [
         sys.executable, "-m", "PyInstaller",
         "--onefile",                    # Single executable file
-        "--windowed",                   # No console window (GUI app)
+        # "--windowed",                   # No console window (GUI app)
         "--name", APP_NAME,             # Name of the executable
         "--clean",                      # Clean PyInstaller cache
         "--noconfirm",                  # Replace output directory without asking
@@ -256,6 +260,8 @@ def build_pyinstaller_command(data_files, hidden_imports):
     # Add data files to bundle inside executable
     for src, dest in data_files:
         cmd.extend(["--add-data", f"{src}{separator}{dest}"])
+    cmd.extend(["--add-data", f"assets{separator}assets"])  # Add an extra dummy entry to ensure at least one --add-data is present assets folder
+
     
     # Add hidden imports
     for module in hidden_imports:

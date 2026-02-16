@@ -1,14 +1,5 @@
 [
     {
-        "SpecCommon": "aa",
-        "Origin": "Natural Stand",
-        "EquationType": "DBH-based",
-        "bwoodb1": 0.0,
-        "bwoodb2": 0.0,
-        "bbarkb1": 0.0,
-        "bbarkb2": 0.0
-    },
-    {
         "SpecCommon": "dsa d",
         "Origin": "Natural Stand",
         "EquationType": "DBH-based",
@@ -61,6 +52,15 @@
         "Origin": "Natural Stand",
         "EquationType": "DBH-based",
         "bwoodb1": 0.0,
+        "bwoodb2": 0.0,
+        "bbarkb1": 0.0,
+        "bbarkb2": 0.0
+    },
+    {
+        "SpecCommon": "das",
+        "Origin": "Natural Stand",
+        "EquationType": "DBH-based",
+        "bwoodb1": 0.002,
         "bwoodb2": 0.0,
         "bbarkb1": 0.0,
         "bbarkb2": 0.0
