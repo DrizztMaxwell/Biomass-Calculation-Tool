@@ -543,7 +543,7 @@ class Edit_Dialog:
                 )
             ], alignment=ft.MainAxisAlignment.END),
             padding=ft.padding.symmetric(horizontal=30, vertical=20),
-            bgcolor=ft.Colors.GREY_500,
+            bgcolor=self.SECONDARY_CONTAINER,
             border=ft.border.only(top=ft.BorderSide(1, self.GREY_200)),
             border_radius=ft.border_radius.only(bottom_left=16, bottom_right=16)
         )

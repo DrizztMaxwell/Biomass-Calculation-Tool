@@ -1,0 +1,50 @@
+[13:46:28] --- Log Session Started ---
+[13:46:30] Running as script
+[13:46:30]    Program path: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool
+[13:46:30]    Data path: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\app_data
+[13:46:30] Initializing JSON files...
+[13:46:30]    Created/Updated: storage/localstorage.json
+[13:46:30]    Created/Updated: data/treeparameters.json
+[13:46:30]    Preserved existing: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\data/create_species.json
+[13:46:30] Initialized 2 JSON files
+[13:46:30]    Preserved existing: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\data/selected_database.json
+[13:46:30]    Preserved existing: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\data/connection_history.json
+[13:46:30] Application starting...
+[13:46:30] Page configured
+[13:46:30] Splash screen displayed
+[13:46:32] Splash screen cleared
+[13:46:32] DataManager cleared, proceeding to EULA
+[13:46:32] EULA view displayed
+[13:46:33] User agreed to EULA - proceeding with application
+[13:46:33] User navigated to Select Data page
+[13:46:34] Import text file dialog opened
+[13:46:36] Selected file for import: C:\Users\mohib\Documents\Biomass-Calculation-Tool\All_Sp_Data_Test_BCT_Dec - Copy.txt
+[13:46:37] Text file imported successfully with 1991 records and 1 errors.
+[13:46:40] User navigated to Calculate Biomass page
+[13:46:43] Calculate biomass button clicked
+[13:46:50] User navigated to Create Species page
+[13:46:56] Checking if species name das exists in C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\data/treeparameters.json
+[13:46:56] Checking if species name das exists in C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\data/create_species.json
+[13:46:57] Selected components for creation: ['Wood', 'Bark']
+[13:46:57] Current equation type is DBH-based
+[13:46:57] Species das created successfully and added to create_species.json
+[13:46:58] User navigated to Modify Species page
+[13:46:58] Species data loaded successfully.
+[13:46:59] User navigated to Settings page
+[13:47:04] User navigated to Modify Species page
+[13:47:04] Species data loaded successfully.
+[13:47:05] Editing species: 
+[13:47:09] Viewing species: 
+[13:47:10] Species details dialog closed for species: 
+[13:47:10] Editing species: 
+[13:47:12] Confirming deletion of species: 
+[13:48:37] Loaded species data from C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\data/treeparameters.json successfully.
+[13:48:40] User navigated to Settings page
+[13:48:40] Theme toggled to: ThemeMode.DARK
+[13:48:41] User navigated to Modify Species page
+[13:48:41] Species data loaded successfully.
+[13:48:42] Editing species: 
+[13:48:46] Viewing species: 
+[13:48:49] Species details dialog closed for species: 
+[13:48:51] Confirming deletion of species: 
+[13:48:52] Editing species: 

@@ -1,6 +1,8 @@
 import flet as ft
 from data.components_data import COMPONENTS_DATA
-from helper_functions.Assets_Helper import asset_helper  # Import the asset helper
+from helper_functions.Assets_Helper import asset_helper
+import os
+import sys
 
 class Select_Components_Widget:
     def __init__(
@@ -18,31 +20,87 @@ class Select_Components_Widget:
         is_database_selected=False,
         is_in_create_species_page=False
     ):
+        # Initialize attributes first
+        self.debug = False  # Set debug first
         self.page = page
         self.title = title
         self.description_text = description_text
         self.components_card_row = components_card_row
         self.selected_card_component = selected_card_component
-        self.components_data = components_data or self._prepare_component_data(COMPONENTS_DATA.copy())
+        
+        # Prepare component data with proper paths before any other operations
+        if components_data:
+            self.components_data = self._prepare_component_data(components_data)
+        else:
+            self.components_data = self._prepare_component_data(COMPONENTS_DATA.copy())
+        
         self.display_button = display_button
         self.display_shadow = display_shadow
         self.on_selection_change = on_selection_change
         self.is_alternate_card = is_alternate_card
         self.is_database_selected = is_database_selected
         self.is_in_create_species_page = is_in_create_species_page
+        
+        # Prepare original data after components_data is set
         self.original_components_data = self._prepare_component_data(COMPONENTS_DATA.copy())
         
+        # Initialize the widget
         self._initialize_widget()
+    
+    def _get_resource_path(self, relative_path):
+        """Get absolute path to resource for both development and production"""
+        try:
+            if getattr(sys, 'frozen', False):
+                # Running in production (PyInstaller bundle)
+                base_path = sys._MEIPASS
+                if hasattr(self, 'debug') and self.debug:
+                    print(f"Production mode - using MEIPASS: {base_path}")
+            else:
+                # Running in development
+                base_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+                if hasattr(self, 'debug') and self.debug:
+                    print(f"Development mode - using base_path: {base_path}")
+            
+            # Clean the relative path
+            clean_path = relative_path.replace('./', '').replace('\\', '/')
+            
+            # Construct full path
+            full_path = os.path.join(base_path, clean_path)
+            
+            if hasattr(self, 'debug') and self.debug:
+                print(f"Resource path: {full_path}")
+                print(f"Exists: {os.path.exists(full_path)}")
+            
+            return full_path
+        except Exception as e:
+            if hasattr(self, 'debug') and self.debug:
+                print(f"Error getting resource path: {e}")
+            return relative_path
     
     def _prepare_component_data(self, components):
         """Update image paths in component data for current environment"""
         for component in components:
             if "image_src" in component:
-                component["image_src"] = asset_helper.get_asset_path(component["image_src"])
+                # Store original path for reference
+                original_path = component["image_src"]
+                
+                # Get the correct path based on environment
+                component["image_src"] = self._get_resource_path(component["image_src"])
+                
+                if hasattr(self, 'debug') and self.debug:
+                    print(f"Component {component['title']}:")
+                    print(f"  Original: {original_path}")
+                    print(f"  Resolved: {component['image_src']}")
+        
         return components
     
     def _initialize_widget(self):
         """Initialize the widget and its components"""
+        if hasattr(self, 'debug') and self.debug:
+            print(f"Initializing widget - Production mode: {getattr(sys, 'frozen', False)}")
+            if hasattr(sys, '_MEIPASS'):
+                print(f"MEIPASS path: {sys._MEIPASS}")
+        
         if self.is_in_create_species_page == False:
             self._apply_database_mode()
         elif self.is_in_create_species_page:
@@ -61,8 +119,12 @@ class Select_Components_Widget:
                 component["is_selected"] = True
                 component["is_disabled"] = True
             else:
-                original_component = self.original_components_data[i]
-                component["is_selected"] = original_component.get("is_selected", False)
+                # Make sure original_components_data exists and has the same length
+                if i < len(self.original_components_data):
+                    original_component = self.original_components_data[i]
+                    component["is_selected"] = original_component.get("is_selected", False)
+                else:
+                    component["is_selected"] = False
                 component["is_disabled"] = False
     
     def _create_select_all_button(self):
@@ -139,16 +201,27 @@ class Select_Components_Widget:
     
     def _create_image_container(self, component, is_disabled):
         """Create image container for component card"""
+        # Debug: print image path
+        if hasattr(self, 'debug') and self.debug:
+            print(f"Loading image for {component['title']}: {component['image_src']}")
+            print(f"File exists: {os.path.exists(component['image_src'])}")
+        
+        # Create image with fallback
+        image = ft.Image(
+            src=component["image_src"],
+            fit=ft.ImageFit.CONTAIN,
+            color=ft.Colors.GREY_400 if is_disabled else None,
+            error_content=ft.Column([
+                ft.Icon(ft.Icons.IMAGE_NOT_SUPPORTED, size=30, color=ft.Colors.RED),
+                ft.Text("?", size=10, color=ft.Colors.RED)
+            ])
+        )
+        
         return ft.Container(
             width=50,
             height=50,
             alignment=ft.alignment.center,
-            content=ft.Image(
-                src=component["image_src"],
-                fit=ft.ImageFit.CONTAIN,
-                color=ft.Colors.GREY_400 if is_disabled else None,
-                error_content=ft.Icon(ft.Icons.IMAGE_NOT_SUPPORTED, size=30)  # Fallback if image fails to load
-            )
+            content=image
         )
     
     def _create_title_text(self, component, is_disabled):
@@ -334,5 +407,9 @@ class Select_Components_Widget:
         """Refresh all asset paths (useful if theme changes or after rebuild)"""
         for component in self.components_data:
             if "image_src" in component:
-                component["image_src"] = asset_helper.get_asset_path(component["image_src"])
+                component["image_src"] = self._get_resource_path(component["image_src"])
         self._build_component_cards()
+    
+    def enable_debug(self, enabled=True):
+        """Enable or disable debug mode"""
+        self.debug = enabled
