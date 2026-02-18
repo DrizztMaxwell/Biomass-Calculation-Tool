@@ -19,6 +19,8 @@ from widgets.Supported_Species_Dialog import Supported_Species_Dialog
 from widgets.LogFileTxt import logger
 from controller.Settings_Controller import Settings_Controller
 from controller.Modify_Species_Controller import Modify_Species_Controller
+from widgets.Custom_Alert_Dialog import Custom_Alert_Dialog
+
 class SideNavbar_View:
     
     """Main application class for the Biomass Calculator"""
@@ -210,26 +212,89 @@ class SideNavbar_View:
             padding=ft.padding.only(left=20, right=10, top=10, bottom=10)
         )
     def _on_save_manual_result(self, e: ft.FilePickerResultEvent):
-                if e.path:
-                    # Determine source based on OS (matching your previous logic)
-                    source = "manual/MANUAL SOFTWARE EXAMPLE.pdf" if sys.platform.startswith("win") else "manual/MANUAL SOFTWARE EXAMPLE.pdf"
-                    if not os.path.exists(source):
-                        # Fallback for the other filename mentioned in your code
-                        source = "../manual/MANUAL SOFTWARE EXAMPLE.pdf"
-
-                    try:
-                        shutil.copy(source, e.path)
-                        self.page.snack_bar = ft.SnackBar(
-                            ft.Text(f"Manual saved successfully to {e.path}"),
-                            bgcolor=ft.Colors.GREEN_700
-                        )
-                    except Exception as ex:
-                        self.page.snack_bar = ft.SnackBar(
-                            ft.Text(f"Error saving file: {str(ex)}"),
-                            bgcolor=ft.Colors.RED_700
-                        )
-                    self.page.snack_bar.open = True
-                    self.page.update()
+        if e.path:
+            # Get the correct base path depending on environment
+            if getattr(sys, 'frozen', False):
+                # Production mode - use MEIPASS
+                base_path = sys._MEIPASS
+            else:
+                # Development mode - use current directory or project root
+                base_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+            
+            # Determine source filename based on OS
+            if sys.platform.startswith("win"):
+                source_filename = "Biomass Calculation Tool Manual.pdf"
+                fallback_filename = "MANUAL SOFTWARE EXAMPLE.pdf"
+            else:
+                source_filename = "MANUAL SOFTWARE EXAMPLE.pdf"
+                fallback_filename = "Biomass Calculation Tool Manual.pdf"
+            
+            # Try different possible locations for the manual
+            possible_source_paths = [
+                # In manual folder under base_path
+                os.path.join(base_path, "manual", source_filename),
+                # Directly in base_path
+                os.path.join(base_path, source_filename),
+                # In manual folder with fallback filename
+                os.path.join(base_path, "manual", fallback_filename),
+                # Original paths from your code (as fallbacks)
+                "manual/Biomass Calculation Tool Manual.pdf",
+                "../manual/MANUAL SOFTWARE EXAMPLE.pdf",
+                "manual/MANUAL SOFTWARE EXAMPLE.pdf",
+            ]
+            
+            # Find the first existing source file
+            source = None
+            for path in possible_source_paths:
+                if os.path.exists(path):
+                    source = path
+                    print(f"Found manual at: {source}")  # For debugging
+                    break
+            
+            if source is None:
+                # No manual found
+                Error_Message = "User manual file not found in any expected location."
+                Custom_Alert_Dialog(
+                    self.page,
+                    title_icon=ft.Icons.ERROR,
+                    title_icon_color=ft.Colors.RED,
+                    title_color=ft.Colors.RED,
+                    title="Error",
+                    message=f"{Error_Message}",
+                    button_text="OK",
+                ).show()
+                logger.write(Error_Message)
+                self.page.update()
+                return
+            
+            try:
+                shutil.copy(source, e.path)
+                Success_Message = f"User manual saved successfully to: {e.path}"
+                
+                Custom_Alert_Dialog(
+                    self.page,
+                    title_icon=ft.Icons.CHECK_CIRCLE,
+                    title_icon_color=ft.Colors.GREEN,
+                    title_color=ft.Colors.GREEN,
+                    title="Success",
+                    message=f"{Success_Message}",
+                    button_text="OK",
+                ).show()
+                
+                logger.write(Success_Message)
+            except Exception as ex:
+                Error_Message = f"Failed to save user manual: {str(ex)}"
+                Custom_Alert_Dialog(
+                    self.page,
+                    title_icon=ft.Icons.ERROR,
+                    title_icon_color=ft.Colors.RED,
+                    title_color=ft.Colors.RED,
+                    title="Error",
+                    message=f"{Error_Message}",
+                    button_text="OK",
+                ).show()
+                logger.write(Error_Message)
+            self.page.update()
     def _build_sidebar_controls(self, is_expanded, e):
         """Builds all navigation items and footer buttons."""
         
@@ -337,7 +402,7 @@ class SideNavbar_View:
                 border_radius=10,
                 padding=ft.padding.symmetric(vertical=12, horizontal=20),
               on_click=lambda _: self.file_picker.save_file(
-        file_name="MANUAL SOFTWARE EXAMPLE.pdf",
+        file_name="Biomass_Calculation_Tool_Manual_2026.pdf",
         allowed_extensions=["pdf"]
     ),
             )
