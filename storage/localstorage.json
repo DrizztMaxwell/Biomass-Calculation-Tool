@@ -1,1 +1,134 @@
-[]
+[
+    {
+        "PLot": 1108656,
+        "SubPlot": 1,
+        "Year": "2005a",
+        "Origin": "Natural Stand",
+        "Tree Status": "L ",
+        "Species": "13a",
+        "Tree Number": "1a",
+        "DBH": "19.5a",
+        "Height": "1a7.07"
+    },
+    {
+        "PLot": 1108656,
+        "SubPlot": 1,
+        "Year": "2005",
+        "Origin": "Natural Stand",
+        "Tree Status": "L ",
+        "Species": "251",
+        "Tree Number": "2",
+        "DBH": "18.3",
+        "Height": "14.48"
+    },
+    {
+        "PLot": 1108656,
+        "SubPlot": 1,
+        "Year": "2005",
+        "Origin": "Natural Stand",
+        "Tree Status": "L ",
+        "Species": "251",
+        "Tree Number": "3",
+        "DBH": "17",
+        "Height": "13.84"
+    },
+    {
+        "PLot": 1108656,
+        "SubPlot": 1,
+        "Year": "2005",
+        "Origin": "Natural Stand",
+        "Tree Status": "L ",
+        "Species": "13",
+        "Tree Number": "4",
+        "DBH": "17.8",
+        "Height": "13.82"
+    },
+    {
+        "PLot": 1108656,
+        "SubPlot": 1,
+        "Year": "2005",
+        "Origin": "Natural Stand",
+        "Tree Status": "L ",
+        "Species": "13",
+        "Tree Number": "5",
+        "DBH": "15.7",
+        "Height": "13.81"
+    },
+    {
+        "PLot": 1108656,
+        "SubPlot": 1,
+        "Year": "2005",
+        "Origin": "Natural Stand",
+        "Tree Status": "L ",
+        "Species": "13",
+        "Tree Number": "6",
+        "DBH": "18.2",
+        "Height": "13.64"
+    },
+    {
+        "PLot": 1108656,
+        "SubPlot": 1,
+        "Year": "2005",
+        "Origin": "Natural Stand",
+        "Tree Status": "L ",
+        "Species": "13",
+        "Tree Number": "7",
+        "DBH": "15.7",
+        "Height": "13.32"
+    },
+    {
+        "PLot": 1108656,
+        "SubPlot": 1,
+        "Year": "2005",
+        "Origin": "Natural Stand",
+        "Tree Status": "L ",
+        "Species": "13",
+        "Tree Number": "8",
+        "DBH": "16",
+        "Height": "12s.08"
+    },
+    {
+        "PLot": 1108656,
+        "SubPlot": 1,
+        "Year": "2005",
+        "Origin": "Natural Stand",
+        "Tree Status": "L ",
+        "Species": "13",
+        "Tree Number": "9",
+        "DBH": "10.3",
+        "Height": "10.77"
+    },
+    {
+        "PLot": 1108656,
+        "SubPlot": 1,
+        "Year": "2016",
+        "Origin": "Natural Stand",
+        "Tree Status": "L ",
+        "Species": "13",
+        "Tree Number": "95",
+        "DBH": "10.3",
+        "Height": "10.77"
+    },
+    {
+        "PLot": 9999999,
+        "SubPlot": 1,
+        "Year": "2005",
+        "Origin": "Natural Stand",
+        "Tree Status": "L ",
+        "Species": "13",
+        "Tree Number": "18266",
+        "DBH": "11.8",
+        "Height": "8.66"
+    },
+    {
+        "PLot": 9999999,
+        "SubPlot": 1,
+        "Year": "2005",
+        "Origin": "Natural Stand",
+        "Tree Status": "L ",
+        "Species": "13",
+        "Tree Number": "18267",
+        "DBH": "5",
+        "Height": "4.36"
+    }
+]
