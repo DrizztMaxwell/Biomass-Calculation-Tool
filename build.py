@@ -30,6 +30,7 @@ EXCLUDE_DIRS = {
 # They will be available at runtime via sys._MEIPASS
 ASSETS_TO_BUNDLE = {
     "assets": "assets",  # Bundle entire assets folder
+    "manual": "manual",  # Bundle entire manual folder
 }
 
 # Specific files that will be CREATED at runtime in AppData
@@ -99,7 +100,7 @@ def verify_assets_for_bundling():
             total_files = sum([len(files) for _, _, files in os.walk(asset_folder)])
             print(f"   ✅ Found '{asset_folder}/' - will be BUNDLED inside executable ({total_files} files)")
             
-            # Check for subfolders
+            # Check for subfolders in assets
             if asset_folder == "assets":
                 images_path = os.path.join(asset_folder, "images")
                 fonts_path = os.path.join(asset_folder, "fonts")
@@ -111,13 +112,18 @@ def verify_assets_for_bundling():
                 if os.path.exists(fonts_path):
                     font_count = len([f for f in os.listdir(fonts_path) if os.path.isfile(os.path.join(fonts_path, f))])
                     print(f"      🔤 fonts/ subfolder found ({font_count} files)")
+            
+            # Check manual folder contents
+            if asset_folder == "manual":
+                pdf_files = [f for f in os.listdir(asset_folder) if f.endswith('.pdf')]
+                print(f"      📄 PDF files found: {', '.join(pdf_files)}")
         else:
             print(f"   ⚠️  Warning: '{asset_folder}/' not found - will not be bundled")
             all_assets_found = False
     
     if not all_assets_found:
         print("\n⚠️  Some asset folders are missing. The executable will still work,")
-        print("   but may lack icons, images, or fonts.")
+        print("   but may lack icons, images, fonts, or manuals.")
     
     return all_assets_found
 
@@ -135,47 +141,54 @@ def collect_bundle_files(base_dir):
     """
     Collect files that need to be BUNDLED INSIDE the executable.
     Returns a list of tuples: (source_path, destination_path)
-    This version recursively collects ALL files in assets, preserving folder structure.
+    This version recursively collects ALL files in assets and manual, preserving folder structure.
     """
     print("📦 Collecting files to BUNDLE inside executable...")
     
     data_files = []
     base_path = Path(base_dir)
     
-    # Bundle assets folders recursively
-    print("   Bundling asset folders INSIDE executable:")
+    # Bundle assets and manual folders recursively
+    print("   Bundling folders INSIDE executable:")
     for src_folder, dest_folder in ASSETS_TO_BUNDLE.items():
         full_src_path = base_path / src_folder
         if full_src_path.exists() and full_src_path.is_dir():
             # Walk through all files recursively
+            file_count = 0
             for file_path in full_src_path.rglob("*"):
                 if file_path.is_file():
                     # Relative path inside project for destination
                     rel_path = file_path.relative_to(base_path).parent
                     data_files.append((str(file_path), str(rel_path)))
-                    print(f"      ✔ {file_path.relative_to(base_path)}")
+                    file_count += 1
+                    if file_count <= 5:  # Show first 5 files as examples
+                        print(f"      ✔ {file_path.relative_to(base_path)}")
+            if file_count > 5:
+                print(f"      ... and {file_count - 5} more files in {src_folder}/")
+            print(f"      📦 Total: {file_count} files in {src_folder}/")
         else:
             print(f"   ⚠️  Warning: '{src_folder}/' not found - will not be bundled")
     
     # Bundle Python packages
-    print("   Bundling Python packages:")
+    print("\n   Bundling Python packages:")
     for package in REQUIRED_PACKAGES:
         package_path = base_path / Path(package.replace('.', os.sep))
         if package_path.exists() and package_path.is_dir():
             py_files = list(package_path.rglob("*.py"))
             if py_files:
                 data_files.append((str(package_path), package))
-                print(f"      Bundled package: {package}/ ({len(py_files)} files)")
+                print(f"      ✅ Bundled package: {package}/ ({len(py_files)} files)")
     
     # Also add important root files
+    print("\n   Bundling root files:")
     important_root_files = ["requirements.txt", ".gitignore"]
     for filename in important_root_files:
         filepath = base_path / filename
         if filepath.exists() and filepath.is_file():
             data_files.append((str(filepath), "."))
-            print(f"      Bundled file: {filename}")
+            print(f"      ✅ Bundled file: {filename}")
     
-    print(f"\n   Total items bundled inside executable: {len(data_files)}")
+    print(f"\n   📊 Total items bundled inside executable: {len(data_files)}")
     return data_files
 
 
@@ -250,7 +263,7 @@ def build_pyinstaller_command(data_files, hidden_imports):
     cmd = [
         sys.executable, "-m", "PyInstaller",
         "--onefile",                    # Single executable file
-        # "--windowed",                   # No console window (GUI app)
+        "--windowed",                   # No console window (GUI app)
         "--name", APP_NAME,             # Name of the executable
         "--clean",                      # Clean PyInstaller cache
         "--noconfirm",                  # Replace output directory without asking
@@ -260,8 +273,6 @@ def build_pyinstaller_command(data_files, hidden_imports):
     # Add data files to bundle inside executable
     for src, dest in data_files:
         cmd.extend(["--add-data", f"{src}{separator}{dest}"])
-    cmd.extend(["--add-data", f"assets{separator}assets"])  # Add an extra dummy entry to ensure at least one --add-data is present assets folder
-
     
     # Add hidden imports
     for module in hidden_imports:
@@ -290,7 +301,7 @@ def main():
     """Main build process"""
     
     print("=" * 70)
-    print(f"  Building {APP_NAME} with ASSETS BUNDLED INSIDE")
+    print(f"  Building {APP_NAME} with ASSETS AND MANUAL BUNDLED INSIDE")
     print("=" * 70)
     print()
     
@@ -351,7 +362,7 @@ def main():
     print("🚀 Running PyInstaller...")
     print("=" * 70)
     print()
-    print("📦 ASSETS ARE BEING BUNDLED INSIDE THE EXECUTABLE")
+    print("📦 ASSETS AND MANUAL ARE BEING BUNDLED INSIDE THE EXECUTABLE")
     print("   They will be extracted to a temp folder at runtime")
     print()
     print(f"   Bundling {len(data_files)} data folders/files")
@@ -370,9 +381,18 @@ def main():
         print(f"📦 Your executable is ready: {DIST_DIR}\\{APP_NAME}.exe")
         print(f"   Location: {os.path.join(project_dir, DIST_DIR)}")
         print()
-        print("🎯 ASSETS BUNDLED INSIDE THE EXECUTABLE:")
+        print("🎯 BUNDLED INSIDE THE EXECUTABLE:")
         for asset_folder in ASSETS_TO_BUNDLE.keys():
             print(f"   - {asset_folder}/ (entire folder)")
+        
+        # Show manual files specifically
+        manual_path = os.path.join(project_dir, "manual")
+        if os.path.exists(manual_path):
+            pdf_files = [f for f in os.listdir(manual_path) if f.endswith('.pdf')]
+            if pdf_files:
+                print(f"\n   📄 Manual PDFs bundled:")
+                for pdf in pdf_files:
+                    print(f"      - {pdf}")
         
         print("\n📝 RUNTIME FILES (created on first run in %APPDATA%):")
         for file_path in RUNTIME_FILES[:3]:  # Show first 3
@@ -382,7 +402,7 @@ def main():
         
         print()
         print("✨ You can now distribute this single .exe file anywhere!")
-        print("   The executable contains ALL assets inside it.")
+        print("   The executable contains ALL assets AND manuals inside it.")
         print("   User data will be stored in %APPDATA%/BiomassCalculationTool/")
         print()
         
