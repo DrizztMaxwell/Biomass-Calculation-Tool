@@ -1,0 +1,11 @@
+[17:36:39] --- Log Session Started ---
+[17:36:39] Error connecting to database: No SQL Server ODBC drivers found.
+[17:36:39] Successfully connected to database MyDb on server localhost
+[17:36:39] Database connection info saved: {'server': 'localhost', 'database': 'MyDb', 'driver': 'ODBC Driver 18 for SQL Server', 'data_folder_path': 'C:\\SQL\\DATA'}
+[17:36:39] Connecting to database MyDb on server localhost using driver ODBC Driver 18 for SQL Server
+[17:36:39] Error importing from database: 42S02
+[17:36:39] Failed to import data from database: 42S02
+[17:36:39] Connecting to database MyDb on server localhost using driver ODBC Driver 18 for SQL Server
+[17:36:39] Database import successful with 1 records.
+[17:36:39] Connecting to database MyDb on server localhost using driver ODBC Driver 18 for SQL Server
+[17:36:39] Database import successful with 1 records.

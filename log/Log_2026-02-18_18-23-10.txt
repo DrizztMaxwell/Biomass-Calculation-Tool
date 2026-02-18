@@ -1,0 +1,26 @@
+[18:23:10] --- Log Session Started ---
+[18:23:10] File selection cancelled by user
+[18:23:10] Selected file for import: input.txt
+[18:23:10] Error importing text file: Text file may be empty or invalid.
+[18:23:10] Selected file for import: input.txt
+[18:23:10] Text file imported successfully with 1 records and 1 errors.
+[18:23:11] Error connecting to database: 28000
+[18:23:11] Error connecting to database: No SQL Server ODBC drivers found.
+[18:23:11] Successfully connected to database MyDb on server localhost
+[18:23:11] Database connection info saved: {'server': 'localhost', 'database': 'MyDb', 'driver': 'ODBC Driver 18 for SQL Server', 'data_folder_path': 'C:\\SQL\\DATA'}
+[18:23:11] Connecting to database MyDb on server localhost using driver ODBC Driver 18 for SQL Server
+[18:23:11] Error importing from database: 08001
+[18:23:11] Failed to import data from database: 08001
+[18:23:11] Connecting to database MyDb on server localhost using driver ODBC Driver 18 for SQL Server
+[18:23:11] Error importing from database: 28000
+[18:23:11] Failed to import data from database: 28000
+[18:23:11] Connecting to database MyDb on server localhost using driver ODBC Driver 18 for SQL Server
+[18:23:11] Error importing from database: Cannot open database 'MyDb' requested by login
+[18:23:11] Failed to import data from database: Cannot open database 'MyDb' requested by login
+[18:23:11] Connecting to database MyDb on server localhost using driver ODBC Driver 18 for SQL Server
+[18:23:11] Error importing from database: 42S02
+[18:23:11] Failed to import data from database: 42S02
+[18:23:11] Connecting to database MyDb on server localhost using driver ODBC Driver 18 for SQL Server
+[18:23:11] Database import successful with 1 records.
+[18:23:11] Connecting to database MyDb on server localhost using driver ODBC Driver 18 for SQL Server
+[18:23:11] Database import successful with 1 records.

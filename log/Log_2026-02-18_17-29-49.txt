@@ -1,0 +1,6 @@
+[17:29:49] --- Log Session Started ---
+[17:29:49] Connecting to database MyDb on server localhost using driver ODBC Driver 18 for SQL Server
+[17:29:49] Error importing from database: 42S02
+[17:29:49] Failed to import data from database: 42S02
+[17:29:49] Connecting to database MyDb on server localhost using driver ODBC Driver 18 for SQL Server
+[17:29:49] Database import successful with 1 records.
