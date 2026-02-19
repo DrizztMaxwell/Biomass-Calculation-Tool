@@ -6,9 +6,14 @@ class Parameter_Input:
     @staticmethod
     def create(label: str, controller=None) -> ft.TextField:
         """Create a parameter input field."""
+        
+        def on_blur(e):
+            if not e.control.value or e.control.value.strip() == "":
+                e.control.value = "0.00"
+                e.control.update()
+        
         control = ft.TextField(
             label=label,
-            value="0.00",
             height=50,
             width=120,
             text_size=14,
@@ -37,6 +42,7 @@ class Parameter_Input:
                 size=13,
                 color=ft.Colors.ON_PRIMARY_CONTAINER
             ),
+            on_blur=on_blur,
         )
         
         if controller:

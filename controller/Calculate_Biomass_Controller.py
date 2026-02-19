@@ -313,12 +313,12 @@ class Calculate_Biomass_Controller:
                     #print("Dialog was cancelled. Aborting biomass calculation.")
                     
                     raise Exception("Dialog cancelled by user")
-                print(species_type_mapping)
+                # print(species_type_mapping)
                 #print(f"Species type mapping received: {species_type_mapping}")
                 # Now you can use the mapping to set parameters
                 self._apply_species_type_mapping(species_type_mapping)
                 #print(f"Hardwood and Softwood Species Code Mapping: {self.hardwood_and_softwood_species_code_mapping}")
-            print(self.hardwood_and_softwood_species_code_mapping)
+            # print(self.hardwood_and_softwood_species_code_mapping)
             self._lower_column_names(self.local_storage_data, self.tree_params_data)
             self._process_biomass_calculations(self.local_storage_data, self.tree_params_data)
             self._save_results(self.local_storage_data)
@@ -427,8 +427,8 @@ class Calculate_Biomass_Controller:
                         hardwood_and_softwood_species_code_mapping_lookup[(code)] = species
                 except (ValueError, TypeError):
                     continue
-        print("Hardwood and Softwood Species Code Mapping Lookup:")
-        print(hardwood_and_softwood_species_code_mapping_lookup)
+        # print("Hardwood and Softwood Species Code Mapping Lookup:")
+        # print(hardwood_and_softwood_species_code_mapping_lookup)
         # 2. Vectorized filtering of valid rows\
             #check alphanumeric species codes and name
             
@@ -752,7 +752,7 @@ class Calculate_Biomass_Controller:
             print(f"Error saving to text file: {e}")
 
     def _normalize_biomass_row(self, row: dict) -> dict:
-        print(row)
+        # print(row)
         plot = row.get("Plot") or row.get("plot")
         year = row.get("Year") or row.get("year")
         tree_number = row.get("Tree_number") or row.get("Tree Number") or row.get("tree_number")

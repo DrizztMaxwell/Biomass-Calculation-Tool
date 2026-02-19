@@ -227,7 +227,7 @@ class Select_Data_Controller:
                 "driver": driver,
                 "data_folder_path": data_folder_path,
             }
-            os.makedirs("data", exist_ok=True)
+            # os.makedirs("data", exist_ok=True)
             with open(json_paths.SELECTED_DATABASE_PATH, "w") as f:
                 json.dump(db_config, f, indent=4)
 

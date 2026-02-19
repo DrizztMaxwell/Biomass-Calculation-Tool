@@ -1,0 +1,25 @@
+[20:03:19] --- Log Session Started ---
+[20:03:21] Running as script
+[20:03:21]    Program path: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool
+[20:03:21]    Data path: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\app_data
+[20:03:21] Initializing JSON files...
+[20:03:21]    Created/Updated: storage/localstorage.json
+[20:03:21]    Created/Updated: data/treeparameters.json
+[20:03:21]    Preserved existing: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\data/create_species.json
+[20:03:21] Initialized 2 JSON files
+[20:03:21]    Preserved existing: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\data/selected_database.json
+[20:03:21]    Preserved existing: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\data/connection_history.json
+[20:03:21] Application starting...
+[20:03:21] Page configured
+[20:03:21] Splash screen displayed
+[20:03:23] Splash screen cleared
+[20:03:23] DataManager cleared, proceeding to EULA
+[20:03:23] EULA view displayed
+[20:03:23] User agreed to EULA - proceeding with application
+[20:03:23] User navigated to Select Data page
+[20:03:25] User navigated to Settings page
+[20:03:27] User navigated to Modify Species page
+[20:03:27] Species data loaded successfully.
+[20:03:28] Editing species: 
+[20:03:30] Species data saved successfully.
+[20:03:30] Exception while saving species '': 'Edit_Dialog' object has no attribute '_close_dialog'

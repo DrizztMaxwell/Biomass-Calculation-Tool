@@ -1,0 +1,40 @@
+[20:11:33] --- Log Session Started ---
+[20:11:34] Running as script
+[20:11:34]    Program path: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool
+[20:11:34]    Data path: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\app_data
+[20:11:34] Initializing JSON files...
+[20:11:34]    Created/Updated: storage/localstorage.json
+[20:11:34]    Created/Updated: data/treeparameters.json
+[20:11:34]    Preserved existing: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\data/create_species.json
+[20:11:34] Initialized 2 JSON files
+[20:11:34]    Preserved existing: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\data/selected_database.json
+[20:11:34]    Preserved existing: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\data/connection_history.json
+[20:11:34] Application starting...
+[20:11:34] Page configured
+[20:11:34] Splash screen displayed
+[20:11:36] Splash screen cleared
+[20:11:36] DataManager cleared, proceeding to EULA
+[20:11:36] EULA view displayed
+[20:11:37] User agreed to EULA - proceeding with application
+[20:11:37] User navigated to Select Data page
+[20:11:42] User navigated to Settings page
+[20:11:43] User navigated to Modify Species page
+[20:11:43] Species data loaded successfully.
+[20:11:44] Confirming deletion of species: 
+[20:12:06] User navigated to Create Species page
+[20:12:09] Checking if species code 2 exists in C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\data/treeparameters.json
+[20:12:09] Species code or name '2' already exists in treeparameters.json
+[20:12:13] Checking if species code 2 exists in C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\data/treeparameters.json
+[20:12:13] Species code or name '2' already exists in treeparameters.json
+[20:12:18] Checking if species code 222 exists in C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\data/treeparameters.json
+[20:12:18] Selected components for creation: ['Wood', 'Bark']
+[20:12:18] Current equation type is DBH-based
+[20:12:18] Species 222 created successfully and added to create_species.json
+[20:12:20] User navigated to Modify Species page
+[20:12:20] Species data loaded successfully.
+[20:12:27] Confirming deletion of species: 222
+[20:12:32] Confirming deletion of species: 222
+[20:12:33] Confirming deletion of species: 222
+[20:12:33] Species data saved successfully.
+[20:12:33] Species '222' deleted successfully.
+[20:12:37] Confirming deletion of species: 

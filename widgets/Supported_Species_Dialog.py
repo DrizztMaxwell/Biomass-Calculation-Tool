@@ -65,8 +65,9 @@ class Supported_Species_Dialog:
             modal=True,
             title_padding=0,
             content_padding=0,
-            shape=ft.RoundedRectangleBorder(radius=20),
+            
             content=ft.Container(
+                border_radius=20,
                 width=450,
                 height=600,
                 clip_behavior=ft.ClipBehavior.ANTI_ALIAS,
@@ -75,14 +76,14 @@ class Supported_Species_Dialog:
                     controls=[
                         # Header
                         ft.Container(
-                            bgcolor=ft.Colors.GREEN,
+                            bgcolor="#0F1219",
                             padding=25,
                             content=ft.Column([
                                 ft.Row([
                                     ft.Icon(ft.Icons.NATURE_PEOPLE_OUTLINED, color=ft.Colors.WHITE, size=30),
                                     ft.Text("Tree Species", color=ft.Colors.WHITE, size=24, weight=ft.FontWeight.BOLD),
                                 ], alignment=ft.MainAxisAlignment.START),
-                                ft.Text("Official database for biomass calculation", color=ft.Colors.GREEN_100, size=12),
+                                ft.Text("List of tree species", color=ft.Colors.GREY_400, size=12),
                             ])
                         ),
                         
