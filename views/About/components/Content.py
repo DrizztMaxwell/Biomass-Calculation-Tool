@@ -13,7 +13,7 @@ class Content:
             self.bg_color = ft.Colors.WHITE
             self.section_bg_1 = ft.Colors.BLUE_50
             self.section_bg_2 = ft.Colors.GREEN_50
-            self.section_bg_3 = ft.Colors.GREY_50
+            self.section_bg_3 = ft.Colors.YELLOW_50
             self.contact_bg = ft.Colors.BLUE_GREY_50
             
             self.title_color = ft.Colors.BLUE_900
@@ -35,8 +35,8 @@ class Content:
             self.bg_color = ft.Colors.GREY_900
             self.section_bg_1 = ft.Colors.with_opacity(0.15, ft.Colors.BLUE_900)
             self.section_bg_2 = ft.Colors.with_opacity(0.15, ft.Colors.GREEN_900)
-            self.section_bg_3 = ft.Colors.with_opacity(0.15, ft.Colors.GREY_800)
-            self.contact_bg = ft.Colors.with_opacity(0.2, ft.Colors.BLUE_GREY_900)
+            self.section_bg_3 = ft.Colors.with_opacity(0.15, ft.Colors.YELLOW_900)
+            self.contact_bg = ft.Colors.with_opacity(0.2, ft.Colors.ORANGE_900)
             
             self.title_color = ft.Colors.BLUE_200
             self.text_color = ft.Colors.GREY_300
@@ -84,6 +84,7 @@ class Content:
             
             # Section 4: Contact (Streamlined)
             ft.Container(
+                margin=ft.margin.only(top=5),
                 content=ft.Column([
                     ft.Text(
                         "Development & Contact", 
@@ -109,13 +110,13 @@ class Content:
                 ft.Column([
                     ft.Text(
                         title, 
-                        size=13, 
+                        size=16, 
                         weight=ft.FontWeight.BOLD, 
                         color=self.title_color
                     ),
                     ft.Text(
                         text, 
-                        size=11, 
+                        size=13, 
                         color=self.text_color, 
                         width=700
                     ),
@@ -132,7 +133,7 @@ class Content:
                 ft.Icon(icon, size=14, color=color),
                 ft.Text(
                     label, 
-                    size=10, 
+                    size=13, 
                     weight=ft.FontWeight.W_500, 
                     color=self.chip_text_color
                 ),
@@ -148,7 +149,7 @@ class Content:
                 ft.Icon(ft.Icons.MAIL_ROUNDED, size=14, color=color),
                 ft.Text(
                     f"{name} ({email})", 
-                    size=10, 
+                    size=13, 
                     weight=ft.FontWeight.W_500,
                     color=self.text_color,
                 ),

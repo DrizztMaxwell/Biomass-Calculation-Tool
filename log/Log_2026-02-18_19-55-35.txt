@@ -1,0 +1,32 @@
+[19:55:35] --- Log Session Started ---
+[19:55:36] Running as script
+[19:55:36]    Program path: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool
+[19:55:36]    Data path: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\app_data
+[19:55:36] Initializing JSON files...
+[19:55:36]    Created/Updated: storage/localstorage.json
+[19:55:36]    Created/Updated: data/treeparameters.json
+[19:55:36]    Preserved existing: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\data/create_species.json
+[19:55:36] Initialized 2 JSON files
+[19:55:36]    Preserved existing: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\data/selected_database.json
+[19:55:36]    Preserved existing: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\data/connection_history.json
+[19:55:36] Application starting...
+[19:55:36] Page configured
+[19:55:36] Splash screen displayed
+[19:55:39] Splash screen cleared
+[19:55:39] DataManager cleared, proceeding to EULA
+[19:55:39] EULA view displayed
+[19:55:40] User agreed to EULA - proceeding with application
+[19:55:40] User navigated to Select Data page
+[19:55:41] Loaded species data from C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\data/treeparameters.json successfully.
+[19:55:52] User navigated to Modify Species page
+[19:55:52] Species data loaded successfully.
+[19:55:53] Editing species: 
+[19:56:21] Species data saved successfully.
+[19:56:21] Exception while saving species '': 'Page' object has no attribute 'dialog'
+[19:56:38] Viewing species: 
+[19:56:38] Species details dialog closed for species: 
+[19:57:03] Editing species: 
+[19:57:14] Species data saved successfully.
+[19:57:14] Species '' updated successfully.
+[19:57:18] Viewing species: 
+[19:57:25] Species details dialog closed for species: 

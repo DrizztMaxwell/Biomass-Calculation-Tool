@@ -1,0 +1,41 @@
+[20:57:06] --- Log Session Started ---
+[20:57:07] Running as script
+[20:57:07]    Program path: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool
+[20:57:07]    Data path: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\app_data
+[20:57:07] Initializing JSON files...
+[20:57:07]    Created/Updated: storage/localstorage.json
+[20:57:07]    Created/Updated: data/treeparameters.json
+[20:57:07]    Preserved existing: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\data/create_species.json
+[20:57:07] Initialized 2 JSON files
+[20:57:07]    Preserved existing: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\data/selected_database.json
+[20:57:07]    Preserved existing: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\data/connection_history.json
+[20:57:07] Application starting...
+[20:57:07] Page configured
+[20:57:07] Splash screen displayed
+[20:57:09] Splash screen cleared
+[20:57:09] DataManager cleared, proceeding to EULA
+[20:57:09] EULA view displayed
+[20:57:10] User agreed to EULA - proceeding with application
+[20:57:10] User navigated to Select Data page
+[20:57:11] User navigated to Modify Species page
+[20:57:11] Species data loaded successfully.
+[20:57:12] User navigated to Create Species page
+[20:57:30] Checking if species code 34431 exists in C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\data/treeparameters.json
+[20:57:53] Checking if species code 34431 exists in C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\data/treeparameters.json
+[20:58:01] Checking if species code 34431 exists in C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\data/treeparameters.json
+[21:02:16] User navigated to Modify Species page
+[21:02:16] Species data loaded successfully.
+[21:02:17] Viewing species: 
+[21:03:05] Species details dialog closed for species: 
+[21:03:07] Editing species: 
+[21:03:10] User navigated to Settings page
+[21:04:03] Loaded species data from C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\data/treeparameters.json successfully.
+[21:06:02] User navigated to Select Data page
+[21:06:06] Successfully connected to database gypsppgp on server .\SQLEXPRESS
+[21:06:06] Database connection info saved: {'server': '.\\SQLEXPRESS', 'database': 'gypsppgp', 'driver': 'ODBC Driver 17 for SQL Server', 'data_folder_path': 'C:\\Program Files\\Microsoft SQL Server\\MSSQL16.SQLEXPRESS\\MSSQL\\DATA'}
+[21:06:06] Connecting to database gypsppgp on server .\SQLEXPRESS using driver ODBC Driver 17 for SQL Server
+[21:06:06] Database import successful with 10000 records.
+[21:06:06] Database import process completed for gypsppgp
+[21:06:08] User navigated to Calculate Biomass page
+[21:06:09] Calculate biomass button clicked
+[21:06:22] Write to database operation success: True

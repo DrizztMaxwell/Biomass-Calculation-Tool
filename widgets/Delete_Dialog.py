@@ -6,9 +6,13 @@ from widgets.Custom_Alert_Dialog import Custom_Alert_Dialog
 class Delete_Dialog:
     """Dialog for confirming species deletion."""
     
-    # Constants
+    # Constants - Updated with min/max values
     DIALOG_WIDTH_MAX = 500
+    DIALOG_WIDTH_MIN = 320  # Minimum width for mobile devices
+    DIALOG_HEIGHT_MAX = 400  # Maximum height
+    DIALOG_HEIGHT_MIN = 400  # Minimum height
     DIALOG_WIDTH_RATIO = 0.8
+    DIALOG_HEIGHT_RATIO = 0.5  # Height ratio for content
     
     # Colors
     RED_400 = ft.Colors.RED_400
@@ -47,8 +51,11 @@ class Delete_Dialog:
         self.display_value = self._get_display_value(species)
         self.actual_index = actual_index
         
+        # Calculate responsive dimensions
+        dialog_width, dialog_height = self._calculate_dialog_dimensions()
+        
         # Create and show dialog
-        dialog = self._create_dialog()
+        dialog = self._create_dialog(dialog_width, dialog_height)
         self._show_dialog(dialog)
     
     def _find_species(self, index, filtered_species, species_data):
@@ -81,61 +88,84 @@ class Delete_Dialog:
             return spec_common
         return species_code
     
-    def _create_dialog(self):
-        """Create the complete delete confirmation dialog."""
-        dialog_width = self._calculate_dialog_width()
+    def _calculate_responsive_width(self):
+        """Calculate responsive width based on screen size."""
+        if not self.page.width:
+            return self.DIALOG_WIDTH_MAX
+        
+        calculated_width = self.page.width * self.DIALOG_WIDTH_RATIO
+        # Clamp width between min and max
+        return max(self.DIALOG_WIDTH_MIN, min(calculated_width, self.DIALOG_WIDTH_MAX))
+    
+    def _calculate_responsive_height(self):
+        """Calculate responsive height based on screen size."""
+        if not self.page.height:
+            return self.DIALOG_HEIGHT_MAX
+        
+        calculated_height = self.page.height * self.DIALOG_HEIGHT_RATIO
+        # Clamp height between min and max
+        return max(self.DIALOG_HEIGHT_MIN, min(calculated_height, self.DIALOG_HEIGHT_MAX))
+    
+    def _calculate_dialog_dimensions(self):
+        """Calculate dialog dimensions based on page size."""
+        dialog_width = self._calculate_responsive_width()
+        dialog_height = self._calculate_responsive_height()
+        return dialog_width, dialog_height
+    
+    def _create_dialog(self, width, height):
+        """Create the complete delete confirmation dialog with fixed buttons."""
+        dialog_ref = None
         
         def close_dialog(e):
-            self._close_dialog(self.page.dialog)
+            if dialog_ref:
+                self._close_dialog(dialog_ref)
         
         def confirm_delete_wrapper(e):
-            self._confirm_delete(self.page.dialog)
+            self._confirm_delete(dialog_ref)
         
-        # Main container
+        # Main container with fixed height layout
         main_container = ft.Container(
             content=ft.Column([
-                self._create_content_container(dialog_width),
+                # Content area that scrolls if needed
+                ft.Container(
+                    content=self._create_content_container(width),
+                    expand=True,  # Takes remaining space
+                ),
+                # Fixed actions bar at bottom
                 self._create_actions_container(close_dialog, confirm_delete_wrapper)
             ], spacing=0, tight=True),
-            width=dialog_width,
+            width=width,
+            height=height,  # Fixed height for entire dialog
             border_radius=16,
             shadow=self._create_main_shadow(),
-            clip_behavior=ft.ClipBehavior.HARD_EDGE
+            clip_behavior=ft.ClipBehavior.HARD_EDGE,
+            bgcolor=self.SECONDARY
         )
         
-        # AlertDialog
-        return ft.AlertDialog(
+        # AlertDialog with proper centering and transparency
+        dialog_ref = ft.AlertDialog(
             modal=True,
             content=main_container,
             content_padding=0,
             shape=ft.RoundedRectangleBorder(radius=16),
             bgcolor=ft.Colors.TRANSPARENT,
-            inset_padding=ft.padding.all(20)
+            inset_padding=ft.padding.symmetric(horizontal=20, vertical=20),
+            alignment=ft.alignment.center,
         )
-    
-    def _calculate_dialog_width(self):
-        """Calculate dialog width based on page size."""
-        return min(self.DIALOG_WIDTH_MAX, self.page.width * self.DIALOG_WIDTH_RATIO)
-    
-    def _create_main_shadow(self):
-        """Create main container shadow."""
-        return ft.BoxShadow(
-            spread_radius=2,
-            blur_radius=40,
-            color=ft.Colors.with_opacity(0.25, self.BLACK),
-            offset=ft.Offset(0, 10)
-        )
+        
+        return dialog_ref
     
     def _create_content_container(self, width):
         """Create content container with header and warning."""
         return ft.Container(
             content=ft.Column([
                 self._create_header(),
-                self._create_warning_content()
-            ], spacing=0),
+                self._create_scrollable_warning_content()
+            ], spacing=0, expand=True),
             width=width,
             bgcolor=self.SECONDARY,
-            clip_behavior=ft.ClipBehavior.HARD_EDGE
+            clip_behavior=ft.ClipBehavior.HARD_EDGE,
+            expand=True
         )
     
     def _create_header(self):
@@ -154,14 +184,16 @@ class Delete_Dialog:
                         "Confirm Delete", 
                         size=24, 
                         weight=ft.FontWeight.W_700, 
-                        color=self.WHITE
+                        color=self.WHITE,
+                        overflow=ft.TextOverflow.ELLIPSIS
                     ),
                     ft.Text(
                         f"Species: {self.display_value}", 
                         size=14, 
-                        color=ft.Colors.with_opacity(0.9, self.WHITE)
+                        color=ft.Colors.with_opacity(0.9, self.WHITE),
+                        overflow=ft.TextOverflow.ELLIPSIS
                     ),
-                ], spacing=4, alignment=ft.CrossAxisAlignment.START)
+                ], spacing=4, alignment=ft.CrossAxisAlignment.START, expand=True)
             ], alignment=ft.MainAxisAlignment.START),
             gradient=ft.LinearGradient(
                 begin=ft.alignment.top_left,
@@ -177,19 +209,17 @@ class Delete_Dialog:
             )
         )
     
-    def _create_warning_content(self):
-        """Create warning content block."""
+    def _create_scrollable_warning_content(self):
+        """Create scrollable warning content area."""
         return ft.Container(
             content=ft.Column([
-                ft.Container(height=30),
-           
+                ft.Container(height=24),
                 self._create_warning_text(),
-                ft.Container(height=30),
-            ], spacing=0),
-            padding=ft.padding.symmetric(horizontal=30),
+                ft.Container(height=24),
+            ], scroll=ft.ScrollMode.AUTO, spacing=0, expand=True),
+            padding=ft.padding.symmetric(horizontal=30, vertical=10),
+            expand=True
         )
-    
-    
     
     def _create_warning_text(self):
         """Create warning text content."""
@@ -207,7 +237,8 @@ class Delete_Dialog:
                     size=18, 
                     weight=ft.FontWeight.BOLD, 
                     color=self.PRIMARY,
-                    text_align=ft.TextAlign.CENTER
+                    text_align=ft.TextAlign.CENTER,
+                    overflow=ft.TextOverflow.ELLIPSIS
                 ),
                 ft.Container(height=10),
                 ft.Text(
@@ -237,9 +268,10 @@ class Delete_Dialog:
         )
     
     def _create_actions_container(self, close_handler, delete_handler):
-        """Create action buttons container."""
+        """Create action buttons container - fixed at bottom."""
         return ft.Container(
             content=ft.Row([
+                ft.Container(expand=True),
                 self._create_cancel_button(close_handler),
                 ft.Container(width=12),
                 self._create_delete_button(delete_handler)
@@ -247,7 +279,8 @@ class Delete_Dialog:
             padding=ft.padding.symmetric(horizontal=30, vertical=20),
             bgcolor=self.SECONDARY_CONTAINER,
             border=ft.border.only(top=ft.BorderSide(1, self.GREY_200)),
-            border_radius=ft.border_radius.only(bottom_left=16, bottom_right=16)
+            border_radius=ft.border_radius.only(bottom_left=16, bottom_right=16),
+            height=80,  # Fixed height for actions bar
         )
     
     def _create_cancel_button(self, click_handler):
@@ -279,6 +312,15 @@ class Delete_Dialog:
                 shadow_color=ft.Colors.with_opacity(0.2, self.RED_500)
             ),
             on_click=click_handler
+        )
+    
+    def _create_main_shadow(self):
+        """Create main container shadow."""
+        return ft.BoxShadow(
+            spread_radius=2,
+            blur_radius=40,
+            color=ft.Colors.with_opacity(0.25, self.BLACK),
+            offset=ft.Offset(0, 10)
         )
     
     def _confirm_delete(self, dialog):
@@ -399,13 +441,11 @@ class Delete_Dialog:
     
     def _close_dialog(self, dialog):
         """Close the main dialog."""
-        dialog.open = False
-        self.page.update()
+        if dialog:
+            dialog.open = False
+            self.page.update()
     
     def _show_dialog(self, dialog):
-        """Show the dialog on the page."""
-        self.page.dialog = dialog
-        dialog.open = True
+        """Show the dialog on the page with proper centering."""
         self.page.open(dialog)
         logger.write(f"Confirming deletion of species: {self.species.get('SpeciesCode', '')}")
-        self.page.update()

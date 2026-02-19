@@ -1,0 +1,29 @@
+[21:08:26] --- Log Session Started ---
+[21:08:27] Running as script
+[21:08:27]    Program path: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool
+[21:08:27]    Data path: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\app_data
+[21:08:27] Initializing JSON files...
+[21:08:27]    Created/Updated: storage/localstorage.json
+[21:08:27]    Created/Updated: data/treeparameters.json
+[21:08:27]    Preserved existing: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\data/create_species.json
+[21:08:27] Initialized 2 JSON files
+[21:08:27]    Preserved existing: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\data/selected_database.json
+[21:08:27]    Preserved existing: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\data/connection_history.json
+[21:08:27] Application starting...
+[21:08:27] Page configured
+[21:08:27] Splash screen displayed
+[21:08:29] Splash screen cleared
+[21:08:29] DataManager cleared, proceeding to EULA
+[21:08:29] EULA view displayed
+[21:08:30] User agreed to EULA - proceeding with application
+[21:08:30] User navigated to Select Data page
+[21:08:36] Successfully connected to database gypsppgp on server .\SQLEXPRESS
+[21:08:36] Database connection info saved: {'server': '.\\SQLEXPRESS', 'database': 'gypsppgp', 'driver': 'ODBC Driver 17 for SQL Server', 'data_folder_path': 'C:\\Program Files\\Microsoft SQL Server\\MSSQL16.SQLEXPRESS\\MSSQL\\DATA'}
+[21:08:36] Connecting to database gypsppgp on server .\SQLEXPRESS using driver ODBC Driver 17 for SQL Server
+[21:08:36] Database import successful with 10000 records.
+[21:08:36] Database import process completed for gypsppgp
+[21:08:38] User navigated to Calculate Biomass page
+[21:08:39] Calculate biomass button clicked
+[21:08:46] Write to database operation success: True
+[21:10:20] Loaded species data from C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\data/treeparameters.json successfully.
+[21:10:31] Loaded species data from C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\data/treeparameters.json successfully.

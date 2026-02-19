@@ -6,9 +6,11 @@ from widgets.Custom_Alert_Dialog import Custom_Alert_Dialog
 class Edit_Dialog:
     """Dialog for editing species data."""
     
-    # Constants
+    # Constants - Updated with min/max values
     DIALOG_WIDTH_MAX = 700
+    DIALOG_WIDTH_MIN = 320  # Minimum width for mobile devices
     DIALOG_HEIGHT_MAX = 650
+    DIALOG_HEIGHT_MIN = 400  # Minimum height
     DIALOG_WIDTH_RATIO = 0.9
     DIALOG_HEIGHT_RATIO = 0.85
     
@@ -95,7 +97,7 @@ class Edit_Dialog:
         dialog_content = self._create_dialog_content(species, display_value, dialog_width, dialog_height)
         
         # Create and show dialog
-        dialog = self._create_dialog(species, dialog_content, dialog_width)
+        dialog = self._create_dialog(species, dialog_content, dialog_width, dialog_height)
         self._show_dialog(dialog, species)
     
     def _find_species(self, index, filtered_species, species_data):
@@ -119,10 +121,28 @@ class Edit_Dialog:
         
         return None, None
     
+    def _calculate_responsive_width(self):
+        """Calculate responsive width based on screen size."""
+        if not self.page.width:
+            return self.DIALOG_WIDTH_MAX
+        
+        calculated_width = self.page.width * self.DIALOG_WIDTH_RATIO
+        # Clamp width between min and max
+        return max(self.DIALOG_WIDTH_MIN, min(calculated_width, self.DIALOG_WIDTH_MAX))
+    
+    def _calculate_responsive_height(self):
+        """Calculate responsive height based on screen size."""
+        if not self.page.height:
+            return self.DIALOG_HEIGHT_MAX
+        
+        calculated_height = self.page.height * self.DIALOG_HEIGHT_RATIO
+        # Clamp height between min and max
+        return max(self.DIALOG_HEIGHT_MIN, min(calculated_height, self.DIALOG_HEIGHT_MAX))
+    
     def _calculate_dialog_dimensions(self):
         """Calculate dialog dimensions based on page size."""
-        dialog_width = min(self.DIALOG_WIDTH_MAX, self.page.width * self.DIALOG_WIDTH_RATIO)
-        dialog_height = min(self.DIALOG_HEIGHT_MAX, self.page.height * self.DIALOG_HEIGHT_RATIO)
+        dialog_width = self._calculate_responsive_width()
+        dialog_height = self._calculate_responsive_height()
         return dialog_width, dialog_height
     
     def _get_display_value(self, species):
@@ -137,7 +157,7 @@ class Edit_Dialog:
             content=ft.Column([
                 self._create_header(species, display_value),
                 self._create_scrollable_content(species)
-            ], spacing=0),
+            ], spacing=0, expand=True),
             width=width,
             height=height,
             bgcolor=self.SECONDARY,
@@ -161,14 +181,16 @@ class Edit_Dialog:
                         "Edit Species", 
                         size=24, 
                         weight=ft.FontWeight.W_700, 
-                        color=self.WHITE
+                        color=self.WHITE,
+                        overflow=ft.TextOverflow.ELLIPSIS
                     ),
                     ft.Text(
                         f"Species: {display_value}", 
                         size=14, 
-                        color=ft.Colors.with_opacity(0.9, self.WHITE)
+                        color=ft.Colors.with_opacity(0.9, self.WHITE),
+                        overflow=ft.TextOverflow.ELLIPSIS
                     ),
-                ], spacing=4, alignment=ft.CrossAxisAlignment.START)
+                ], spacing=4, alignment=ft.CrossAxisAlignment.START, expand=True)
             ], alignment=ft.MainAxisAlignment.START),
            
             padding=ft.padding.symmetric(horizontal=30, vertical=24),
@@ -189,7 +211,7 @@ class Edit_Dialog:
                 ft.Container(height=24),
                 *self._create_parameter_cards(species),
                 ft.Container(height=24),
-            ], scroll=ft.ScrollMode.AUTO, spacing=0),
+            ], scroll=ft.ScrollMode.AUTO, spacing=0, expand=True),
             padding=ft.padding.symmetric(horizontal=30),
             expand=True
         )
@@ -210,34 +232,62 @@ class Edit_Dialog:
             focused_border_color=self.primary_color,
             focused_bgcolor=self.WHITE,
             text_size=14,
+            width=200,
             content_padding=15,
             prefix_icon=ft.Icon(ft.Icons.LOCATION_ON, color=self.text_secondary, size=20),
-            hint_text="Select Origin"
+            hint_text="Select Origin",
+            expand=True,  # Allow dropdown to expand
         )
         
         return ft.Container(
             content=ft.Column([
+                # Header row
                 ft.Row([
-                    ft.Icon(ft.Icons.INFO_OUTLINE, color=self.primary_color, size=20),
+                    ft.Container(
+                        content=ft.Icon(ft.Icons.INFO_OUTLINE, color=self.primary_color, size=20),
+                        margin=ft.margin.only(right=8)
+                    ),
                     ft.Text(
                         "Basic Information", 
                         size=17, 
                         weight=ft.FontWeight.W_600, 
-                        color=self.PRIMARY
+                        color=self.PRIMARY,
                     ),
-                ], spacing=12),
+                ], spacing=0, alignment=ft.MainAxisAlignment.START),
+                
                 ft.Divider(height=1, color=self.GREY_200),
                 ft.Container(height=15),
-                ft.Text("Origin", size=14, weight=ft.FontWeight.W_500, color=self.PRIMARY),
-                self.origin_dropdown,
-                ft.Container(height=15),
-            ]),
+                
+                # Origin row with label and dropdown side by side
+                ft.Row([
+                    # Label with icon
+                    ft.Row([
+                        ft.Icon(ft.Icons.LOCATION_ON, size=18, color=self.primary_color),
+                        ft.Text(
+                            "Origin", 
+                            size=14, 
+                            weight=ft.FontWeight.W_600, 
+                            color=self.PRIMARY,
+                        ),
+                    ], spacing=8),
+                    
+                    ft.Container(width=20),  # Spacing
+                    
+                    # Dropdown
+                    self.origin_dropdown,
+                ], alignment=ft.MainAxisAlignment.START, vertical_alignment=ft.CrossAxisAlignment.CENTER),
+                
+            ], spacing=0),
             padding=ft.padding.all(24),
             bgcolor=self.SECONDARY_CONTAINER,
             border_radius=12,
-            border=ft.border.all(1, self.PRIMARY),
+            border=ft.border.all(1, self.GREY_200),
+            shadow=ft.BoxShadow(
+                spread_radius=0,
+                blur_radius=12,
+                color=ft.Colors.with_opacity(0.08, self.BLACK)
+            )
         )
-    
     def _create_parameter_cards(self, species):
         """Create parameter input cards."""
         # Reset parameter fields
@@ -308,7 +358,9 @@ class Edit_Dialog:
                         category_data["name"], 
                         size=16, 
                         weight=ft.FontWeight.W_600, 
-                        color=category_data["color"]
+                        color=category_data["color"],
+                        overflow=ft.TextOverflow.ELLIPSIS,
+                        expand=True
                     ),
                 ], spacing=0),
                 ft.Container(height=20),
@@ -377,7 +429,7 @@ class Edit_Dialog:
             
             # All validations passed, save the data
             if self._save_species_data():
-                self._close_dialog()
+                
                 self._show_success_message(species)
                 
                 # Refresh data table if callback provided
@@ -386,7 +438,7 @@ class Edit_Dialog:
             else:
                 self._show_error_dialog("Failed to save changes.")
                 logger.write(f"Failed to save changes for species '{species.get('SpeciesCode', '')}'.")
-                
+                self.page.close(self.page.dialog)
         except Exception as ex:
             self._show_error_dialog(f"Error saving species: {ex}")
             logger.write(f"Exception while saving species '{species.get('SpeciesCode', '')}': {ex}")
@@ -496,22 +548,19 @@ class Edit_Dialog:
         ).show()
         logger.write(f"Species '{species.get('SpeciesCode', '')}' updated successfully.")
     
-    def _close_dialog(self):
-        """Close the main dialog."""
-        self.page.dialog.open = False
-        
-        self.page.update()
-    
-    def _create_dialog(self, species, content, width):
-        """Create the complete dialog."""
-        def close_dialog(e):
-            
-            self._close_dialog()
+    def _create_dialog(self, species, content, width, height):
+        """Create the complete dialog with fixed buttons at bottom."""
+        # Get reference to the dialog
+        dialog_ref = None
         
         def save_changes_wrapper(e):
-            self._save_changes(e, e.control, species)
+            self._save_changes(e, dialog_ref, species)
         
-        # Action buttons
+        def cancel_dialog(e):
+            if dialog_ref:
+                self.page.close(dialog_ref)
+        
+        # Action buttons - Fixed at bottom with consistent height
         actions = ft.Container(
             content=ft.Row([
                 ft.Container(expand=True),
@@ -525,7 +574,7 @@ class Edit_Dialog:
                         shape=ft.RoundedRectangleBorder(radius=10),
                         side=ft.BorderSide(1, self.GREY_200)
                     ),
-                    on_click=close_dialog
+                    on_click=cancel_dialog
                 ),
                 ft.Container(width=12),
                 ft.ElevatedButton(
@@ -545,33 +594,42 @@ class Edit_Dialog:
             padding=ft.padding.symmetric(horizontal=30, vertical=20),
             bgcolor=self.SECONDARY_CONTAINER,
             border=ft.border.only(top=ft.BorderSide(1, self.GREY_200)),
-            border_radius=ft.border_radius.only(bottom_left=16, bottom_right=16)
+            border_radius=ft.border_radius.only(bottom_left=16, bottom_right=16),
+            height=80,  # Fixed height for actions bar
         )
         
-        # Main container
+        # Main container with proper layout to ensure actions always visible
         main_container = ft.Container(
             content=ft.Column([
-                content,
-                actions
-            ], spacing=0),
+                # Content area that scrolls
+                ft.Container(
+                    content=content,
+                    expand=True,  # Takes remaining space
+                ),
+                # Fixed actions bar at bottom
+                actions,
+            ], spacing=0, tight=True),
             width=width,
+            height=height,  # Fixed height for entire dialog
             border_radius=16,
-            clip_behavior=ft.ClipBehavior.HARD_EDGE
+            clip_behavior=ft.ClipBehavior.HARD_EDGE,
+            bgcolor=self.SECONDARY
         )
         
-        # AlertDialog
-        return ft.AlertDialog(
+        # AlertDialog with proper centering and transparency
+        dialog_ref = ft.AlertDialog(
             modal=True,
             content=main_container,
             content_padding=0,
             shape=ft.RoundedRectangleBorder(radius=16),
             bgcolor=ft.Colors.TRANSPARENT,
+            inset_padding=ft.padding.symmetric(horizontal=20, vertical=20),
+            alignment=ft.alignment.center,
         )
+        
+        return dialog_ref
     
     def _show_dialog(self, dialog, species):
-        """Show the dialog on the page."""
-        self.page.dialog = dialog
-        dialog.open = True
+        """Show the dialog on the page with proper centering."""
         self.page.open(dialog)
         logger.write(f"Editing species: {species.get('SpeciesCode', '')}")
-        self.page.update()

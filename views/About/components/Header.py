@@ -12,14 +12,14 @@ class Header:
             self.bg_color = "#1A202C"  # Deep slate for light mode
             self.title_color = ft.Colors.WHITE
             self.subtitle_color = ft.Colors.BLUE_200
-            self.icon_color = ft.Colors.BLUE_400
+            self.icon_color = ft.Colors.WHITE
             self.close_icon_color = ft.Colors.WHITE70
             self.close_overlay_color = ft.Colors.WHITE10
         else:
             self.bg_color = "#0F1219"  # Even darker for dark mode
             self.title_color = ft.Colors.WHITE
             self.subtitle_color = ft.Colors.PURPLE_300
-            self.icon_color = ft.Colors.PURPLE_400
+            self.icon_color = ft.Colors.WHITE
             self.close_icon_color = ft.Colors.WHITE60
             self.close_overlay_color = ft.Colors.with_opacity(0.1, ft.Colors.PURPLE_400)
         
@@ -43,11 +43,7 @@ class Header:
                             weight=ft.FontWeight.W_800, 
                             color=self.title_color
                         ),
-                        ft.Text(
-                            "Biomass Calculator | MNRF & Trent University", 
-                            size=11, 
-                            color=self.subtitle_color
-                        ),
+                      
                     ], spacing=0)
                 ], spacing=15),
                 ft.IconButton(

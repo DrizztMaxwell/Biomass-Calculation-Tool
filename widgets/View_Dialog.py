@@ -5,9 +5,11 @@ from widgets.LogFileTxt import logger
 class View_Dialog:
     """Base class for dialog views in the application."""
     
-    # Constants for styling
+    # Constants for styling - Updated for better responsiveness
     DIALOG_WIDTH_MAX = 700
+    DIALOG_WIDTH_MIN = 320  # Minimum width for mobile devices
     DIALOG_HEIGHT_MAX = 650
+    DIALOG_HEIGHT_MIN = 400  # Minimum height
     DIALOG_WIDTH_RATIO = 0.9
     DIALOG_HEIGHT_RATIO = 0.85
     
@@ -47,9 +49,8 @@ class View_Dialog:
         }
     }
     
-    def __init__(self, page:ft.Page,):
+    def __init__(self, page: ft.Page):
         self.page = page
-        
     
     def view_species_dialog(self, index, species_data, filtered_species=None, primary_color=None, secondary_color=None, accent_color=None):
         """Show species details in a beautiful professional dialog."""
@@ -65,22 +66,36 @@ class View_Dialog:
         self.PARAMETER_CATEGORIES["bh"]["color"] = self.secondary_color
         self.PARAMETER_CATEGORIES["b"]["color"] = self.accent_color
         
-        # if filtered_species and index >= len(filtered_species):
-        #     return
-        # print("Filtere Species in View Dialog:", filtered_species)
-        
         species = filtered_species[index] if filtered_species else species_data[index]
         
-        # Calculate dialog dimensions
-        dialog_width = min(self.DIALOG_WIDTH_MAX, self.page.width * self.DIALOG_WIDTH_RATIO)
-        max_dialog_height = min(self.DIALOG_HEIGHT_MAX, self.page.height * self.DIALOG_HEIGHT_RATIO)
+        # Calculate responsive dialog dimensions
+        dialog_width = self._calculate_responsive_width()
+        dialog_height = self._calculate_responsive_height()
         
         # Create dialog content
-        dialog_content = self._create_dialog_content(species, dialog_width, max_dialog_height)
+        dialog_content = self._create_dialog_content(species, dialog_width, dialog_height)
         
         # Create and show dialog
         dialog = self._create_dialog(species, dialog_content, dialog_width)
         self._show_dialog(dialog, species)
+    
+    def _calculate_responsive_width(self):
+        """Calculate responsive width based on screen size."""
+        if not self.page.width:
+            return self.DIALOG_WIDTH_MAX
+        
+        calculated_width = self.page.width * self.DIALOG_WIDTH_RATIO
+        # Clamp width between min and max
+        return max(self.DIALOG_WIDTH_MIN, min(calculated_width, self.DIALOG_WIDTH_MAX))
+    
+    def _calculate_responsive_height(self):
+        """Calculate responsive height based on screen size."""
+        if not self.page.height:
+            return self.DIALOG_HEIGHT_MAX
+        
+        calculated_height = self.page.height * self.DIALOG_HEIGHT_RATIO
+        # Clamp height between min and max
+        return max(self.DIALOG_HEIGHT_MIN, min(calculated_height, self.DIALOG_HEIGHT_MAX))
     
     def _create_dialog_content(self, species, width, height):
         """Create the main dialog content."""
@@ -88,7 +103,7 @@ class View_Dialog:
             content=ft.Column([
                 self._create_header(species),
                 self._create_scrollable_content(species)
-            ], spacing=0),
+            ], spacing=0, expand=True),
             width=width,
             height=height,
             bgcolor=self.SECONDARY,
@@ -111,14 +126,16 @@ class View_Dialog:
                         "Species Details", 
                         size=24, 
                         weight=ft.FontWeight.W_700, 
-                        color=self.WHITE
+                        color=self.WHITE,
+                        overflow=ft.TextOverflow.ELLIPSIS
                     ),
-                    ft.Text(
-                        f"Species Code: {species.get('SpeciesCode', '')}", 
-                        size=14, 
-                        color=ft.Colors.with_opacity(0.9, self.WHITE)
-                    ),
-                ], spacing=4, alignment=ft.CrossAxisAlignment.START)
+                    # ft.Text(
+                    #     f"Species Code: {species.get('SpeciesCode', '')}", 
+                    #     size=14, 
+                    #     color=ft.Colors.with_opacity(0.9, self.WHITE),
+                    #     overflow=ft.TextOverflow.ELLIPSIS
+                    # ),
+                ], spacing=4, alignment=ft.CrossAxisAlignment.START, expand=True)
             ], alignment=ft.MainAxisAlignment.START),
             gradient=ft.LinearGradient(
                 begin=ft.alignment.top_left,
@@ -143,7 +160,7 @@ class View_Dialog:
                 ft.Container(height=24),
                 *[card for card in self._create_parameter_cards(species) if card is not None],
                 ft.Container(height=24),
-            ], scroll=ft.ScrollMode.AUTO, spacing=0, tight=True),
+            ], scroll=ft.ScrollMode.AUTO, spacing=0, tight=True, expand=True),
             padding=ft.padding.symmetric(horizontal=30, vertical=20),
             expand=True
         )
@@ -158,7 +175,8 @@ class View_Dialog:
                     "Basic Information", 
                     size=17, 
                     weight=ft.FontWeight.W_600, 
-                    color=self.PRIMARY
+                    color=self.PRIMARY,
+                    overflow=ft.TextOverflow.ELLIPSIS
                 ),
             ], spacing=12),
             ft.Container(height=20),
@@ -200,7 +218,6 @@ class View_Dialog:
             )
         )
 
-
     def _create_detail_row(self, title, value, icon):
         """Helper to create a detail row with icon. Returns None if value is empty."""
         # Convert value to string and check if it's empty
@@ -214,7 +231,14 @@ class View_Dialog:
             ft.Icon(icon, color=self.text_secondary, size=18),
             ft.Text(title + ":", size=14, weight=ft.FontWeight.W_500, color=ft.Colors.PRIMARY),
             ft.Container(expand=True),
-            ft.Text(str_value, size=14, weight=ft.FontWeight.W_600, color=ft.Colors.PRIMARY),
+            ft.Text(
+                str_value, 
+                size=14, 
+                weight=ft.FontWeight.W_600, 
+                color=ft.Colors.PRIMARY,
+                overflow=ft.TextOverflow.ELLIPSIS,
+                max_lines=1
+            ),
         ], alignment=ft.MainAxisAlignment.START)
     
     def _create_parameter_cards(self, species):
@@ -281,7 +305,9 @@ class View_Dialog:
                 category_data["name"], 
                 size=16, 
                 weight=ft.FontWeight.W_600, 
-                color=category_data["color"]
+                color=category_data["color"],
+                overflow=ft.TextOverflow.ELLIPSIS,
+                expand=True
             ),
         ], spacing=0)
         
@@ -299,16 +325,15 @@ class View_Dialog:
                     "Value", 
                     size=13,
                     weight=ft.FontWeight.W_600,
-                    color=self.PRIMARY
+                    color=self.PRIMARY,
+                    expand=True
                 ),
             ], spacing=0),
             padding=ft.padding.symmetric(horizontal=15, vertical=8),
             bgcolor=self.SECONDARY_CONTAINER,
             border_radius=6,
             border=ft.border.all(0.5, self.GREY_200),
-            
         )
-        
         
         return ft.Container(
             content=ft.Column([
@@ -316,7 +341,7 @@ class View_Dialog:
                 ft.Container(height=18),
                 ft.Column([
                     table_header,
-                    ft.Container(height=8),
+                  
                     param_rows
                 ])
             ], spacing=0),
@@ -340,7 +365,9 @@ class View_Dialog:
                         param_key, 
                         size=14, 
                         weight=ft.FontWeight.W_500,
-                        color=self.PRIMARY
+                        color=self.PRIMARY,
+                        overflow=ft.TextOverflow.ELLIPSIS,
+                        max_lines=1
                     ),
                     width=180,
                     padding=ft.padding.symmetric(vertical=10, horizontal=15)
@@ -351,7 +378,9 @@ class View_Dialog:
                         f"{float(param_value):.6f}", 
                         size=14, 
                         weight=ft.FontWeight.W_600,
-                        color=self.PRIMARY
+                        color=self.PRIMARY,
+                        overflow=ft.TextOverflow.ELLIPSIS,
+                        max_lines=1
                     ),
                     expand=True,
                     padding=ft.padding.symmetric(vertical=10, horizontal=15),
@@ -365,13 +394,12 @@ class View_Dialog:
         )
     
     def _create_dialog(self, species, content, width):
-        """Create the complete dialog."""
+        """Create the complete dialog with proper centering and visibility."""
         def close_dialog(e):
             logger.write(f"Species details dialog closed for species: {species.get('SpeciesCode', '')}")
-            self.page.dialog.open = False
-            self.page.update()
+            self.page.close(dialog)
         
-        # Action buttons
+        # Action buttons - Fixed at bottom
         actions = ft.Container(
             content=ft.Row([
                 ft.Container(expand=True),
@@ -392,34 +420,43 @@ class View_Dialog:
             padding=ft.padding.symmetric(horizontal=30, vertical=20),
             bgcolor=self.SECONDARY_CONTAINER,
             border=ft.border.only(top=ft.BorderSide(1, self.GREY_200)),
-            border_radius=ft.border_radius.only(bottom_left=16, bottom_right=16)
+            border_radius=ft.border_radius.only(bottom_left=16, bottom_right=16),
+            height=80,  # Fixed height for actions bar
         )
         
-        # Main container
+        # Main container with proper layout to ensure actions always visible
         main_container = ft.Container(
             content=ft.Column([
-                content,
-                actions
-            ], spacing=0),
+                # Content area that scrolls
+                ft.Container(
+                    content=content,
+                    expand=True,  # Takes remaining space
+                ),
+                # Fixed actions bar at bottom
+                actions,
+            ], spacing=0, tight=True),
             width=width,
+            height=self._calculate_responsive_height(),  # Fixed height for entire dialog
             border_radius=16,
-            clip_behavior=ft.ClipBehavior.HARD_EDGE
+            clip_behavior=ft.ClipBehavior.HARD_EDGE,
+            bgcolor=self.SECONDARY
         )
         
-        # AlertDialog
-        return ft.AlertDialog(
+        # AlertDialog with proper centering and transparency
+        dialog = ft.AlertDialog(
             modal=True,
             content=main_container,
             content_padding=0,
             shape=ft.RoundedRectangleBorder(radius=16),
             bgcolor=ft.Colors.TRANSPARENT,
-            inset_padding=ft.padding.symmetric(horizontal=20, vertical=40)
+            inset_padding=ft.padding.symmetric(horizontal=20, vertical=20),  # Add padding from screen edges
+            alignment=ft.alignment.center,  # Center the dialog
         )
+        
+        return dialog
     
     def _show_dialog(self, dialog, species):
-        """Show the dialog on the page."""
-        self.page.dialog = dialog
-        dialog.open = True
+        """Show the dialog on the page with proper centering."""
+        # Ensure the dialog is centered by using page.open() which handles centering
         self.page.open(dialog)
         logger.write(f"Viewing species: {species.get('SpeciesCode', '')}")
-        self.page.update()

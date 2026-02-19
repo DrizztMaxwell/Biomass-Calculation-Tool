@@ -1,0 +1,25 @@
+[19:58:16] --- Log Session Started ---
+[19:58:17] Running as script
+[19:58:17]    Program path: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool
+[19:58:17]    Data path: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\app_data
+[19:58:17] Initializing JSON files...
+[19:58:17]    Created/Updated: storage/localstorage.json
+[19:58:17]    Created/Updated: data/treeparameters.json
+[19:58:17]    Preserved existing: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\data/create_species.json
+[19:58:17] Initialized 2 JSON files
+[19:58:17]    Preserved existing: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\data/selected_database.json
+[19:58:17]    Preserved existing: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\data/connection_history.json
+[19:58:17] Application starting...
+[19:58:17] Page configured
+[19:58:17] Splash screen displayed
+[19:58:20] Splash screen cleared
+[19:58:20] DataManager cleared, proceeding to EULA
+[19:58:20] EULA view displayed
+[19:58:21] User agreed to EULA - proceeding with application
+[19:58:21] User navigated to Select Data page
+[19:58:23] User navigated to Modify Species page
+[19:58:23] Species data loaded successfully.
+[19:58:24] Editing species: 
+[19:59:12] Species data saved successfully.
+[19:59:12] Exception while saving species '': Edit_Dialog has no open attribute
+[19:59:14] Viewing species: 
