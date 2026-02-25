@@ -7,7 +7,7 @@ import time
 import unittest
 from contextlib import redirect_stdout
 from typing import Any, cast
-from unittest.mock import MagicMock, patch
+from unittest.mock import AsyncMock, MagicMock, mock_open, patch
 
 import numpy as np
 import pandas as pd
@@ -611,6 +611,193 @@ class TestDataManagerCore(unittest.TestCase):
                 self.assertEqual(meta["db_name"], "MyDb")
                 self.assertIn("db_path", meta)
                 DataManager._instance = None
+
+
+class TestCalculateBiomassControllerMethods(unittest.IsolatedAsyncioTestCase):
+    def _import_calculate_controller_module(self):
+        with redirect_stdout(io.StringIO()):
+            return importlib.import_module("controller.Calculate_Biomass_Controller")
+
+    def _new_controller(self):
+        calc_mod = self._import_calculate_controller_module()
+        controller_cls = calc_mod.Calculate_Biomass_Controller
+        controller = controller_cls.__new__(controller_cls)
+        return calc_mod, controller
+
+    def test_get_database_selected_flag(self):
+        _calc_mod, controller = self._new_controller()
+        controller.is_database_selected = True
+        self.assertTrue(controller.get_database_selected_flag())
+        controller.is_database_selected = False
+        self.assertFalse(controller.get_database_selected_flag())
+
+    def test_extract_all_species_codes(self):
+        _calc_mod, controller = self._new_controller()
+        data = pd.DataFrame({"species": [101, 102, 101]})
+        self.assertEqual(controller._extract_all_species_codes(data), [101, 102])
+        self.assertEqual(controller._extract_all_species_codes(pd.DataFrame({"dbh": [10]})), [])
+
+    def test_check_if_species_code_exists_within_the_json_files(self):
+        _calc_mod, controller = self._new_controller()
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            p1 = os.path.join(tmp_dir, "a.json")
+            p2 = os.path.join(tmp_dir, "b.json")
+            with open(p1, "w", encoding="utf-8") as f:
+                json.dump([{"SpeciesCode": 101}], f)
+            with open(p2, "w", encoding="utf-8") as f:
+                json.dump([{"SpeciesCode": 202}], f)
+
+            self.assertTrue(controller.check_if_species_code_exists_within_the_json_files(101, p1, p2))
+            self.assertTrue(controller.check_if_species_code_exists_within_the_json_files(202, p1, p2))
+            self.assertFalse(controller.check_if_species_code_exists_within_the_json_files(999, p1, p2))
+
+    def test_create_hardwood_softwood_species_code_mapping(self):
+        _calc_mod, controller = self._new_controller()
+        mapping = controller._create_hardwood_softwood_species_code_mapping([1, 2], [3])
+        self.assertEqual(mapping, {1: "hardwood", 2: "hardwood", 3: "softwood"})
+
+    def test_lookup_and_get_species_parameters(self):
+        _calc_mod, controller = self._new_controller()
+        records = [{"speciescode": 101, "speccommon": "Pine"}, {"speciescode": 202, "speccommon": "Spruce"}]
+        self.assertEqual(controller.lookup(records, 101)["speccommon"], "Pine")
+        self.assertIsNone(controller.lookup(records, 999))
+
+        params_df = pd.DataFrame(records)
+        self.assertEqual(controller._get_species_parameters(params_df, 202)["speccommon"], "Spruce")
+
+    async def test_on_calculate_biomass_click_success_and_failure(self):
+        calc_mod, controller = self._new_controller()
+        controller.view = MagicMock()
+        controller.view.page = MagicMock()
+        controller.view.disable_calculation_button = MagicMock()
+        controller.view.enable_calculation_button = MagicMock()
+        controller.view.show_results = MagicMock()
+        controller.calculate_biomass = AsyncMock(side_effect=[True, False])
+
+        class _FakeSpinner:
+            def __init__(self, _page):
+                self.hide = MagicMock()
+
+            def show_dialog(self):
+                return None
+
+            async def simulate_progressive_loading(self, *_args, **_kwargs):
+                return None
+
+        event = type("Event", (), {"control": MagicMock()})()
+
+        with patch.dict(sys.modules, {"widgets.Loading_Spinner_Widget": type("M", (), {"Loading_Spinner_Widget": _FakeSpinner})}), patch.dict(
+            sys.modules, {"widgets.LogFileTxt": type("L", (), {"logger": MagicMock()})}
+        ):
+            await controller.on_calculate_biomass_click(event)
+            await controller.on_calculate_biomass_click(event)
+
+        self.assertEqual(controller.view.disable_calculation_button.call_count, 2)
+        self.assertEqual(controller.view.enable_calculation_button.call_count, 2)
+        controller.view.show_results.assert_called_once()
+
+    def test_process_biomass_calculations_uses_code_name_and_mapping(self):
+        calc_mod, controller = self._new_controller()
+        controller.hardwood_and_softwood_species_code_mapping = [[{"SpeciesCode": "303", "bwood1": 1, "bwood2": 1}]]
+        controller._calculate_row_biomass = MagicMock()
+
+        local_data = pd.DataFrame({"species": [101, "jack pine", 303, "missing"], "dbh": [10, 10, 10, 10]})
+        tree_params = pd.DataFrame([{"speciescode": 101, "speccommon": "Pine", "bwood1": 1, "bwood2": 1}])
+
+        created_payload = [{"SpeciesCode": 202, "SpecCommon": "Jack Pine", "bwood1": 2, "bwood2": 1}]
+        with patch("builtins.open", mock_open(read_data=json.dumps(created_payload))):
+            controller._process_biomass_calculations(local_data, tree_params)
+
+        self.assertEqual(controller._calculate_row_biomass.call_count, 3)
+
+    def test_calculate_row_biomass_dispatch(self):
+        _calc_mod, controller = self._new_controller()
+        controller._calculate_dbh_based_biomass = MagicMock()
+        controller._calculate_dbh_height_based_biomass = MagicMock()
+
+        df = pd.DataFrame([{"dbh": 10, "height": 12}])
+        row = df.iloc[0]
+
+        controller.equation_type = "DBH-based"
+        controller._calculate_row_biomass(df, 0, row, {})
+        controller._calculate_dbh_based_biomass.assert_called_once()
+
+        controller.equation_type = "DBH + Height-based"
+        controller._calculate_row_biomass(df, 0, row, {})
+        controller._calculate_dbh_height_based_biomass.assert_called_once()
+
+    def test_dbh_height_formula_helpers(self):
+        _calc_mod, controller = self._new_controller()
+        self.assertAlmostEqual(controller._calculate_dbh_and_height_based_biomass_for_wood(2, 3, 1, 1, 1), 6.0)
+        self.assertAlmostEqual(controller._calculate_dbh_and_height_based_biomass_for_bark(2, 3, 1, 1, 1), 6.0)
+        self.assertAlmostEqual(controller._calculate_dbh_and_height_based_biomass_for_branch(2, 3, 1, 1, 1), 6.0)
+        self.assertAlmostEqual(controller._calculate_dbh_and_height_based_biomass_for_foliage(2, 3, 1, 1, 1), 6.0)
+
+    def test_individual_and_composite_component_paths(self):
+        _calc_mod, controller = self._new_controller()
+        controller.selected_components = ["Wood", "Bark", "Crown", "Stem", "Total"]
+        controller._calculate_component_biomass = MagicMock()
+        controller._calculate_crown_biomass = MagicMock()
+        controller._calculate_stem_biomass = MagicMock()
+        controller._calculate_total_biomass = MagicMock()
+
+        df = pd.DataFrame([{"dbh": 10}])
+        controller._calculate_individual_components(df, 0, {}, 10)
+        controller._calculate_composite_components(df, 0, {}, 10)
+
+        self.assertEqual(controller._calculate_component_biomass.call_count, 2)
+        controller._calculate_crown_biomass.assert_called_once()
+        controller._calculate_stem_biomass.assert_called_once()
+        controller._calculate_total_biomass.assert_called_once()
+
+    def test_calculate_component_and_composites(self):
+        _calc_mod, controller = self._new_controller()
+        df = pd.DataFrame([{"dbh": 2.0}])
+        params = {
+            "bwood1": 2,
+            "bwood2": 2,
+            "bbark1": 3,
+            "bbark2": 1,
+            "bfoliage1": 1,
+            "bfoliage2": 3,
+            "bbranches1": 4,
+            "bbranches2": 1,
+        }
+        controller._calculate_component_biomass(df, 0, params, 2.0, "branches", "bbranches1", "bbranches2")
+        self.assertEqual(df.loc[0, "Branch (KG)"], 8.0)
+
+        controller._calculate_crown_biomass(df, 0, params, 2.0)
+        controller._calculate_stem_biomass(df, 0, params, 2.0)
+        controller._calculate_total_biomass(df, 0, params, 2.0)
+
+        self.assertEqual(df.loc[0, "Crown (KG)"], 16.0)
+        self.assertEqual(df.loc[0, "Stem (KG)"], 14.0)
+        self.assertEqual(df.loc[0, "Total (KG)"], 30.0)
+
+    def test_calculate_single_component_positive(self):
+        _calc_mod, controller = self._new_controller()
+        result = controller._calculate_single_component({"bwood1": 2, "bwood2": 2}, 3.0, "bwood1", "bwood2")
+        self.assertEqual(result, 18.0)
+
+    def test_save_results_calls_json_and_text(self):
+        calc_mod, controller = self._new_controller()
+        df = pd.DataFrame([{"species": 101}])
+        controller._save_to_text_file = MagicMock()
+        with patch.object(df, "to_json") as mock_to_json:
+            controller._save_results(df)
+        mock_to_json.assert_called_once_with(calc_mod.json_paths.BIOMASS_RESULTS_PATH, orient="records")
+        controller._save_to_text_file.assert_called_once_with(df)
+
+    def test_save_to_text_file_writes_header_and_rows(self):
+        _calc_mod, controller = self._new_controller()
+        df = pd.DataFrame([{"species": 101, "dbh": 10.0}, {"species": 202, "dbh": 11.0}])
+        m = mock_open()
+        with patch("builtins.open", m):
+            controller._save_to_text_file(df)
+        written = "".join(call.args[0] for call in m().write.call_args_list)
+        self.assertIn("species\tdbh", written)
+        self.assertIn("101\t10.0", written)
+        self.assertIn("202\t11.0", written)
 
 if __name__ == "__main__":
     unittest.main()
