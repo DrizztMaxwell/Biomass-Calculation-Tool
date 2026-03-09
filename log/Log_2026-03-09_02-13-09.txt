@@ -1,0 +1,38 @@
+[02:13:09] --- Log Session Started ---
+[02:13:10] Running as script
+[02:13:10]    Program path: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool
+[02:13:10]    Data path: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\app_data
+[02:13:10] Initializing JSON files...
+[02:13:10]    Created/Updated: storage/localstorage.json
+[02:13:10]    Created/Updated: data/treeparameters.json
+[02:13:10]    Preserved existing: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\data/create_species.json
+[02:13:10] Initialized 2 JSON files
+[02:13:10]    Preserved existing: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\data/selected_database.json
+[02:13:10]    Preserved existing: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\data/connection_history.json
+[02:13:10] Application starting...
+[02:13:10] Page configured
+[02:13:10] Splash screen displayed
+[02:13:12] Splash screen cleared
+[02:13:12] DataManager cleared, proceeding to EULA
+[02:13:12] EULA view displayed
+[02:13:13] User agreed to EULA - proceeding with application
+[02:13:13] User navigated to Select Data page
+[02:13:18] Import text file dialog opened
+[02:13:20] Selected file for import: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\BCT.txt
+[02:13:21] Text file imported successfully with 5 records and 0 errors.
+[02:13:22] User navigated to Calculate Biomass page
+[02:13:24] Calculate biomass button clicked
+[02:13:27] View Chart button clicked
+[02:13:27] Biomass chart displayed
+[02:13:27] Biomass chart displayed
+[02:13:41] User navigated to Select Data page
+[02:13:45] Successfully connected to database gypsppgp on server .\SQLEXPRESS
+[02:13:45] Database connection info saved: {'server': '.\\SQLEXPRESS', 'database': 'gypsppgp', 'driver': 'ODBC Driver 17 for SQL Server', 'data_folder_path': 'C:\\Program Files\\Microsoft SQL Server\\MSSQL16.SQLEXPRESS\\MSSQL\\DATA'}
+[02:13:45] Connecting to database gypsppgp on server .\SQLEXPRESS using driver ODBC Driver 17 for SQL Server
+[02:13:45] Database import successful with 10000 records.
+[02:13:45] Database import process completed for gypsppgp
+[02:13:47] User navigated to Calculate Biomass page
+[02:13:49] Calculate biomass button clicked
+[02:13:53] View Chart button clicked
+[02:13:54] Biomass chart displayed
+[02:13:54] Biomass chart displayed

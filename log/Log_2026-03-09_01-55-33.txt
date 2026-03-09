@@ -1,0 +1,38 @@
+[01:55:33] --- Log Session Started ---
+[01:55:34] Running as script
+[01:55:34]    Program path: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool
+[01:55:34]    Data path: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\app_data
+[01:55:34] Initializing JSON files...
+[01:55:34]    Created/Updated: storage/localstorage.json
+[01:55:34]    Created/Updated: data/treeparameters.json
+[01:55:34]    Preserved existing: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\data/create_species.json
+[01:55:34] Initialized 2 JSON files
+[01:55:34]    Preserved existing: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\data/selected_database.json
+[01:55:34]    Preserved existing: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\data/connection_history.json
+[01:55:34] Application starting...
+[01:55:34] Page configured
+[01:55:34] Splash screen displayed
+[01:55:37] Splash screen cleared
+[01:55:37] DataManager cleared, proceeding to EULA
+[01:55:37] EULA view displayed
+[01:55:38] User agreed to EULA - proceeding with application
+[01:55:38] User navigated to Select Data page
+[01:55:45] Successfully connected to database gypsppgp on server .\SQLEXPRESS
+[01:55:45] Database connection info saved: {'server': '.\\SQLEXPRESS', 'database': 'gypsppgp', 'driver': 'ODBC Driver 17 for SQL Server', 'data_folder_path': 'C:\\Program Files\\Microsoft SQL Server\\MSSQL16.SQLEXPRESS\\MSSQL\\DATA'}
+[01:55:45] Connecting to database gypsppgp on server .\SQLEXPRESS using driver ODBC Driver 17 for SQL Server
+[01:55:46] Database import successful with 10000 records.
+[01:55:46] Database import process completed for gypsppgp
+[01:55:47] User navigated to Calculate Biomass page
+[01:55:49] Calculate biomass button clicked
+[01:55:53] View Chart button clicked
+[01:55:54] Biomass chart displayed
+[01:55:54] Biomass chart displayed
+[01:56:45] User navigated to Select Data page
+[01:56:46] Import text file dialog opened
+[01:56:50] Selected file for import: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\BCT.txt
+[01:56:51] Text file imported successfully with 5 records and 0 errors.
+[01:56:52] User navigated to Calculate Biomass page
+[01:56:53] Calculate biomass button clicked
+[01:56:56] View Chart button clicked
+[01:56:57] Biomass chart displayed
+[01:56:57] Biomass chart displayed

@@ -744,6 +744,7 @@ class Calculate_Biomass_Controller:
                     
                     for record in records:
                         row_values = [str(record.get(header, '')) for header in headers]
+                        # 1 decimal place for DBH and Height, 4 decimal places for biomass values
                         file.write('\t'.join(row_values) + '\n')
 
             # print("Data successfully written to output.txt")
@@ -791,12 +792,14 @@ class Calculate_Biomass_Controller:
 #  use gyPSPPGP; => make it dynamic not fixed
             # Ensure output table exists (new schema)
             create_table_sql = """
-           
+           DROP TABLE IF EXISTS dbo.tCalcBiomassOutput;
             IF NOT EXISTS (
                 SELECT 1 FROM sys.tables t
                 JOIN sys.schemas s ON t.schema_id = s.schema_id
                 WHERE t.name = 'tCalcBiomassOutput' AND s.name = 'dbo'
             )
+           
+            
             CREATE TABLE dbo.tCalcBiomassOutput
             (
                 Plot               VARCHAR(100) NOT NULL,
@@ -805,13 +808,13 @@ class Calculate_Biomass_Controller:
                 Tree_number        INT          NOT NULL,
                 DBH                DECIMAL(4,1)  NOT NULL,
                 Height             DECIMAL(4,2)  NULL,
-                Wood_kg            NUMERIC(10,3),
-                Bark_kg            NUMERIC(10,3),
-                Foliage_kg         NUMERIC(10,3),
-                Branch_kg          NUMERIC(10,3),
-                Crown_kg           NUMERIC(10,3),
-                Stem_kg            NUMERIC(10,3),
-                Total_kg           NUMERIC(10,3),
+                Wood_kg            NUMERIC(10,1),
+                Bark_kg            NUMERIC(10,1),
+                Foliage_kg         NUMERIC(10,1),
+                Branch_kg          NUMERIC(10,1),
+                Crown_kg           NUMERIC(10,1),
+                Stem_kg            NUMERIC(10,1),
+                Total_kg           NUMERIC(10,1),
                 CoefficientSource  VARCHAR(100)  NULL,
                 processed_at       DATETIMEOFFSET NOT NULL DEFAULT SYSUTCDATETIME()
             );
@@ -842,7 +845,7 @@ class Calculate_Biomass_Controller:
 
             for row in data:
                 r = self._normalize_biomass_row(row)
-
+               
                 cursor.execute(
                     insert_sql,
                     r["plot"],
@@ -851,13 +854,13 @@ class Calculate_Biomass_Controller:
                     r["tree_number"],
                     r["dbh"],
                     r["height"],
-                    r["wood_kg"],
-                    r["bark_kg"],
-                    r["foliage_kg"],
-                    r["branch_kg"],
-                    r["crown_kg"],
-                    r["stem_kg"],
-                    r["total_kg"],
+                    to_one_decimal(r["wood_kg"]), # 1 dp 
+                    to_one_decimal(r["bark_kg"]),
+                    to_one_decimal(r["foliage_kg"]),
+                    to_one_decimal(r["branch_kg"]),
+                    to_one_decimal(r["crown_kg"]),
+                    to_one_decimal(r["stem_kg"]),
+                    to_one_decimal(r["total_kg"]),
                     r.get("coefficient_source")  # optional
                 )
 
@@ -869,3 +872,6 @@ class Calculate_Biomass_Controller:
         except Exception as e:
             print(f"Database write error: {e}")
             return False
+def to_one_decimal(value):
+    """Convert value to one decimal place if not None"""
+    return round(value, 1) if value is not None else None

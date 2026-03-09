@@ -76,7 +76,7 @@ class Results_Table:
         
         if isinstance(value, (int, float)):
             if header in self._BIOMASS_COLUMNS:
-                formatted_value = f"{value:.4f}"
+                formatted_value = f"{value:.1f}"
             else:
                 formatted_value = str(value)
         else:
