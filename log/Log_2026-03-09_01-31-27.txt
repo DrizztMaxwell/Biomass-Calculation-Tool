@@ -1,0 +1,37 @@
+[01:31:27] --- Log Session Started ---
+[01:31:28] Running as script
+[01:31:28]    Program path: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool
+[01:31:28]    Data path: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\app_data
+[01:31:28] Initializing JSON files...
+[01:31:28]    Created/Updated: storage/localstorage.json
+[01:31:28]    Created/Updated: data/treeparameters.json
+[01:31:28]    Preserved existing: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\data/create_species.json
+[01:31:28] Initialized 2 JSON files
+[01:31:28]    Preserved existing: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\data/selected_database.json
+[01:31:28]    Preserved existing: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\data/connection_history.json
+[01:31:28] Application starting...
+[01:31:28] Page configured
+[01:31:28] Splash screen displayed
+[01:31:30] Splash screen cleared
+[01:31:30] DataManager cleared, proceeding to EULA
+[01:31:30] EULA view displayed
+[01:31:33] User agreed to EULA - proceeding with application
+[01:31:33] User navigated to Select Data page
+[01:31:36] Import text file dialog opened
+[01:31:38] Selected file for import: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\BCT.txt
+[01:31:39] Text file imported successfully with 5 records and 0 errors.
+[01:31:43] User navigated to Calculate Biomass page
+[01:31:45] Calculate biomass button clicked
+[01:31:51] View Chart button clicked
+[01:31:51] Biomass chart displayed
+[01:31:51] Biomass chart displayed
+[01:31:53] Generated default export filename: Output_Biomass_Results_20260309_013153.txt
+[01:31:53] Export file dialog opened
+[01:31:56] Data exported successfully to C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\Output_Biomass_Results_20260309_013153.txt
+[01:32:25] User navigated to Select Data page
+[01:32:30] Successfully connected to database gypsppgp on server .\SQLEXPRESS
+[01:32:30] Database connection info saved: {'server': '.\\SQLEXPRESS', 'database': 'gypsppgp', 'driver': 'ODBC Driver 17 for SQL Server', 'data_folder_path': 'C:\\Program Files\\Microsoft SQL Server\\MSSQL16.SQLEXPRESS\\MSSQL\\DATA'}
+[01:32:30] Connecting to database gypsppgp on server .\SQLEXPRESS using driver ODBC Driver 17 for SQL Server
+[01:32:31] Database import successful with 10000 records.
+[01:32:31] Database import process completed for gypsppgp
+[01:32:32] User navigated to Calculate Biomass page

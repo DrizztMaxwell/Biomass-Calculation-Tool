@@ -14,28 +14,21 @@ class Bar_Chart_Widget(ft.BarChart):
         self.file_path_of_saved_chart_image = ""
         self.confirmation_container_ref = ft.Ref[ft.Container]()
         self.species_data = species_data
+        self.summary_table_ref = ft.Ref[ft.Container]()
         print("Initializing Bar Chart Widget with species data:")
         # print(species_data)
         # Track if we've saved a screenshot
         self.has_saved = False
         
     def _calculate_max_y(self) -> float:
-        """Calculate maximum Y value for the chart with some padding."""
         if not self.species_data:
-            return 1000  # Default value
-            
-        max_value = 0
-        for species in self.species_data:
-            # Sum all components for this species
-            total = species.get("Wood", 0) + species.get("Bark", 0) + species.get("Branch", 0) + species.get("Foliage", 0)
-            max_value = max(max_value, total)
-        
-        # Add 10% padding and round up to nearest 100
-        if max_value > 0:
-            padded_max = max_value * 1.1
-            # Round up to nearest 100 for clean axis labels
-            return ((padded_max + 99) // 100) * 100
-        return 1000   
+            return 1000
+        max_val = 0
+        for s in self.species_data:
+            total = sum([s.get(k, 0) for k in ["Wood", "Bark", "Branch", "Foliage"]])
+            max_val = max(max_val, total)
+        # Pad by 15% and round to nearest 100
+        return (( (max_val * 1.15) + 99) // 100) * 100 if max_val > 0 else 1000
         
     def _on_close(self, e):
         print("Closing Bar Chart Widget")
@@ -118,6 +111,86 @@ class Bar_Chart_Widget(ft.BarChart):
             )
             self.page.snack_bar.open = True
             self.page.update()
+    
+    def _create_summary_table(self):
+        """Create a summary table with component percentages for each species."""
+        species_data = self.species_data
+        
+        # Create the DataTable
+        summary_table = ft.DataTable(
+            columns=[
+                ft.DataColumn(ft.Text("Species", weight=ft.FontWeight.BOLD, color=ft.Colors.PRIMARY, size=12)),
+                ft.DataColumn(ft.Text("Wood %", weight=ft.FontWeight.BOLD, color=ft.Colors.AMBER, size=12)),
+                ft.DataColumn(ft.Text("Bark %", weight=ft.FontWeight.BOLD, color=ft.Colors.BROWN, size=12)),
+                ft.DataColumn(ft.Text("Branch %", weight=ft.FontWeight.BOLD, color=ft.Colors.ORANGE, size=12)),
+                ft.DataColumn(ft.Text("Foliage %", weight=ft.FontWeight.BOLD, color=ft.Colors.GREEN, size=12)),
+                ft.DataColumn(ft.Text("Total (kg)", weight=ft.FontWeight.BOLD, color=ft.Colors.PRIMARY, size=12)),
+            ],
+            column_spacing=20,
+            horizontal_margin=10,
+            heading_row_color=ft.Colors.with_opacity(0.2, ft.Colors.PRIMARY),
+            heading_row_height=40,
+            divider_thickness=0.5,
+            show_bottom_border=True,
+        )
+        
+        # Create rows for each species and add to the table
+        for i, species_info in enumerate(species_data):
+            total = (species_info.get("Wood", 0) + 
+                    species_info.get("Bark", 0) + 
+                    species_info.get("Branch", 0) + 
+                    species_info.get("Foliage", 0))
+            
+            # Calculate percentages (handle division by zero)
+            if total > 0:
+                wood_pct = (species_info.get("Wood", 0) / total) * 100
+                bark_pct = (species_info.get("Bark", 0) / total) * 100
+                branch_pct = (species_info.get("Branch", 0) / total) * 100
+                foliage_pct = (species_info.get("Foliage", 0) / total) * 100
+            else:
+                wood_pct = bark_pct = branch_pct = foliage_pct = 0
+            
+            # Add alternating row colors
+            row_color = ft.Colors.with_opacity(0.05, ft.Colors.PRIMARY) if i % 2 == 0 else ft.Colors.WHITE
+            
+            # Create data row
+            row = ft.DataRow(
+                cells=[
+                    ft.DataCell(ft.Text(species_info["species_code"], size=11, weight=ft.FontWeight.W_500)),
+                    ft.DataCell(ft.Text(f"{wood_pct:.1f}%", size=11)),
+                    ft.DataCell(ft.Text(f"{bark_pct:.1f}%", size=11)),
+                    ft.DataCell(ft.Text(f"{branch_pct:.1f}%", size=11)),
+                    ft.DataCell(ft.Text(f"{foliage_pct:.1f}%", size=11)),
+                    ft.DataCell(ft.Text(f"{total:.1f}", size=11, weight=ft.FontWeight.W_500)),
+                ],
+                color=row_color,
+            )
+            summary_table.rows.append(row)
+        
+        # Wrap in a scrollable container
+        summary_container = ft.Container(
+            ref=self.summary_table_ref,
+            content=ft.Column([
+               
+                ft.Container(
+                    content=ft.Column(
+                        [summary_table],
+                        scroll=ft.ScrollMode.ADAPTIVE,
+                        height=180,
+                    ),
+                    padding=10,
+                    bgcolor=ft.Colors.WHITE,
+                    border_radius=ft.border_radius.all(8),
+                    border=ft.border.all(1, ft.Colors.GREY_300),
+                ),
+            ], spacing=10),
+            padding=10,
+            bgcolor=ft.Colors.SECONDARY_CONTAINER,
+            border_radius=ft.border_radius.all(8),
+            border=ft.border.all(1, ft.Colors.GREY_300),
+        )
+        
+        return summary_container
         
     def build(self):
             # Stacked bar chart data for different species components
@@ -171,7 +244,7 @@ class Bar_Chart_Widget(ft.BarChart):
             # Calculate chart width - increased multiplier for better spacing
             chart_width = max(800, len(species_data) * 45)
             
-            # Create the bar chart with rotated labels
+           # Update the bar chart creation with these adjustments:
             bar_chart = ft.BarChart(
                 bar_groups=bar_groups,
                 border=ft.border.all(1, ft.Colors.GREY_400),
@@ -179,12 +252,11 @@ class Bar_Chart_Widget(ft.BarChart):
                 
                 left_axis=ft.ChartAxis(
                     title=ft.Text("Biomass (KG)", color=ft.Colors.PRIMARY, size=13, weight=ft.FontWeight.BOLD),
-                    labels_size=70,
-                    title_size=16,
+                    labels_size=80,  # Reduced from 70
                     show_labels=True,
+                 
                 ),
                 
-                # Bottom Axis with rotated labels for better readability
                 bottom_axis=ft.ChartAxis(
                     title=ft.Text("Species", color=ft.Colors.PRIMARY, size=13, weight=ft.FontWeight.BOLD),
                     labels=[
@@ -194,16 +266,19 @@ class Bar_Chart_Widget(ft.BarChart):
                                 content=ft.Text(
                                     species_info["species_code"], 
                                     color=ft.Colors.PRIMARY, 
-                                    size=9,
-                                    weight=ft.FontWeight.W_500
+                                    size=14,
+                                    weight=ft.FontWeight.W_600,
+                                    text_align=ft.TextAlign.CENTER,
                                 ),
-                                rotate=ft.Rotate(angle=-0.785),  # -45 degrees in radians
-                                alignment=ft.alignment.center_right,
+                                padding=ft.padding.only(top=5, left=5, right=5),
+                                alignment=ft.alignment.center,
+                                width=80,
                             )
                         ) for i, species_info in enumerate(species_data)
                     ],
-                    labels_size=80,  # Increased to accommodate rotated labels
-                    title_size=16,
+                    labels_size=80,
+                    show_labels=True,
+                    # labels_interval=1,
                 ),
                 
                 horizontal_grid_lines=ft.ChartGridLines(
@@ -211,12 +286,18 @@ class Bar_Chart_Widget(ft.BarChart):
                     width=1,
                     dash_pattern=[5, 5],
                 ),
-                max_y=max_y,
+                
+                # Add these properties to improve layout
+                max_y=self._calculate_max_y(),
                 min_y=0,
                 interactive=True,
-                width=chart_width,
-                height=450,  # Increased height for better visibility with rotated labels
-                groups_space=35,  # Increased space between groups
+                expand=True,
+                height=450,
+                groups_space=40,  # Slightly increased
+               
+                
+                # Add margins to prevent label clipping
+                # margin=ft.margin.all(10),  # Add margin around the chart
             )
             
             # Create scrollable container for the chart
@@ -233,8 +314,27 @@ class Bar_Chart_Widget(ft.BarChart):
                     scroll=ft.ScrollMode.ADAPTIVE,
                 ),
                 width=1000,  # Increased width
-                height=550,  # Increased height to accommodate rotated labels
+                height=500,  # Adjusted height
                 border=ft.border.all(1, ft.Colors.GREY_300),
+            )
+            
+            # Create summary table (scrollable)
+            summary_table = self._create_summary_table()
+            
+            # Create scrollable container for the summary table
+            scrollable_summary_container = ft.Container(
+                content=ft.Column(
+                    [
+                        summary_table
+                    ],
+                    scroll=ft.ScrollMode.ADAPTIVE,
+                    height=250,  # Fixed height for scrolling
+                ),
+                width=1000,
+                height=270,
+                border=ft.border.all(1, ft.Colors.GREY_300),
+                border_radius=ft.border_radius.all(8),
+                padding=5,
             )
             
             # Saved screenshot confirmation text (with top margin)
@@ -261,12 +361,14 @@ class Bar_Chart_Widget(ft.BarChart):
             card = ft.Card(
                 ref=self.card_ref,
                 elevation=20,
+                
                 content=ft.Container(
+                    margin=ft.margin.all(20),
                     border_radius=ft.border_radius.all(15),
-                    width=1000,  # Increased width
-                    height=950,  # Increased height
+                    width=1000,  # Increased width slightly
+                    height=650,  # Increased height
                     bgcolor=ft.Colors.SECONDARY_CONTAINER,
-                    padding=30,
+                    padding=25,
                     content=ft.Column([
                         # Header
                         ft.Row([
@@ -298,7 +400,7 @@ class Bar_Chart_Widget(ft.BarChart):
                         
                         # Legend
                         ft.Container(
-                            margin=ft.margin.only(top=20),
+                            margin=ft.margin.only(top=10),
                             content=ft.Column([
                                 ft.Text("Components Legend (Bottom to Top):", 
                                     size=14, 
@@ -307,28 +409,40 @@ class Bar_Chart_Widget(ft.BarChart):
                                 ft.Row([
                                     ft.Row([
                                         ft.Container(width=15, height=15, bgcolor=ft.Colors.AMBER, border_radius=3),
-                                        ft.Text("Wood", size=11, color=ft.Colors.PRIMARY),
+                                        ft.Text("Wood", size=12, color=ft.Colors.PRIMARY),
                                     ], spacing=3),
                                     ft.Row([
                                         ft.Container(width=15, height=15, bgcolor=ft.Colors.BROWN, border_radius=3),
-                                        ft.Text("Bark", size=11, color=ft.Colors.PRIMARY),
+                                        ft.Text("Bark", size=12, color=ft.Colors.PRIMARY),
                                     ], spacing=3),
                                     ft.Row([
                                         ft.Container(width=15, height=15, bgcolor=ft.Colors.ORANGE, border_radius=3),
-                                        ft.Text("Branch", size=11, color=ft.Colors.PRIMARY),
+                                        ft.Text("Branch", size=12, color=ft.Colors.PRIMARY),
                                     ], spacing=3),
                                     ft.Row([
                                         ft.Container(width=15, height=15, bgcolor=ft.Colors.GREEN, border_radius=3),
-                                        ft.Text("Foliage", size=11, color=ft.Colors.PRIMARY),
+                                        ft.Text("Foliage", size=12, color=ft.Colors.PRIMARY),
                                     ], spacing=3),
-                                ], spacing=15),
-                            ], spacing=10),
+                                ], spacing=15, wrap=True),
+                            ], spacing=8),
+                        ),
+                        
+                        # Scrollable summary table
+                        ft.Container(
+                            margin=ft.margin.only(top=15),
+                            content=ft.Column([
+                                ft.Text("Summary Table - Component Percentages", 
+                                       size=16, 
+                                       weight=ft.FontWeight.BOLD, 
+                                       color=ft.Colors.PRIMARY),
+                                scrollable_summary_container,
+                            ], spacing=5),
                         ),
                         
                         # Confirmation container
                         confirmation_container
                         
-                    ])
+                    ], spacing=10, scroll=ft.ScrollMode.ADAPTIVE)  # Make entire card content scrollable if needed
                 )
             )
 
@@ -339,4 +453,4 @@ class Bar_Chart_Widget(ft.BarChart):
                 alignment=ft.alignment.center,
                 bgcolor=ft.Colors.with_opacity(0.7, ft.Colors.BLACK),
                 expand=True,
-            )
+            ) 

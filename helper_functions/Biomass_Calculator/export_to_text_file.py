@@ -30,7 +30,7 @@ def export_to_text_file(file_path) -> bool:
                             value = item.get(header, "")
                             if isinstance(value, (int, float)) and value is not None:
                                 if header in Biomass_Config.BIOMASS_COLUMNS:
-                                    display_value = f"{value:.4f}" if value is not None else "N/A"
+                                    display_value = f"{value:.1f}" if value is not None else "N/A"
                                 else:
                                     display_value = str(value)
                             else:
