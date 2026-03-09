@@ -151,7 +151,7 @@ class Bar_Chart_Widget(ft.BarChart):
                 wood_pct = bark_pct = branch_pct = foliage_pct = 0
             
             # Add alternating row colors
-            row_color = ft.Colors.with_opacity(0.05, ft.Colors.PRIMARY) if i % 2 == 0 else ft.Colors.WHITE
+            row_color = ft.Colors.SECONDARY_CONTAINER
             
             # Create data row
             row = ft.DataRow(
@@ -179,7 +179,7 @@ class Bar_Chart_Widget(ft.BarChart):
                         height=180,
                     ),
                     padding=10,
-                    bgcolor=ft.Colors.WHITE,
+                    bgcolor=ft.Colors.SECONDARY_CONTAINER,
                     border_radius=ft.border_radius.all(8),
                     border=ft.border.all(1, ft.Colors.GREY_300),
                 ),
