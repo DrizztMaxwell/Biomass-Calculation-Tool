@@ -1,0 +1,57 @@
+name: CD
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build Windows Executable
+    runs-on: windows-latest
+    env:
+      PYTHONPATH: ${{ github.workspace }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: requirements.txt
+
+      - name: Install dependencies
+        shell: pwsh
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements.txt
+          python -m pip install pytest pyarrow pyautogui pyinstaller
+          python -m pip install "flet==0.28.3"
+
+      - name: Run test suite
+        shell: pwsh
+        run: pytest -q tests
+
+      - name: Build executable
+        shell: pwsh
+        run: python build.py
+
+      - name: Upload executable
+        uses: actions/upload-artifact@v4
+        with:
+          name: BiomassCalculationTool-windows
+          path: dist/BiomassCalculationTool.exe
+          if-no-files-found: error
+
+      - name: Upload build outputs
+        uses: actions/upload-artifact@v4
+        with:
+          name: BiomassCalculationTool-build-output
+          path: |
+            dist
+            build
+          if-no-files-found: warn
