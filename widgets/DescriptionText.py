@@ -1,3 +1,16 @@
 import flet as ft
-def DescriptionText(message: str, size: int = 14, letter_spacing: int = 1,  color: str = ft.Colors.PRIMARY, font_weight=ft.FontWeight.W_100) -> ft.Text:
-    return ft.Text(message, color=color, font_family="Poppins-Regular", weight=font_weight, size=size, style=ft.TextStyle(letter_spacing=letter_spacing))
+
+
+def DescriptionText(
+    message: str,
+    size: int = 13,
+    color: str = None,
+    font_weight=ft.FontWeight.W_400,
+) -> ft.Text:
+    """Muted description text — uses ON_SURFACE_VARIANT to adapt to dark/light mode."""
+    return ft.Text(
+        message,
+        size=size,
+        weight=font_weight,
+        color=color or ft.Colors.ON_SURFACE_VARIANT,
+    )

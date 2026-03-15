@@ -1,110 +1,161 @@
 import flet as ft
 import asyncio
-import time
+
 
 class Loading_Spinner_Widget:
     """
-    A reusable black loading spinner component with percentage display and built-in loading management.
-    Uses AlertDialog for proper modal behavior.
+    Reusable loading spinner with progress ring, percentage, and status text.
+    Matches app dark/light design language.
     """
-    
-    def __init__(self, page: ft.Page, size=64, stroke_width=4, text_size=18, show_loading_text=True):
+
+    def __init__(
+        self,
+        page: ft.Page,
+        size: int = 72,
+        stroke_width: int = 5,
+        text_size: int = 16,
+        show_loading_text: bool = True,
+    ):
         self.page = page
         self.size = size
         self.stroke_width = stroke_width
         self.text_size = text_size
+        self.show_loading_text = show_loading_text
         self.progress = 0
         self.is_visible = False
-        # Progress Ring and Text setup
+        self._build_widget()
+
+    # ── Theme helpers ─────────────────────────────────────────────────────────
+
+    @property
+    def _is_dark(self):
+        return self.page.theme_mode == ft.ThemeMode.DARK
+
+    def _bg(self):
+        return "#1A1A1A" if self._is_dark else "#FFFFFF"
+
+    def _surface(self):
+        return "#222222" if self._is_dark else "#F8FAFC"
+
+    def _border(self):
+        return "#2E2E2E" if self._is_dark else "#E2E8F0"
+
+    def _text_primary(self):
+        return "#F5F5F5" if self._is_dark else "#0F172A"
+
+    def _text_secondary(self):
+        return "#888888" if self._is_dark else "#64748B"
+
+    def _ring_track(self):
+        return "#2E2E2E" if self._is_dark else "#E2E8F0"
+
+    # ── Build ─────────────────────────────────────────────────────────────────
+
+    def _build_widget(self):
+        # Progress ring
         self.progress_ring = ft.ProgressRing(
-            width=self.size, height=self.size, stroke_width=self.stroke_width,
-            color=ft.Colors.PRIMARY, bgcolor=ft.Colors.GREY_300, value=0
+            width=self.size,
+            height=self.size,
+            stroke_width=self.stroke_width,
+            color="#16A34A",
+            bgcolor=self._ring_track(),
+            value=0,
         )
+
+        # Percentage in centre of ring
         self.percentage_text = ft.Text(
-            "0%", size=self.text_size, weight=ft.FontWeight.BOLD, color=ft.Colors.PRIMARY
+            "0%",
+            size=self.text_size,
+            weight=ft.FontWeight.W_700,
+            color=self._text_primary(),
         )
-        self.loading_stack = ft.Stack(
-            [
-                self.progress_ring,
-                ft.Container(
-                    content=self.percentage_text, alignment=ft.alignment.center,
-                    width=self.size, height=self.size,
-                )
-            ],
-            width=self.size, height=self.size,
-        )
+
+        ring_stack = ft.Stack([
+            self.progress_ring,
+            ft.Container(
+                content=self.percentage_text,
+                alignment=ft.alignment.center,
+                width=self.size,
+                height=self.size,
+            ),
+        ], width=self.size, height=self.size)
+
+        # Status text
         self.loading_text = ft.Text(
-            "Loading...", size=self.text_size - 3 , color=ft.Colors.PRIMARY, weight=ft.FontWeight.BOLD
+            "Loading...",
+            size=13,
+            color=self._text_secondary(),
+            weight=ft.FontWeight.W_500,
+            text_align=ft.TextAlign.CENTER,
         )
 
-        controls = [self.loading_stack]
-        if show_loading_text:
-            # Wrap loading_text in a Container to apply a top margin/padding AND center the text.
-            loading_text_container = ft.Container(
-                content=self.loading_text, 
-                margin=ft.margin.only(top=30),
-                alignment=ft.alignment.center 
-            )
-            controls.append(loading_text_container)
+        body_controls = [ring_stack]
+        if self.show_loading_text:
+            body_controls += [
+                ft.Container(height=16),
+                self.loading_text,
+            ]
 
-        # Content Card (The white box with spinner) - Adjusted to 400x400
+        # Card
         self.content_card = ft.Container(
             content=ft.Column(
-                controls, 
-                horizontal_alignment=ft.CrossAxisAlignment.CENTER, 
-                spacing=0, 
-                # Center the column content both ways
+                body_controls,
+                horizontal_alignment=ft.CrossAxisAlignment.CENTER,
                 alignment=ft.MainAxisAlignment.CENTER,
-                expand=True, 
+                spacing=0,
+                expand=True,
             ),
-            padding=30,
-            bgcolor=ft.Colors.SECONDARY_CONTAINER,
-            border_radius=16,
+            padding=ft.padding.symmetric(horizontal=40, vertical=36),
+            bgcolor=self._bg(),
+            border_radius=ft.border_radius.all(14),
+            border=ft.border.all(1, self._border()),
             shadow=ft.BoxShadow(
-                spread_radius=1, blur_radius=20, color=ft.Colors.BLACK26, offset=ft.Offset(0, 4)
+                spread_radius=0,
+                blur_radius=30,
+                color=ft.Colors.with_opacity(0.18, ft.Colors.BLACK),
+                offset=ft.Offset(0, 8),
             ),
-            width=400,  # <-- INCREASED WIDTH
-            height=400, # <-- INCREASED HEIGHT
-            alignment=ft.alignment.center, 
+            width=280,
+            height=220,
+            alignment=ft.alignment.center,
         )
 
-        # AlertDialog as the main container
         self.loading_dialog = ft.AlertDialog(
             modal=True,
             content=self.content_card,
-            content_padding=0,
+            content_padding=ft.padding.all(0),
             bgcolor=ft.Colors.TRANSPARENT,
             shadow_color=ft.Colors.TRANSPARENT,
-            inset_padding=0,
-            actions_alignment=ft.MainAxisAlignment.CENTER,
-            open=False
+            surface_tint_color=ft.Colors.TRANSPARENT,
+            inset_padding=ft.padding.all(0),
+            shape=ft.RoundedRectangleBorder(radius=14),
+            open=False,
         )
 
-        # Set the main container for build()
         self.container = self.loading_dialog
-    
+
     def build(self):
-        """Return the AlertDialog container."""
         return self.loading_dialog
 
+    # ── Public controls ───────────────────────────────────────────────────────
+
     def update_progress(self, progress: float):
-        self.progress = max(0, min(1, progress))
+        self.progress = max(0.0, min(1.0, progress))
         self.progress_ring.value = self.progress
         self.percentage_text.value = f"{int(self.progress * 100)}%"
         if self.is_visible:
             self.page.update()
-    
+
     def set_loading_text(self, text: str):
         self.loading_text.value = text
         if self.is_visible:
             self.page.update()
-    
+
     def reset(self):
         self.update_progress(0)
         self.set_loading_text("Loading...")
 
     def show_dialog(self):
-        """Show the loading dialog."""
         if not self.is_visible:
             self.page.dialog = self.loading_dialog
             self.loading_dialog.open = True
@@ -113,32 +164,39 @@ class Loading_Spinner_Widget:
         self.page.open(self.loading_dialog)
 
     def hide(self):
-        """Hide the loading dialog."""
         if self.is_visible:
             self.loading_dialog.open = False
             self.is_visible = False
             self.page.update()
-        
-    async def simulate_progressive_loading(self, start_progress: float, final_progress: float, duration: float, loading_text: str):
-        self.set_loading_text(loading_text)
 
+    # ── Async helpers (unchanged logic, kept intact) ──────────────────────────
+
+    async def simulate_progressive_loading(
+        self,
+        start_progress: float,
+        final_progress: float,
+        duration: float,
+        loading_text: str,
+    ):
+        self.set_loading_text(loading_text)
         progress_range = final_progress - start_progress
         updates_per_second = 10
-        total_updates = max(int(duration * updates_per_second), 1)  # <- prevent zero division
-
+        total_updates = max(int(duration * updates_per_second), 1)
         progress_increment = progress_range / total_updates
         current_progress = start_progress
-
         for _ in range(total_updates):
             current_progress += progress_increment
             current_progress = min(current_progress, final_progress)
             self.update_progress(current_progress)
-            await asyncio.sleep(duration / total_updates)  # smoother timing
-
+            await asyncio.sleep(duration / total_updates)
         self.update_progress(final_progress)
 
-        
-    async def simulate_loading(self, duration: float = 2.0, steps: int = 10, completion_message: str = "Complete!"):
+    async def simulate_loading(
+        self,
+        duration: float = 2.0,
+        steps: int = 10,
+        completion_message: str = "Complete!",
+    ):
         self.show_dialog()
         self.reset()
         step_duration = duration / steps
@@ -150,7 +208,7 @@ class Loading_Spinner_Widget:
         self.set_loading_text(completion_message)
         await asyncio.sleep(0.5)
         self.hide()
-    
+
     def start_loading_with_steps(self, steps_data: list, total_duration: float = None):
         async def run_steps():
             self.show_dialog()
@@ -164,7 +222,7 @@ class Loading_Spinner_Widget:
             await asyncio.sleep(0.5)
             self.hide()
         asyncio.create_task(run_steps())
-    
+
     def show_loading_with_callback(self, callback: callable, *args, **kwargs):
         async def execute_with_loading():
             self.show_dialog()

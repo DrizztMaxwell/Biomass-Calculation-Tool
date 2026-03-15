@@ -1,276 +1,341 @@
 import flet as ft
+import asyncio
+
+
 class HardwoodOrSoftwoodDialog:
     """
-    A multi-step dialog for classifying missing species codes as Hardwood or Softwood,
-    using a professional, checklist-style card layout.
+    Multi-step dialog for classifying missing species codes as Hardwood or Softwood.
     """
+
     def __init__(self, page: ft.Page, missing_species_codes: set):
         self.page = page
         self.missing_species_codes = missing_species_codes
-        self.user_selections = {}
-        # Track selected types for each species code globally within the dialog context
-        self.selected_types = {code: None for code in missing_species_codes}
-        self.submitted = False
-        self.result_future = None
-        
+        self.user_selections  = {}
+        self.selected_types   = {code: None for code in missing_species_codes}
+        self.submitted        = False
+        self.result_future    = None
+        self.current_step     = [0]
+        self.main_column      = None
+        self.dialog           = None
+
+    # ── Theme helpers ─────────────────────────────────────────────────────────
+
+    @property
+    def _is_dark(self):
+        return self.page.theme_mode == ft.ThemeMode.DARK
+
+    def _bg(self):
+        return "#1A1A1A" if self._is_dark else "#FFFFFF"
+
+    def _surface(self):
+        return "#222222" if self._is_dark else "#F8FAFC"
+
+    def _surface_card(self):
+        return "#2A2A2A" if self._is_dark else "#FFFFFF"
+
+    def _border(self):
+        return "#2E2E2E" if self._is_dark else "#E2E8F0"
+
+    def _text_primary(self):
+        return "#F5F5F5" if self._is_dark else "#0F172A"
+
+    def _text_secondary(self):
+        return "#888888" if self._is_dark else "#64748B"
+
+    def _step_color(self, step):
+        """Hardwood = amber, Softwood = blue."""
+        return "#D97706" if step == 0 else "#2563EB"
+
+    # ── Header ────────────────────────────────────────────────────────────────
+
+    def _build_header(self) -> ft.Container:
+        step      = self.current_step[0]
+        color     = self._step_color(step)
+        icon      = ft.Icons.PARK_OUTLINED if step == 0 else ft.Icons.FOREST_OUTLINED
+        title     = "Classify as Hardwood" if step == 0 else "Classify as Softwood"
+        subtitle  = f"Step {step + 1} of 2 — select species codes below"
+
+        return ft.Container(
+            content=ft.Row([
+                ft.Container(
+                    content=ft.Icon(icon, size=22, color="#FFFFFF"),
+                    width=44, height=44,
+                    bgcolor=ft.Colors.with_opacity(0.18, "#FFFFFF"),
+                    border_radius=ft.border_radius.all(10),
+                    alignment=ft.alignment.center,
+                ),
+                ft.Column([
+                    ft.Text(title, size=17, weight=ft.FontWeight.W_700, color="#FFFFFF"),
+                    ft.Text(subtitle, size=12,
+                            color=ft.Colors.with_opacity(0.75, "#FFFFFF")),
+                ], spacing=2, expand=True),
+                # Step pill
+                ft.Container(
+                    content=ft.Text(f"{step + 1}/2", size=12,
+                                    weight=ft.FontWeight.W_700, color="#FFFFFF"),
+                    bgcolor=ft.Colors.with_opacity(0.20, "#FFFFFF"),
+                    border_radius=ft.border_radius.all(20),
+                    padding=ft.padding.symmetric(horizontal=12, vertical=5),
+                ),
+            ], spacing=14, vertical_alignment=ft.CrossAxisAlignment.CENTER),
+            bgcolor=color,
+            padding=ft.padding.symmetric(horizontal=24, vertical=18),
+            border_radius=ft.border_radius.only(top_left=14, top_right=14),
+        )
+
+    # ── Species card ──────────────────────────────────────────────────────────
+
+    def create_species_card(self, code, species_type: str) -> ft.Container:
+        is_selected = self.selected_types.get(code) == species_type
+        step        = self.current_step[0]
+        color       = self._step_color(step)
+
+        def on_tap(e):
+            self.selected_types[code] = None if self.selected_types.get(code) == species_type else species_type
+            self.main_column.controls = self._get_current_step_content(self.current_step[0])
+            self.page.update()
+
+        return ft.Container(
+            content=ft.Row([
+                # Check circle
+                ft.Container(
+                    content=ft.Icon(
+                        ft.Icons.CHECK_ROUNDED if is_selected else ft.Icons.CIRCLE_OUTLINED,
+                        size=16,
+                        color=color if is_selected else self._text_secondary(),
+                    ),
+                    width=32, height=32,
+                    bgcolor=ft.Colors.with_opacity(0.10 if is_selected else 0.0, color),
+                    border_radius=ft.border_radius.all(16),
+                    alignment=ft.alignment.center,
+                ),
+                ft.Column([
+                    ft.Text(str(code), size=14, weight=ft.FontWeight.W_700,
+                            color=color if is_selected else self._text_primary()),
+                    ft.Text(f"Classify as {species_type}", size=12,
+                            color=self._text_secondary()),
+                ], spacing=2, expand=True),
+            ], spacing=12, vertical_alignment=ft.CrossAxisAlignment.CENTER),
+            on_click=on_tap,
+            bgcolor=ft.Colors.with_opacity(0.06, color) if is_selected else self._surface_card(),
+            border=ft.border.all(
+                1.5 if is_selected else 1,
+                ft.Colors.with_opacity(0.4 if is_selected else 0.15, color),
+            ),
+            border_radius=ft.border_radius.all(10),
+            padding=ft.padding.symmetric(horizontal=16, vertical=12),
+            ink=True,
+            animate=ft.Animation(150, ft.AnimationCurve.LINEAR),
+            margin=ft.margin.only(bottom=8),
+        )
+
+    # ── Step content ──────────────────────────────────────────────────────────
+
+    def _get_current_step_content(self, step: int):
+        species_type    = "Hardwood" if step == 0 else "Softwood"
+        color           = self._step_color(step)
+        available_codes = list(self.missing_species_codes) if step == 0 else [
+            c for c in self.missing_species_codes
+            if self.selected_types.get(c) != "Hardwood"
+        ]
+
+        if step == 1 and not available_codes:
+            body = ft.Container(
+                content=ft.Column([
+                    ft.Container(
+                        content=ft.Icon(ft.Icons.CHECK_CIRCLE_OUTLINE_ROUNDED,
+                                        size=32, color="#16A34A"),
+                        bgcolor=ft.Colors.with_opacity(0.08, "#16A34A"),
+                        border_radius=ft.border_radius.all(24),
+                        width=56, height=56,
+                        alignment=ft.alignment.center,
+                    ),
+                    ft.Container(height=10),
+                    ft.Text("All codes classified as Hardwood", size=14,
+                            weight=ft.FontWeight.W_700,
+                            color=self._text_primary(),
+                            text_align=ft.TextAlign.CENTER),
+                    ft.Text("Press Submit to confirm, or Back to review.",
+                            size=12, color=self._text_secondary(),
+                            text_align=ft.TextAlign.CENTER),
+                ], horizontal_alignment=ft.CrossAxisAlignment.CENTER,
+                   spacing=0, tight=True),
+                alignment=ft.alignment.center,
+                padding=ft.padding.symmetric(vertical=30),
+            )
+        else:
+            # Info hint for step 2
+            hint = ft.Container(
+                content=ft.Row([
+                    ft.Icon(ft.Icons.INFO_OUTLINE_ROUNDED, size=13,
+                            color=color),
+                    ft.Text("Hardwood selections are removed from this list.",
+                            size=11, color=self._text_secondary()),
+                ], spacing=6),
+                visible=(step == 1),
+                margin=ft.margin.only(bottom=10),
+            )
+
+            cards = [self.create_species_card(c, species_type) for c in available_codes]
+            body  = ft.Column([
+                hint,
+                ft.Column(
+                    cards,
+                    scroll=ft.ScrollMode.ADAPTIVE,
+                    spacing=0,
+                ),
+            ], spacing=0)
+
+        return [body]
+
+    # ── Actions bar ───────────────────────────────────────────────────────────
+
+    def _build_actions(self, on_next, on_back, on_submit, on_cancel) -> ft.Container:
+        step  = self.current_step[0]
+        color = self._step_color(step)
+
+        def _btn(label, icon, on_click, bgcolor, text_color, outline=False):
+            return ft.Container(
+                content=ft.Row([
+                    ft.Icon(icon, size=14, color=text_color),
+                    ft.Text(label, size=13, weight=ft.FontWeight.W_600, color=text_color),
+                ], spacing=6, tight=True),
+                on_click=on_click,
+                bgcolor=bgcolor,
+                border=ft.border.all(1, self._border()) if outline else None,
+                border_radius=ft.border_radius.all(8),
+                padding=ft.padding.symmetric(horizontal=18, vertical=10),
+                ink=True,
+            )
+
+        cancel_btn = _btn("Cancel", ft.Icons.CLOSE_ROUNDED,
+                          on_cancel,
+                          ft.Colors.with_opacity(0.06,
+                              ft.Colors.WHITE if self._is_dark else ft.Colors.BLACK),
+                          self._text_secondary(), outline=True)
+
+        if step == 0:
+            action_btn = _btn("Next Step", ft.Icons.ARROW_FORWARD_IOS_ROUNDED,
+                              on_next, color, "#FFFFFF")
+            right_btns = [action_btn]
+        else:
+            back_btn   = _btn("Back", ft.Icons.ARROW_BACK_IOS_ROUNDED,
+                              on_back,
+                              ft.Colors.with_opacity(0.06,
+                                  ft.Colors.WHITE if self._is_dark else ft.Colors.BLACK),
+                              self._text_primary(), outline=True)
+            submit_btn = _btn("Submit", ft.Icons.DONE_ALL_ROUNDED,
+                              on_submit, "#16A34A", "#FFFFFF")
+            right_btns = [back_btn, submit_btn]
+
+        return ft.Container(
+            content=ft.Row([
+                cancel_btn,
+                ft.Container(expand=True),
+                *right_btns,
+            ], spacing=8, vertical_alignment=ft.CrossAxisAlignment.CENTER),
+            padding=ft.padding.only(left=24, right=24, top=12, bottom=16),
+            bgcolor=self._bg(),
+            border=ft.border.only(top=ft.BorderSide(1, self._border())),
+            border_radius=ft.border_radius.only(bottom_left=14, bottom_right=14),
+        )
+
+    # ── Dialog assembly ───────────────────────────────────────────────────────
+
     async def show_species_code_dialog(self):
-        """Show dialog to select hardwood or softwood for missing species codes."""
-        
-        # Create a future to await
-        import asyncio
         self.result_future = asyncio.Future()
-        
-        # Current step (0 = hardwood selection, 1 = softwood selection)
-        self.current_step = [0]
-        
-        # Main column that will hold the current step content
+        self.current_step  = [0]
+
         self.main_column = ft.Column(
-            self._get_current_step_content(self.current_step[0]),
-            expand=True
+            self._get_current_step_content(0),
+            scroll=ft.ScrollMode.ADAPTIVE,
+            expand=True,
         )
 
         async def on_next(e):
-            """Move to softwood selection step."""
             self.current_step[0] = 1
-            self.main_column.controls = self._get_current_step_content(self.current_step[0])
-            update_dialog_actions()
-            self.page.update()
-        
+            self._rebuild_dialog()
+
         async def on_back(e):
-            """Return to hardwood selection step."""
             self.current_step[0] = 0
-            # Clear any softwood selections when going back
             for code in self.missing_species_codes:
                 if self.selected_types.get(code) == "Softwood":
                     self.selected_types[code] = None
-            self.main_column.controls = self._get_current_step_content(self.current_step[0])
-            update_dialog_actions()
-            self.page.update()
-        
+            self._rebuild_dialog()
+
         async def on_submit(e):
-            """Final submission and validation."""
-            final_selections = {
-                code: type_ for code, type_ in self.selected_types.items() if type_ is not None
-            }
-            print(f"User Selections before validation: {final_selections}")
-            # Codes that were not selected as Hardwood OR Softwood
-            missing_selections = [
-                code for code in self.missing_species_codes 
-                if final_selections.get(code) is None
-            ]
-            
-            # if missing_selections:
-            #     # Show error for missing selections
-            #     self.page.show_snack_bar(
-            #         ft.SnackBar(
-            #             content=ft.Text(f"❌ Error: Please classify all codes. Missing: {', '.join(map(str, missing_selections))}", 
-            #                             color=ft.Colors.WHITE, weight=ft.FontWeight.BOLD),
-            #             bgcolor=ft.Colors.RED_600,
-            #             duration=3000,
-            #         )
-            #     )
-            #     self.page.update()
-            #     return
-            
-            self.user_selections = final_selections
-            # print(f"Final Selected types: {self.user_selections}")
-            
-            # Set the future result
+            final = {c: t for c, t in self.selected_types.items() if t is not None}
+            self.user_selections = final
             self.result_future.set_result(self.user_selections)
             self.submitted = True
-            
-            self.dialog.open = False
-            self.page.update()
-            
-        
-        async def on_cancel(e):
-            """Cancel the dialog."""
-            self.dialog.open = False
-            self.page.update()
-            print("Dialog cancelled")
-            # Set the future to None to indicate cancellation
-            self.result_future.set_result(None)
-        
-        def update_dialog_actions():
-            """Dynamically update the action buttons based on the current step."""
-            if self.current_step[0] == 0:
-                self.dialog.actions = [
-                    ft.ElevatedButton(text="Next Step", on_click=on_next, icon=ft.Icons.ARROW_FORWARD_IOS_ROUNDED, bgcolor=ft.Colors.TERTIARY, color=ft.Colors.WHITE),
-                    ft.TextButton(text="Cancel", on_click=on_cancel)
-                ]
-            else:
-                self.dialog.actions = [
-                    ft.TextButton(text="Back", on_click=on_back, icon=ft.Icons.ARROW_BACK_IOS_ROUNDED),
-                    ft.ElevatedButton(text="Submit Final", on_click=on_submit, icon=ft.Icons.DONE_ALL_ROUNDED, bgcolor=ft.Colors.GREEN_700, color=ft.Colors.WHITE),
-                    ft.TextButton(text="Cancel", on_click=on_cancel)
-                ]
-        
-        # Initialize dialog with fixed width and height
-        self.dialog = ft.AlertDialog(
-            title=ft.Text("🌲 Species Type Checklist", weight=ft.FontWeight.BOLD, color=ft.Colors.PRIMARY),
-            content=ft.Container(
-               
-                content=self.main_column,
-                width=600,  # Fixed width
-                height=500,  # Fixed height
-                padding=10,
-                expand=True,
-            ),
-            actions_alignment=ft.MainAxisAlignment.END,
-            modal=True,
-            # Styling for a clean, professional look
-            shape=ft.RoundedRectangleBorder(radius=15),
-            bgcolor=ft.Colors.SECONDARY,
-            content_padding=ft.padding.all(0),  # Remove content padding since we're using Container
-        )
-        
-        # Set initial actions
-        update_dialog_actions()
+            self.page.close(self.dialog)
 
-        # Show the dialog
-        self.page.dialog = self.dialog
-        self.dialog.open = True
+        async def on_cancel(e):
+            self.result_future.set_result(None)
+            self.page.close(self.dialog)
+
+        self._on_next   = on_next
+        self._on_back   = on_back
+        self._on_submit = on_submit
+        self._on_cancel = on_cancel
+
+        self.dialog = self._make_dialog()
         self.page.open(self.dialog)
-        self.page.update()
-        
-        # Wait for the dialog to be submitted or cancelled
         return await self.result_future
 
-    def create_species_card(self, code, species_type: str):
-        """
-        Creates a professional, interactive Card component with a checklist appearance.
-        The card's appearance changes based on whether it is selected.
-        """
-        
-        # State variables for appearance and selection
-        is_selected = self.selected_types.get(code) == species_type
-        
-        # Define the border color and thickness based on selection state
-        # Use a Green color for a clear "checked" state
-        border_color = ft.Colors.AMBER_600 if self.page.theme_mode == ft.ThemeMode.DARK and is_selected else (ft.Colors.GREEN_600 if is_selected else ft.Colors.GREY_300)
-        border_width = 2.0 if is_selected else 1
-
-        # The core interactive element: A Checkbox
-        checkbox = ft.Checkbox(
-            value=is_selected,
-            fill_color=ft.Colors.GREEN_600 if is_selected else ft.Colors.GREY_300,
-            tooltip=f"Select {species_type}",
-            disabled=True, # Disable standard checkbox interaction, use card tap instead
-            check_color=ft.Colors.WHITE,
-        )
-
-        # Card content: List tile is now simpler, acting as the main touch area
-        card_content = ft.ListTile(
-            leading=checkbox,
-            title=ft.Text(
-                str(code),
-                weight=ft.FontWeight.BOLD,
-                color=ft.Colors.PRIMARY 
-            ),
-            subtitle=ft.Text(
-                f"Classify as {species_type}", 
-                color=ft.Colors.PRIMARY
-            ),
-        )
-
-        def on_tap(e):
-            """Handles the tap event for the card (selection/deselection)."""
-            
-            # If currently selected, deselect it (set to None)
-            if self.selected_types.get(code) == species_type:
-                self.selected_types[code] = None
-            # If not selected, select it (set to species_type)
-            else:
-                self.selected_types[code] = species_type
-            
-            # Re-render the dialog to reflect the change
-            self.main_column.controls = self._get_current_step_content(self.current_step[0])
-            self.page.update()
-
-        # The interactive Card component
-        card = ft.Card(
-            content=ft.Container(
-                
-                content=card_content,
-                padding=5,
-                border=ft.border.all(border_width, border_color),
-                border_radius=ft.border_radius.all(8),
-                # if selected and is dark theme switch to amber yellow else green light
-                bgcolor= ft.Colors.TERTIARY if self.page.theme_mode == ft.ThemeMode.DARK and is_selected else (ft.Colors.SECONDARY_CONTAINER if not is_selected else ft.Colors.GREEN_50),
-                on_click=on_tap,
-                ink=True, 
-            ),
-            elevation=0,
-        )
-        
-        return card
-
-    def _get_current_step_content(self, step: int):
-        """Generates the main content (cards) for the current step."""
-        
-        # Determine which codes are available for selection in this step
-        if step == 0: # Hardwood Selection
-            species_type = "Hardwood"
-            available_codes = self.missing_species_codes
-        else: # Softwood Selection (Step 1)
-            species_type = "Softwood"
-            # Only show codes that were NOT selected as Hardwood
-            available_codes = [
-                code for code in self.missing_species_codes 
-                if self.selected_types.get(code) != "Hardwood"
-            ]
-        
-        # Generate the list of cards
-        card_list = []
-        for code in available_codes:
-            card_list.append(self.create_species_card(code, species_type))
-
-        # Handle the case where all codes were already selected as Hardwood
-        if step == 1 and not available_codes:
-             info_message = ft.Column([
-                ft.Text("✅ All remaining species codes were classified as Hardwood in the previous step.", 
-                        weight=ft.FontWeight.BOLD, color=ft.Colors.PRIMARY),
-                ft.Text("Click 'Back' to review, or 'Submit Final' to complete the classification.", size=14, color=ft.Colors.PRIMARY),
-            ])
-             card_area = ft.Container(
-                content=info_message,
-                alignment=ft.alignment.center,
-                height=300
-            )
-        else:
-            card_area = ft.Container(
-                content=ft.Column(
-                    card_list,
-                    scroll=ft.ScrollMode.AUTO,
-                    spacing=6,
-                    expand=True  # Changed to expand to fill available space
+    def _make_dialog(self) -> ft.AlertDialog:
+        body = ft.Container(
+            content=ft.Column([
+                self._build_header(),
+                ft.Container(
+                    content=self.main_column,
+                    padding=ft.padding.symmetric(horizontal=20, vertical=14),
+                    expand=True,
+                    bgcolor=self._bg(),
                 ),
-                padding=10,
-                border_radius=10,
-                expand=True  # Make container expandable
-            )
-
-        # Assemble the full content for the step
-        content = ft.Column([
-            ft.Text(f"📋 Step {step + 1}: Select codes for {species_type}:", 
-                    weight=ft.FontWeight.W_700, size=18, color=ft.Colors.PRIMARY),
-            
-            # Info for Softwood step
-            *(
-                [ft.Text("Codes selected as Hardwood are automatically removed from this list.", 
-                         size=12, color=ft.Colors.BLUE_GREY_500)] 
-                if step == 1 and available_codes else []
+                self._build_actions(
+                    self._on_next, self._on_back,
+                    self._on_submit, self._on_cancel,
+                ),
+            ], spacing=0, tight=False),
+            width=520,
+            height=520,
+            bgcolor=self._bg(),
+            border_radius=ft.border_radius.all(14),
+            clip_behavior=ft.ClipBehavior.HARD_EDGE,
+            shadow=ft.BoxShadow(
+                blur_radius=30, spread_radius=0,
+                color=ft.Colors.with_opacity(0.2, ft.Colors.BLACK),
+                offset=ft.Offset(0, 8),
             ),
+        )
 
-            card_area
-        ], expand=True)  # Make column expand to fill space
+        return ft.AlertDialog(
+            modal=True,
+            content=body,
+            content_padding=ft.padding.all(0),
+            shape=ft.RoundedRectangleBorder(radius=14),
+            bgcolor=ft.Colors.TRANSPARENT,
+            inset_padding=ft.padding.symmetric(horizontal=20, vertical=20),
+            alignment=ft.alignment.center,
+        )
 
-        return [content]
+    def _rebuild_dialog(self):
+        """Rebuild header + actions + content after step change."""
+        self.main_column.controls = self._get_current_step_content(self.current_step[0])
+        # Rebuild the whole inner column in the dialog body
+        body_col = self.dialog.content.content
+        body_col.controls[0] = self._build_header()
+        body_col.controls[2] = self._build_actions(
+            self._on_next, self._on_back,
+            self._on_submit, self._on_cancel,
+        )
+        self.page.update()
+
+    # ── Getters ───────────────────────────────────────────────────────────────
 
     def get_user_selections(self):
-        """Get the user selections after dialog submission."""
         return self.user_selections
 
     def was_submitted(self):
-        """Check if the dialog was submitted."""
         return self.submitted

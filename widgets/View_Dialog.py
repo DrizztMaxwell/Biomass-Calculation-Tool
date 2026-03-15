@@ -4,459 +4,378 @@ from widgets.LogFileTxt import logger
 
 class View_Dialog:
     """Base class for dialog views in the application."""
-    
-    # Constants for styling - Updated for better responsiveness
-    DIALOG_WIDTH_MAX = 700
-    DIALOG_WIDTH_MIN = 320  # Minimum width for mobile devices
-    DIALOG_HEIGHT_MAX = 650
-    DIALOG_HEIGHT_MIN = 400  # Minimum height
-    DIALOG_WIDTH_RATIO = 0.9
+
+    DIALOG_WIDTH_MAX  = 680
+    DIALOG_WIDTH_MIN  = 320
+    DIALOG_HEIGHT_MAX = 640
+    DIALOG_HEIGHT_MIN = 400
+    DIALOG_WIDTH_RATIO  = 0.9
     DIALOG_HEIGHT_RATIO = 0.85
-    
-    # Colors
-    PRIMARY_COLOR = ft.Colors.BLUE_700
-    SECONDARY_COLOR = ft.Colors.GREEN_600
-    ACCENT_COLOR = ft.Colors.ORANGE_500
-    TEXT_PRIMARY = ft.Colors.GREY_900
-    TEXT_SECONDARY = ft.Colors.GREY_600
-    WHITE = ft.Colors.WHITE
-    GREY_100 = ft.Colors.GREY_100
-    GREY_200 = ft.Colors.GREY_200
-    PRIMARY = ft.Colors.PRIMARY
+
+    # Flet semantic colors (kept for compatibility)
+    PRIMARY_COLOR       = ft.Colors.BLUE_700
+    SECONDARY_COLOR     = ft.Colors.GREEN_600
+    ACCENT_COLOR        = ft.Colors.ORANGE_500
+    TEXT_PRIMARY        = ft.Colors.GREY_900
+    TEXT_SECONDARY      = ft.Colors.GREY_600
+    WHITE               = ft.Colors.WHITE
+    GREY_100            = ft.Colors.GREY_100
+    GREY_200            = ft.Colors.GREY_200
+    PRIMARY             = ft.Colors.PRIMARY
     SECONDARY_CONTAINER = ft.Colors.SECONDARY_CONTAINER
-    SECONDARY = ft.Colors.SECONDARY
-    TERTIARY = ft.Colors.TERTIARY
-    PURPLE_600 = ft.Colors.PURPLE_600
-    BLACK = ft.Colors.BLACK
-    BLUE_600 = ft.Colors.BLUE_600
-    
-    # Parameter categories
+    SECONDARY           = ft.Colors.SECONDARY
+    TERTIARY            = ft.Colors.TERTIARY
+    PURPLE_600          = ft.Colors.PURPLE_600
+    BLACK               = ft.Colors.BLACK
+    BLUE_600            = ft.Colors.BLUE_600
+
     PARAMETER_CATEGORIES = {
         "bh": {
             "name": "DBH + Height-based Parameters",
             "icon": ft.Icons.TRENDING_UP,
-            "color": None  # Will be set to secondary_color
+            "color": None,
         },
         "b": {
             "name": "DBH-based Parameters",
             "icon": ft.Icons.STRAIGHTEN,
-            "color": None  # Will be set to accent_color
+            "color": None,
         },
         "default": {
             "name": "Other Parameters",
             "icon": ft.Icons.TUNE,
-            "color": PURPLE_600
-        }
+            "color": ft.Colors.PURPLE_600,
+        },
     }
-    
+
     def __init__(self, page: ft.Page):
         self.page = page
-    
-    def view_species_dialog(self, index, species_data, filtered_species=None, primary_color=None, secondary_color=None, accent_color=None):
-        """Show species details in a beautiful professional dialog."""
-        
-        # Use provided colors or defaults
-        self.primary_color = primary_color or self.PRIMARY_COLOR
+
+    # ── Theme helpers ─────────────────────────────────────────────────────────
+
+    @property
+    def _is_dark(self) -> bool:
+        return self.page.theme_mode == ft.ThemeMode.DARK
+
+    def _bg(self):
+        return "#1A1A1A" if self._is_dark else "#FFFFFF"
+
+    def _surface(self):
+        return "#222222" if self._is_dark else "#F8FAFC"
+
+    def _surface_card(self):
+        return "#2A2A2A" if self._is_dark else "#FFFFFF"
+
+    def _border(self):
+        return "#2E2E2E" if self._is_dark else "#E2E8F0"
+
+    def _text_primary(self):
+        return "#F5F5F5" if self._is_dark else "#0F172A"
+
+    def _text_secondary(self):
+        return "#888888" if self._is_dark else "#64748B"
+
+    def _divider(self):
+        return "#333333" if self._is_dark else "#F1F5F9"
+
+    # ── Public entry point ────────────────────────────────────────────────────
+
+    def view_species_dialog(
+        self, index, species_data, filtered_species=None,
+        primary_color=None, secondary_color=None, accent_color=None
+    ):
+        self.primary_color   = primary_color   or self.PRIMARY_COLOR
         self.secondary_color = secondary_color or self.SECONDARY_COLOR
-        self.accent_color = accent_color or self.ACCENT_COLOR
-        self.text_primary = self.TEXT_PRIMARY
-        self.text_secondary = self.TEXT_SECONDARY
-        
-        # Set colors for parameter categories
+        self.accent_color    = accent_color    or self.ACCENT_COLOR
+        self.text_primary    = self.TEXT_PRIMARY
+        self.text_secondary  = self.TEXT_SECONDARY
+
         self.PARAMETER_CATEGORIES["bh"]["color"] = self.secondary_color
-        self.PARAMETER_CATEGORIES["b"]["color"] = self.accent_color
-        
+        self.PARAMETER_CATEGORIES["b"]["color"]  = self.accent_color
+
         species = filtered_species[index] if filtered_species else species_data[index]
-        
-        # Calculate responsive dialog dimensions
-        dialog_width = self._calculate_responsive_width()
-        dialog_height = self._calculate_responsive_height()
-        
-        # Create dialog content
-        dialog_content = self._create_dialog_content(species, dialog_width, dialog_height)
-        
-        # Create and show dialog
-        dialog = self._create_dialog(species, dialog_content, dialog_width)
+
+        dialog_width  = self._calc_width()
+        dialog_height = self._calc_height()
+
+        dialog = self._create_dialog(species, dialog_width, dialog_height)
         self._show_dialog(dialog, species)
-    
-    def _calculate_responsive_width(self):
-        """Calculate responsive width based on screen size."""
-        if not self.page.width:
-            return self.DIALOG_WIDTH_MAX
-        
-        calculated_width = self.page.width * self.DIALOG_WIDTH_RATIO
-        # Clamp width between min and max
-        return max(self.DIALOG_WIDTH_MIN, min(calculated_width, self.DIALOG_WIDTH_MAX))
-    
-    def _calculate_responsive_height(self):
-        """Calculate responsive height based on screen size."""
-        if not self.page.height:
-            return self.DIALOG_HEIGHT_MAX
-        
-        calculated_height = self.page.height * self.DIALOG_HEIGHT_RATIO
-        # Clamp height between min and max
-        return max(self.DIALOG_HEIGHT_MIN, min(calculated_height, self.DIALOG_HEIGHT_MAX))
-    
-    def _create_dialog_content(self, species, width, height):
-        """Create the main dialog content."""
-        return ft.Container(
-            content=ft.Column([
-                self._create_header(species),
-                self._create_scrollable_content(species)
-            ], spacing=0, expand=True),
-            width=width,
-            height=height,
-            bgcolor=self.SECONDARY,
-            clip_behavior=ft.ClipBehavior.HARD_EDGE
-        )
-    
-    def _create_header(self, species):
-        """Create dialog header with gradient background."""
+
+    def _calc_width(self):
+        w = (self.page.width or self.DIALOG_WIDTH_MAX) * self.DIALOG_WIDTH_RATIO
+        return max(self.DIALOG_WIDTH_MIN, min(w, self.DIALOG_WIDTH_MAX))
+
+    def _calc_height(self):
+        h = (self.page.height or self.DIALOG_HEIGHT_MAX) * self.DIALOG_HEIGHT_RATIO
+        return max(self.DIALOG_HEIGHT_MIN, min(h, self.DIALOG_HEIGHT_MAX))
+
+    # ── Header ────────────────────────────────────────────────────────────────
+
+    def _build_header(self, species) -> ft.Container:
+        species_code = species.get("SpeciesCode", "")
+        spec_common  = species.get("SpecCommon", "")
+        subtitle     = spec_common if spec_common and spec_common != "None" else species_code
+
         return ft.Container(
             content=ft.Row([
                 ft.Container(
-                    content=ft.Icon(ft.Icons.REMOVE_RED_EYE_OUTLINED, size=32, color=self.WHITE),
-                    bgcolor=ft.Colors.with_opacity(0.2, self.WHITE),
-                    padding=12,
-                    border_radius=12,
-                    margin=ft.margin.only(right=15)
+                    content=ft.Icon(ft.Icons.REMOVE_RED_EYE_OUTLINED, size=22, color="#FFFFFF"),
+                    width=44, height=44,
+                    bgcolor=ft.Colors.with_opacity(0.18, "#FFFFFF"),
+                    border_radius=ft.border_radius.all(10),
+                    alignment=ft.alignment.center,
                 ),
                 ft.Column([
                     ft.Text(
-                        "Species Details", 
-                        size=24, 
-                        weight=ft.FontWeight.W_700, 
-                        color=self.WHITE,
-                        overflow=ft.TextOverflow.ELLIPSIS
+                        "Species Details",
+                        size=18,
+                        weight=ft.FontWeight.W_700,
+                        color="#FFFFFF",
                     ),
-                    # ft.Text(
-                    #     f"Species Code: {species.get('SpeciesCode', '')}", 
-                    #     size=14, 
-                    #     color=ft.Colors.with_opacity(0.9, self.WHITE),
-                    #     overflow=ft.TextOverflow.ELLIPSIS
-                    # ),
-                ], spacing=4, alignment=ft.CrossAxisAlignment.START, expand=True)
-            ], alignment=ft.MainAxisAlignment.START),
-            gradient=ft.LinearGradient(
-                begin=ft.alignment.top_left,
-                end=ft.alignment.bottom_right,
-                colors=[self.primary_color, self.BLUE_600]
-            ),
-            padding=ft.padding.symmetric(horizontal=30, vertical=24),
-            border_radius=ft.border_radius.only(top_left=16, top_right=16),
-            shadow=ft.BoxShadow(
-                spread_radius=1,
-                blur_radius=15,
-                color=ft.Colors.with_opacity(0.2, self.BLACK)
-            )
-        )
-    
-    def _create_scrollable_content(self, species):
-        """Create scrollable content area with species details."""
-        return ft.Container(
-            content=ft.Column([
-                ft.Container(height=24),
-                self._create_basic_info_card(species),
-                ft.Container(height=24),
-                *[card for card in self._create_parameter_cards(species) if card is not None],
-                ft.Container(height=24),
-            ], scroll=ft.ScrollMode.AUTO, spacing=0, tight=True, expand=True),
-            padding=ft.padding.symmetric(horizontal=30, vertical=20),
-            expand=True
-        )
-    
-    def _create_basic_info_card(self, species):
-        """Create basic information card."""
-        # Build the content list
-        content_widgets = [
-            ft.Row([
-                ft.Icon(ft.Icons.INFO_OUTLINE, color=self.primary_color, size=20),
-                ft.Text(
-                    "Basic Information", 
-                    size=17, 
-                    weight=ft.FontWeight.W_600, 
-                    color=self.PRIMARY,
-                    overflow=ft.TextOverflow.ELLIPSIS
+                    ft.Text(
+                        subtitle,
+                        size=12,
+                        color=ft.Colors.with_opacity(0.75, "#FFFFFF"),
+                    ),
+                ], spacing=2, expand=True),
+
+                # Close X
+                ft.Container(
+                    content=ft.Icon(ft.Icons.CLOSE_ROUNDED, size=16, color="#FFFFFF"),
+                    on_click=lambda e: self.page.close(self._current_dialog),
+                    bgcolor=ft.Colors.with_opacity(0.15, "#FFFFFF"),
+                    border_radius=ft.border_radius.all(8),
+                    padding=ft.padding.all(6),
+                    ink=True,
+                    tooltip="Close",
                 ),
-            ], spacing=12),
-            ft.Container(height=20),
-        ]
-        
-        # Helper to add a row if value exists
-        def add_row_if_exists(title, value, icon):
-            row = self._create_detail_row(title, value, icon)
-            if row:
-                content_widgets.append(row)
-                content_widgets.append(ft.Container(height=12))
-        
-        # Add rows conditionally
-        add_row_if_exists("Species Code", species.get("SpeciesCode", ""), ft.Icons.CODE)
-        add_row_if_exists("Common Name", species.get("SpecCommon", ""), ft.Icons.TEXT_SNIPPET)
-        add_row_if_exists("Origin", species.get("Origin", ""), ft.Icons.LOCATION_ON)
-        
-        # Add equation type (might have default value)
-        equation_type_row = self._create_detail_row("Equation Type", species.get("EquationType", "Height-based"), ft.Icons.FUNCTIONS)
-        if equation_type_row:
-            content_widgets.append(equation_type_row)
-        
-        # Remove the last spacing container if it exists
-        if content_widgets and isinstance(content_widgets[-1], ft.Container) and content_widgets[-1].height == 12:
-            content_widgets.pop()
-        
-        content_widgets.append(ft.Container(height=5))
-        
-        return ft.Container(
-            content=ft.Column(content_widgets, spacing=0),
-            padding=ft.padding.all(24),
-            bgcolor=self.SECONDARY_CONTAINER,
-            border_radius=12,
-            border=ft.border.all(1, self.GREY_100),
-            shadow=ft.BoxShadow(
-                spread_radius=0,
-                blur_radius=12,
-                color=ft.Colors.with_opacity(0.08, self.BLACK)
-            )
+            ], spacing=14, vertical_alignment=ft.CrossAxisAlignment.CENTER),
+            bgcolor=ft.Colors.BLUE_700,          # Blue — matches app primary action color
+            padding=ft.padding.symmetric(horizontal=24, vertical=18),
+            border_radius=ft.border_radius.only(top_left=14, top_right=14),
         )
 
-    def _create_detail_row(self, title, value, icon):
-        """Helper to create a detail row with icon. Returns None if value is empty."""
-        # Convert value to string and check if it's empty
-        str_value = str(value) if value is not None else ""
-        
-        # Return None if value is empty/None/whitespace only
-        if not str_value.strip():
+    # ── Basic info card ───────────────────────────────────────────────────────
+
+    def _info_row(self, icon, label, value) -> ft.Control | None:
+        str_val = str(value) if value is not None else ""
+        if not str_val.strip() or str_val == "None":
             return None
-        
-        return ft.Row([
-            ft.Icon(icon, color=self.text_secondary, size=18),
-            ft.Text(title + ":", size=14, weight=ft.FontWeight.W_500, color=ft.Colors.PRIMARY),
-            ft.Container(expand=True),
-            ft.Text(
-                str_value, 
-                size=14, 
-                weight=ft.FontWeight.W_600, 
-                color=ft.Colors.PRIMARY,
-                overflow=ft.TextOverflow.ELLIPSIS,
-                max_lines=1
-            ),
-        ], alignment=ft.MainAxisAlignment.START)
-    
-    def _create_parameter_cards(self, species):
-        """Create parameter cards for the species."""
-        # Organize parameters by category
-        categorized_params = self._categorize_parameters(species)
-        
-        # Create a card for each category
-        param_cards = []
-        for category_key, category_data in categorized_params.items():
-            param_cards.append(self._create_parameter_category_card(category_data))
-        
-        return param_cards
-    
-    def _categorize_parameters(self, species):
-        """Categorize parameters based on their keys."""
+
+        return ft.Container(
+            content=ft.Row([
+                ft.Row([
+                    ft.Icon(icon, size=15, color=self._text_secondary()),
+                    ft.Text(label, size=13, color=self._text_secondary(),
+                            weight=ft.FontWeight.W_500),
+                ], spacing=6),
+                ft.Container(expand=True),
+                ft.Text(str_val, size=13, weight=ft.FontWeight.W_600,
+                        color=self._text_primary(),
+                        overflow=ft.TextOverflow.ELLIPSIS, max_lines=1),
+            ]),
+            padding=ft.padding.symmetric(horizontal=16, vertical=11),
+            border=ft.border.only(bottom=ft.BorderSide(1, self._divider())),
+        )
+
+    def _build_basic_info_card(self, species) -> ft.Container:
+        rows = [
+            self._info_row(ft.Icons.CODE,          "Species Code",  species.get("SpeciesCode")),
+            self._info_row(ft.Icons.TEXT_SNIPPET,  "Common Name",   species.get("SpecCommon")),
+            self._info_row(ft.Icons.LOCATION_ON,   "Origin",        species.get("Origin")),
+            self._info_row(ft.Icons.FUNCTIONS,     "Equation Type", species.get("EquationType", "Height-based")),
+        ]
+        valid_rows = [r for r in rows if r is not None]
+
+        # Remove bottom border from last row
+        if valid_rows:
+            last = valid_rows[-1]
+            last.border = None
+
+        return self._card(
+            icon=ft.Icons.INFO_OUTLINE,
+            icon_color="#2563EB",
+            label="Basic Information",
+            content=ft.Column(valid_rows, spacing=0),
+        )
+
+    # ── Parameter cards ───────────────────────────────────────────────────────
+
+    def _build_parameter_cards(self, species) -> list:
         categorized = {}
-        
+
         for key, value in species.items():
             if key in ["SpeciesCode", "Origin", "EquationType", "SpecCommon"]:
                 continue
-            
-            # Determine category based on prefix
-            if key.startswith("bh"):
-                category_key = "bh"
-            elif key.startswith("b"):
-                category_key = "b"
-            else:
-                category_key = "default"
-            
-            category = self.PARAMETER_CATEGORIES[category_key]
-            
+            category_key = "bh" if key.startswith("bh") else ("b" if key.startswith("b") else "default")
+            cat = self.PARAMETER_CATEGORIES[category_key]
             if category_key not in categorized:
                 categorized[category_key] = {
-                    "name": category["name"],
-                    "icon": category["icon"],
-                    "color": category["color"],
-                    "icon_bg": ft.Colors.with_opacity(0.1, category["color"]),
-                    "params": []
+                    "name":    cat["name"],
+                    "icon":    cat["icon"],
+                    "color":   cat["color"],
+                    "params":  [],
                 }
-            
             categorized[category_key]["params"].append((key, value))
-        
-        return categorized
-    
-    def _create_parameter_category_card(self, category_data):
-        """Create a card for a parameter category."""
-        param_rows = ft.Column(spacing=8)
-        
-        # Create rows for each parameter
-        for param_key, param_value in category_data["params"]:
-            param_rows.controls.append(self._create_parameter_row(param_key, param_value))
-        
-        # Create header row
-        header = ft.Row([
-            ft.Container(
-                content=ft.Icon(category_data["icon"], color=category_data["color"], size=20),
-                bgcolor=category_data["icon_bg"],
-                padding=10,
-                border_radius=10,
-                margin=ft.margin.only(right=12)
-            ),
-            ft.Text(
-                category_data["name"], 
-                size=16, 
-                weight=ft.FontWeight.W_600, 
-                color=category_data["color"],
-                overflow=ft.TextOverflow.ELLIPSIS,
-                expand=True
-            ),
-        ], spacing=0)
-        
-        # Create parameter table header
-        table_header = ft.Container(
+
+        cards = []
+        for cat_data in categorized.values():
+            color = cat_data["color"]
+
+            # Column header row
+            col_header = ft.Container(
+                content=ft.Row([
+                    ft.Text("Parameter", size=11, weight=ft.FontWeight.W_700,
+                            color=self._text_secondary()),
+                    ft.Container(expand=True),
+                    ft.Text("Value", size=11, weight=ft.FontWeight.W_700,
+                            color=self._text_secondary()),
+                ]),
+                padding=ft.padding.symmetric(horizontal=16, vertical=8),
+                bgcolor=self._surface(),
+                border_radius=ft.border_radius.all(6),
+                margin=ft.margin.only(bottom=4),
+            )
+
+            param_rows = []
+            for i, (k, v) in enumerate(cat_data["params"]):
+                is_last = (i == len(cat_data["params"]) - 1)
+                try:
+                    display_val = f"{float(v):.6f}"
+                except (ValueError, TypeError):
+                    display_val = str(v)
+
+                row = ft.Container(
+                    content=ft.Row([
+                        ft.Text(k, size=13, weight=ft.FontWeight.W_500,
+                                color=self._text_primary(),
+                                overflow=ft.TextOverflow.ELLIPSIS),
+                        ft.Container(expand=True),
+                        ft.Text(display_val, size=13, weight=ft.FontWeight.W_600,
+                                color=color or self._text_primary()),
+                    ]),
+                    padding=ft.padding.symmetric(horizontal=16, vertical=10),
+                    border=ft.border.only(
+                        bottom=ft.BorderSide(1, self._divider()) if not is_last else ft.BorderSide(0)
+                    ),
+                )
+                param_rows.append(row)
+
+            cards.append(self._card(
+                icon=cat_data["icon"],
+                icon_color=color or "#888888",
+                label=cat_data["name"],
+                content=ft.Column([col_header, *param_rows], spacing=0),
+            ))
+
+        return cards
+
+    # ── Card wrapper ──────────────────────────────────────────────────────────
+
+    def _card(self, icon, icon_color, label, content) -> ft.Container:
+        header = ft.Container(
             content=ft.Row([
-                ft.Text(
-                    "Parameter", 
-                    size=13,
-                    weight=ft.FontWeight.W_600,
-                    color=self.PRIMARY,
-                    width=180
+                ft.Container(
+                    content=ft.Icon(icon, size=15, color=icon_color),
+                    bgcolor=ft.Colors.with_opacity(0.10, icon_color),
+                    border_radius=ft.border_radius.all(7),
+                    width=30, height=30,
+                    alignment=ft.alignment.center,
                 ),
-                ft.Text(
-                    "Value", 
-                    size=13,
-                    weight=ft.FontWeight.W_600,
-                    color=self.PRIMARY,
-                    expand=True
-                ),
-            ], spacing=0),
-            padding=ft.padding.symmetric(horizontal=15, vertical=8),
-            bgcolor=self.SECONDARY_CONTAINER,
-            border_radius=6,
-            border=ft.border.all(0.5, self.GREY_200),
+                ft.Text(label, size=13, weight=ft.FontWeight.W_600,
+                        color=self._text_primary()),
+            ], spacing=10),
+            padding=ft.padding.only(left=16, right=16, top=14, bottom=12),
+            bgcolor=self._surface(),
         )
-        
+
         return ft.Container(
             content=ft.Column([
                 header,
-                ft.Container(height=18),
-                ft.Column([
-                    table_header,
-                  
-                    param_rows
-                ])
+                ft.Container(height=1, bgcolor=self._border()),
+                content,
             ], spacing=0),
-            padding=24,
-            bgcolor=self.SECONDARY_CONTAINER,
-            border_radius=12,
-            shadow=ft.BoxShadow(
-                spread_radius=0,
-                blur_radius=12,
-                color=ft.Colors.with_opacity(0.08, self.BLACK)
-            ),
-           border=ft.border.all(0.5, self.GREY_200)
+            bgcolor=self._surface_card(),
+            border=ft.border.all(1, self._border()),
+            border_radius=ft.border_radius.all(10),
+            clip_behavior=ft.ClipBehavior.ANTI_ALIAS,
         )
-    
-    def _create_parameter_row(self, param_key, param_value):
-        """Create a single parameter row."""
+
+    # ── Actions bar ───────────────────────────────────────────────────────────
+
+    def _build_actions(self) -> ft.Container:
         return ft.Container(
             content=ft.Row([
-                ft.Container(
-                    content=ft.Text(
-                        param_key, 
-                        size=14, 
-                        weight=ft.FontWeight.W_500,
-                        color=self.PRIMARY,
-                        overflow=ft.TextOverflow.ELLIPSIS,
-                        max_lines=1
-                    ),
-                    width=180,
-                    padding=ft.padding.symmetric(vertical=10, horizontal=15)
-                ),
-                ft.VerticalDivider(width=1, color=self.GREY_200),
-                ft.Container(
-                    content=ft.Text(
-                        f"{float(param_value):.6f}", 
-                        size=14, 
-                        weight=ft.FontWeight.W_600,
-                        color=self.PRIMARY,
-                        overflow=ft.TextOverflow.ELLIPSIS,
-                        max_lines=1
-                    ),
-                    expand=True,
-                    padding=ft.padding.symmetric(vertical=10, horizontal=15),
-                    bgcolor=self.SECONDARY_CONTAINER, 
-                    border_radius=6
-                )
-            ], spacing=0),
-            border=ft.border.all(0.5, self.GREY_200),
-            border_radius=6,
-            bgcolor=self.SECONDARY_CONTAINER
-        )
-    
-    def _create_dialog(self, species, content, width):
-        """Create the complete dialog with proper centering and visibility."""
-        def close_dialog(e):
-            logger.write(f"Species details dialog closed for species: {species.get('SpeciesCode', '')}")
-            self.page.close(dialog)
-        
-        # Action buttons - Fixed at bottom
-        actions = ft.Container(
-            content=ft.Row([
                 ft.Container(expand=True),
-                ft.ElevatedButton(
-                    "Close",
-                    icon=ft.Icons.CLOSE,
-                    style=ft.ButtonStyle(
-                        bgcolor=self.TERTIARY,
-                        color=self.WHITE,
-                        padding=ft.padding.symmetric(horizontal=28, vertical=14),
-                        shape=ft.RoundedRectangleBorder(radius=10),
-                        side=ft.BorderSide(1, self.GREY_200)
-                    ),
-                    on_click=close_dialog
-                ),
-                ft.Container(width=12),
-            ], alignment=ft.MainAxisAlignment.END),
-            padding=ft.padding.symmetric(horizontal=30, vertical=20),
-            bgcolor=self.SECONDARY_CONTAINER,
-            border=ft.border.only(top=ft.BorderSide(1, self.GREY_200)),
-            border_radius=ft.border_radius.only(bottom_left=16, bottom_right=16),
-            height=80,  # Fixed height for actions bar
-        )
-        
-        # Main container with proper layout to ensure actions always visible
-        main_container = ft.Container(
-            content=ft.Column([
-                # Content area that scrolls
                 ft.Container(
-                    content=content,
-                    expand=True,  # Takes remaining space
+                    content=ft.Row([
+                        ft.Icon(ft.Icons.CLOSE_ROUNDED, size=15, color="#FFFFFF"),
+                        ft.Text("Close", size=13, weight=ft.FontWeight.W_600, color="#FFFFFF"),
+                    ], spacing=7),
+                    on_click=lambda e: self.page.close(self._current_dialog),
+                    bgcolor=ft.Colors.BLUE_700,
+                    border_radius=ft.border_radius.all(8),
+                    padding=ft.padding.symmetric(horizontal=20, vertical=10),
+                    ink=True,
                 ),
-                # Fixed actions bar at bottom
-                actions,
+            ]),
+            padding=ft.padding.only(left=24, right=24, top=14, bottom=18),
+            bgcolor=self._bg(),
+            border=ft.border.only(top=ft.BorderSide(1, self._border())),
+        )
+
+    # ── Dialog assembly ───────────────────────────────────────────────────────
+
+    def _create_dialog(self, species, width, height) -> ft.AlertDialog:
+        scrollable_body = ft.Container(
+            content=ft.Column([
+                ft.Container(height=16),
+                self._build_basic_info_card(species),
+                ft.Container(height=14),
+                *self._build_parameter_cards(species),
+                ft.Container(height=16),
+            ], scroll=ft.ScrollMode.AUTO, spacing=0, tight=True, expand=True),
+            padding=ft.padding.symmetric(horizontal=22),
+            expand=True,
+            bgcolor=self._bg(),
+        )
+
+        main = ft.Container(
+            content=ft.Column([
+                self._build_header(species),
+                scrollable_body,
+                self._build_actions(),
             ], spacing=0, tight=True),
             width=width,
-            height=self._calculate_responsive_height(),  # Fixed height for entire dialog
-            border_radius=16,
+            height=height,
+            bgcolor=self._bg(),
+            border_radius=ft.border_radius.all(14),
             clip_behavior=ft.ClipBehavior.HARD_EDGE,
-            bgcolor=self.SECONDARY
+            shadow=ft.BoxShadow(
+                blur_radius=30,
+                spread_radius=0,
+                color=ft.Colors.with_opacity(0.2, ft.Colors.BLACK),
+                offset=ft.Offset(0, 8),
+            ),
         )
-        
-        # AlertDialog with proper centering and transparency
+
         dialog = ft.AlertDialog(
             modal=True,
-            content=main_container,
-            content_padding=0,
-            shape=ft.RoundedRectangleBorder(radius=16),
+            content=main,
+            content_padding=ft.padding.all(0),
+            shape=ft.RoundedRectangleBorder(radius=14),
             bgcolor=ft.Colors.TRANSPARENT,
-            inset_padding=ft.padding.symmetric(horizontal=20, vertical=20),  # Add padding from screen edges
-            alignment=ft.alignment.center,  # Center the dialog
+            inset_padding=ft.padding.symmetric(horizontal=20, vertical=20),
+            alignment=ft.alignment.center,
         )
-        
+
+        self._current_dialog = dialog
         return dialog
-    
+
+    # ── Compat shims (kept so callers don't break) ────────────────────────────
+
+    def _create_dialog_content(self, species, width, height):
+        return self._create_dialog(species, width, height)
+
     def _show_dialog(self, dialog, species):
-        """Show the dialog on the page with proper centering."""
-        # Ensure the dialog is centered by using page.open() which handles centering
         self.page.open(dialog)
         logger.write(f"Viewing species: {species.get('SpeciesCode', '')}")

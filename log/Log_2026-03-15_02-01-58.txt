@@ -1,0 +1,36 @@
+[02:01:58] --- Log Session Started ---
+[02:02:00] Running as script
+[02:02:00]    Program path: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool
+[02:02:00]    Data path: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\app_data
+[02:02:00] Initializing JSON files...
+[02:02:00]    Created/Updated: storage/localstorage.json
+[02:02:00]    Created/Updated: data/treeparameters.json
+[02:02:00]    Preserved existing: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/create_species.json
+[02:02:00] Initialized 2 JSON files
+[02:02:00]    Preserved existing: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/selected_database.json
+[02:02:00]    Preserved existing: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/connection_history.json
+[02:02:00] Application starting...
+[02:02:00] Page configured
+[02:02:00] Splash screen displayed
+[02:02:02] Splash screen cleared
+[02:02:02] DataManager cleared, proceeding to EULA
+[02:02:02] EULA view displayed
+[02:02:04] User agreed to EULA - proceeding with application
+[02:02:04] User navigated to Select Data page
+[02:02:09] Import text file dialog opened
+[02:02:14] Selected file for import: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\BCT.txt
+[02:02:15] Text file imported successfully with 5 records and 0 errors.
+[02:02:17] User navigated to Calculate Biomass page
+[02:02:23] Calculate biomass button clicked
+[02:02:35] User navigated to Create Species page
+[02:02:57] Checking if species name sam exists in C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/treeparameters.json
+[02:02:58] Selected components for creation: ['Wood', 'Bark', 'Branch', 'Foliage']
+[02:02:58] Current equation type is DBH-based
+[02:02:58] Species sam created successfully and added to create_species.json
+[02:03:01] User navigated to Calculate Biomass page
+[02:03:02] Calculate biomass button clicked
+[02:03:16] User navigated to Select Data page
+[02:03:18] User navigated to Calculate Biomass page
+[02:03:20] User navigated to Settings page
+[02:03:21] Theme toggled to: ThemeMode.DARK
+[02:03:22] User navigated to Calculate Biomass page

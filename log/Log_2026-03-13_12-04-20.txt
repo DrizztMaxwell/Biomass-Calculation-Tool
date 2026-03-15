@@ -1,0 +1,39 @@
+[12:04:20] --- Log Session Started ---
+[12:04:22] Running as script
+[12:04:22]    Program path: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool
+[12:04:22]    Data path: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\app_data
+[12:04:22] Initializing JSON files...
+[12:04:22]    Created/Updated: storage/localstorage.json
+[12:04:22]    Created/Updated: data/treeparameters.json
+[12:04:22]    Preserved existing: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/create_species.json
+[12:04:22] Initialized 2 JSON files
+[12:04:22]    Preserved existing: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/selected_database.json
+[12:04:22]    Preserved existing: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/connection_history.json
+[12:04:22] Application starting...
+[12:04:22] Page configured
+[12:04:22] Splash screen displayed
+[12:04:25] Splash screen cleared
+[12:04:25] DataManager cleared, proceeding to EULA
+[12:04:25] EULA view displayed
+[12:04:26] User agreed to EULA - proceeding with application
+[12:04:26] User navigated to Select Data page
+[12:04:28] Import text file dialog opened
+[12:04:31] Selected file for import: C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\BCT.txt
+[12:04:33] Text file imported successfully with 5 records and 0 errors.
+[12:04:34] User navigated to Settings page
+[12:04:36] Theme toggled to: ThemeMode.DARK
+[12:04:38] User navigated to Calculate Biomass page
+[12:04:41] Calculate biomass button clicked
+[12:04:44] View Chart button clicked
+[12:04:45] Biomass chart displayed
+[12:04:45] Biomass chart displayed
+[12:04:52] User navigated to Settings page
+[12:04:53] Theme toggled to: ThemeMode.LIGHT
+[12:04:54] User navigated to Calculate Biomass page
+[12:04:56] Calculate biomass button clicked
+[12:04:59] View Chart button clicked
+[12:04:59] Biomass chart displayed
+[12:04:59] Biomass chart displayed
+[12:05:31] View Chart button clicked
+[12:05:31] Biomass chart displayed
+[12:05:31] Biomass chart displayed

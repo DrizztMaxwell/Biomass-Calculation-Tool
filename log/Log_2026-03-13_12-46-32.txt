@@ -1,0 +1,41 @@
+[12:46:32] --- Log Session Started ---
+[12:46:33] Running as script
+[12:46:33]    Program path: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool
+[12:46:33]    Data path: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\app_data
+[12:46:33] Initializing JSON files...
+[12:46:33]    Created/Updated: storage/localstorage.json
+[12:46:33]    Created/Updated: data/treeparameters.json
+[12:46:33]    Preserved existing: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/create_species.json
+[12:46:33] Initialized 2 JSON files
+[12:46:33]    Preserved existing: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/selected_database.json
+[12:46:33]    Preserved existing: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/connection_history.json
+[12:46:33] Application starting...
+[12:46:33] Page configured
+[12:46:33] Splash screen displayed
+[12:46:36] Splash screen cleared
+[12:46:36] DataManager cleared, proceeding to EULA
+[12:46:36] EULA view displayed
+[12:46:37] User agreed to EULA - proceeding with application
+[12:46:37] User navigated to Select Data page
+[12:46:39] User navigated to Modify Species page
+[12:46:39] Species data loaded successfully.
+[12:46:40] Viewing species: 
+[12:46:44] User navigated to Create Species page
+[12:46:53] Checking if species name dsdas exists in C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/treeparameters.json
+[12:46:53] Checking if species name dsdas exists in C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/create_species.json
+[12:46:54] Selected components for creation: ['Wood', 'Bark', 'Branch', 'Foliage']
+[12:46:54] Current equation type is DBH-based
+[12:46:54] Species dsdas created successfully and added to create_species.json
+[12:46:56] User navigated to Modify Species page
+[12:46:56] Species data loaded successfully.
+[12:46:58] Viewing species: 
+[12:47:09] Editing species: 
+[12:47:42] User navigated to Settings page
+[12:47:43] Theme toggled to: ThemeMode.DARK
+[12:47:44] User navigated to Modify Species page
+[12:47:44] Species data loaded successfully.
+[12:47:46] User navigated to Settings page
+[12:47:47] User navigated to Modify Species page
+[12:47:47] Species data loaded successfully.
+[12:47:48] Viewing species: 
+[12:47:53] Viewing species: 

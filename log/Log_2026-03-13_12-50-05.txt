@@ -1,0 +1,44 @@
+[12:50:05] --- Log Session Started ---
+[12:50:07] Running as script
+[12:50:07]    Program path: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool
+[12:50:07]    Data path: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\app_data
+[12:50:07] Initializing JSON files...
+[12:50:07]    Created/Updated: storage/localstorage.json
+[12:50:07]    Created/Updated: data/treeparameters.json
+[12:50:07]    Preserved existing: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/create_species.json
+[12:50:07] Initialized 2 JSON files
+[12:50:07]    Preserved existing: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/selected_database.json
+[12:50:07]    Preserved existing: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/connection_history.json
+[12:50:07] Application starting...
+[12:50:07] Page configured
+[12:50:07] Splash screen displayed
+[12:50:09] Splash screen cleared
+[12:50:09] DataManager cleared, proceeding to EULA
+[12:50:09] EULA view displayed
+[12:50:10] User agreed to EULA - proceeding with application
+[12:50:10] User navigated to Select Data page
+[12:50:11] User navigated to Settings page
+[12:50:12] Theme toggled to: ThemeMode.DARK
+[12:50:13] User navigated to Modify Species page
+[12:50:13] Species data loaded successfully.
+[12:50:16] Editing species: 
+[12:50:28] User navigated to Settings page
+[12:50:29] Theme toggled to: ThemeMode.LIGHT
+[12:50:30] User navigated to Modify Species page
+[12:50:30] Species data loaded successfully.
+[12:50:31] Editing species: 
+[12:50:39] Editing species: 
+[12:50:46] Editing species: 
+[12:50:50] Editing species: 
+[12:50:52] Confirming deletion of species: 
+[12:54:55] Viewing species: 
+[12:54:58] Editing species: 
+[12:55:01] Confirming deletion of species: 
+[12:55:03] Editing species: 
+[12:55:04] Species data saved successfully.
+[12:55:04] Species '' updated successfully.
+[12:55:06] Viewing species: 
+[12:55:08] Editing species: 
+[12:55:16] Loaded species data from C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/treeparameters.json successfully.
+[12:56:18] User navigated to Settings page
+[12:56:19] User navigated to Create Species page

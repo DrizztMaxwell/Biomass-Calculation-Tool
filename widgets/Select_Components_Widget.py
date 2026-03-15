@@ -4,6 +4,7 @@ from helper_functions.Assets_Helper import asset_helper
 import os
 import sys
 
+
 class Select_Components_Widget:
     def __init__(
         self,
@@ -20,88 +21,79 @@ class Select_Components_Widget:
         is_database_selected=False,
         is_in_create_species_page=False
     ):
-        # Initialize attributes first
-        self.debug = False  # Set debug first
+        self.debug = False
         self.page = page
         self.title = title
         self.description_text = description_text
         self.components_card_row = components_card_row
         self.selected_card_component = selected_card_component
-        
-        # Prepare component data with proper paths before any other operations
+
         if components_data:
             self.components_data = self._prepare_component_data(components_data)
         else:
             self.components_data = self._prepare_component_data(COMPONENTS_DATA.copy())
-        
-        self.display_button = display_button
-        self.display_shadow = display_shadow
+
+        self.display_button      = display_button
+        self.display_shadow      = display_shadow
         self.on_selection_change = on_selection_change
-        self.is_alternate_card = is_alternate_card
+        self.is_alternate_card   = is_alternate_card
         self.is_database_selected = is_database_selected
         self.is_in_create_species_page = is_in_create_species_page
-        
-        # Prepare original data after components_data is set
+
         self.original_components_data = self._prepare_component_data(COMPONENTS_DATA.copy())
-        
-        # Initialize the widget
         self._initialize_widget()
-    
+
+    # ── Theme helpers ─────────────────────────────────────────────────────────
+
+    @property
+    def _is_dark(self):
+        return self.page.theme_mode == ft.ThemeMode.DARK
+
+    def _card_bg(self, is_selected, is_disabled):
+        if is_disabled or is_selected:
+            return ft.Colors.with_opacity(0.10, "#16A34A")
+        return "#2A2A2A" if self._is_dark else "#FFFFFF"
+
+    def _card_border(self, is_selected, is_disabled):
+        if is_disabled or is_selected:
+            return "#16A34A"
+        return "#3A3A3A" if self._is_dark else "#E2E8F0"
+
+    def _card_border_width(self, is_selected, is_disabled):
+        return 2 if (is_selected or is_disabled) else 1
+
+    def _text_primary(self):
+        return "#F5F5F5" if self._is_dark else "#0F172A"
+
+    def _text_secondary(self):
+        return "#888888" if self._is_dark else "#64748B"
+
+    def _surface(self):
+        return "#222222" if self._is_dark else "#F8FAFC"
+
+    # ── Path helpers ──────────────────────────────────────────────────────────
+
     def _get_resource_path(self, relative_path):
-        """Get absolute path to resource for both development and production"""
         try:
             if getattr(sys, 'frozen', False):
-                # Running in production (PyInstaller bundle)
                 base_path = sys._MEIPASS
-                if hasattr(self, 'debug') and self.debug:
-                    print(f"Production mode - using MEIPASS: {base_path}")
             else:
-                # Running in development
                 base_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-                if hasattr(self, 'debug') and self.debug:
-                    print(f"Development mode - using base_path: {base_path}")
-            
-            # Clean the relative path
             clean_path = relative_path.replace('./', '').replace('\\', '/')
-            
-            # Construct full path
-            full_path = os.path.join(base_path, clean_path)
-            
-            if hasattr(self, 'debug') and self.debug:
-                print(f"Resource path: {full_path}")
-                print(f"Exists: {os.path.exists(full_path)}")
-            
-            return full_path
-        except Exception as e:
-            if hasattr(self, 'debug') and self.debug:
-                print(f"Error getting resource path: {e}")
+            return os.path.join(base_path, clean_path)
+        except Exception:
             return relative_path
-    
+
     def _prepare_component_data(self, components):
-        """Update image paths in component data for current environment"""
         for component in components:
             if "image_src" in component:
-                # Store original path for reference
-                original_path = component["image_src"]
-                
-                # Get the correct path based on environment
                 component["image_src"] = self._get_resource_path(component["image_src"])
-                
-                if hasattr(self, 'debug') and self.debug:
-                    print(f"Component {component['title']}:")
-                    print(f"  Original: {original_path}")
-                    print(f"  Resolved: {component['image_src']}")
-        
         return components
-    
+
+    # ── Init ──────────────────────────────────────────────────────────────────
+
     def _initialize_widget(self):
-        """Initialize the widget and its components"""
-        if hasattr(self, 'debug') and self.debug:
-            print(f"Initializing widget - Production mode: {getattr(sys, 'frozen', False)}")
-            if hasattr(sys, '_MEIPASS'):
-                print(f"MEIPASS path: {sys._MEIPASS}")
-        
-        if self.is_in_create_species_page == False:
+        if not self.is_in_create_species_page:
             self._apply_database_mode()
         elif self.is_in_create_species_page:
             for component in self.components_data:
@@ -111,225 +103,289 @@ class Select_Components_Widget:
         self._create_select_all_button()
         self._build_component_cards()
         self._update_selected_text()
-    
+
     def _apply_database_mode(self):
-        """Apply database selection mode: select all and disable if database is selected"""
         for i, component in enumerate(self.components_data):
             if self.is_database_selected:
                 component["is_selected"] = True
                 component["is_disabled"] = True
             else:
-                # Make sure original_components_data exists and has the same length
                 if i < len(self.original_components_data):
-                    original_component = self.original_components_data[i]
-                    component["is_selected"] = original_component.get("is_selected", False)
+                    component["is_selected"] = self.original_components_data[i].get("is_selected", False)
                 else:
                     component["is_selected"] = False
                 component["is_disabled"] = False
-    
+
+    # ── Select-all button ─────────────────────────────────────────────────────
+
     def _create_select_all_button(self):
-        """Create the select all button"""
-        self.select_all_button = ft.TextButton(
-            text=self._get_select_all_button_text(),
-            icon=ft.Icons.CHECK_BOX_OUTLINED,
-            style=ft.ButtonStyle(color=ft.Colors.TERTIARY),
-            on_click=self._select_all_components,
-            disabled=self.is_database_selected
+        label = "All Required" if self.is_database_selected else (
+            "Deselect All" if self._all_components_selected() else "Select All"
         )
-    
+        icon  = ft.Icons.CHECK_BOX_OUTLINED if not self._all_components_selected() else ft.Icons.CHECK_BOX_OUTLINE_BLANK
+
+        self.select_all_button = ft.Container(
+            content=ft.Row([
+                ft.Icon(icon, size=14,
+                        color="#16A34A" if not self.is_database_selected else "#888888"),
+                ft.Text(label, size=12, weight=ft.FontWeight.W_600,
+                        color="#16A34A" if not self.is_database_selected else "#888888"),
+            ], spacing=6, tight=True),
+            on_click=None if self.is_database_selected else self._select_all_components,
+            bgcolor=ft.Colors.with_opacity(0.07, "#16A34A" if not self.is_database_selected else "#888888"),
+            border=ft.border.all(1, ft.Colors.with_opacity(
+                0.25, "#16A34A" if not self.is_database_selected else "#888888"
+            )),
+            border_radius=ft.border_radius.all(20),
+            padding=ft.padding.symmetric(horizontal=14, vertical=7),
+            ink=not self.is_database_selected,
+            tooltip="Select or deselect all components",
+        )
+
     def _get_select_all_button_text(self):
-        """Get the appropriate text for the select all button"""
         if self.is_database_selected:
             return "All Required"
         return "Deselect All" if self._all_components_selected() else "Select All"
-    
+
     def _all_components_selected(self):
-        """Check if all components are selected"""
         return all(comp.get("is_selected", False) for comp in self.components_data)
-    
-    def _get_card_colors(self, is_selected, is_disabled):
-        """Get colors for component card based on state"""
-        is_light_mode = self.page.theme_mode == ft.ThemeMode.LIGHT
-        
-        if is_disabled:
-            bgcolor = ft.Colors.GREEN_100 
-            border_color = ft.Colors.GREEN if is_light_mode else ft.Colors.PRIMARY
-        elif is_selected:
-            bgcolor = ft.Colors.GREEN_50 if is_light_mode else ft.Colors.GREEN_300 
-            border_color = ft.Colors.GREEN if is_light_mode else ft.Colors.PRIMARY
-        else:
-            bgcolor = ft.Colors.WHITE if is_light_mode else ft.Colors.GREY_300
-            border_color = ft.Colors.GREY_300 if is_light_mode else ft.Colors.BLACK
-        
-        return bgcolor, border_color
-    
+
+    # ── Cards ─────────────────────────────────────────────────────────────────
+
     def _create_component_card(self, component):
-        """Create individual component card"""
         is_disabled = component.get("is_disabled", False)
         is_selected = component["is_selected"]
-        bgcolor, border_color = self._get_card_colors(is_selected, is_disabled)
-        
-        card_content = ft.Column(
-            horizontal_alignment=ft.CrossAxisAlignment.CENTER,
-            alignment=ft.MainAxisAlignment.CENTER,
-            spacing=8,
-            controls=[
-                self._create_image_container(component, is_disabled),
-                self._create_title_text(component, is_disabled)
-            ]
+
+        # Checkmark badge (top-right) — only visible when selected
+        check_badge = ft.Container(
+            content=ft.Icon(ft.Icons.CHECK_CIRCLE_ROUNDED, size=16, color="#16A34A"),
+            visible=is_selected or is_disabled,
+            alignment=ft.alignment.top_right,
         )
-        
-        card = ft.Container(
-            width=150,
-            height=150,
-            border_radius=10,
-            bgcolor=bgcolor,
-            border=ft.border.all(2, border_color),
-            padding=10,
-            alignment=ft.alignment.center,
-            animate_scale=None if is_disabled else ft.Animation(300, "easeInOut"),
-            scale=1.0,
-            content=card_content,
-            tooltip=self._get_card_tooltip(is_disabled)
-        )
-        
-        if not is_disabled:
-            card.on_click = lambda e, comp=component: self._toggle_component(e, comp)
-            card.on_hover = lambda e: self._handle_hover(e, card)
-        
-        return card
-    
-    def _create_image_container(self, component, is_disabled):
-        """Create image container for component card"""
-        # Debug: print image path
-        if hasattr(self, 'debug') and self.debug:
-            print(f"Loading image for {component['title']}: {component['image_src']}")
-            print(f"File exists: {os.path.exists(component['image_src'])}")
-        
-        # Create image with fallback
+
         image = ft.Image(
             src=component["image_src"],
             fit=ft.ImageFit.CONTAIN,
-            color=ft.Colors.GREY_400 if is_disabled else None,
-            error_content=ft.Column([
-                ft.Icon(ft.Icons.IMAGE_NOT_SUPPORTED, size=30, color=ft.Colors.RED),
-                ft.Text("?", size=10, color=ft.Colors.RED)
-            ])
+            color=ft.Colors.with_opacity(0.4, "#888888") if is_disabled else None,
+            error_content=ft.Icon(ft.Icons.FOREST_OUTLINED, size=30,
+                                   color="#16A34A" if is_selected else "#888888"),
         )
-        
-        return ft.Container(
-            width=50,
-            height=50,
+
+        card_content = ft.Stack([
+            ft.Column([
+                ft.Container(
+                    content=image,
+                    width=48, height=48,
+                    alignment=ft.alignment.center,
+                ),
+                ft.Container(height=8),
+                ft.Text(
+                    component["title"],
+                    size=13,
+                    weight=ft.FontWeight.W_600,
+                    color="#16A34A" if (is_selected or is_disabled) else self._text_primary(),
+                    text_align=ft.TextAlign.CENTER,
+                ),
+            ],
+            horizontal_alignment=ft.CrossAxisAlignment.CENTER,
+            alignment=ft.MainAxisAlignment.CENTER,
+            spacing=0,
+            ),
+            ft.Container(
+                content=check_badge,
+                alignment=ft.alignment.top_right,
+                padding=ft.padding.all(6),
+            ),
+        ])
+
+        card = ft.Container(
+            width=130,
+            height=130,
+            border_radius=ft.border_radius.all(10),
+            bgcolor=self._card_bg(is_selected, is_disabled),
+            border=ft.border.all(
+                self._card_border_width(is_selected, is_disabled),
+                self._card_border(is_selected, is_disabled),
+            ),
+            padding=10,
             alignment=ft.alignment.center,
-            content=image
+            animate_scale=None if is_disabled else ft.Animation(200, "easeInOut"),
+            scale=1.0,
+            clip_behavior=ft.ClipBehavior.NONE,
+            content=card_content,
+            tooltip="Required" if is_disabled else "Click to select/deselect",
+            shadow=ft.BoxShadow(
+                blur_radius=6, spread_radius=0,
+                color=ft.Colors.with_opacity(0.12 if is_selected else 0.04,
+                                              "#16A34A" if is_selected else "#000000"),
+                offset=ft.Offset(0, 2),
+            ) if not is_disabled else None,
         )
-    
-    def _create_title_text(self, component, is_disabled):
-        """Create title text for component card"""
-        return ft.Container(
-            alignment=ft.alignment.center,
-            content=ft.Text(
-                value=component["title"],
-                weight=ft.FontWeight.BOLD,
-                color=ft.Colors.GREY_600 if is_disabled else ft.Colors.BLACK,
-                size=18,
-                text_align=ft.TextAlign.CENTER
-            )
-        )
-    
-    def _get_card_tooltip(self, is_disabled):
-        """Get tooltip text for component card"""
-        return "Required - cannot be deselected" if is_disabled else "Click to select/deselect"
-    
+
+        if not is_disabled:
+            card.on_click = lambda e, comp=component: self._toggle_component(e, comp)
+            card.on_hover = lambda e: self._handle_hover(e, card)
+
+        return card
+
     def _handle_hover(self, e, card):
-        """Handle hover effects for enabled cards"""
         card.scale = 1.05 if e.data == "true" else 1.0
         card.update()
-    
+
     def _toggle_component(self, e, component):
-        """Handle component selection/deselection for enabled cards"""
         if component.get("is_disabled", False):
             return
-        
         component["is_selected"] = not component["is_selected"]
         self._update_card_appearance(e.control, component)
         self._update_ui_state()
-        
         if self.on_selection_change:
             self.on_selection_change(self.selected_components)
-    
+
     def _update_card_appearance(self, card, component):
-        """Update the visual appearance of a component card"""
-        bgcolor, border_color = self._get_card_colors(component["is_selected"], False)
-        card.bgcolor = bgcolor
-        card.border = ft.border.all(2, border_color)
+        is_selected = component["is_selected"]
+        card.bgcolor = self._card_bg(is_selected, False)
+        card.border  = ft.border.all(
+            self._card_border_width(is_selected, False),
+            self._card_border(is_selected, False),
+        )
+        card.shadow = ft.BoxShadow(
+            blur_radius=6, spread_radius=0,
+            color=ft.Colors.with_opacity(0.12 if is_selected else 0.04,
+                                          "#16A34A" if is_selected else "#000000"),
+            offset=ft.Offset(0, 2),
+        )
+        # Update check badge and title color inside the Stack
+        try:
+            stack   = card.content
+            col     = stack.controls[0]
+            badge_c = stack.controls[1]
+
+            # Title text — last in column
+            col.controls[-1].color = "#16A34A" if is_selected else self._text_primary()
+            # Check badge visibility
+            badge_c.content.visible = is_selected
+        except Exception:
+            pass
         card.update()
-    
+
     def _update_ui_state(self):
-        """Update all UI elements that depend on selection state"""
         self._update_selected_text()
-        self.select_all_button.text = self._get_select_all_button_text()
+        self._refresh_select_all_button()
         self._update_controls()
-    
+
+    def _refresh_select_all_button(self):
+        all_sel = self._all_components_selected()
+        label = "Deselect All" if all_sel else "Select All"
+        icon  = ft.Icons.CHECK_BOX_OUTLINE_BLANK if all_sel else ft.Icons.CHECK_BOX_OUTLINED
+        try:
+            row = self.select_all_button.content
+            row.controls[0].name  = icon
+            row.controls[1].value = label
+            self.select_all_button.update()
+        except Exception:
+            pass
+
     def _update_selected_text(self):
-        """Update selected components text display"""
         if self.is_database_selected:
             self.selected_card_component.value = "All components selected (database mode)"
         elif self.selected_components:
             self.selected_card_component.value = f"Selected: {', '.join(self.selected_components)}"
         else:
             self.selected_card_component.value = "No components selected"
-        
-        self.selected_card_component.color = ft.Colors.PRIMARY
-    
+        self.selected_card_component.color = self._text_secondary()
+
     def _update_controls(self):
-        """Update all control states"""
-        if hasattr(self.select_all_button, '_Control__page') and self.select_all_button._Control__page is not None:
-            self.select_all_button.update()
-        self.selected_card_component.update()
-    
+        try:
+            self.selected_card_component.update()
+        except Exception:
+            pass
+
     def _select_all_components(self, e=None):
-        """Select or deselect all enabled components"""
         if self.is_database_selected:
             return
-        
         all_selected = self._all_components_selected()
-        
         for component in self.components_data:
             if not component.get("is_disabled", False):
                 component["is_selected"] = not all_selected
-        
         self._rebuild_component_cards()
         self._update_ui_state()
-        
         if self.on_selection_change:
             self.on_selection_change(self.selected_components)
-    
+
     def _build_component_cards(self):
-        """Build all component cards and add them to the row"""
         self.components_card_row.controls.clear()
         for component in self.components_data:
             self.components_card_row.controls.append(self._create_component_card(component))
-    
+
     def _rebuild_component_cards(self):
-        """Rebuild all component cards with current state"""
         for i, component in enumerate(self.components_data):
             if i < len(self.components_card_row.controls):
-                card = self.components_card_row.controls[i]
-                if not component.get("is_disabled", False):
-                    self._update_card_appearance(card, component)
-    
+                self._update_card_appearance(
+                    self.components_card_row.controls[i], component
+                )
+
+    # ── Widget assembly ───────────────────────────────────────────────────────
+
     def get_widget(self):
-        """Return the Flet widget container"""
-        controls = [
-            self.title,
-            self.description_text,
-            self._create_select_all_row(),
-            ft.Container(height=10),
-            self.components_card_row,
-            self._create_selected_display()
+        # Selected summary strip
+        selected_strip = ft.Container(
+            content=ft.Row([
+                ft.Icon(
+                    ft.Icons.CHECK_CIRCLE_ROUNDED if self.selected_components else ft.Icons.RADIO_BUTTON_UNCHECKED,
+                    size=14,
+                    color="#16A34A" if self.selected_components else self._text_secondary(),
+                ),
+                self.selected_card_component,
+            ], spacing=8),
+            bgcolor=ft.Colors.with_opacity(
+                0.07 if self.selected_components else 0.03, "#16A34A"
+            ),
+            border=ft.border.all(
+                1,
+                ft.Colors.with_opacity(
+                    0.20 if self.selected_components else 0.10, "#16A34A"
+                ),
+            ),
+            border_radius=ft.border_radius.all(8),
+            padding=ft.padding.symmetric(horizontal=14, vertical=10),
+            margin=ft.margin.only(top=12),
+        )
+
+        controls = []
+
+        # Add title if it has visible content
+        title_val = getattr(self.title, 'value', None)
+        if title_val is None or title_val != "":
+            # It's either a non-Text widget (ft.Row etc.) or a Text with content
+            if not (hasattr(self.title, 'value') and self.title.value == ""):
+                controls.append(self.title)
+        # Add description if non-empty
+        desc_val = getattr(self.description_text, 'value', None)
+        if desc_val is None or desc_val != "":
+            if not (hasattr(self.description_text, 'value') and self.description_text.value == ""):
+                controls.append(ft.Container(content=self.description_text, margin=ft.margin.only(top=2)))
+
+        if self.display_button:
+            controls.append(
+                ft.Container(
+                    content=ft.Row([self.select_all_button],
+                                   alignment=ft.MainAxisAlignment.START),
+                    margin=ft.margin.only(top=10, bottom=10),
+                )
+            )
+
+        controls += [
+            ft.Container(
+                content=ft.Row(
+                    controls=self.components_card_row.controls,
+                    spacing=12,
+                    wrap=True,
+                ),
+                padding=ft.padding.all(8),  # breathing room so scaled cards aren't clipped
+            ),
+            selected_strip,
         ]
-        
+
         return ft.Container(
             expand=True,
             bgcolor=ft.Colors.SECONDARY_CONTAINER,
@@ -341,75 +397,58 @@ class Select_Components_Widget:
             content=ft.Column(
                 controls=controls,
                 horizontal_alignment=ft.CrossAxisAlignment.START,
-                alignment=ft.MainAxisAlignment.START,
+                spacing=0,
                 expand=True,
-            )
+            ),
         )
-    
-    def _create_select_all_row(self):
-        """Create the select all button row if display_button is True"""
-        if self.display_button:
-            return ft.Row(
-                controls=[self.select_all_button],
-                alignment=ft.MainAxisAlignment.START,
-            )
-        return ft.Container()
-    
-    def _create_selected_display(self):
-        """Create the selected items display container"""
-        return ft.Container(
-            expand=True,
-            bgcolor=ft.Colors.with_opacity(0.1, ft.Colors.GREEN_ACCENT_400),
-            border_radius=10,
-            margin=ft.margin.only(top=10, bottom=10),
-            padding=10,
-            alignment=ft.alignment.center_left,
-            content=self.selected_card_component
-        )
-    
+
     def _create_shadow(self):
-        """Create box shadow if display_shadow is True"""
         return ft.BoxShadow(
-            spread_radius=1,
-            blur_radius=5,
-            color=ft.Colors.with_opacity(0.15, ft.Colors.BLUE_GREY_900),
-            offset=ft.Offset(0, 3),
+            spread_radius=0, blur_radius=6,
+            color=ft.Colors.with_opacity(0.08, ft.Colors.BLACK),
+            offset=ft.Offset(0, 2),
         )
-    
+
+    # ── Public API ────────────────────────────────────────────────────────────
+
     @property
     def selected_components(self):
-        """Get list of selected component titles"""
         return [comp["title"] for comp in self.components_data if comp["is_selected"]]
-    
+
     def set_selected_components(self, component_titles):
-        """Set specific components as selected (only if not disabled)"""
         if self.is_database_selected:
             return
-        
         for component in self.components_data:
             if not component.get("is_disabled", False):
                 component["is_selected"] = component["title"] in component_titles
-        
         self._rebuild_component_cards()
         self._update_ui_state()
-    
+
     def toggle_database_mode(self, is_database_selected: bool):
-        """Toggle between database mode and normal mode"""
         self.is_database_selected = is_database_selected
         self._apply_database_mode()
-        self.select_all_button.disabled = is_database_selected
-        self.select_all_button.text = self._get_select_all_button_text()
+        self._create_select_all_button()
         self._build_component_cards()
         self._update_selected_text()
         self._update_controls()
 
     def refresh_asset_paths(self):
-        """Refresh all asset paths (useful if theme changes or after rebuild)"""
         for component in self.components_data:
             if "image_src" in component:
                 component["image_src"] = self._get_resource_path(component["image_src"])
         self._build_component_cards()
-    
+
     def enable_debug(self, enabled=True):
-        """Enable or disable debug mode"""
         self.debug = enabled
+
+    def _create_title_text(self, component, is_disabled):
+        return ft.Container(
+            alignment=ft.alignment.center,
+            content=ft.Text(
+                value=component["title"],
+                weight=ft.FontWeight.W_600,
+                color=self._text_secondary() if is_disabled else self._text_primary(),
+                size=13,
+                text_align=ft.TextAlign.CENTER,
+            ),
+        )

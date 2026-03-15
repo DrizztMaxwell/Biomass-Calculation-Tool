@@ -296,6 +296,7 @@ class Calculate_Biomass_Controller:
             self.tree_params_data = pd.read_json(Biomass_Config.TREE_PARAMS_PATH)
             # if not self.check_if_species_code_exists_within_the_json_files(101, "data/treeparameters.json", "data/create_species.json"):
             #print("Checking for missing species codes...")
+            
             datasets_species_code_list = extract_all_the_species_code_from_the_json_files(Biomass_Config.TREE_PARAMS_PATH,Biomass_Config.CREATED_SPECIES_PATH)
             local_storage_species_code_list = extract_all_species_codes_from_local_storage_json(self.local_storage_data)
            
@@ -484,6 +485,7 @@ class Calculate_Biomass_Controller:
                # print("Found species parameters:")
                 # print(species_params)
                 # print(f"Row {idx}: Found species params for '{species_value}'")
+                print(f"Row {idx}: Found species parameters for '{species_value}': {species_params}")
                 self._calculate_row_biomass(local_data, idx, row, species_params)
             else:
                 pass

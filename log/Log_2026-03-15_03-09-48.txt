@@ -1,0 +1,44 @@
+[03:09:48] --- Log Session Started ---
+[03:09:50] Running as script
+[03:09:50]    Program path: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool
+[03:09:50]    Data path: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\app_data
+[03:09:50] Initializing JSON files...
+[03:09:50]    Created/Updated: storage/localstorage.json
+[03:09:50]    Created/Updated: data/treeparameters.json
+[03:09:50]    Preserved existing: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/create_species.json
+[03:09:50] Initialized 2 JSON files
+[03:09:50]    Preserved existing: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/selected_database.json
+[03:09:50]    Preserved existing: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/connection_history.json
+[03:09:50] Application starting...
+[03:09:50] Page configured
+[03:09:50] Splash screen displayed
+[03:09:52] Splash screen cleared
+[03:09:52] DataManager cleared, proceeding to EULA
+[03:09:52] EULA view displayed
+[03:09:53] User agreed to EULA - proceeding with application
+[03:09:53] User navigated to Select Data page
+[03:09:54] Import text file dialog opened
+[03:09:57] Selected file for import: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data_set.txt
+[03:09:58] Text file imported successfully with 12 records and 2 errors.
+[03:10:00] User navigated to Calculate Biomass page
+[03:10:03] Calculate biomass button clicked
+[03:10:07] User navigated to Select Data page
+[03:10:08] Import text file dialog opened
+[03:10:11] Selected file for import: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\testingnewdataset.txt
+[03:10:11] Text file imported successfully with 2 records and 2 errors.
+[03:10:14] User navigated to Calculate Biomass page
+[03:10:15] Calculate biomass button clicked
+[03:13:24] User navigated to Select Data page
+[03:13:26] Import text file dialog opened
+[03:13:31] Selected file for import: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\todd_final.txt
+[03:13:31] Text file imported successfully with 2 records and 0 errors.
+[03:13:33] User navigated to Calculate Biomass page
+[03:13:35] Calculate biomass button clicked
+[03:13:46] User navigated to Create Species page
+[03:13:48] User navigated to Modify Species page
+[03:13:48] Species data loaded successfully.
+[03:13:52] User navigated to Calculate Biomass page
+[03:13:54] Calculate biomass button clicked
+[03:14:00] User navigated to Select Data page
+[03:14:04] User navigated to Calculate Biomass page
+[03:14:05] Calculate biomass button clicked

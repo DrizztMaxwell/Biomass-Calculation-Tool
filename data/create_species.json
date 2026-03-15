@@ -1,17 +1,10 @@
 [
     {
-        "SpecCommon": "dsa d",
+        "SpecCommon": "sam",
         "Origin": "Natural Stand",
         "EquationType": "DBH-based",
-        "bbarkb1": 0.0,
-        "bbarkb2": 0.0
-    },
-    {
-        "SpecCommon": "sddas",
-        "Origin": "Natural Stand",
-        "EquationType": "DBH-based",
-        "bwoodb1": 0.0,
-        "bwoodb2": 0.0,
+        "bwoodb1": 1.0,
+        "bwoodb2": 2.0,
         "bbarkb1": 0.0,
         "bbarkb2": 0.0,
         "bbranchesb1": 0.0,
@@ -20,49 +13,12 @@
         "bfoliageb2": 0.0
     },
     {
-        "SpecCommon": "dasdasd",
-        "Origin": "Natural Stand",
-        "EquationType": "DBH + Height-based",
-        "bhwoodb1": 0.0,
-        "bhwoodb2": 0.0,
-        "bhwoodb3": 0.0,
-        "bhbarkb1": 0.0,
-        "bhbarkb2": 0.0,
-        "bhbarkb3": 0.0,
-        "bhbranchesb1": 0.0,
-        "bhbranchesb2": 0.0,
-        "bhbranchesb3": 0.0,
-        "bhfoliageb1": 0.0,
-        "bhfoliageb2": 0.0,
-        "bhfoliageb3": 0.0
-    },
-    {
-        "SpecCommon": "dasd",
+        "SpecCommon": "Todd",
         "Origin": "Natural Stand",
         "EquationType": "DBH-based",
-        "bwoodb1": 0.0,
-        "bwoodb2": 0.0,
-        "bbarkb1": 0.0,
-        "bbarkb2": 0.0,
-        "bbranchesb1": 0.0,
-        "bbranchesb2": 0.0
-    },
-    {
-        "SpecCommon": "sdadsa",
-        "Origin": "Natural Stand",
-        "EquationType": "DBH-based",
-        "bwoodb1": 0.0,
-        "bwoodb2": 0.0,
-        "bbarkb1": 0.0,
-        "bbarkb2": 0.0
-    },
-    {
-        "SpecCommon": "das",
-        "Origin": "Natural Stand",
-        "EquationType": "DBH-based",
-        "bwoodb1": 0.002,
-        "bwoodb2": 0.0,
-        "bbarkb1": 0.0,
-        "bbarkb2": 0.0
+        "bwoodb1": 1.0,
+        "bwoodb2": 2.0,
+        "bbarkb1": 3.0,
+        "bbarkb2": 4.0
     }
 ]

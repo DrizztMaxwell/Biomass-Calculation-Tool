@@ -1,0 +1,85 @@
+[13:05:37] --- Log Session Started ---
+[13:05:39] Running as script
+[13:05:39]    Program path: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool
+[13:05:39]    Data path: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\app_data
+[13:05:39] Initializing JSON files...
+[13:05:39]    Created/Updated: storage/localstorage.json
+[13:05:39]    Created/Updated: data/treeparameters.json
+[13:05:39]    Preserved existing: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/create_species.json
+[13:05:39] Initialized 2 JSON files
+[13:05:39]    Preserved existing: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/selected_database.json
+[13:05:39]    Preserved existing: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/connection_history.json
+[13:05:39] Application starting...
+[13:05:39] Page configured
+[13:05:39] Splash screen displayed
+[13:05:41] Splash screen cleared
+[13:05:41] DataManager cleared, proceeding to EULA
+[13:05:41] EULA view displayed
+[13:05:47] User agreed to EULA - proceeding with application
+[13:05:47] User navigated to Select Data page
+[13:05:53] Successfully connected to database gypsppgp on server .\SQLEXPRESS
+[13:05:53] Database connection info saved: {'server': '.\\SQLEXPRESS', 'database': 'gypsppgp', 'driver': 'ODBC Driver 17 for SQL Server', 'data_folder_path': 'C:\\Program Files\\Microsoft SQL Server\\MSSQL16.SQLEXPRESS\\MSSQL\\DATA'}
+[13:05:53] Connecting to database gypsppgp on server .\SQLEXPRESS using driver ODBC Driver 17 for SQL Server
+[13:05:53] Database import successful with 10000 records.
+[13:05:53] Database import process completed for gypsppgp
+[13:05:55] User navigated to Calculate Biomass page
+[13:05:55] Calculate biomass button clicked
+[13:06:00] View Chart button clicked
+[13:06:01] Biomass chart displayed
+[13:06:01] Biomass chart displayed
+[13:07:06] User navigated to Modify Species page
+[13:07:06] Species data loaded successfully.
+[13:07:08] User navigated to Settings page
+[13:07:09] User navigated to Modify Species page
+[13:07:09] Species data loaded successfully.
+[13:07:12] Loaded species data from C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/treeparameters.json successfully.
+[13:09:39] User navigated to Calculate Biomass page
+[13:09:40] Calculate biomass button clicked
+[13:09:45] View Chart button clicked
+[13:09:46] Biomass chart displayed
+[13:09:46] Biomass chart displayed
+[13:11:30] Write to database operation success: True
+[13:11:50] Generated default export filename: Output_Biomass_Results_20260313_131150.txt
+[13:11:50] Export file dialog opened
+[13:11:59] Data exported successfully to C:\Users\mohib\Desktop\BIOMASS L\Biomass-Calculation-Tool\Output_Biomass_Results_20260313_131150.txt
+[13:12:10] Generated default export filename: Output_Biomass_Results_20260313_131210.txt
+[13:12:10] Export file dialog opened
+[13:12:21] Data exported successfully to C:\Users\mohib\Desktop\Output_Biomass_Results_20260313_131210.txt
+[13:13:04] User navigated to Settings page
+[13:13:12] User navigated to Create Species page
+[13:13:13] User navigated to Modify Species page
+[13:13:13] Species data loaded successfully.
+[13:13:15] User navigated to Settings page
+[13:13:16] User navigated to Create Species page
+[13:13:19] User navigated to Calculate Biomass page
+[13:13:20] Calculate biomass button clicked
+[13:13:25] View Chart button clicked
+[13:13:26] Biomass chart displayed
+[13:13:26] Biomass chart displayed
+[13:14:55] View Chart button clicked
+[13:14:56] Biomass chart displayed
+[13:14:56] Biomass chart displayed
+[13:18:11] User navigated to Select Data page
+[13:22:07] User navigated to Modify Species page
+[13:22:07] Species data loaded successfully.
+[13:22:07] User navigated to Create Species page
+[13:22:35] Checking if species name Todd exists in C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/treeparameters.json
+[13:22:35] Checking if species name Todd exists in C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/create_species.json
+[13:22:37] Selected components for creation: ['Wood', 'Bark']
+[13:22:37] Current equation type is DBH-based
+[13:22:37] Species Todd created successfully and added to create_species.json
+[13:22:39] User navigated to Modify Species page
+[13:22:39] Species data loaded successfully.
+[13:22:41] Viewing species: 
+[13:22:44] User navigated to Calculate Biomass page
+[13:24:37] User navigated to Select Data page
+[13:24:38] Import text file dialog opened
+[13:24:40] File selection cancelled by user
+[13:24:50] Import text file dialog opened
+[13:25:36] Selected file for import: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\testingnewdataset.txt
+[13:25:37] Error importing text file: Missing required columns: ['plot', 'year', 'species', 'tree number', 'dbh', 'height']
+Available columns: [' asdfafd20261\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0 1233\xa0\xa0\xa0 2\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0 0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0 0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0 Todd\xa0\xa0 TL \xa0\xa0\xa0\xa0\xa0\xa0\xa0 N\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0 L\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0 1197\xa0\xa0\xa0 13.2\xa0\xa0\xa0\xa0 14']
+[13:28:08] Import text file dialog opened
+[13:28:10] Selected file for import: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\testingnewdataset.txt
+[13:28:11] Error importing text file: Missing required columns: ['plot', 'year', 'species', 'tree number', 'dbh', 'height']
+Available columns: ['plot    year    species tree Number dbh height']

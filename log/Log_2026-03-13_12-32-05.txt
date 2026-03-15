@@ -1,0 +1,46 @@
+[12:32:05] --- Log Session Started ---
+[12:32:07] Running as script
+[12:32:07]    Program path: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool
+[12:32:07]    Data path: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\app_data
+[12:32:07] Initializing JSON files...
+[12:32:07]    Created/Updated: storage/localstorage.json
+[12:32:07]    Created/Updated: data/treeparameters.json
+[12:32:07]    Preserved existing: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/create_species.json
+[12:32:07] Initialized 2 JSON files
+[12:32:07]    Preserved existing: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/selected_database.json
+[12:32:07]    Preserved existing: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/connection_history.json
+[12:32:07] Application starting...
+[12:32:07] Page configured
+[12:32:07] Splash screen displayed
+[12:32:10] Splash screen cleared
+[12:32:10] DataManager cleared, proceeding to EULA
+[12:32:10] EULA view displayed
+[12:32:11] User agreed to EULA - proceeding with application
+[12:32:11] User navigated to Select Data page
+[12:32:12] User navigated to Settings page
+[12:32:13] User navigated to Modify Species page
+[12:32:13] Species data loaded successfully.
+[12:32:24] Confirming deletion of species: 
+[12:32:25] Confirming deletion of species: 
+[12:32:25] Species data saved successfully.
+[12:32:25] Species 'dsa d' deleted successfully.
+[12:32:27] Confirming deletion of species: 
+[12:32:28] Confirming deletion of species: 
+[12:32:28] Species data saved successfully.
+[12:32:28] Species 'sddas' deleted successfully.
+[12:32:29] Confirming deletion of species: 
+[12:32:30] Confirming deletion of species: 
+[12:32:30] Species data saved successfully.
+[12:32:30] Species 'dasdasd' deleted successfully.
+[12:32:32] Confirming deletion of species: 
+[12:32:32] Confirming deletion of species: 
+[12:32:32] Species data saved successfully.
+[12:32:32] Species 'dasd' deleted successfully.
+[12:32:34] Confirming deletion of species: 
+[12:32:35] Confirming deletion of species: 
+[12:32:35] Species data saved successfully.
+[12:32:35] Species 'das' deleted successfully.
+[12:32:37] Confirming deletion of species: 
+[12:32:37] Confirming deletion of species: 
+[12:32:37] Species data saved successfully.
+[12:32:37] Species 'sdadsa' deleted successfully.
