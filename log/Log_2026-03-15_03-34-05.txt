@@ -1,0 +1,55 @@
+[03:34:05] --- Log Session Started ---
+[03:34:07] Running as script
+[03:34:07]    Program path: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool
+[03:34:07]    Data path: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\app_data
+[03:34:07] Initializing JSON files...
+[03:34:07]    Created/Updated: storage/localstorage.json
+[03:34:07]    Created/Updated: data/treeparameters.json
+[03:34:07]    Preserved existing: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/create_species.json
+[03:34:07] Initialized 2 JSON files
+[03:34:07]    Preserved existing: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/selected_database.json
+[03:34:07]    Preserved existing: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/connection_history.json
+[03:34:07] Application starting...
+[03:34:07] Page configured
+[03:34:07] Splash screen displayed
+[03:34:10] Splash screen cleared
+[03:34:10] DataManager cleared, proceeding to EULA
+[03:34:10] EULA view displayed
+[03:34:11] User agreed to EULA - proceeding with application
+[03:34:11] User navigated to Select Data page
+[03:34:13] User navigated to Create Species page
+[03:34:15] User navigated to Select Data page
+[03:34:17] Import text file dialog opened
+[03:34:21] Selected file for import: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\All_Sp_Data_Test_BCT_Dec - Copy.txt
+[03:34:22] Text file imported successfully with 1991 records and 1 errors.
+[03:34:25] User navigated to Calculate Biomass page
+[03:34:28] Calculate biomass button clicked
+[03:34:33] User navigated to Select Data page
+[03:34:33] Import text file dialog opened
+[03:34:37] Selected file for import: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\todd_final.txt
+[03:34:38] Text file imported successfully with 2 records and 0 errors.
+[03:34:39] User navigated to Calculate Biomass page
+[03:34:40] Calculate biomass button clicked
+[03:34:53] Calculate biomass button clicked
+[03:34:57] Calculate biomass button clicked
+[03:35:11] User navigated to Select Data page
+[03:35:16] User navigated to Calculate Biomass page
+[03:35:17] Calculate biomass button clicked
+[03:35:21] User navigated to Create Species page
+[03:35:23] User navigated to Modify Species page
+[03:35:23] Species data loaded successfully.
+[03:35:25] Viewing species: 
+[03:35:35] User navigated to Calculate Biomass page
+[03:35:41] User navigated to Modify Species page
+[03:35:41] Species data loaded successfully.
+[03:35:42] Viewing species: 
+[03:35:47] User navigated to Calculate Biomass page
+[03:35:49] Calculate biomass button clicked
+[03:36:27] User navigated to Select Data page
+[03:36:28] Import text file dialog opened
+[03:36:35] Selected file for import: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\All_Sp_Data_Test_BCT_Dec - Copy.txt
+[03:36:36] Text file imported successfully with 1991 records and 1 errors.
+[03:36:39] User navigated to Calculate Biomass page
+[03:36:42] Calculate biomass button clicked
+[03:36:53] View Chart button clicked
+[03:36:53] Biomass chart displayed
