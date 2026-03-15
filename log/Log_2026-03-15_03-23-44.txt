@@ -44,3 +44,4 @@ Available columns: ['Plot', 'PlotKey', 'Year', 'Origin', 'TrEe Status', 'Tree Nu
 [03:32:06] Species ds created successfully and added to create_species.json
 [03:32:08] User navigated to Modify Species page
 [03:32:08] Species data loaded successfully.
+[03:37:17] User navigated to Select Data page
