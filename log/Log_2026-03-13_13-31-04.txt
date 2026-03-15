@@ -1,0 +1,29 @@
+[13:31:04] --- Log Session Started ---
+[13:31:06] Running as script
+[13:31:06]    Program path: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool
+[13:31:06]    Data path: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\app_data
+[13:31:06] Initializing JSON files...
+[13:31:06]    Created/Updated: storage/localstorage.json
+[13:31:06]    Created/Updated: data/treeparameters.json
+[13:31:06]    Preserved existing: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/create_species.json
+[13:31:06] Initialized 2 JSON files
+[13:31:06]    Preserved existing: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/selected_database.json
+[13:31:06]    Preserved existing: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/connection_history.json
+[13:31:06] Application starting...
+[13:31:06] Page configured
+[13:31:06] Splash screen displayed
+[13:31:08] Splash screen cleared
+[13:31:08] DataManager cleared, proceeding to EULA
+[13:31:08] EULA view displayed
+[13:31:09] User agreed to EULA - proceeding with application
+[13:31:09] User navigated to Select Data page
+[13:31:10] Import text file dialog opened
+[13:31:13] Selected file for import: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\testingnewdataset.txt
+[13:31:13] Error importing text file: Missing required columns: ['year', 'species', 'tree number', 'dbh', 'height']
+Available columns: ['Plot', 'Year    Species     Tree_Number     DBH     Height']
+[13:32:23] Import text file dialog opened
+[13:32:25] File selection cancelled by user
+[13:33:09] Import text file dialog opened
+[13:33:12] Selected file for import: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\testingnewdataset.txt
+[13:33:12] Error importing text file: Missing required columns: ['year', 'species', 'tree number', 'dbh', 'height']
+Available columns: ['Plot', 'Year    Species     Tree Number     DBH     Height']

@@ -1,0 +1,11 @@
+Plot	Year	GrowthPlotNum	Section	SpecCode	Species	SpecAbbrev	Origin	Tree Status	Tree Number	DBH	Height
+LSJP1993003PSP	2023	3	12	13	Black Spruce	Sb 	N	L 	162	5.5	5.5
+THU2023001PSP	2023	1	12	32	Red Maple	Mr 	N	L 	73	25	17.4
+KAP2023001PSP	2023	1	12	73	Balsam Poplar	Pb 	N	L 	104	15.2	16.7
+KAP2023001PSP	2023	2	12	20	Balsam Fir	Bf 	N	L 	154	19	17.4
+THU2024001PSP	2024	3	12	1	Eastern White Pine	Pw 	N	L 	523	28.4	26.8
+KAP2024001PSP	2024	2	12	13	Black Spruce	Sb 	N	L 	570	3.3	4
+KAP2024001PSP	2024	2	12	12	White Spruce	Sw 	N	L 	576	16.1	13.5
+KAP2024001PSP	2024	3	12	20	Balsam Fir	Bf 	N	L 	197	13.2	14
+asdfafd20261	1233	2	0	0	Todd	TL	N	L	1197	13.2	14
+asdfafd20261	1233	2	0	0	Todd	TL	N	L	1197	13.2	14

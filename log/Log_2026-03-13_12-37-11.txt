@@ -1,0 +1,44 @@
+[12:37:11] --- Log Session Started ---
+[12:37:13] Running as script
+[12:37:13]    Program path: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool
+[12:37:13]    Data path: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\app_data
+[12:37:13] Initializing JSON files...
+[12:37:13]    Created/Updated: storage/localstorage.json
+[12:37:13]    Created/Updated: data/treeparameters.json
+[12:37:13]    Preserved existing: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/create_species.json
+[12:37:13] Initialized 2 JSON files
+[12:37:13]    Preserved existing: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/selected_database.json
+[12:37:13]    Preserved existing: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/connection_history.json
+[12:37:13] Application starting...
+[12:37:13] Page configured
+[12:37:13] Splash screen displayed
+[12:37:15] Splash screen cleared
+[12:37:15] DataManager cleared, proceeding to EULA
+[12:37:15] EULA view displayed
+[12:37:16] User agreed to EULA - proceeding with application
+[12:37:16] User navigated to Select Data page
+[12:37:18] User navigated to Modify Species page
+[12:37:18] Species data loaded successfully.
+[12:37:19] User navigated to Settings page
+[12:37:20] Theme toggled to: ThemeMode.DARK
+[12:37:21] User navigated to Modify Species page
+[12:37:21] Species data loaded successfully.
+[12:37:24] User navigated to Settings page
+[12:37:27] User navigated to Modify Species page
+[12:37:27] Species data loaded successfully.
+[12:37:29] User navigated to Create Species page
+[12:37:33] User navigated to Settings page
+[12:37:34] Theme toggled to: ThemeMode.LIGHT
+[12:37:35] User navigated to Modify Species page
+[12:37:35] Species data loaded successfully.
+[12:37:38] User navigated to Settings page
+[12:37:38] Theme toggled to: ThemeMode.DARK
+[12:37:39] User navigated to Modify Species page
+[12:37:39] Species data loaded successfully.
+[12:38:13] User navigated to Create Species page
+[12:38:24] Checking if species name ds exists in C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/treeparameters.json
+[12:38:25] Selected components for creation: ['Wood', 'Bark']
+[12:38:25] Current equation type is DBH-based
+[12:38:25] Species ds created successfully and added to create_species.json
+[12:38:28] User navigated to Modify Species page
+[12:38:28] Species data loaded successfully.

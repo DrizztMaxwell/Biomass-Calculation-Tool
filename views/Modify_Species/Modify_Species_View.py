@@ -27,7 +27,7 @@ class Modify_Species_View:
         self.__controller = controller
         self.__controller.load_species_data()
         self.CONSTANTS = Settings_Constants()
-        
+
         # Pagination settings
         self.current_page = 1
         self.items_per_page = 10
@@ -48,25 +48,25 @@ class Modify_Species_View:
             self.CONSTANTS.SEARCH_FIELD_PLACEHOLDER,
             self.filter_species
         )
-        
+
         self.no_data_display = No_Data_Display(
             self.primary_color,
             self.text_primary,
             self.text_secondary
         )
-        
+
         self.no_search_results_display = No_Search_Results_Display(
             self.clear_search
         )
-        
+
         self.data_table = Species_Data_Table()
-        
+
         self.pagination_controls = Pagination_Controls(
             self.primary_color,
             self.text_primary,
             self.text_secondary
         )
-        
+
         # Set up pagination button callbacks
         self.pagination_controls.prev_button.on_click = self.previous_page
         self.pagination_controls.next_button.on_click = self.next_page
@@ -74,9 +74,108 @@ class Modify_Species_View:
         # Initialize filtered species
         self.filtered_species = self.__controller.get_species_data().copy()
 
+    # ── Theme helpers ─────────────────────────────────────────────────────────
+
+    @property
+    def _is_dark(self) -> bool:
+        return self.page.theme_mode == ft.ThemeMode.DARK
+
+    def _row_even_bg(self):
+        return ft.Colors.with_opacity(0.0, ft.Colors.WHITE)
+
+    def _row_odd_bg(self):
+        return (
+            ft.Colors.with_opacity(0.04, ft.Colors.WHITE)
+            if self._is_dark
+            else ft.Colors.with_opacity(0.5, ft.Colors.BLUE_50)
+        )
+
+    def _search_bg(self):
+        return "#2A2A2A" if self._is_dark else "#FFFFFF"
+
+    def _search_border(self):
+        return "#3A3A3A" if self._is_dark else "#E2E8F0"
+
+    def _search_text(self):
+        return "#F5F5F5" if self._is_dark else "#0F172A"
+
+    def _search_hint(self):
+        return "#777777" if self._is_dark else "#94A3B8"
+
+    # ── Search bar ────────────────────────────────────────────────────────────
+
+    def _build_search_bar(self) -> ft.Container:
+        """Cleaner rounded search bar with inline clear button."""
+
+        def on_clear(e):
+            self._search_input.value = ""
+            self._search_input.update()
+            self.filter_species(e)
+
+        def on_change(e):
+            # Show/hide clear button based on content
+            self._clear_btn.visible = bool(self._search_input.value)
+            self._clear_btn.update()
+            self.filter_species(e)
+
+        self._search_input = ft.TextField(
+            hint_text=self.CONSTANTS.SEARCH_FIELD_PLACEHOLDER,
+            on_change=on_change,
+            border=ft.InputBorder.NONE,
+            filled=False,
+            color=self._search_text(),
+            hint_style=ft.TextStyle(color=self._search_hint(), size=13),
+            text_style=ft.TextStyle(size=13),
+            cursor_color=self._search_text(),
+            expand=True,
+            content_padding=ft.padding.symmetric(vertical=10),
+        )
+
+        self._clear_btn = ft.Container(
+            content=ft.Icon(ft.Icons.CLOSE_ROUNDED, size=16, color=self._search_hint()),
+            on_click=on_clear,
+            visible=False,
+            padding=ft.padding.all(4),
+            border_radius=ft.border_radius.all(20),
+            ink=True,
+            tooltip="Clear search",
+        )
+
+        return ft.Container(
+            content=ft.Row([
+                ft.Icon(ft.Icons.SEARCH_ROUNDED, size=18, color=self._search_hint()),
+                ft.Container(width=8),
+                self._search_input,
+                self._clear_btn,
+            ],
+            vertical_alignment=ft.CrossAxisAlignment.CENTER,
+            spacing=0,
+            ),
+            bgcolor=self._search_bg(),
+            border=ft.border.all(1, self._search_border()),
+            border_radius=ft.border_radius.all(10),
+            padding=ft.padding.symmetric(horizontal=14, vertical=2),
+            expand=True,
+            shadow=ft.BoxShadow(
+                spread_radius=0,
+                blur_radius=4,
+                color=ft.Colors.with_opacity(0.04, ft.Colors.BLACK),
+                offset=ft.Offset(0, 1),
+            ),
+        )
+
+    # ── Table row ─────────────────────────────────────────────────────────────
+
     def clear_search(self, e):
         """Clear search field and refresh data"""
         self.search_field.value = ""
+        # Also clear the custom search input if it exists
+        if hasattr(self, "_search_input"):
+            self._search_input.value = ""
+            self._search_input.update()
+        if hasattr(self, "_clear_btn"):
+            self._clear_btn.visible = False
+            self._clear_btn.update()
         self.filter_species(e)
 
     def filter_species(self, e):
@@ -146,7 +245,6 @@ class Modify_Species_View:
         total_pages = max(
             1, (total_species + self.items_per_page - 1) // self.items_per_page
         )
-
         if self.current_page < total_pages:
             self.current_page += 1
             self.refresh_data_table()
@@ -158,30 +256,30 @@ class Modify_Species_View:
             self.refresh_data_table()
 
     def create_table_row(self, species, index, actual_index):
-        """Create a single table row for the species"""
+        """Create a single table row for the species — with alternating row colors."""
         species_code = str(species.get("SpeciesCode", ""))
-        spec_common = str(species.get("SpecCommon", ""))
-        origin = species.get("Origin", "")
+        spec_common  = str(species.get("SpecCommon", ""))
+        origin       = species.get("Origin", "")
         equation_type = species.get("EquationType", "Height-based")
 
-        # Determine what to display in the SPECIES column
-        if spec_common and spec_common != "" and spec_common != "None":
-            species_display = spec_common
-        else:
-            species_display = species_code
+        # Species display name
+        species_display = (
+            spec_common
+            if spec_common and spec_common not in ("", "None")
+            else species_code
+        )
 
-        # Determine equation type color and icon
+        # Equation type styling
         if equation_type == "DBH + Height-based":
             eq_color = ft.Colors.GREEN
-            eq_icon = ft.Icons.TRENDING_UP
+            eq_icon  = ft.Icons.TRENDING_UP
         elif equation_type == "DBH-based":
             eq_color = ft.Colors.AMBER_700
-            eq_icon = ft.Icons.STRAIGHTEN
+            eq_icon  = ft.Icons.STRAIGHTEN
         else:
             eq_color = self.text_secondary
-            eq_icon = ft.Icons.FUNCTIONS
+            eq_icon  = ft.Icons.FUNCTIONS
 
-        # Create action buttons
         action_buttons = Action_Buttons(
             actual_index,
             self.display_view_dialog,
@@ -191,16 +289,19 @@ class Modify_Species_View:
             self.secondary_color
         )
 
-        # Calculate row number
         row_number = (self.current_page - 1) * self.items_per_page + index + 1
 
+        # ── Alternating row color ──────────────────────────────────────────
+        row_bg = self._row_odd_bg() if index % 2 != 0 else self._row_even_bg()
+
         return ft.DataRow(
+            color=row_bg,
             cells=[
                 ft.DataCell(
                     ft.Container(
                         content=ft.Text(
                             str(row_number),
-                            size=14,
+                            size=13,
                             weight=ft.FontWeight.W_600,
                             color=ft.Colors.PRIMARY,
                         ),
@@ -212,39 +313,31 @@ class Modify_Species_View:
                     ft.Container(
                         content=ft.Text(
                             species_display,
-                            size=14,
+                            size=13,
                             weight=ft.FontWeight.W_600,
                             color=ft.Colors.PRIMARY,
                         ),
                         padding=10,
                         tooltip=(
-                            f"Code: {species_code}"
-                            if spec_common
-                            else f"Name: {spec_common}" if spec_common else None
+                            f"Code: {species_code}" if spec_common else None
                         ),
                     )
                 ),
                 ft.DataCell(
-                    ft.Row(
-                        [
-                            ft.Icon(
-                                ft.Icons.LOCATION_ON_OUTLINED,
-                                size=16,
-                                color=self.text_secondary,
-                            ),
-                            ft.Text(origin, size=14, color=ft.Colors.PRIMARY),
-                        ],
-                        spacing=8,
-                    )
+                    ft.Row([
+                        ft.Icon(
+                            ft.Icons.LOCATION_ON_OUTLINED,
+                            size=15,
+                            color=self.text_secondary,
+                        ),
+                        ft.Text(origin, size=13, color=ft.Colors.PRIMARY),
+                    ], spacing=6),
                 ),
                 ft.DataCell(
-                    ft.Row(
-                        [
-                            ft.Icon(eq_icon, size=16, color=eq_color),
-                            ft.Text(equation_type, size=14, color=eq_color),
-                        ],
-                        spacing=8,
-                    )
+                    ft.Row([
+                        ft.Icon(eq_icon, size=15, color=eq_color),
+                        ft.Text(equation_type, size=13, color=eq_color),
+                    ], spacing=6),
                 ),
                 ft.DataCell(action_buttons),
             ]
@@ -252,30 +345,31 @@ class Modify_Species_View:
 
     def refresh_data_table(self):
         """Refresh the data table with current species data"""
-        # Clear existing rows
         self.data_table.rows.clear()
 
-        # Apply search filter
-        search_text = self.search_field.value.lower() if self.search_field.value else ""
+        # Use custom search input if available, fall back to Search_Field
+        search_text = ""
+        if hasattr(self, "_search_input"):
+            search_text = (self._search_input.value or "").lower()
+        elif self.search_field.value:
+            search_text = self.search_field.value.lower()
+
         self.filtered_species = []
 
         for species in self.__controller.get_species_data():
             species_code = str(species.get("SpeciesCode", ""))
-            spec_common = str(species.get("SpecCommon", ""))
-            origin = species.get("Origin", "")
+            spec_common  = str(species.get("SpecCommon", ""))
+            origin       = species.get("Origin", "")
 
-            # Check if search text matches any of these fields
             if search_text:
-                matches_code = search_text in species_code.lower()
-                matches_common = search_text in spec_common.lower()
-                matches_origin = search_text in origin.lower()
-
-                if not (matches_code or matches_common or matches_origin):
+                if not any(
+                    search_text in field.lower()
+                    for field in [species_code, spec_common, origin]
+                ):
                     continue
 
             self.filtered_species.append(species)
 
-        # Check if data exists
         if not self.filtered_species:
             self.data_table.visible = False
             self.no_data_display.visible = (
@@ -288,20 +382,16 @@ class Modify_Species_View:
             self.page.update()
             return
 
-        # Show pagination controls
         self.pagination_controls.visible = True
         self.update_pagination_controls()
 
-        # Get current page species
         current_page_species = self.get_paginated_species()
 
-        # Populate table with current page species
         for index, species in enumerate(current_page_species):
             actual_index = (self.current_page - 1) * self.items_per_page + index
             row = self.create_table_row(species, index, actual_index)
             self.data_table.rows.append(row)
 
-        # Show table
         self.data_table.visible = True
         self.no_data_display.visible = False
         self.no_search_results_display.visible = False
@@ -318,47 +408,35 @@ class Modify_Species_View:
         )
 
     def display_edit_dialog(self, index):
-        
         Edit_Dialog(self.page).edit_species_dialog(
             index=index,
-            filtered_species=self.filtered_species, # The list being viewed
-            species_data=self.__controller.get_species_data(), # The master list
-            controller=self.__controller, # THIS WAS MISSING/MISPLACED
+            filtered_species=self.filtered_species,
+            species_data=self.__controller.get_species_data(),
+            controller=self.__controller,
             primary_color=self.primary_color,
             secondary_color=self.secondary_color,
             accent_color=self.accent_color,
-            refresh_callback=self.refresh_data_table, # Highly recommended to pass this
-            save_callback=self.__controller.save_species_data # Or whatever your save method is
+            refresh_callback=self.refresh_data_table,
+            save_callback=self.__controller.save_species_data
         )
 
     def display_delete_dialog(self, index):
-        # Inside Modify_Species_View class
-
-    # 1. Get the current data from the controller
-        master_data = self.__controller.get_species_data()
-        
-        # 2. Initialize the Dialog with page and controller
+        master_data    = self.__controller.get_species_data()
         delete_utility = Delete_Dialog(self.page, self.__controller)
-        
-        # 3. Call the confirmation with the correct parameter order
         delete_utility.delete_species_confirmation(
             index=index,
             filtered_species=self.filtered_species,
             species_data=master_data,
             controller=self.__controller,
             text_secondary=self.text_secondary,
-            refresh_callback=self.refresh_data_table, # Refresh table after delete
-            save_callback=self.__controller.save_species_data # Pass the actual save function
+            refresh_callback=self.refresh_data_table,
+            save_callback=self.__controller.save_species_data
         )
 
-    # ... (keep the dialog methods and helper methods as they are)
-
     def build(self):
-        """Build the main view matching Uber Eats aesthetics"""
-        # Initialize filtered species
+        """Build the main view"""
         self.filtered_species = self.__controller.get_species_data().copy()
 
-        # Build the main content
         content = ft.Container(
             margin=ft.margin.all(20),
             padding=ft.padding.all(30),
@@ -383,15 +461,17 @@ class Modify_Species_View:
                         ],
                         spacing=8,
                     ),
-                    ft.Container(height=25),
-                    # Search Bar Row
-                    ft.Row([self.search_field], spacing=10),
-                    ft.Container(height=25),
+                    ft.Container(height=20),
+
+                    # ── Improved search bar ───────────────────────────────
+                    ft.Row([self._build_search_bar()], spacing=10),
+
+                    ft.Container(height=20),
+
                     # Main content container
                     ft.Container(
                         content=ft.Column(
                             [
-                                # Table container (scrollable)
                                 ft.Container(
                                     content=ft.Column(
                                         [
@@ -403,22 +483,20 @@ class Modify_Species_View:
                                     ),
                                     alignment=ft.alignment.center,
                                     padding=ft.padding.all(10),
-                                    
                                     expand=True,
                                 ),
-                                # Pagination controls
                                 self.pagination_controls,
                             ],
                             spacing=0,
                         ),
                         expand=True,
-                        border=ft.border.all(0.5, ft.Colors.PRIMARY),
-                        border_radius=15,
-                        bgcolor=ft.Colors.SECONDARY,
+                        border_radius=12,
+                        bgcolor="#2A2A2A" if self._is_dark else ft.Colors.SECONDARY,
                         shadow=ft.BoxShadow(
-                            spread_radius=1,
-                            blur_radius=10,
-                            color=ft.Colors.with_opacity(0.05, ft.Colors.BLACK),
+                            spread_radius=0,
+                            blur_radius=8,
+                            color=ft.Colors.with_opacity(0.06, ft.Colors.BLACK),
+                            offset=ft.Offset(0, 2),
                         ),
                     ),
                 ],
@@ -427,9 +505,7 @@ class Modify_Species_View:
             ),
         )
 
-        # Populate the table with initial data
         self.populate_initial_table()
-
         return content
 
     def populate_initial_table(self):

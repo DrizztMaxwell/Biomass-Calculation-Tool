@@ -1,0 +1,29 @@
+[02:05:22] --- Log Session Started ---
+[02:05:24] Running as script
+[02:05:24]    Program path: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool
+[02:05:24]    Data path: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\app_data
+[02:05:24] Initializing JSON files...
+[02:05:24]    Created/Updated: storage/localstorage.json
+[02:05:24]    Created/Updated: data/treeparameters.json
+[02:05:24]    Preserved existing: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/create_species.json
+[02:05:24] Initialized 2 JSON files
+[02:05:24]    Preserved existing: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/selected_database.json
+[02:05:24]    Preserved existing: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/connection_history.json
+[02:05:24] Application starting...
+[02:05:24] Page configured
+[02:05:24] Splash screen displayed
+[02:05:27] Splash screen cleared
+[02:05:27] DataManager cleared, proceeding to EULA
+[02:05:27] EULA view displayed
+[02:05:28] User agreed to EULA - proceeding with application
+[02:05:28] User navigated to Select Data page
+[02:05:32] User navigated to Settings page
+[02:05:33] User navigated to Select Data page
+[02:05:36] Import text file dialog opened
+[02:05:39] Selected file for import: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\BCT.txt
+[02:05:40] Text file imported successfully with 5 records and 0 errors.
+[02:05:42] User navigated to Calculate Biomass page
+[02:05:46] Calculate biomass button clicked
+[02:05:55] User navigated to Settings page
+[02:05:56] Theme toggled to: ThemeMode.DARK
+[02:05:56] User navigated to Calculate Biomass page

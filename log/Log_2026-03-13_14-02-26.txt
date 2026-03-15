@@ -1,0 +1,72 @@
+[14:02:26] --- Log Session Started ---
+[14:02:33] Running as script
+[14:02:33]    Program path: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool
+[14:02:33]    Data path: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\app_data
+[14:02:33] Initializing JSON files...
+[14:02:33]    Created/Updated: storage/localstorage.json
+[14:02:33]    Created/Updated: data/treeparameters.json
+[14:02:33]    Preserved existing: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/create_species.json
+[14:02:33] Initialized 2 JSON files
+[14:02:33]    Preserved existing: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/selected_database.json
+[14:02:33]    Preserved existing: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/connection_history.json
+[14:02:33] Application starting...
+[14:02:33] Page configured
+[14:02:33] Splash screen displayed
+[14:02:35] Splash screen cleared
+[14:02:35] DataManager cleared, proceeding to EULA
+[14:02:35] EULA view displayed
+[14:02:37] User agreed to EULA - proceeding with application
+[14:02:37] User navigated to Select Data page
+[14:02:37] Import text file dialog opened
+[14:02:40] Selected file for import: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\Test_Todd_comment.txt
+[14:02:42] Text file imported successfully with 10 records and 0 errors.
+[14:02:44] User navigated to Calculate Biomass page
+[14:02:47] Calculate biomass button clicked
+[14:03:12] User navigated to Modify Species page
+[14:03:12] Species data loaded successfully.
+[14:03:16] Editing species: 
+[14:03:19] Species data saved successfully.
+[14:03:19] Species '' updated successfully.
+[14:03:22] User navigated to Select Data page
+[14:03:27] Import text file dialog opened
+[14:03:30] Selected file for import: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\Test_Todd_comment.txt
+[14:03:30] Text file imported successfully with 10 records and 0 errors.
+[14:03:32] User navigated to Select Data page
+[14:03:32] User navigated to Calculate Biomass page
+[14:03:34] Calculate biomass button clicked
+[14:04:00] User navigated to Modify Species page
+[14:04:00] Species data loaded successfully.
+[14:04:04] Viewing species: 
+[14:04:16] User navigated to Calculate Biomass page
+[14:04:17] User navigated to Select Data page
+[14:04:21] Import text file dialog opened
+[14:04:24] Selected file for import: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\Test_Todd_comment.txt
+[14:04:25] Text file imported successfully with 10 records and 0 errors.
+[14:04:28] User navigated to Calculate Biomass page
+[14:04:29] Calculate biomass button clicked
+[14:05:36] User navigated to Modify Species page
+[14:05:36] Species data loaded successfully.
+[14:05:38] User navigated to Create Species page
+[14:05:45] User navigated to Modify Species page
+[14:05:45] Species data loaded successfully.
+[14:05:47] Confirming deletion of species: 
+[14:05:49] Confirming deletion of species: 
+[14:05:49] Species data saved successfully.
+[14:05:49] Species 'Todd' deleted successfully.
+[14:05:50] User navigated to Create Species page
+[14:05:58] Checking if species name Todd exists in C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/treeparameters.json
+[14:05:58] Checking if species name Todd exists in C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/create_species.json
+[14:05:59] Selected components for creation: ['Wood', 'Bark']
+[14:05:59] Current equation type is DBH-based
+[14:05:59] Species Todd created successfully and added to create_species.json
+[14:06:01] User navigated to Calculate Biomass page
+[14:06:02] Calculate biomass button clicked
+[14:07:53] User navigated to Modify Species page
+[14:07:53] Species data loaded successfully.
+[14:10:10] User navigated to Select Data page
+[14:10:16] User navigated to Calculate Biomass page
+[14:10:16] User navigated to Create Species page
+[14:10:18] User navigated to Modify Species page
+[14:10:18] Species data loaded successfully.
+[14:10:19] User navigated to Settings page
+[14:10:25] Loaded species data from C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/treeparameters.json successfully.

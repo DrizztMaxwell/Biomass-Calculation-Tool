@@ -1,55 +1,79 @@
 import flet as ft
 
+
 class No_Search_Results_Display(ft.Container):
     def __init__(self, clear_search_callback):
-        # 1. Simplified the layout: Removed the Stack. 
-        # A single Container with alignment=ft.alignment.center is more efficient.
         super().__init__(
+            expand=True,
+            visible=False,
+            alignment=ft.alignment.center,
+            padding=40,
             content=ft.Column(
-                [
+                alignment=ft.MainAxisAlignment.CENTER,
+                horizontal_alignment=ft.CrossAxisAlignment.CENTER,
+                spacing=0,
+                controls=[
+                    # Icon circle
                     ft.Container(
                         content=ft.Icon(
-                            ft.Icons.SEARCH_OFF,
-                            size=70,
-                            color=ft.Colors.with_opacity(0.4, ft.Colors.RED_500),
+                            ft.Icons.SEARCH_OFF_ROUNDED,
+                            size=44,
+                            color=ft.Colors.with_opacity(0.55, ft.Colors.RED_400),
                         ),
-                        padding=25,
-                        bgcolor=ft.Colors.with_opacity(0.1, ft.Colors.RED_500),
-                        border_radius=55,
-                        margin=ft.margin.only(bottom=25),
+                        width=88,
+                        height=88,
+                        bgcolor=ft.Colors.with_opacity(0.08, ft.Colors.RED_400),
+                        border_radius=ft.border_radius.all(44),
+                        alignment=ft.alignment.center,
+                        margin=ft.margin.only(bottom=20),
                     ),
+
+                    # Title
                     ft.Text(
-                        "No Results Found",
-                        size=22,
+                        "No results found",
+                        size=17,
                         weight=ft.FontWeight.W_700,
-                        color=ft.Colors.PRIMARY,
-                    ),
-                    ft.Text(
-                        "No species match your search criteria.\nTry different keywords or clear the search.",
-                        size=16,
                         color=ft.Colors.PRIMARY,
                         text_align=ft.TextAlign.CENTER,
                     ),
-                    ft.Container(height=20),
-                    ft.ElevatedButton(
-                        "Clear Search",
-                        icon=ft.Icons.CLEAR,
-                        style=ft.ButtonStyle(
-                            bgcolor=ft.Colors.RED_500,
-                            color=ft.Colors.WHITE,
-                            padding=ft.padding.symmetric(horizontal=30, vertical=12),
-                            shape=ft.RoundedRectangleBorder(radius=10),
-                        ),
-                        on_click=clear_search_callback,
+
+                    ft.Container(height=6),
+
+                    # Subtitle
+                    ft.Text(
+                        "No species match your search.\nTry different keywords.",
+                        size=13,
+                        color=ft.Colors.with_opacity(0.6, ft.Colors.PRIMARY),
+                        text_align=ft.TextAlign.CENTER,
                     ),
+
+                    ft.Container(height=20),
+
+                    # Clear search button — centered pill
+                    ft.Row([
+                        ft.Container(
+                            content=ft.Row([
+                                ft.Icon(
+                                    ft.Icons.CLOSE_ROUNDED,
+                                    size=14,
+                                    color=ft.Colors.RED_400,
+                                ),
+                                ft.Text(
+                                    "Clear Search",
+                                    size=12,
+                                    weight=ft.FontWeight.W_600,
+                                    color=ft.Colors.RED_400,
+                                ),
+                            ], spacing=6),
+                            on_click=clear_search_callback,
+                            bgcolor=ft.Colors.with_opacity(0.07, ft.Colors.RED_400),
+                            border=ft.border.all(1, ft.Colors.with_opacity(0.25, ft.Colors.RED_400)),
+                            border_radius=ft.border_radius.all(20),
+                            padding=ft.padding.symmetric(horizontal=18, vertical=9),
+                            ink=True,
+                            tooltip="Clear current search",
+                        ),
+                    ], alignment=ft.MainAxisAlignment.CENTER),
                 ],
-                horizontal_alignment=ft.CrossAxisAlignment.CENTER,
-                alignment=ft.MainAxisAlignment.CENTER, # Centering inside the Column
-                tight=True, # Important: wraps content closely
             ),
-            # 2. Appearance & Positioning
-            # bgcolor=ft.Colors.GREY_50,
-            expand=True,           # Tells the container to take all available space
-            alignment=ft.alignment.center, # Centers the Column vertically and horizontally
-            visible=False,
         )

@@ -1,0 +1,31 @@
+[02:43:57] --- Log Session Started ---
+[02:43:59] Running as script
+[02:43:59]    Program path: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool
+[02:43:59]    Data path: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\app_data
+[02:43:59] Initializing JSON files...
+[02:43:59]    Created/Updated: storage/localstorage.json
+[02:43:59]    Created/Updated: data/treeparameters.json
+[02:43:59]    Preserved existing: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/create_species.json
+[02:43:59] Initialized 2 JSON files
+[02:43:59]    Preserved existing: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/selected_database.json
+[02:43:59]    Preserved existing: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/connection_history.json
+[02:43:59] Application starting...
+[02:43:59] Page configured
+[02:43:59] Splash screen displayed
+[02:44:01] Splash screen cleared
+[02:44:01] DataManager cleared, proceeding to EULA
+[02:44:01] EULA view displayed
+[02:44:02] User agreed to EULA - proceeding with application
+[02:44:02] User navigated to Select Data page
+[02:44:06] Import text file dialog opened
+[02:44:09] Selected file for import: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\Data_Test_BCT(in)(in).txt
+[02:44:09] Error importing text file: Missing required columns: ['species']
+Available columns: ['Plot', 'PlotKey', 'Year', 'Origin', 'TrEe Status', 'Tree Number', 'SpecCode', 'DBH', 'Height']
+[02:44:11] Import text file dialog opened
+[02:44:17] Selected file for import: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\All_Sp_Data_Test_BCT_Dec - Copy.txt
+[02:44:18] Text file imported successfully with 1991 records and 1 errors.
+[02:44:20] User navigated to Calculate Biomass page
+[02:44:25] User navigated to Create Species page
+[02:44:26] User navigated to Calculate Biomass page
+[02:44:27] Calculate biomass button clicked
+[02:44:44] View Chart button clicked

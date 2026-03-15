@@ -1,0 +1,30 @@
+[01:09:28] --- Log Session Started ---
+[01:09:30] Running as script
+[01:09:30]    Program path: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool
+[01:09:30]    Data path: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\app_data
+[01:09:30] Initializing JSON files...
+[01:09:30]    Created/Updated: storage/localstorage.json
+[01:09:30]    Created/Updated: data/treeparameters.json
+[01:09:30]    Preserved existing: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/create_species.json
+[01:09:30] Initialized 2 JSON files
+[01:09:30]    Preserved existing: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/selected_database.json
+[01:09:30]    Preserved existing: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/connection_history.json
+[01:09:30] Application starting...
+[01:09:30] Page configured
+[01:09:30] Splash screen displayed
+[01:09:32] Splash screen cleared
+[01:09:32] DataManager cleared, proceeding to EULA
+[01:09:32] EULA view displayed
+[01:09:33] User agreed to EULA - proceeding with application
+[01:09:33] User navigated to Select Data page
+[01:09:37] Loaded species data from C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/treeparameters.json successfully.
+[01:10:10] Loaded species data from C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/treeparameters.json successfully.
+[01:10:16] Loaded species data from C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/treeparameters.json successfully.
+[01:10:20] Loaded species data from C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/treeparameters.json successfully.
+[01:10:22] User navigated to Settings page
+[01:10:23] Theme toggled to: ThemeMode.DARK
+[01:10:24] Loaded species data from C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/treeparameters.json successfully.
+[01:10:30] Theme toggled to: ThemeMode.LIGHT
+[01:10:31] User navigated to Modify Species page
+[01:10:31] Species data loaded successfully.
+[01:10:32] User navigated to Settings page

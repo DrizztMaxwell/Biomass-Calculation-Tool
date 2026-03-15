@@ -1,0 +1,38 @@
+[02:22:34] --- Log Session Started ---
+[02:22:36] Running as script
+[02:22:36]    Program path: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool
+[02:22:36]    Data path: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\app_data
+[02:22:36] Initializing JSON files...
+[02:22:36]    Created/Updated: storage/localstorage.json
+[02:22:36]    Created/Updated: data/treeparameters.json
+[02:22:36]    Preserved existing: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/create_species.json
+[02:22:36] Initialized 2 JSON files
+[02:22:36]    Preserved existing: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/selected_database.json
+[02:22:36]    Preserved existing: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/connection_history.json
+[02:22:36] Application starting...
+[02:22:36] Page configured
+[02:22:36] Splash screen displayed
+[02:22:39] Splash screen cleared
+[02:22:39] DataManager cleared, proceeding to EULA
+[02:22:39] EULA view displayed
+[02:22:39] User agreed to EULA - proceeding with application
+[02:22:39] User navigated to Select Data page
+[02:22:48] Import text file dialog opened
+[02:22:52] Selected file for import: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\BCT.txt
+[02:22:53] Text file imported successfully with 5 records and 0 errors.
+[02:22:54] Import text file dialog opened
+[02:22:57] Selected file for import: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data_set_final.txt
+[02:22:57] Error importing text file: Missing required columns: ['plot', 'year', 'species', 'tree number', 'height']
+Available columns: ['PlotName', 'PlotKey', 'FieldSeasonYear', 'StandOriginCode', 'TreeStatusCode', 'TreeNum', 'SpecCode', 'DBH', 'HtTot']
+[02:22:59] Import text file dialog opened
+[02:23:02] Selected file for import: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data_set.txt
+[02:23:03] Text file imported successfully with 12 records and 2 errors.
+[02:24:17] User navigated to Settings page
+[02:24:18] Theme toggled to: ThemeMode.DARK
+[02:24:19] User navigated to Select Data page
+[02:24:20] Import text file dialog opened
+[02:24:23] Selected file for import: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\BCT.txt
+[02:24:23] Text file imported successfully with 5 records and 0 errors.
+[02:24:26] Import text file dialog opened
+[02:24:28] Selected file for import: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data_set.txt
+[02:24:29] Text file imported successfully with 12 records and 2 errors.

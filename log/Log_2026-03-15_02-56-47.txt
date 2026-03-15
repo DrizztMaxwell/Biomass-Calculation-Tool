@@ -1,0 +1,44 @@
+[02:56:47] --- Log Session Started ---
+[02:56:48] Running as script
+[02:56:48]    Program path: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool
+[02:56:48]    Data path: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\app_data
+[02:56:48] Initializing JSON files...
+[02:56:48]    Created/Updated: storage/localstorage.json
+[02:56:49]    Created/Updated: data/treeparameters.json
+[02:56:49]    Preserved existing: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/create_species.json
+[02:56:49] Initialized 2 JSON files
+[02:56:49]    Preserved existing: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/selected_database.json
+[02:56:49]    Preserved existing: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/connection_history.json
+[02:56:49] Application starting...
+[02:56:49] Page configured
+[02:56:49] Splash screen displayed
+[02:56:51] Splash screen cleared
+[02:56:51] DataManager cleared, proceeding to EULA
+[02:56:51] EULA view displayed
+[02:56:52] User agreed to EULA - proceeding with application
+[02:56:52] User navigated to Select Data page
+[02:56:54] Import text file dialog opened
+[02:56:57] Selected file for import: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\All_Sp_Data_Test_BCT_Dec - Copy.txt
+[02:56:58] Text file imported successfully with 1991 records and 1 errors.
+[02:57:01] User navigated to Calculate Biomass page
+[02:57:03] Calculate biomass button clicked
+[02:57:16] View Chart button clicked
+[02:57:16] Biomass chart displayed
+[02:57:31] View Chart button clicked
+[02:57:32] Biomass chart displayed
+[02:57:37] Generated default export filename: Output_Biomass_Results_20260315_025737.txt
+[02:57:37] Export file dialog opened
+[02:57:39] Export cancelled by user
+[02:57:49] User navigated to Select Data page
+[02:57:50] Import text file dialog opened
+[02:57:54] Selected file for import: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\BCT.txt
+[02:57:55] Text file imported successfully with 5 records and 0 errors.
+[02:57:56] User navigated to Calculate Biomass page
+[02:57:57] Calculate biomass button clicked
+[02:58:04] Generated default export filename: Output_Biomass_Results_20260315_025804.txt
+[02:58:04] Export file dialog opened
+[02:58:06] Data exported successfully to C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\Output_Biomass_Results_20260315_025804.txt
+[02:59:14] User navigated to Select Data page
+[02:59:15] User navigated to Calculate Biomass page
+[02:59:16] User navigated to Create Species page
+[02:59:17] User navigated to Calculate Biomass page
