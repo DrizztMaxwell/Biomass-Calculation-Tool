@@ -288,8 +288,8 @@
     "bhfoliage3": -0.5968
   },
   {
-    "SpecCommon": "Grey birch",
-    "SpeciesCode": "",
+    "SpecCommon": "Gray birch",
+    "SpeciesCode": 168,
     "bwood1": 0.072,
     "bwood2": 2.3885,
     "bbark1": 0.0168,
@@ -313,7 +313,7 @@
   },
   {
     "SpecCommon": "Hickory",
-    "SpeciesCode": "",
+    "SpeciesCode": 183,
     "bwood1": 0.2116,
     "bwood2": 2.2013,
     "bbark1": 0.0365,
@@ -336,8 +336,8 @@
     "bhfoliage3": 0.0
   },
   {
-    "SpecCommon": "Hop-hornbeam",
-    "SpeciesCode": "",
+    "SpecCommon": "Ironwood",
+    "SpeciesCode": 56,
     "bwood1": 0.1929,
     "bwood2": 1.9672,
     "bbark1": 0.0671,

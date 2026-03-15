@@ -1,0 +1,19 @@
+[03:40:02] --- Log Session Started ---
+[03:40:04] Running as script
+[03:40:04]    Program path: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool
+[03:40:04]    Data path: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\app_data
+[03:40:04] Initializing JSON files...
+[03:40:04]    Created/Updated: storage/localstorage.json
+[03:40:04]    Created/Updated: data/treeparameters.json
+[03:40:04]    Preserved existing: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/create_species.json
+[03:40:04] Initialized 2 JSON files
+[03:40:04]    Preserved existing: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/selected_database.json
+[03:40:04]    Preserved existing: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/connection_history.json
+[03:40:04] Application starting...
+[03:40:04] Page configured
+[03:40:04] Splash screen displayed
+[03:40:07] Splash screen cleared
+[03:40:07] DataManager cleared, proceeding to EULA
+[03:40:07] EULA view displayed
+[03:40:08] User agreed to EULA - proceeding with application
+[03:40:08] User navigated to Select Data page
