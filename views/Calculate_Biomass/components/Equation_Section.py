@@ -68,13 +68,31 @@ class Equation_Section:
         self.controller.set_equation_type(event.control.value)
     
     def _create_section_header(self, title: str, description: str) -> ft.Container:
-        """Create section header."""
+        """Page-style header matching Settings / Modify Species pattern."""
         return ft.Container(
-            margin=ft.margin.only(top=15, left=5, right=5, bottom=5),
             content=ft.Column([
-                TitleTextWidget(title),
-                DescriptionText(description),
-            ]),
+                ft.Row([
+                    ft.Container(
+                        content=ft.Icon(ft.Icons.FUNCTIONS, size=22, color="#FFFFFF"),
+                        bgcolor="#16A34A",
+                        border_radius=ft.border_radius.all(10),
+                        width=44, height=44,
+                        alignment=ft.alignment.center,
+                    ),
+                    ft.Column([
+                        ft.Text(title, size=18, weight=ft.FontWeight.W_700,
+                                color=ft.Colors.ON_SURFACE),
+                        ft.Text(description, size=12,
+                                color=ft.Colors.ON_SURFACE_VARIANT),
+                    ], spacing=2, expand=True),
+                ], spacing=14, vertical_alignment=ft.CrossAxisAlignment.CENTER),
+                ft.Container(
+                    height=1,
+                    bgcolor=ft.Colors.OUTLINE_VARIANT,
+                    margin=ft.margin.only(top=14),
+                ),
+            ], spacing=0),
+            margin=ft.margin.only(bottom=16),
         )
     
     def _create_shadow(self) -> ft.BoxShadow:

@@ -1,0 +1,28 @@
+[02:49:47] --- Log Session Started ---
+[02:49:50] Running as script — data: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\app_data
+[02:49:50] Initializing JSON files...
+[02:49:50]    Created/Updated: storage/localstorage.json
+[02:49:50]    Created/Updated: data/treeparameters.json
+[02:49:50]    Preserved existing: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/create_species.json
+[02:49:50]    Preserved existing: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/selected_database.json
+[02:49:50]    Preserved existing: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/connection_history.json
+[02:49:50] Initialized 2 JSON files
+[02:49:50] Application starting...
+[02:49:50] Page configured
+[02:49:50] Splash screen displayed
+[02:49:52] Splash cleared — proceeding to EULA
+[02:49:52] EULA view displayed
+[02:49:53] User agreed to EULA — proceeding
+[02:49:53] User navigated to Select Data page
+[02:49:54] User navigated to Settings page
+[02:49:59] Theme toggled to: ThemeMode.DARK
+[02:50:01] User navigated to Create Species page
+[02:50:02] User navigated to Modify Species page
+[02:50:02] Species data loaded successfully.
+[02:50:03] User navigated to Select Data page
+[02:50:04] User navigated to Settings page
+[02:50:05] User navigated to Select Data page
+[02:50:06] User navigated to Modify Species page
+[02:50:06] Species data loaded successfully.
+[02:50:06] User navigated to Settings page
+[02:50:26] Theme toggled to: ThemeMode.LIGHT

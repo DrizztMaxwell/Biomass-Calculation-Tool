@@ -1,18 +1,5 @@
 [
     {
-        "SpecCommon": "sam",
-        "Origin": "Natural Stand",
-        "EquationType": "DBH-based",
-        "bwoodb1": 1.0,
-        "bwoodb2": 2.0,
-        "bbarkb1": 0.0,
-        "bbarkb2": 0.0,
-        "bbranchesb1": 0.0,
-        "bbranchesb2": 0.0,
-        "bfoliageb1": 0.0,
-        "bfoliageb2": 0.0
-    },
-    {
         "SpecCommon": "Todd",
         "Origin": "Natural Stand",
         "EquationType": "DBH-based",

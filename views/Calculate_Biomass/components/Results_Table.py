@@ -1,15 +1,13 @@
 import flet as ft
 from .Results_Buttons import Results_Buttons
-from widgets.TitleTextWidget import TitleTextWidget
-from widgets.DescriptionText import DescriptionText
 from helper_functions.Results_Data_Loader import Results_Data_Loader
 from .File_Exporter_Handler import File_Exporter_Handler
 
 
 class Results_Table:
-    """Results table component."""
+    """Results table component with pagination."""
 
-    _MAX_DISPLAY_ROWS = 10
+    _PAGE_SIZE = 10
     _BIOMASS_COLUMNS = {
         "Wood (KG)", "Bark (KG)", "Branch (KG)", "Foliage (KG)",
         "Stem (KG)", "Crown (KG)", "Total (KG)"
@@ -18,11 +16,22 @@ class Results_Table:
     def __init__(self, controller, page: ft.Page,
                  results_loader: Results_Data_Loader,
                  file_exporter_handler: File_Exporter_Handler):
-        self.controller       = controller
-        self.page             = page
-        self.results_loader   = results_loader
+        self.controller            = controller
+        self.page                  = page
+        self.results_loader        = results_loader
         self.file_exporter_handler = file_exporter_handler
-        self.results_buttons  = Results_Buttons(controller, page, file_exporter_handler)
+        self.results_buttons       = Results_Buttons(controller, page, file_exporter_handler)
+
+        self._current_page = 0
+        self._all_data: list = []
+
+        # Persistent controls updated in-place on page change
+        self._table_col      = ft.Column(scroll=ft.ScrollMode.ADAPTIVE, spacing=0)
+        self._info_text      = ft.Text("", size=12)
+        self._page_label     = ft.Text("", size=12)
+        self._pills_row      = ft.Row(spacing=4)
+        self._prev_btn       = self._make_nav_btn("Previous", ft.Icons.ARROW_BACK_IOS_ROUNDED,  self._go_prev)
+        self._next_btn       = self._make_nav_btn("Next",     ft.Icons.ARROW_FORWARD_IOS_ROUNDED, self._go_next)
 
     # ── Theme helpers ─────────────────────────────────────────────────────────
 
@@ -30,35 +39,85 @@ class Results_Table:
     def _is_dark(self):
         return self.page.theme_mode == ft.ThemeMode.DARK
 
-    def _bg(self):          return "#1A1A1A" if self._is_dark else "#FFFFFF"
-    def _surface(self):     return "#222222" if self._is_dark else "#F8FAFC"
-    def _surface_card(self):return "#2A2A2A" if self._is_dark else "#FFFFFF"
-    def _border(self):      return "#2E2E2E" if self._is_dark else "#E2E8F0"
-    def _divider(self):     return "#333333" if self._is_dark else "#F1F5F9"
-    def _text_primary(self):return "#F5F5F5" if self._is_dark else "#0F172A"
+    def _bg(self):           return "#1A1A1A" if self._is_dark else "#FFFFFF"
+    def _surface(self):      return "#222222" if self._is_dark else "#F8FAFC"
+    def _surface_card(self): return "#2A2A2A" if self._is_dark else "#FFFFFF"
+    def _border(self):       return "#2E2E2E" if self._is_dark else "#E2E8F0"
+    def _text_primary(self): return "#F5F5F5" if self._is_dark else "#0F172A"
     def _text_secondary(self): return "#888888" if self._is_dark else "#64748B"
-    def _heading_bg(self):  return "#1E3A2F" if self._is_dark else "#16A34A"
+    def _heading_bg(self):   return "#1E3A2F" if self._is_dark else "#16A34A"
 
-    # ── Public ────────────────────────────────────────────────────────────────
+    # ── Pagination helpers ────────────────────────────────────────────────────
 
-    def create(self) -> ft.Container:
-        data = self.results_loader.load()
-        if not data:
-            return self._empty_state()
+    @property
+    def _total_pages(self):
+        return max(1, (len(self._all_data) + self._PAGE_SIZE - 1) // self._PAGE_SIZE)
 
-        display_data = data[:self._MAX_DISPLAY_ROWS]
-        return self._build_card(display_data, len(data))
+    @property
+    def _page_data(self):
+        start = self._current_page * self._PAGE_SIZE
+        return self._all_data[start: start + self._PAGE_SIZE]
 
-    # ── Card wrapper ──────────────────────────────────────────────────────────
+    def _go_prev(self, e):
+        if self._current_page > 0:
+            self._current_page -= 1
+            self._update_table()
 
-    def _build_card(self, display_data: list, total_records: int) -> ft.Container:
-        headers = list(display_data[0].keys()) if display_data else []
+    def _go_next(self, e):
+        if self._current_page < self._total_pages - 1:
+            self._current_page += 1
+            self._update_table()
 
-        # Table
+    def _jump_to(self, p: int):
+        if p != self._current_page:
+            self._current_page = p
+            self._update_table()
+
+    # ── Nav button (persistent container) ────────────────────────────────────
+
+    def _make_nav_btn(self, label, icon, on_click) -> ft.Container:
+        return ft.Container(
+            content=ft.Row([
+                ft.Icon(icon, size=13),
+                ft.Text(label, size=12, weight=ft.FontWeight.W_500),
+            ], spacing=5, tight=True),
+            on_click=on_click,
+            border_radius=ft.border_radius.all(7),
+            padding=ft.padding.symmetric(horizontal=12, vertical=7),
+            animate=ft.Animation(150, ft.AnimationCurve.LINEAR),
+        )
+
+    def _style_nav_btn(self, btn: ft.Container, disabled: bool, icon_name):
+        color = self._text_secondary() if disabled else self._text_primary()
+        row   = btn.content
+        row.controls[0].color = color
+        row.controls[1].color = color
+        btn.bgcolor  = ft.Colors.with_opacity(
+            0.04 if disabled else 0.06,
+            ft.Colors.WHITE if self._is_dark else ft.Colors.BLACK,
+        )
+        btn.border   = ft.border.all(1, self._border())
+        btn.opacity  = 0.4 if disabled else 1.0
+        btn.on_click = None if disabled else btn.on_click if btn.on_click else None
+        # restore correct callback
+        if not disabled:
+            if "Previous" in row.controls[1].value:
+                btn.on_click = self._go_prev
+            else:
+                btn.on_click = self._go_next
+        else:
+            btn.on_click = None
+
+    # ── Update in-place ───────────────────────────────────────────────────────
+
+    def _update_table(self):
+        display_data  = self._page_data
+        total_records = len(self._all_data)
+        headers       = list(display_data[0].keys()) if display_data else []
+
+        # Rebuild table rows
         columns = [
-            ft.DataColumn(
-                ft.Text(h, size=11, weight=ft.FontWeight.W_700, color="#FFFFFF")
-            )
+            ft.DataColumn(ft.Text(h, size=11, weight=ft.FontWeight.W_700, color="#FFFFFF"))
             for h in headers
         ]
         rows = []
@@ -69,44 +128,175 @@ class Results_Table:
             )
             rows.append(ft.DataRow(
                 color=row_bg,
-                cells=[
-                    ft.DataCell(self._format_cell(h, item.get(h)))
-                    for h in headers
-                ],
+                cells=[ft.DataCell(self._format_cell(h, item.get(h))) for h in headers],
             ))
 
         table = ft.DataTable(
-            columns=columns,
-            rows=rows,
+            columns=columns, rows=rows,
             heading_row_color=self._heading_bg(),
             heading_row_height=40,
-            data_row_min_height=38,
-            data_row_max_height=38,
-            column_spacing=14,
-            horizontal_margin=12,
-            divider_thickness=0,
-            show_checkbox_column=False,
+            data_row_min_height=38, data_row_max_height=38,
+            column_spacing=14, horizontal_margin=12,
+            divider_thickness=0, show_checkbox_column=False,
         )
 
+        self._table_col.controls = [ft.Row([table], scroll=ft.ScrollMode.ADAPTIVE)]
+        self._table_col.update()
+
+        # Update info text
+        start_rec = self._current_page * self._PAGE_SIZE + 1
+        end_rec   = min(start_rec + self._PAGE_SIZE - 1, total_records)
+        self._info_text.value = f"Showing {start_rec}–{end_rec} of {total_records} records"
+        self._info_text.color = self._text_secondary()
+        self._info_text.update()
+
+        # Update page label
+        self._page_label.value = f"Page {self._current_page + 1} of {self._total_pages}"
+        self._page_label.color = self._text_secondary()
+        self._page_label.update()
+
+        # Rebuild pills
+        self._rebuild_pills()
+
+        # Style nav buttons
+        prev_disabled = self._current_page <= 0
+        next_disabled = self._current_page >= self._total_pages - 1
+        self._style_nav_btn(self._prev_btn, prev_disabled, ft.Icons.ARROW_BACK_IOS_ROUNDED)
+        self._style_nav_btn(self._next_btn, next_disabled, ft.Icons.ARROW_FORWARD_IOS_ROUNDED)
+        self._prev_btn.update()
+        self._next_btn.update()
+
+        self.page.update()
+
+    def _rebuild_pills(self, update=True):
+        cp    = self._current_page
+        total = self._total_pages
+        pills = []
+
+        # Which page numbers to show
+        if total <= 7:
+            indices = list(range(total))
+        else:
+            keep = sorted({0, total - 1, cp,
+                           max(0, cp - 1), min(total - 1, cp + 1)})
+            indices = keep
+
+        prev_idx = -1
+        for p in indices:
+            if prev_idx >= 0 and p > prev_idx + 1:
+                pills.append(ft.Text("…", size=12, color=self._text_secondary()))
+            is_active = (p == cp)
+            pills.append(ft.Container(
+                content=ft.Text(
+                    str(p + 1), size=12,
+                    weight=ft.FontWeight.W_700 if is_active else ft.FontWeight.W_400,
+                    color="#FFFFFF" if is_active else self._text_secondary(),
+                ),
+                on_click=(lambda e, pg=p: self._jump_to(pg)) if not is_active else None,
+                bgcolor="#16A34A" if is_active else ft.Colors.with_opacity(
+                    0.06, ft.Colors.WHITE if self._is_dark else ft.Colors.BLACK,
+                ),
+                border=ft.border.all(1, "#16A34A" if is_active else self._border()),
+                border_radius=ft.border_radius.all(6),
+                width=32, height=30,
+                alignment=ft.alignment.center,
+                ink=not is_active,
+            ))
+            prev_idx = p
+
+        self._pills_row.controls = pills
+        if update:
+            self._pills_row.update()
+
+    # ── Public ────────────────────────────────────────────────────────────────
+
+    def create(self) -> ft.Container:
+        self._all_data     = self.results_loader.load() or []
+        self._current_page = 0
+        if not self._all_data:
+            return self._empty_state()
+        return self._build_card()
+
+    # ── Card (built once, updated in-place) ───────────────────────────────────
+
+    def _build_card(self) -> ft.Container:
+        display_data  = self._page_data
+        total_records = len(self._all_data)
+        headers       = list(display_data[0].keys()) if display_data else []
+
+        # Initial table
+        columns = [
+            ft.DataColumn(ft.Text(h, size=11, weight=ft.FontWeight.W_700, color="#FFFFFF"))
+            for h in headers
+        ]
+        rows = []
+        for i, item in enumerate(display_data):
+            row_bg = ft.Colors.with_opacity(
+                0.04 if i % 2 != 0 else 0.0,
+                ft.Colors.WHITE if self._is_dark else ft.Colors.BLACK,
+            )
+            rows.append(ft.DataRow(
+                color=row_bg,
+                cells=[ft.DataCell(self._format_cell(h, item.get(h))) for h in headers],
+            ))
+
+        table = ft.DataTable(
+            columns=columns, rows=rows,
+            heading_row_color=self._heading_bg(),
+            heading_row_height=40,
+            data_row_min_height=38, data_row_max_height=38,
+            column_spacing=14, horizontal_margin=12,
+            divider_thickness=0, show_checkbox_column=False,
+        )
+        self._table_col.controls = [ft.Row([table], scroll=ft.ScrollMode.ADAPTIVE)]
+
+        # Info text
+        start_rec = 1
+        end_rec   = min(self._PAGE_SIZE, total_records)
+        self._info_text.value = f"Showing {start_rec}–{end_rec} of {total_records} records"
+        self._info_text.color = self._text_secondary()
+
+        # Page label
+        self._page_label.value = f"Page 1 of {self._total_pages}"
+        self._page_label.color = self._text_secondary()
+
+        # Pills — no update() during initial build, controls not on page yet
+        self._rebuild_pills(update=False)
+
+        # Style nav buttons (no .update — not on page yet)
+        self._style_nav_btn(self._prev_btn, True,  ft.Icons.ARROW_BACK_IOS_ROUNDED)
+        self._style_nav_btn(self._next_btn, self._total_pages <= 1,
+                            ft.Icons.ARROW_FORWARD_IOS_ROUNDED)
+
         table_container = ft.Container(
-            content=ft.Column([
-                ft.Row([table], scroll=ft.ScrollMode.ADAPTIVE),
-            ], scroll=ft.ScrollMode.ADAPTIVE, spacing=0),
+            content=self._table_col,
             border=ft.border.all(1, self._border()),
-            border_radius=ft.border_radius.all(8),
+            border_radius=ft.border_radius.only(top_left=8, top_right=8),
             bgcolor=self._surface_card(),
             clip_behavior=ft.ClipBehavior.ANTI_ALIAS,
         )
 
-        # Info strip
+        pagination_bar = ft.Container(
+            content=ft.Row([
+                self._page_label,
+                ft.Container(expand=True),
+                self._prev_btn,
+                ft.Container(width=6),
+                self._pills_row,
+                ft.Container(width=6),
+                self._next_btn,
+            ], vertical_alignment=ft.CrossAxisAlignment.CENTER),
+            padding=ft.padding.symmetric(horizontal=16, vertical=10),
+            bgcolor=self._surface(),
+            border=ft.border.only(top=ft.BorderSide(1, self._border())),
+            border_radius=ft.border_radius.only(bottom_left=8, bottom_right=8),
+        )
+
         info_strip = ft.Row([
             ft.Row([
                 ft.Icon(ft.Icons.INFO_OUTLINE_ROUNDED, size=13,
                         color=self._text_secondary()),
-                ft.Text(
-                    f"Showing {len(display_data)} of {total_records} records",
-                    size=12, color=self._text_secondary(),
-                ),
+                self._info_text,
             ], spacing=6),
             ft.Row([
                 ft.Icon(ft.Icons.SWAP_HORIZ_ROUNDED, size=13,
@@ -116,7 +306,6 @@ class Results_Table:
             ], spacing=6),
         ], alignment=ft.MainAxisAlignment.SPACE_BETWEEN)
 
-        # Card header
         card_header = ft.Container(
             content=ft.Row([
                 ft.Row([
@@ -148,6 +337,7 @@ class Results_Table:
                         info_strip,
                         ft.Container(height=10),
                         table_container,
+                        pagination_bar,
                     ], spacing=0),
                     padding=ft.padding.all(16),
                     bgcolor=self._bg(),

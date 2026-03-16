@@ -1,0 +1,39 @@
+[02:24:47] --- Log Session Started ---
+[02:24:49] Running as script — data: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\app_data
+[02:24:49] Initializing JSON files...
+[02:24:50]    Created/Updated: storage/localstorage.json
+[02:24:50]    Created/Updated: data/treeparameters.json
+[02:24:50]    Preserved existing: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/create_species.json
+[02:24:50]    Preserved existing: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/selected_database.json
+[02:24:50]    Preserved existing: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/connection_history.json
+[02:24:50] Initialized 2 JSON files
+[02:24:50] Application starting...
+[02:24:50] Page configured
+[02:24:50] Splash screen displayed
+[02:24:52] Splash cleared — proceeding to EULA
+[02:24:52] EULA view displayed
+[02:24:53] User agreed to EULA — proceeding
+[02:24:54] User navigated to Select Data page
+[02:25:00] User navigated to Modify Species page
+[02:25:00] Species data loaded successfully.
+[02:25:11] User navigated to Create Species page
+[02:25:14] User navigated to Modify Species page
+[02:25:14] Species data loaded successfully.
+[02:25:23] User navigated to Create Species page
+[02:25:25] User navigated to Modify Species page
+[02:25:25] Species data loaded successfully.
+[02:25:27] User navigated to Settings page
+[02:25:28] User navigated to Modify Species page
+[02:25:28] Species data loaded successfully.
+[02:25:30] User navigated to Create Species page
+[02:25:31] User navigated to Select Data page
+[02:25:34] User navigated to Modify Species page
+[02:25:34] Species data loaded successfully.
+[02:25:37] User navigated to Settings page
+[02:25:38] Theme toggled to: ThemeMode.DARK
+[02:25:39] User navigated to Modify Species page
+[02:25:39] Species data loaded successfully.
+[02:25:42] User navigated to Settings page
+[02:25:43] Theme toggled to: ThemeMode.LIGHT
+[02:25:44] User navigated to Modify Species page
+[02:25:44] Species data loaded successfully.

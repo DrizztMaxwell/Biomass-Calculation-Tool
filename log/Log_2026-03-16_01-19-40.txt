@@ -1,0 +1,40 @@
+[01:19:40] --- Log Session Started ---
+[01:19:42] Running as script — data: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\app_data
+[01:19:42] Initializing JSON files...
+[01:19:42]    Created/Updated: storage/localstorage.json
+[01:19:42]    Created/Updated: data/treeparameters.json
+[01:19:42]    Preserved existing: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/create_species.json
+[01:19:42]    Preserved existing: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/selected_database.json
+[01:19:42]    Preserved existing: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/connection_history.json
+[01:19:43] Initialized 2 JSON files
+[01:19:43] Application starting...
+[01:19:43] Page configured
+[01:19:43] Splash screen displayed
+[01:19:45] Splash cleared — proceeding to EULA
+[01:19:45] EULA view displayed
+[01:19:46] User agreed to EULA — proceeding
+[01:19:46] User navigated to Select Data page
+[01:19:51] Successfully connected to database gypsppgp on server .\SQLEXPRESS
+[01:19:51] Database connection info saved: {'server': '.\\SQLEXPRESS', 'database': 'gypsppgp', 'driver': 'ODBC Driver 17 for SQL Server', 'data_folder_path': 'C:\\Program Files\\Microsoft SQL Server\\MSSQL16.SQLEXPRESS\\MSSQL\\DATA'}
+[01:19:51] Connecting to database gypsppgp on server .\SQLEXPRESS using driver ODBC Driver 17 for SQL Server
+[01:19:52] Database import successful with 10000 records.
+[01:19:52] Database import process completed for gypsppgp
+[01:19:53] User navigated to Calculate Biomass page
+[01:19:54] Calculate biomass button clicked
+[01:19:59] View Chart button clicked
+[01:20:00] Biomass chart displayed
+[01:20:13] View Chart button clicked
+[01:20:14] Biomass chart displayed
+[01:20:20] User navigated to Create Species page
+[01:20:20] User navigated to Select Data page
+[01:20:32] User navigated to Settings page
+[01:20:32] Theme toggled to: ThemeMode.DARK
+[01:20:48] Loaded species data from C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/treeparameters.json successfully.
+[01:20:56] User navigated to Create Species page
+[01:21:05] User navigated to Calculate Biomass page
+[01:21:09] User navigated to Select Data page
+[01:21:32] User navigated to Settings page
+[01:22:14] User navigated to Select Data page
+[01:22:17] User navigated to Settings page
+[01:22:18] Theme toggled to: ThemeMode.LIGHT
+[01:22:19] User navigated to Select Data page
