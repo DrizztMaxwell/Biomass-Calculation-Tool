@@ -1,0 +1,37 @@
+[02:04:23] --- Log Session Started ---
+[02:04:25] Running as script — data: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\app_data
+[02:04:25] Initializing JSON files...
+[02:04:25]    Created/Updated: storage/localstorage.json
+[02:04:25]    Created/Updated: data/treeparameters.json
+[02:04:25]    Preserved existing: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/create_species.json
+[02:04:25]    Preserved existing: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/selected_database.json
+[02:04:25]    Preserved existing: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/connection_history.json
+[02:04:25] Initialized 2 JSON files
+[02:04:25] Application starting...
+[02:04:25] Page configured
+[02:04:25] Splash screen displayed
+[02:04:27] Splash cleared — proceeding to EULA
+[02:04:27] EULA view displayed
+[02:04:28] User agreed to EULA — proceeding
+[02:04:28] User navigated to Select Data page
+[02:04:30] Import text file dialog opened
+[02:04:35] Selected file for import: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\All_Sp_Data_Test_BCT_Dec - Copy.txt
+[02:04:37] Text file imported successfully with 2062 records and 72 errors.
+[02:04:42] Import text file dialog opened
+[02:04:46] Selected file for import: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\todd_final.txt
+[02:04:47] Text file imported successfully with 2 records and 0 errors.
+[02:05:17] Import text file dialog opened
+[02:05:19] File selection cancelled by user
+[02:05:20] Import text file dialog opened
+[02:05:24] Selected file for import: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\Test_Todd_comment.txt
+[02:05:25] Text file imported successfully with 11 records and 0 errors.
+[02:05:44] User navigated to Calculate Biomass page
+[02:05:46] Calculate biomass button clicked
+[02:05:54] View Chart button clicked
+[02:05:54] Biomass chart displayed
+[02:06:34] User navigated to Select Data page
+[02:06:36] Import text file dialog opened
+[02:06:43] Selected file for import: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\All_Sp_Data_Test_BCT_Dec - Copy.txt
+[02:06:45] Text file imported successfully with 2062 records and 72 errors.
+[02:06:48] User navigated to Calculate Biomass page
+[02:06:49] Calculate biomass button clicked

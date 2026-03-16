@@ -1,0 +1,21 @@
+[03:38:05] --- Log Session Started ---
+[03:38:06] Running as script — data: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\app_data
+[03:38:06] Initializing JSON files...
+[03:38:06]    Created/Updated: storage/localstorage.json
+[03:38:06]    Created/Updated: data/treeparameters.json
+[03:38:06]    Preserved existing: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/create_species.json
+[03:38:06]    Preserved existing: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/selected_database.json
+[03:38:06]    Preserved existing: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/connection_history.json
+[03:38:06] Initialized 2 JSON files
+[03:38:06] Application starting...
+[03:38:06] Page configured
+[03:38:06] Splash screen displayed
+[03:38:09] Splash cleared — proceeding to EULA
+[03:38:09] EULA view displayed
+[03:38:10] User agreed to EULA — proceeding
+[03:38:10] User navigated to Select Data page
+[03:38:14] User navigated to Create Species page
+[03:38:16] User navigated to Select Data page
+[03:38:19] Import text file dialog opened
+[03:38:22] Selected file for import: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\Test_Todd_comment.txt
+[03:38:23] Text file imported successfully with 11 records and 0 errors.

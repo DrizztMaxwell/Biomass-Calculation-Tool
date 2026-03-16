@@ -84,6 +84,31 @@ class Create_Species_View:
             margin=ft.margin.only(bottom=18),
         )
 
+    def _page_header(self) -> ft.Container:
+        return ft.Container(
+            content=ft.Column([
+                ft.Row([
+                    ft.Container(
+                        content=ft.Icon(ft.Icons.ADD_BOX_OUTLINED, size=22, color="#FFFFFF"),
+                        bgcolor="#16A34A",
+                        border_radius=ft.border_radius.all(10),
+                        width=44, height=44,
+                        alignment=ft.alignment.center,
+                    ),
+                    ft.Column([
+                        ft.Text("Create Species", size=18,
+                                weight=ft.FontWeight.W_700,
+                                color=self._text_primary()),
+                        ft.Text(
+                            "Define a new tree species by specifying its parameters and components.",
+                            size=12, color=self._text_secondary()),
+                    ], spacing=2, expand=True),
+                ], spacing=14, vertical_alignment=ft.CrossAxisAlignment.CENTER),
+                ft.Container(height=1, bgcolor=self._border(),
+                             margin=ft.margin.only(top=14)),
+            ], spacing=0),
+        )
+
     def build(self):
         self.parameters_section_widget = self.parameters_section.build()
         metadata_row_widget = self.metadata_row.build()
@@ -111,12 +136,8 @@ class Create_Species_View:
             content=ft.Container(
                 content=ft.Column(
                     controls=[
-                        Title_With_Icon("Create Species", ft.Icons.ADD_BOX_OUTLINED),
-                        ft.Text(
-                            "Define a new tree species by specifying its parameters and components.",
-                            size=14, color=self._text_secondary(),
-                        ),
-                        ft.Container(height=28),
+                        self._page_header(),
+                        ft.Container(height=24),
                         self._section_header("1", "Species Information",
                                              "Species code or name, origin and equation type"),
                         metadata_row_widget,

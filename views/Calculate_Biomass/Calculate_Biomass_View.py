@@ -15,10 +15,10 @@ class Calculate_Biomass_View:
     """Main view for calculating and displaying biomass results."""
 
     def __init__(self, controller, page: ft.Page, selected_file_path=None):
-        self.controller          = controller
-        self.page                = page
-        self.selected_file_path  = selected_file_path
-        self.is_button_disabled  = False
+        self.controller           = controller
+        self.page                 = page
+        self.selected_file_path   = selected_file_path
+        self.is_button_disabled   = False
         self.is_database_selected = False
         self.hardwood_softwood_dialog = None
 
@@ -30,7 +30,20 @@ class Calculate_Biomass_View:
         self.results_loader  = Results_Data_Loader()
         self.layout          = Layout(controller, page)
         self.export_handler  = File_Exporter_Handler(page, selected_file_path, controller)
-        self.results_table   = Results_Table(controller, page, self.results_loader, self.export_handler)
+        self.results_table   = Results_Table(controller, page,
+                                             self.results_loader, self.export_handler)
+
+    # ── Theme helpers ─────────────────────────────────────────────────────────
+
+    @property
+    def _is_dark(self):
+        return self.page.theme_mode == ft.ThemeMode.DARK
+
+    def _text_primary(self):   return "#F5F5F5" if self._is_dark else "#0F172A"
+    def _text_secondary(self): return "#888888" if self._is_dark else "#64748B"
+    def _border(self):         return "#2E2E2E" if self._is_dark else "#E2E8F0"
+
+    # ── Build ─────────────────────────────────────────────────────────────────
 
     def build(self) -> ft.Column:
         return self.layout.build()
@@ -65,32 +78,22 @@ class Calculate_Biomass_View:
     def get_selected_components(self) -> list:
         return self.layout.components_section.get_selected_components()
 
-    # ── Button state management ───────────────────────────────────────────────
+    # ── Button state ──────────────────────────────────────────────────────────
 
     def disable_calculation_button(self, button):
-        """Disable calculation button — works for both ElevatedButton and Container."""
         self.is_button_disabled = True
-        if hasattr(button, 'bgcolor'):
-            button.bgcolor = "#4A4A4A"
-        if hasattr(button, 'color'):
-            button.color = "#888888"
-        if hasattr(button, 'opacity'):
-            button.opacity = 0.5
-        if hasattr(button, 'disabled'):
-            button.disabled = True
+        if hasattr(button, 'bgcolor'):  button.bgcolor  = "#4A4A4A"
+        if hasattr(button, 'color'):    button.color    = "#888888"
+        if hasattr(button, 'opacity'):  button.opacity  = 0.5
+        if hasattr(button, 'disabled'): button.disabled = True
         button.update()
 
     def enable_calculation_button(self, button):
-        """Enable calculation button — uses app green #16A34A."""
         self.is_button_disabled = False
-        if hasattr(button, 'bgcolor'):
-            button.bgcolor = "#16A34A"
-        if hasattr(button, 'color'):
-            button.color = "#FFFFFF"
-        if hasattr(button, 'opacity'):
-            button.opacity = 1.0
-        if hasattr(button, 'disabled'):
-            button.disabled = False
+        if hasattr(button, 'bgcolor'):  button.bgcolor  = "#16A34A"
+        if hasattr(button, 'color'):    button.color    = "#FFFFFF"
+        if hasattr(button, 'opacity'):  button.opacity  = 1.0
+        if hasattr(button, 'disabled'): button.disabled = False
         button.update()
 
     # ── Helper ────────────────────────────────────────────────────────────────

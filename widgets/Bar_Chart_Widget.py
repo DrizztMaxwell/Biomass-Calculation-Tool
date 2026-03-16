@@ -287,20 +287,7 @@ class Bar_Chart_Widget(ft.BarChart):
                 ],
             ))
 
-        # Export CSV button inline with table header
-        csv_btn = ft.Container(
-            content=ft.Row([
-                ft.Icon(ft.Icons.TABLE_CHART_ROUNDED, size=13, color="#16A34A"),
-                ft.Text("Export CSV", size=11, weight=ft.FontWeight.W_600, color="#16A34A"),
-            ], spacing=5, tight=True),
-            on_click=self._open_csv_save_dialog,
-            bgcolor=ft.Colors.with_opacity(0.08, "#16A34A"),
-            border=ft.border.all(1, ft.Colors.with_opacity(0.25, "#16A34A")),
-            border_radius=ft.border_radius.all(6),
-            padding=ft.padding.symmetric(horizontal=10, vertical=5),
-            ink=True,
-            tooltip="Export table as CSV",
-        )
+       
 
         return ft.Container(
             ref=self.summary_table_ref,
@@ -310,7 +297,7 @@ class Bar_Chart_Widget(ft.BarChart):
                             weight=ft.FontWeight.W_700,
                             color=self._text_secondary()),
                     ft.Container(expand=True),
-                    csv_btn,
+                 
                 ]),
                 ft.Container(
                     content=ft.Column(
@@ -416,9 +403,34 @@ class Bar_Chart_Widget(ft.BarChart):
             height=460,
         )
 
+    def _make_close_btn(self):
+        """Close button that turns red on hover."""
+        btn = ft.Container(
+            content=ft.Icon(ft.Icons.CLOSE_ROUNDED, size=16, color="#FFFFFF"),
+            on_click=self._on_close,
+            bgcolor=ft.Colors.with_opacity(
+                0.15, ft.Colors.WHITE if self._is_dark else ft.Colors.BLACK
+            ),
+            border_radius=ft.border_radius.all(8),
+            padding=ft.padding.all(8),
+            ink=True,
+            tooltip="Close",
+            animate=ft.Animation(150, ft.AnimationCurve.LINEAR),
+        )
+
+        def on_hover(e):
+            btn.bgcolor = "#DC2626" if e.data == "true" else ft.Colors.with_opacity(
+                0.15, ft.Colors.WHITE if self._is_dark else ft.Colors.BLACK
+            )
+            btn.update()
+
+        btn.on_hover = on_hover
+        return btn
+
     # ── Main build ────────────────────────────────────────────────────────────
 
     def build(self):
+        self._close_btn = self._make_close_btn()
         # Confirmation banner
         confirmation = ft.Container(
             ref=self.confirmation_ref,
@@ -468,30 +480,36 @@ class Bar_Chart_Widget(ft.BarChart):
                         self._open_csv_save_dialog, "#16A34A",
                         "Save table data as CSV"),
             ft.Container(width=6),
-            # Close
-            ft.Container(
-                content=ft.Icon(ft.Icons.CLOSE_ROUNDED, size=16, color="#FFFFFF"),
-                on_click=self._on_close,
-                bgcolor=ft.Colors.with_opacity(0.15,
-                    ft.Colors.WHITE if self._is_dark else ft.Colors.BLACK),
-                border_radius=ft.border_radius.all(8),
-                padding=ft.padding.all(8),
-                ink=True,
-                tooltip="Close",
-            ),
+            # Close — turns red on hover
+            self._close_btn,
         ], vertical_alignment=ft.CrossAxisAlignment.CENTER)
 
         divider = ft.Container(height=1, bgcolor=self._border_color(),
                                margin=ft.margin.symmetric(vertical=4))
 
-        card_body = ft.Column([
-            header,
-            divider,
-            self._build_bar_chart(),
-            confirmation,
-            self._build_legend(),
-            self._build_summary_table(),
-        ], spacing=16, scroll=ft.ScrollMode.ADAPTIVE)
+        # Fixed header section (non-scrollable)
+        fixed_header = ft.Container(
+            content=ft.Column([
+                header,
+                divider,
+            ], spacing=16),
+            padding=ft.padding.only(left=28, right=28, top=28, bottom=0),
+            bgcolor=self._surface(),
+        )
+
+        # Scrollable body below header
+        scrollable_body = ft.Container(
+            content=ft.Column([
+                self._build_bar_chart(),
+                confirmation,
+                self._build_legend(),
+                self._build_summary_table(),
+                ft.Container(height=12),
+            ], spacing=16, scroll=ft.ScrollMode.ADAPTIVE),
+            padding=ft.padding.only(left=28, right=28, bottom=28, top=16),
+            expand=True,
+            bgcolor=self._surface(),
+        )
 
         card = ft.Card(
             ref=self.card_ref,
@@ -499,8 +517,10 @@ class Bar_Chart_Widget(ft.BarChart):
             surface_tint_color=ft.Colors.TRANSPARENT,
             color=self._surface(),
             content=ft.Container(
-                content=card_body,
-                padding=ft.padding.all(28),
+                content=ft.Column([
+                    fixed_header,
+                    scrollable_body,
+                ], spacing=0, expand=True),
                 width=1080,
                 border_radius=ft.border_radius.all(16),
                 bgcolor=self._surface(),

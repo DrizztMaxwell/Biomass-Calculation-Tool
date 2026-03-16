@@ -1,0 +1,48 @@
+[02:21:00] --- Log Session Started ---
+[02:21:02] Running as script — data: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\app_data
+[02:21:02] Initializing JSON files...
+[02:21:02]    Created/Updated: storage/localstorage.json
+[02:21:02]    Created/Updated: data/treeparameters.json
+[02:21:02]    Preserved existing: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/create_species.json
+[02:21:02]    Preserved existing: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/selected_database.json
+[02:21:02]    Preserved existing: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/connection_history.json
+[02:21:02] Initialized 2 JSON files
+[02:21:02] Application starting...
+[02:21:02] Page configured
+[02:21:02] Splash screen displayed
+[02:21:04] Splash cleared — proceeding to EULA
+[02:21:04] EULA view displayed
+[02:21:05] User agreed to EULA — proceeding
+[02:21:05] User navigated to Select Data page
+[02:21:06] User navigated to Create Species page
+[02:21:43] Checking if species name sd exists in C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/treeparameters.json
+[02:21:43] Checking if species name sd exists in C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/create_species.json
+[02:22:03] Checking if species name aewqdsa exists in C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/treeparameters.json
+[02:22:03] Checking if species name aewqdsa exists in C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/create_species.json
+[02:22:04] Selected components for creation: ['Wood']
+[02:22:04] Species aewqdsa created successfully and added to create_species.json
+[02:22:06] User navigated to Modify Species page
+[02:22:06] Species data loaded successfully.
+[02:22:09] User navigated to Settings page
+[02:22:09] User navigated to Modify Species page
+[02:22:09] Species data loaded successfully.
+[02:22:20] Editing species: 
+[02:22:24] Viewing species: 
+[02:22:28] Editing species: 
+[02:22:29] Species data saved successfully.
+[02:22:29] Species '' updated successfully.
+[02:22:31] Confirming deletion: 
+[02:22:33] Confirming deletion: 
+[02:22:33] Species data saved successfully.
+[02:22:33] Species 'aewqdsa' deleted successfully.
+[02:22:39] User navigated to Select Data page
+[02:22:40] Import text file dialog opened
+[02:22:43] Selected file for import: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\All_Sp_Data_Test_BCT_Dec - Copy.txt
+[02:22:45] Text file imported successfully with 2062 records and 72 errors.
+[02:22:53] User navigated to Settings page
+[02:22:54] User navigated to Modify Species page
+[02:22:54] Species data loaded successfully.
+[02:22:57] Loaded species data from C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/treeparameters.json successfully.
+[02:23:00] User navigated to Settings page
+[02:23:01] User navigated to Modify Species page
+[02:23:01] Species data loaded successfully.

@@ -1,0 +1,41 @@
+[02:13:23] --- Log Session Started ---
+[02:13:25] Running as script — data: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\app_data
+[02:13:25] Initializing JSON files...
+[02:13:25]    Created/Updated: storage/localstorage.json
+[02:13:25]    Created/Updated: data/treeparameters.json
+[02:13:25]    Preserved existing: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/create_species.json
+[02:13:25]    Preserved existing: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/selected_database.json
+[02:13:25]    Preserved existing: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/connection_history.json
+[02:13:25] Initialized 2 JSON files
+[02:13:25] Application starting...
+[02:13:25] Page configured
+[02:13:25] Splash screen displayed
+[02:13:28] Splash cleared — proceeding to EULA
+[02:13:28] EULA view displayed
+[02:13:29] User agreed to EULA — proceeding
+[02:13:29] User navigated to Select Data page
+[02:13:33] Import text file dialog opened
+[02:13:36] Selected file for import: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\All_Sp_Data_Test_BCT_Dec - Copy.txt
+[02:13:37] Text file imported successfully with 2062 records and 72 errors.
+[02:13:40] User navigated to Calculate Biomass page
+[02:13:42] Calculate biomass button clicked
+[02:14:08] View Chart button clicked
+[02:14:09] Biomass chart displayed
+[02:14:41] User navigated to Create Species page
+[02:15:02] User navigated to Modify Species page
+[02:15:02] Species data loaded successfully.
+[02:15:24] User navigated to Create Species page
+[02:15:24] User navigated to Modify Species page
+[02:15:24] Species data loaded successfully.
+[02:15:28] User navigated to Create Species page
+[02:15:29] User navigated to Modify Species page
+[02:15:29] Species data loaded successfully.
+[02:15:33] User navigated to Create Species page
+[02:15:34] User navigated to Modify Species page
+[02:15:34] Species data loaded successfully.
+[02:15:44] User navigated to Settings page
+[02:15:44] User navigated to Modify Species page
+[02:15:44] Species data loaded successfully.
+[02:15:46] User navigated to Create Species page
+[02:15:53] User navigated to Calculate Biomass page
+[02:15:53] User navigated to Create Species page
