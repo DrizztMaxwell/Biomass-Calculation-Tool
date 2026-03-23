@@ -1,0 +1,64 @@
+[12:35:43] --- Log Session Started ---
+[12:35:53] Running as script — data: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\app_data
+[12:35:53] Initializing JSON files...
+[12:35:53]    Created/Updated: storage/localstorage.json
+[12:35:53]    Created/Updated: data/treeparameters.json
+[12:35:53]    Preserved existing: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/create_species.json
+[12:35:53]    Preserved existing: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/selected_database.json
+[12:35:53]    Preserved existing: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/connection_history.json
+[12:35:53] Initialized 2 JSON files
+[12:35:53] Application starting...
+[12:35:53] Page configured
+[12:35:53] Splash screen displayed
+[12:35:56] Splash cleared — proceeding to EULA
+[12:35:56] EULA view displayed
+[12:36:01] User agreed to EULA — proceeding
+[12:36:01] User navigated to Select Data page
+[12:36:05] User navigated to Modify Species page
+[12:36:05] Species data loaded successfully.
+[12:36:07] User navigated to Select Data page
+[12:36:10] Import text file dialog opened
+[12:36:15] Selected file for import: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\todd_final.txt
+[12:36:17] Text file imported successfully with 2 records and 0 errors.
+[12:36:17] Deleted temporary parquet file: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\todd_final.parquet
+[12:40:28] User navigated to Calculate Biomass page
+[12:40:32] Calculate biomass button clicked
+[12:40:39] View Chart button clicked
+[12:40:40] Biomass chart displayed
+[12:40:46] Generated default export filename: Output_Biomass_Results_20260323_124046.txt
+[12:40:46] Export file dialog opened
+[12:40:48] Export cancelled by user
+[12:40:50] User navigated to Settings page
+[12:40:51] User navigated to Modify Species page
+[12:40:51] Species data loaded successfully.
+[12:40:51] User navigated to Create Species page
+[12:40:53] User navigated to Modify Species page
+[12:40:53] Species data loaded successfully.
+[12:40:54] User navigated to Create Species page
+[12:41:03] Loaded species data from C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/treeparameters.json successfully.
+[12:48:33] User navigated to Calculate Biomass page
+[12:48:36] Calculate biomass button clicked
+[12:48:42] User navigated to Select Data page
+[12:48:44] Import text file dialog opened
+[12:48:46] File selection cancelled by user
+[12:48:50] Successfully connected to gypsppgp on DESKTOP-EJ33BVS\SQLEXPRESS
+[12:48:50] Database connection info saved: {'server': 'DESKTOP-EJ33BVS\\SQLEXPRESS', 'database': 'gypsppgp', 'driver': 'ODBC Driver 17 for SQL Server', 'data_folder_path': 'C:\\Program Files\\Microsoft SQL Server\\MSSQL16.SQLEXPRESS\\MSSQL\\DATA'}
+[12:48:50] Database import successful with 10251 records.
+[12:48:50] Database import process completed for gypsppgp
+[12:48:52] User navigated to Calculate Biomass page
+[12:48:54] Calculate biomass button clicked
+[12:49:19] Write to database operation success: True
+[12:49:33] Calculate biomass button clicked
+[12:49:39] Write to database operation success: True
+[12:49:49] User navigated to Select Data page
+[12:49:51] Import text file dialog opened
+[12:50:02] Selected file for import: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\testing_dataset\All_Capitalised_Test.txt
+[12:50:03] Text file imported successfully with 72 records and 0 errors.
+[12:50:03] Deleted temporary parquet file: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\testing_dataset\All_Capitalised_Test.parquet
+[12:50:06] User navigated to Calculate Biomass page
+[12:50:07] Calculate biomass button clicked
+[12:50:23] View Chart button clicked
+[12:50:23] Biomass chart displayed
+[12:50:37] User navigated to Select Data page
+[13:11:48] User navigated to Modify Species page
+[13:11:48] Species data loaded successfully.
