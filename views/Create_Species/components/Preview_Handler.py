@@ -49,7 +49,7 @@ class Preview_Handler:
                 self.page, 
                 title_icon=ft.Icons.REPORT_GMAILERRORRED_ROUNDED, 
                 title_color=ft.Colors.RED_900, 
-                title_icon_color=ft.Colors.RED_accent, 
+                title_icon_color=ft.Colors.RED_ACCENT, 
                 title="System Error", 
                 message=f"An unexpected error occurred: {str(e)}", 
             ).show()

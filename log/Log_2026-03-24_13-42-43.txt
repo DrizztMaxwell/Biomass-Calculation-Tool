@@ -1,0 +1,55 @@
+[13:42:43] --- Log Session Started ---
+[13:42:45] Running as script — data: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\app_data
+[13:42:45] Initializing JSON files...
+[13:42:45]    Created/Updated: storage/localstorage.json
+[13:42:45]    Created/Updated: data/treeparameters.json
+[13:42:45]    Preserved existing: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/create_species.json
+[13:42:45]    Preserved existing: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/selected_database.json
+[13:42:45]    Preserved existing: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/connection_history.json
+[13:42:45] Initialized 2 JSON files
+[13:42:45] Application starting...
+[13:42:45] Page configured
+[13:42:45] Splash screen displayed
+[13:42:47] Splash cleared — proceeding to EULA
+[13:42:47] EULA view displayed
+[13:42:48] User agreed to EULA — proceeding
+[13:42:48] User navigated to Select Data page
+[13:42:54] User navigated to Settings page
+[13:42:54] User navigated to Modify Species page
+[13:42:55] User navigated to Create Species page
+[13:43:07] Checking if species name dadw exists in C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/treeparameters.json
+[13:43:07] Error reading JSON file C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/create_species.json: Expected object or value
+[13:43:08] Selected components for creation: ['Bark']
+[13:43:08] Current equation type is DBH-based
+[13:44:33] User navigated to Modify Species page
+[13:44:33] Species data loaded successfully.
+[13:44:34] User navigated to Create Species page
+[13:44:40] Checking if species code 123 exists in C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/treeparameters.json
+[13:44:40] Selected components for creation: ['Wood']
+[13:44:40] Current equation type is DBH-based
+[13:44:40] Species 123 created successfully and added to create_species.json
+[13:44:42] User navigated to Modify Species page
+[13:44:42] Species data loaded successfully.
+[13:44:46] Editing species: 123
+[13:44:50] User navigated to Modify Species page
+[13:44:50] Species data loaded successfully.
+[13:44:50] User navigated to Create Species page
+[13:44:52] User navigated to Settings page
+[13:44:53] Theme toggled to: ThemeMode.DARK
+[13:44:54] User navigated to Modify Species page
+[13:44:54] Species data loaded successfully.
+[13:44:54] User navigated to Create Species page
+[13:44:58] User navigated to Select Data page
+[13:45:01] User navigated to Settings page
+[13:45:03] Theme toggled to: ThemeMode.LIGHT
+[13:45:04] User navigated to Modify Species page
+[13:45:04] Species data loaded successfully.
+[13:45:04] User navigated to Create Species page
+[13:45:06] User navigated to Select Data page
+[13:45:13] Successfully connected to gypsppgp on DESKTOP-EJ33BVS\SQLEXPRESS
+[13:45:13] Database connection info saved: {'server': 'DESKTOP-EJ33BVS\\SQLEXPRESS', 'database': 'gypsppgp', 'driver': 'ODBC Driver 17 for SQL Server', 'data_folder_path': 'C:\\Program Files\\Microsoft SQL Server\\MSSQL16.SQLEXPRESS\\MSSQL\\DATA', 'table_name': 'tCalcBiomassInput'}
+[13:45:14] Database import successful with 10251 records.
+[13:45:14] Database import process completed for gypsppgp
+[13:45:15] User navigated to Calculate Biomass page
+[13:45:16] Calculate biomass button clicked
+[13:45:29] User navigated to Select Data page

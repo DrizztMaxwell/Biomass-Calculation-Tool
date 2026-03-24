@@ -18,15 +18,6 @@ from helper_functions.Biomass_Calculator.extract_all_the_species_code_from_the_j
 from constants.Json_File_Path_Constants import json_paths
 
 # ── Created-species key normaliser ───────────────────────────────────────────
-<<<<<<< HEAD
-=======
-# Root cause of bug: created_species.json stores params as "Wood_b1", "Bark_b2"
-# but _calculate_*_biomass() looks for "bwood1", "bbark1" (tree_params format).
-# These maps translate between the two formats.
-
-# Actual key format in created_species.json: "bwoodb1", "bwoodb2", "bbarkb1" etc.
-# (b + component + b + number)
->>>>>>> 86feff1736be1803160fdf9b18c7c4b2a70faffa
 _DBH_KEY_MAP = {
     "bwoodb1":     "bwood1",     "bwoodb2":     "bwood2",
     "bbarkb1":     "bbark1",     "bbarkb2":     "bbark2",
@@ -40,7 +31,6 @@ _DBH_H_KEY_MAP = {
     "bhfoliageb1":  "bhfoliage1",  "bhfoliageb2":  "bhfoliage2", "bhfoliageb3":  "bhfoliage3",
 }
 
-<<<<<<< HEAD
 # ── Table name resolver ───────────────────────────────────────────────────────
 # DBH-based           → dbo.tCalcBiomassOutputD
 # DBH + Height-based  → dbo.tCalcBiomassOutputDH
@@ -61,8 +51,6 @@ def _resolve_table_name(equation_type: str) -> str:
 
 # ─────────────────────────────────────────────────────────────────────────────
 
-=======
->>>>>>> 86feff1736be1803160fdf9b18c7c4b2a70faffa
 def _normalise_created_species_params(species: dict) -> dict:
     """
     Remap created_species.json keys (bwoodb1, bbarkb2 etc.)
@@ -109,16 +97,11 @@ class Calculate_Biomass_Controller:
         if not success:
             self.view.show_error_dialog(title="Error", message="Failed to write results to database.")
             return
-<<<<<<< HEAD
         table_name = _resolve_table_name(self.get_equation_type())
         self.view.show_success_dialog(
             title="Success",
             message=f"Successfully exported data to dbo.{table_name}."
         )
-=======
-        from data.constants import TABLE_OUTPUT_NAME
-        self.view.show_success_dialog(title="Success", message=f"Successfully exported data to {TABLE_OUTPUT_NAME}.")
->>>>>>> 86feff1736be1803160fdf9b18c7c4b2a70faffa
 
     def export_results_to_text_file(self, file_path: str) -> bool:
         if export_to_text_file(file_path):
@@ -292,25 +275,13 @@ class Calculate_Biomass_Controller:
             if name and pd.notna(name):
                 species_name_lookup[str(name).lower().strip()] = row.to_dict()
 
-<<<<<<< HEAD
         # Build created_species lookups
-=======
-        # Build created_species lookups — *** FIX: normalise keys before storing ***
->>>>>>> 86feff1736be1803160fdf9b18c7c4b2a70faffa
         try:
             with open(json_paths.CREATED_SPECIES_PATH, "r") as f:
                 created_species_data = json.load(f)
 
             for species in created_species_data:
-<<<<<<< HEAD
                 normalised = _normalise_created_species_params(species)
-=======
-                # ── KEY FIX ──────────────────────────────────────────────────
-                # Remap "Wood_b1" → "bwood1" etc. so calc functions find params
-                normalised = _normalise_created_species_params(species)
-                # ─────────────────────────────────────────────────────────────
-
->>>>>>> 86feff1736be1803160fdf9b18c7c4b2a70faffa
                 code = normalised.get('SpeciesCode')
                 name = normalised.get('SpecCommon')
 
@@ -526,7 +497,6 @@ class Calculate_Biomass_Controller:
             "year":               int(year),
             "species":            int(species),
             "tree_number":        int(tree_number),
-<<<<<<< HEAD
             "dbh":                row.get("DBH")           or row.get("dbh"),
             "height":             row.get("Height")        or row.get("height"),
             "wood_kg":            row.get("Wood (KG)")     or row.get("wood_kg"),
@@ -536,24 +506,12 @@ class Calculate_Biomass_Controller:
             "crown_kg":           row.get("Crown (KG)")    or row.get("crown_kg"),
             "stem_kg":            row.get("Stem (KG)")     or row.get("stem_kg"),
             "total_kg":           row.get("Total (KG)")    or row.get("total_kg"),
-=======
-            "dbh":                row.get("DBH")        or row.get("dbh"),
-            "height":             row.get("Height")     or row.get("height"),
-            "wood_kg":            row.get("Wood (KG)")  or row.get("wood_kg"),
-            "bark_kg":            row.get("Bark (KG)")  or row.get("bark_kg"),
-            "foliage_kg":         row.get("Foliage (KG)") or row.get("foliage_kg"),
-            "branch_kg":          row.get("Branch (KG)") or row.get("branch_kg"),
-            "crown_kg":           row.get("Crown (KG)") or row.get("crown_kg"),
-            "stem_kg":            row.get("Stem (KG)")  or row.get("stem_kg"),
-            "total_kg":           row.get("Total (KG)") or row.get("total_kg"),
->>>>>>> 86feff1736be1803160fdf9b18c7c4b2a70faffa
             "coefficient_source": self.get_equation_type(),
         }
 
     def write_results_to_database(self):
         try:
             from data.data_manager import DataManager
-<<<<<<< HEAD
             dm         = DataManager()
             db_path    = dm.get_database_path()
             conn       = pyodbc.connect(db_path)
@@ -565,25 +523,12 @@ class Calculate_Biomass_Controller:
             # ─────────────────────────────────────────────────────────────────
 
             create_table_sql = f"""
-=======
-            dm     = DataManager()
-            db_path = dm.get_database_path()
-            conn   = pyodbc.connect(db_path)
-            cursor = conn.cursor()
-
-            create_table_sql = """
-            DROP TABLE IF EXISTS dbo.tCalcBiomassOutput;
->>>>>>> 86feff1736be1803160fdf9b18c7c4b2a70faffa
             IF NOT EXISTS (
                 SELECT 1 FROM sys.tables t
                 JOIN sys.schemas s ON t.schema_id = s.schema_id
                 WHERE t.name = '{table_name}' AND s.name = 'dbo'
             )
-<<<<<<< HEAD
             CREATE TABLE dbo.{table_name} (
-=======
-            CREATE TABLE dbo.tCalcBiomassOutput (
->>>>>>> 86feff1736be1803160fdf9b18c7c4b2a70faffa
                 Plot              VARCHAR(100)      NOT NULL,
                 Year              INT               NOT NULL,
                 Species           INT               NOT NULL,
@@ -603,25 +548,16 @@ class Calculate_Biomass_Controller:
             """
             cursor.execute(create_table_sql)
             conn.commit()
-<<<<<<< HEAD
 
             # Clear only the relevant table before re-inserting
             cursor.execute(f"DELETE FROM dbo.{table_name}")
-=======
-            cursor.execute("DELETE FROM dbo.tCalcBiomassOutput")
->>>>>>> 86feff1736be1803160fdf9b18c7c4b2a70faffa
             conn.commit()
 
             with open(json_paths.BIOMASS_RESULTS_PATH, 'r') as f:
                 data = json.load(f)
 
-<<<<<<< HEAD
             insert_sql = f"""
             INSERT INTO dbo.{table_name}
-=======
-            insert_sql = """
-            INSERT INTO dbo.tCalcBiomassOutput
->>>>>>> 86feff1736be1803160fdf9b18c7c4b2a70faffa
             (Plot, Year, Species, Tree_number, DBH, Height,
              Wood_kg, Bark_kg, Foliage_kg, Branch_kg, Crown_kg, Stem_kg, Total_kg, CoefficientSource)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
