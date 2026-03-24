@@ -424,7 +424,7 @@ class Edit_Dialog:
                 if value < self.MIN_VALUE or value > self.MAX_VALUE:
                     has_errors = True
                     self._mark_field_error(tf, f"Value must be between {self.MIN_VALUE} and {self.MAX_VALUE}")
-                    error_messages.append(f"{param_key}: out of range")
+                    error_messages.append(f"{param_key}: out of range.\nPlease enter a value between {self.MIN_VALUE} and {self.MAX_VALUE}.")
                 else:
                     self._clear_field_error(tf)
                     self.controller.get_species_data()[self.current_species_index][param_key] = value

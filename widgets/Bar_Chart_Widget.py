@@ -26,11 +26,12 @@ _STACK_ORDER = ["Wood", "Bark", "Branch", "Foliage"]
 
 class Bar_Chart_Widget(ft.BarChart):
 
-    def __init__(self, page: ft.Page, on_save=None, species_data=None):
+    def __init__(self, page: ft.Page, on_save=None, species_data=None, source_label: str = ""):
         super().__init__()
         self.page               = page
         self.on_save            = on_save
         self.species_data       = species_data or []
+        self.source_label       = source_label   # ← add this
         self.card_ref           = ft.Ref[ft.Card]()
         self.confirmation_ref   = ft.Ref[ft.Container]()
         self.summary_table_ref  = ft.Ref[ft.Container]()
@@ -192,8 +193,10 @@ class Bar_Chart_Widget(ft.BarChart):
         ax.set_xticklabels(labels, rotation=45, ha="right", fontsize=9, color=txt)
         ax.set_ylabel("Biomass (KG)", fontsize=11, fontweight="bold", color=txt)
         ax.set_xlabel("Species",      fontsize=11, fontweight="bold", color=txt)
-        ax.set_title("Biomass by Species Components",
-                     fontsize=14, fontweight="bold", color=txt, pad=14)
+        ax.set_title(
+    f"Total Biomass of Components Per Species for\n{self.source_label}",
+    fontsize=14, fontweight="bold", color=txt, pad=14,
+)
         ax.set_ylim(0, self._calculate_max_y())
         ax.tick_params(colors=txt)
         for spine in ax.spines.values():
@@ -389,19 +392,65 @@ class Bar_Chart_Widget(ft.BarChart):
             height=400,
             groups_space=36,
         )
+        caption = ft.Container(
+    content=ft.Row([
+        ft.Icon(ft.Icons.INFO_OUTLINE_ROUNDED, size=12,
+                color=self._text_secondary()),
+        ft.Text(
+            f"Total biomass of components per species  ·  {self.source_label}",
+            size=11,
+            color=self._text_secondary(),
+            italic=True,
+        ),
+    ], spacing=6),
+    padding=ft.padding.only(left=16, bottom=10, top=6),
+)
 
-        return ft.Container(
+      # Replace the return at the end of _build_bar_chart with:
+        title_bar = ft.Container(
+            content=ft.Column([
+                ft.Text(
+                    f"Total Biomass of Components Per Species",
+                    size=14, weight=ft.FontWeight.W_700,
+                    color=self._text_primary(),
+                    text_align=ft.TextAlign.CENTER,
+                ),
+                ft.Text(
+                    f"For -> {self.source_label}",
+                    size=12, color=self._text_secondary(),
+                    italic=True,
+                    text_align=ft.TextAlign.CENTER,
+                ),
+            ], spacing=2, horizontal_alignment=ft.CrossAxisAlignment.CENTER),
+            padding=ft.padding.only(top=16, bottom=4),
+            width=1020,
             bgcolor=self._chart_bg(),
             border=ft.border.all(1, self._border_color()),
-            border_radius=ft.border_radius.all(10),
+            border_radius=ft.border_radius.only(top_left=10, top_right=10),
+        )
+
+        chart_body = ft.Container(
+            bgcolor=self._chart_bg(),
+            border=ft.border.only(
+                left=ft.BorderSide(1, self._border_color()),
+                right=ft.BorderSide(1, self._border_color()),
+                bottom=ft.BorderSide(1, self._border_color()),
+            ),
+            border_radius=ft.border_radius.only(bottom_left=10, bottom_right=10),
             clip_behavior=ft.ClipBehavior.ANTI_ALIAS,
             content=ft.Column(
-                [ft.Container(content=chart, padding=ft.padding.only(left=16, right=16, top=16, bottom=32), width=chart_width)],
+                [ft.Container(
+                    content=chart,
+                    padding=ft.padding.only(left=16, right=16, top=8, bottom=32),
+                    width=chart_width,
+                )],
                 scroll=ft.ScrollMode.ADAPTIVE,
             ),
             width=1020,
-            height=460,
+            height=430,
         )
+
+        return ft.Column([title_bar, chart_body], spacing=0)
 
     def _make_close_btn(self):
         """Close button that turns red on hover."""
@@ -464,10 +513,10 @@ class Bar_Chart_Widget(ft.BarChart):
             ft.Column([
                 ft.Text("Biomass Analysis", size=20, weight=ft.FontWeight.W_800,
                         color=self._text_primary()),
-                ft.Text(
-                    f"{len(self.species_data)} species · stacked by component",
-                    size=12, color=self._text_secondary(),
-                ),
+               ft.Text(
+    f"{len(self.species_data)} species · stacked by component  ·  {self.source_label}",
+    size=12, color=self._text_secondary(),
+),
             ], spacing=2, expand=True),
 
             # Export PNG

@@ -17,7 +17,7 @@ class About_Dialog_View:
         return "#1A1A1A" if self._is_dark else "#F8FAFC"
 
     def _surface(self):
-        return "#222222" if self._is_dark else "#F8FAFC"
+        return "#1E1E1E" if self._is_dark else "#F0F4F8"
 
     def _surface_card(self):
         return "#2A2A2A" if self._is_dark else "#FFFFFF"
@@ -25,17 +25,167 @@ class About_Dialog_View:
     def _border(self):
         return "#2E2E2E" if self._is_dark else "#E2E8F0"
 
-    def _divider(self):
-        return "#333333" if self._is_dark else "#F1F5F9"
-
     def _text_primary(self):
-        return "#F5F5F5" if self._is_dark else "#0F172A"
+        return "#F5F5F5" if self._is_dark else "#1E293B"
 
     def _text_secondary(self):
-        return "#888888" if self._is_dark else "#64748B"
+        return "#AAAAAA" if self._is_dark else "#374151"
+
     def _accent(self):
         return "#6D28D9" if self._is_dark else "#8B5CF6"
 
+    # ── Coloured flat cards (matching screenshot) ─────────────────────────────
+
+    def _flat_card(self, icon, icon_color, card_bg, title_color, label, body_text) -> ft.Container:
+        return ft.Container(
+            content=ft.Column([
+                ft.Row([
+                    ft.Container(
+                        content=ft.Icon(icon, size=16, color=icon_color),
+                        bgcolor=ft.Colors.with_opacity(0.18, icon_color),
+                        border_radius=ft.border_radius.all(6),
+                        width=30, height=30,
+                        alignment=ft.alignment.center,
+                    ),
+                    ft.Text(label, size=14, weight=ft.FontWeight.W_700,
+                            color=title_color),
+                ], spacing=10, vertical_alignment=ft.CrossAxisAlignment.CENTER),
+                ft.Container(height=8),
+                ft.Text(body_text, size=13, color=self._text_secondary(),
+                        selectable=True),
+            ], spacing=0),
+            bgcolor=card_bg,
+            border_radius=ft.border_radius.all(10),
+            padding=ft.padding.all(16),
+        )
+
+    # ── Content sections ──────────────────────────────────────────────────────
+
+    def _build_overview_card(self) -> ft.Container:
+        card_bg  = "#DBEAFE" if not self._is_dark else "#1E3A5F"
+        title_c  = "#1D4ED8" if not self._is_dark else "#60A5FA"
+        icon_c   = "#2563EB"
+        return self._flat_card(
+            icon=ft.Icons.ANALYTICS_ROUNDED,
+            icon_color=icon_c,
+            card_bg=card_bg,
+            title_color=title_c,
+            label="Overview",
+            body_text=(
+                "This tool estimates aboveground biomass for Canadian tree species "
+                "using national equations (Lambert et al. 2005). It converts standard "
+                "forest inventory measurements into biomass estimates for carbon "
+                "accounting and forest management. Biomass is calculated for individual "
+                "tree components — wood, bark, branches, and foliage — with the sum "
+                "equaling total aboveground biomass. Species-specific allometric models "
+                "offer two precision levels: DBH-based equations (when height is "
+                "unavailable) and more accurate DBH + height-based equations (when both "
+                "measurements are provided)."
+            ),
+        )
+
+    def _build_features_card(self) -> ft.Container:
+        card_bg = "#DCFCE7" if not self._is_dark else "#14532D"
+        title_c = "#15803D" if not self._is_dark else "#4ADE80"
+        icon_c  = "#16A34A"
+        return self._flat_card(
+            icon=ft.Icons.SPEED_ROUNDED,
+            icon_color=icon_c,
+            card_bg=card_bg,
+            title_color=title_c,
+            label="Precision & Features",
+            body_text=(
+                "Estimates aboveground biomass for 33 Canadian tree species using "
+                "national equations (Lambert et al. 2005). Calculates biomass for "
+                "wood, bark, branches, and foliage — summing to total biomass. "
+                "Choose between DBH-based or more accurate DBH + height-based "
+                "equations."
+            ),
+        )
+
+    def _build_audience_card(self) -> ft.Container:
+        card_bg = "#EDE9FE" if not self._is_dark else "#2E1065"
+        title_c = "#6D28D9" if not self._is_dark else "#A78BFA"
+        icon_c  = "#7C3AED"
+        return self._flat_card(
+            icon=ft.Icons.GROUPS_ROUNDED,
+            icon_color=icon_c,
+            card_bg=card_bg,
+            title_color=title_c,
+            label="Intended For",
+            body_text=(
+                "Researchers, forest managers, and policy analysts requiring "
+                "robust biomass estimates across Canada."
+            ),
+        )
+
+    def _build_contact_card(self) -> ft.Container:
+        def email_pill(name, email, icon_color, pill_bg):
+            display = f"{name} ({email})"
+
+            def open_email(e, _email=email):
+                self.page.launch_url(f"mailto:{_email}")
+
+            return ft.Container(
+                content=ft.Row([
+                    ft.Container(
+                        content=ft.Icon(ft.Icons.MAIL_OUTLINE_ROUNDED, size=14,
+                                        color="#FFFFFF"),
+                        bgcolor=icon_color,
+                        border_radius=ft.border_radius.all(5),
+                        width=26, height=26,
+                        alignment=ft.alignment.center,
+                    ),
+                    ft.Text(display, size=12, color=self._text_primary(),
+                            expand=True),
+                ], spacing=8, vertical_alignment=ft.CrossAxisAlignment.CENTER),
+                bgcolor=pill_bg,
+                border_radius=ft.border_radius.all(8),
+                padding=ft.padding.symmetric(horizontal=12, vertical=10),
+                on_click=open_email,
+                ink=True,
+                url=f"mailto:{email}",
+            )
+
+        pill_bg_amber = "#FEF3C7" if not self._is_dark else "#3B2A00"
+        pill_bg_blue  = "#DBEAFE" if not self._is_dark else "#1E3A5F"
+        pill_bg_green = "#DCFCE7" if not self._is_dark else "#14532D"
+
+        return ft.Container(
+            content=ft.Column([
+                ft.Text("Development & Contact", size=14,
+                        weight=ft.FontWeight.W_700,
+                        color=self._text_primary()),
+                ft.Container(height=10),
+                ft.Row([
+                    email_pill(
+                        "Jamshid Eslamdoust",
+                        "Jamshid.Eslamdoust@ontario.ca",
+                        "#F59E0B",
+                        pill_bg_amber,
+                    ),
+                    email_pill(
+                        "Christopher Stratton",
+                        "Christopher.Stratton@ontario.ca",
+                        "#2563EB",
+                        pill_bg_blue,
+                    ),
+                ], spacing=10),
+                ft.Container(height=8),
+                ft.Row([
+                    email_pill(
+                        "Todd Little",
+                        "Todd.Little@ontario.ca",
+                        "#16A34A",
+                        pill_bg_green,
+                    ),
+                ], spacing=10),
+            ], spacing=0),
+            bgcolor=self._surface_card(),
+            border_radius=ft.border_radius.all(10),
+            padding=ft.padding.all(16),
+            border=ft.border.all(1, self._border()),
+        )
 
     # ── Header ────────────────────────────────────────────────────────────────
 
@@ -70,174 +220,6 @@ class About_Dialog_View:
             bgcolor=self._accent(),
             padding=ft.padding.symmetric(horizontal=24, vertical=18),
             border_radius=ft.border_radius.only(top_left=14, top_right=14),
-        )
-
-    # ── Card wrapper ──────────────────────────────────────────────────────────
-
-    def _card(self, icon, icon_color, label, content) -> ft.Container:
-        header = ft.Container(
-            content=ft.Row([
-                ft.Container(
-                    content=ft.Icon(icon, size=15, color=icon_color),
-                    bgcolor=ft.Colors.with_opacity(0.10, icon_color),
-                    border_radius=ft.border_radius.all(7),
-                    width=30, height=30,
-                    alignment=ft.alignment.center,
-                ),
-                ft.Text(label, size=13, weight=ft.FontWeight.W_600,
-                        color=self._text_primary()),
-            ], spacing=10),
-            padding=ft.padding.only(left=16, right=16, top=14, bottom=12),
-            bgcolor=self._surface(),
-        )
-        return ft.Container(
-            content=ft.Column([
-                header,
-                ft.Container(height=1, bgcolor=self._border()),
-                content,
-            ], spacing=0),
-            bgcolor=self._surface_card(),
-            border=ft.border.all(1, self._border()),
-            border_radius=ft.border_radius.all(10),
-            clip_behavior=ft.ClipBehavior.ANTI_ALIAS,
-        )
-
-    # ── Content sections ──────────────────────────────────────────────────────
-
-    def _build_overview_card(self) -> ft.Container:
-        return self._card(
-            icon=ft.Icons.ANALYTICS_ROUNDED,
-            icon_color="#2563EB",
-            label="Overview",
-            content=ft.Container(
-                content=ft.Text(
-                    "This tool estimates aboveground biomass for Canadian tree species "
-                    "using national equations (Lambert et al. 2005). It converts standard "
-                    "forest inventory measurements into biomass estimates for carbon "
-                    "accounting and forest management. Biomass is calculated for individual "
-                    "tree components — wood, bark, branches, and foliage — with the sum "
-                    "equaling total aboveground biomass.",
-                    size=13,
-                    color=self._text_secondary(),
-                ),
-                padding=ft.padding.all(16),
-            ),
-        )
-
-    def _build_features_card(self) -> ft.Container:
-        features = [
-            (ft.Icons.FOREST_OUTLINED,      self._accent(), "33 Canadian tree species supported"),
-            (ft.Icons.DEVICE_HUB_ROUNDED,   "#2563EB", "Biomass for wood, bark, branches & foliage"),
-            (ft.Icons.TRENDING_UP_ROUNDED,  "#F59E0B", "DBH-based & DBH + height-based equations"),
-            (ft.Icons.BALANCE_ROUNDED,      "#8B5CF6", "Carbon accounting & forest management ready"),
-        ]
-
-        rows = []
-        for i, (icon, color, text) in enumerate(features):
-            is_last = (i == len(features) - 1)
-            rows.append(ft.Container(
-                content=ft.Row([
-                    ft.Container(
-                        content=ft.Icon(icon, size=14, color=color),
-                        bgcolor=ft.Colors.with_opacity(0.10, color),
-                        border_radius=ft.border_radius.all(6),
-                        width=28, height=28,
-                        alignment=ft.alignment.center,
-                    ),
-                    ft.Text(text, size=13, color=self._text_secondary(), expand=True),
-                ], spacing=12, vertical_alignment=ft.CrossAxisAlignment.CENTER),
-                padding=ft.padding.symmetric(horizontal=16, vertical=11),
-                border=ft.border.only(
-                    bottom=ft.BorderSide(1, self._divider()) if not is_last else ft.BorderSide(0)
-                ),
-            ))
-
-        return self._card(
-            icon=ft.Icons.SPEED_ROUNDED,
-            icon_color="#F59E0B",
-            label="Precision & Features",
-            content=ft.Column(rows, spacing=0),
-        )
-
-    def _build_audience_card(self) -> ft.Container:
-        return self._card(
-            icon=ft.Icons.GROUPS_ROUNDED,
-            icon_color="#8B5CF6",
-            label="Intended For",
-            content=ft.Container(
-                content=ft.Text(
-                    "Researchers, forest managers, and policy analysts requiring "
-                    "robust biomass estimates across Canada.",
-                    size=13,
-                    color=self._text_secondary(),
-                ),
-                padding=ft.padding.all(16),
-            ),
-        )
-
-    def _build_contact_card(self) -> ft.Container:
-        def email_pill(name, email, color):
-            return ft.Container(
-                content=ft.Row([
-                    ft.Container(
-                        content=ft.Icon(ft.Icons.MAIL_OUTLINE_ROUNDED, size=14,
-                                        color=color),
-                        bgcolor=ft.Colors.with_opacity(0.10, color),
-                        border_radius=ft.border_radius.all(6),
-                        width=28, height=28,
-                        alignment=ft.alignment.center,
-                    ),
-                    ft.Column([
-                        ft.Text(name, size=13, weight=ft.FontWeight.W_600,
-                                color=self._text_primary()),
-                        ft.Text(email, size=11, color=self._text_secondary()),
-                    ], spacing=1, expand=True),
-                    ft.Icon(ft.Icons.OPEN_IN_NEW_ROUNDED, size=13,
-                            color=self._text_secondary()),
-                ], spacing=12, vertical_alignment=ft.CrossAxisAlignment.CENTER),
-                on_click=lambda _, e=email: self.page.launch_url(f"mailto:{e}"),
-                padding=ft.padding.symmetric(horizontal=16, vertical=12),
-                border=ft.border.only(bottom=ft.BorderSide(1, self._divider())),
-                ink=True,
-                ink_color=ft.Colors.with_opacity(0.05, color),
-            )
-
-        contacts = ft.Column([
-            email_pill("Jamshid Eslamdoust",
-                       "Jamshid.Eslamdoust@ontario.ca", "#F59E0B"),
-            ft.Container(  # last item — no bottom border override
-                content=ft.Row([
-                    ft.Container(
-                        content=ft.Icon(ft.Icons.MAIL_OUTLINE_ROUNDED, size=14,
-                                        color="#2563EB"),
-                        bgcolor=ft.Colors.with_opacity(0.10, "#2563EB"),
-                        border_radius=ft.border_radius.all(6),
-                        width=28, height=28,
-                        alignment=ft.alignment.center,
-                    ),
-                    ft.Column([
-                        ft.Text("Christopher Stratton", size=13,
-                                weight=ft.FontWeight.W_600,
-                                color=self._text_primary()),
-                        ft.Text("Christopher.Stratton@ontario.ca", size=11,
-                                color=self._text_secondary()),
-                    ], spacing=1, expand=True),
-                    ft.Icon(ft.Icons.OPEN_IN_NEW_ROUNDED, size=13,
-                            color=self._text_secondary()),
-                ], spacing=12, vertical_alignment=ft.CrossAxisAlignment.CENTER),
-                on_click=lambda _: self.page.launch_url(
-                    "mailto:Christopher.Stratton@ontario.ca"),
-                padding=ft.padding.symmetric(horizontal=16, vertical=12),
-                ink=True,
-                ink_color=ft.Colors.with_opacity(0.05, "#2563EB"),
-            ),
-        ], spacing=0)
-
-        return self._card(
-            icon=ft.Icons.ALTERNATE_EMAIL_ROUNDED,
-            icon_color="#2563EB",
-            label="Development & Contact",
-            content=contacts,
         )
 
     # ── Actions bar ───────────────────────────────────────────────────────────

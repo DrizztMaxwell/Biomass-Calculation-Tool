@@ -1,0 +1,39 @@
+[08:49:45] --- Log Session Started ---
+[08:49:47] Running as script — data: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\app_data
+[08:49:47] Initializing JSON files...
+[08:49:47]    Created/Updated: storage/localstorage.json
+[08:49:47]    Created/Updated: data/treeparameters.json
+[08:49:47]    Preserved existing: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/create_species.json
+[08:49:47]    Preserved existing: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/selected_database.json
+[08:49:47]    Preserved existing: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/connection_history.json
+[08:49:47] Initialized 2 JSON files
+[08:49:47] Application starting...
+[08:49:47] Page configured
+[08:49:47] Splash screen displayed
+[08:49:50] Splash cleared — proceeding to EULA
+[08:49:50] EULA view displayed
+[08:49:54] User agreed to EULA — proceeding
+[08:49:54] User navigated to Select Data page
+[08:49:58] Successfully connected to gypsppgp on DESKTOP-EJ33BVS\SQLEXPRESS
+[08:49:58] Database connection info saved: {'server': 'DESKTOP-EJ33BVS\\SQLEXPRESS', 'database': 'gypsppgp', 'driver': 'ODBC Driver 17 for SQL Server', 'data_folder_path': 'C:\\Program Files\\Microsoft SQL Server\\MSSQL16.SQLEXPRESS\\MSSQL\\DATA'}
+[08:49:58] Database import successful with 10251 records.
+[08:49:58] Database import process completed for gypsppgp
+[08:50:00] User navigated to Calculate Biomass page
+[08:50:02] User navigated to Create Species page
+[08:50:04] User navigated to Modify Species page
+[08:50:04] Species data loaded successfully.
+[08:50:06] User navigated to Settings page
+[08:50:07] User navigated to Modify Species page
+[08:50:07] Species data loaded successfully.
+[08:50:08] User navigated to Create Species page
+[08:50:09] User navigated to Calculate Biomass page
+[08:50:13] User navigated to Select Data page
+[08:50:14] User navigated to Calculate Biomass page
+[08:50:17] Calculate biomass button clicked
+[08:50:25] Write to database operation success: True
+[08:51:30] Calculate biomass button clicked
+[08:51:36] Write to database operation success: True
+[08:52:07] Write to database operation success: True
+[08:53:15] Write to database operation success: True
+[08:53:20] Calculate biomass button clicked
+[08:53:27] Write to database operation success: True

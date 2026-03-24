@@ -4,19 +4,8 @@
         "Origin": "Natural Stand",
         "EquationType": "DBH-based",
         "bwoodb1": 1.0,
-        "bwoodb2": 2.0,
-        "bbarkb1": 3.0,
-        "bbarkb2": 4.0
-    },
-    {
-        "SpecCommon": "ds",
-        "Origin": "Natural Stand",
-        "EquationType": "DBH + Height-based",
-        "bhwoodb1": 1.0,
-        "bhwoodb2": 2.0,
-        "bhwoodb3": 3.0,
-        "bhbarkb1": 4.0,
-        "bhbarkb2": 5.0,
-        "bhbarkb3": 3.0
+        "bwoodb2": 1.0,
+        "bbarkb1": 2.0,
+        "bbarkb2": 2.0
     }
 ]

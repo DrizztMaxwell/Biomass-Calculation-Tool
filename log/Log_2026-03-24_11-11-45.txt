@@ -1,0 +1,67 @@
+[11:11:45] --- Log Session Started ---
+[11:11:47] Running as script — data: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\app_data
+[11:11:47] Initializing JSON files...
+[11:11:47]    Created/Updated: storage/localstorage.json
+[11:11:47]    Created/Updated: data/treeparameters.json
+[11:11:47]    Preserved existing: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/create_species.json
+[11:11:47]    Preserved existing: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/selected_database.json
+[11:11:47]    Preserved existing: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/connection_history.json
+[11:11:47] Initialized 2 JSON files
+[11:11:47] Application starting...
+[11:11:47] Page configured
+[11:11:47] Splash screen displayed
+[11:11:49] Splash cleared — proceeding to EULA
+[11:11:49] EULA view displayed
+[11:11:50] User agreed to EULA — proceeding
+[11:11:50] User navigated to Select Data page
+[11:11:54] Successfully connected to gypsppgp on DESKTOP-EJ33BVS\SQLEXPRESS
+[11:11:54] Database connection info saved: {'server': 'DESKTOP-EJ33BVS\\SQLEXPRESS', 'database': 'gypsppgp', 'driver': 'ODBC Driver 17 for SQL Server', 'data_folder_path': 'C:\\Program Files\\Microsoft SQL Server\\MSSQL16.SQLEXPRESS\\MSSQL\\DATA', 'table_name': 'tCalcBiomassInput'}
+[11:11:54] Database import successful with 10251 records.
+[11:11:54] Database import process completed for gypsppgp
+[11:11:56] User navigated to Create Species page
+[11:11:57] User navigated to Modify Species page
+[11:11:57] Species data loaded successfully.
+[11:11:58] User navigated to Calculate Biomass page
+[11:12:00] Calculate biomass button clicked
+[11:12:04] View Chart button clicked
+[11:12:04] Biomass chart displayed
+[11:12:48] User navigated to Select Data page
+[11:13:06] Successfully connected to gypsppgp on DESKTOP-EJ33BVS\SQLEXPRESS
+[11:13:06] Database connection info saved: {'server': 'DESKTOP-EJ33BVS\\SQLEXPRESS', 'database': 'gypsppgp', 'driver': 'ODBC Driver 17 for SQL Server', 'data_folder_path': 'C:\\Program Files\\Microsoft SQL Server\\MSSQL16.SQLEXPRESS\\MSSQL\\DATA', 'table_name': 'tCalcBiomassInput'}
+[11:13:06] Database import successful with 10251 records.
+[11:13:06] Database import process completed for gypsppgp
+[11:13:07] User navigated to Calculate Biomass page
+[11:13:30] Calculate biomass button clicked
+[11:13:36] View Chart button clicked
+[11:13:36] Biomass chart displayed
+[11:14:25] User navigated to Select Data page
+[11:14:31] Import text file dialog opened
+[11:14:35] Selected file for import: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\todd_final.txt
+[11:14:36] Text file imported successfully with 2 records and 0 errors.
+[11:14:36] Deleted temporary parquet file: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\todd_final.parquet
+[11:14:51] User navigated to Calculate Biomass page
+[11:14:53] Calculate biomass button clicked
+[11:15:11] View Chart button clicked
+[11:15:11] Biomass chart displayed
+[11:15:53] View Chart button clicked
+[11:15:53] Biomass chart displayed
+[11:22:08] User navigated to Select Data page
+[12:25:08] Successfully connected to gypsppgp on DESKTOP-EJ33BVS\SQLEXPRESS
+[12:25:08] Database connection info saved: {'server': 'DESKTOP-EJ33BVS\\SQLEXPRESS', 'database': 'gypsppgp', 'driver': 'ODBC Driver 17 for SQL Server', 'data_folder_path': 'C:\\Program Files\\Microsoft SQL Server\\MSSQL16.SQLEXPRESS\\MSSQL\\DATA', 'table_name': 'tCalcBiomassInput'}
+[12:25:08] Database import successful with 10251 records.
+[12:25:09] Database import process completed for gypsppgp
+[12:25:10] User navigated to Modify Species page
+[12:25:10] Species data loaded successfully.
+[12:25:12] User navigated to Create Species page
+[12:25:15] User navigated to Settings page
+[12:25:16] User navigated to Modify Species page
+[12:25:16] Species data loaded successfully.
+[12:25:17] User navigated to Create Species page
+[12:25:17] User navigated to Calculate Biomass page
+[12:25:19] Calculate biomass button clicked
+[12:25:23] View Chart button clicked
+[12:25:24] Biomass chart displayed
+[12:27:32] View Chart button clicked
+[12:27:33] Biomass chart displayed
+[12:28:10] View Chart button clicked
+[12:28:11] Biomass chart displayed

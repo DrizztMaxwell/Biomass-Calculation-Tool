@@ -139,35 +139,29 @@ class Results_Table:
             column_spacing=14, horizontal_margin=12,
             divider_thickness=0, show_checkbox_column=False,
         )
-
         self._table_col.controls = [ft.Row([table], scroll=ft.ScrollMode.ADAPTIVE)]
-        self._table_col.update()
 
         # Update info text
         start_rec = self._current_page * self._PAGE_SIZE + 1
         end_rec   = min(start_rec + self._PAGE_SIZE - 1, total_records)
         self._info_text.value = f"Showing {start_rec}–{end_rec} of {total_records} records"
         self._info_text.color = self._text_secondary()
-        self._info_text.update()
 
         # Update page label
         self._page_label.value = f"Page {self._current_page + 1} of {self._total_pages}"
         self._page_label.color = self._text_secondary()
-        self._page_label.update()
 
         # Rebuild pills
-        self._rebuild_pills()
+        self._rebuild_pills(update=False)  # ← don't call .update() on pills directly
 
         # Style nav buttons
         prev_disabled = self._current_page <= 0
         next_disabled = self._current_page >= self._total_pages - 1
         self._style_nav_btn(self._prev_btn, prev_disabled, ft.Icons.ARROW_BACK_IOS_ROUNDED)
         self._style_nav_btn(self._next_btn, next_disabled, ft.Icons.ARROW_FORWARD_IOS_ROUNDED)
-        self._prev_btn.update()
-        self._next_btn.update()
 
+        # ✅ One single page update — no individual control .update() calls needed
         self.page.update()
-
     def _rebuild_pills(self, update=True):
         cp    = self._current_page
         total = self._total_pages

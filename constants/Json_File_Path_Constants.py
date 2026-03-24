@@ -28,12 +28,13 @@ class Json_File_Path_Constants:
         self.TREE_PARAMS_PATH = os.path.join(self.base_path, "data/treeparameters.json")
         self.OUTPUT_TEXT_PATH = os.path.join(self.base_path, "storage/output.txt")
         self.CONNECTION_HISTORY_PATH = os.path.join(self.base_path, "data/connection_history.json")
-        
+        self.INPUT_TEXT_FILE_NAME = os.path.join(self.base_path, "data/input_text_file_name.json")
         # Print paths for debugging
         print(f"📂 Development mode - Files stored in: {self.base_path}")
         print(f"   Data folder: {os.path.join(self.base_path, 'data')}")
         print(f"   Storage folder: {os.path.join(self.base_path, 'storage')}")
         print(f"   Connection history file: {self.CONNECTION_HISTORY_PATH}")
+        print(f"   Input text file name: {self.INPUT_TEXT_FILE_NAME}")
         # Create necessary directories
         self._create_directories()
     
@@ -82,7 +83,9 @@ class Json_File_Path_Constants:
             os.path.dirname(self.BIOMASS_RESULTS_PATH),
             os.path.dirname(self.TREE_PARAMS_PATH),
             os.path.dirname(self.OUTPUT_TEXT_PATH),
-            os.path.dirname(self.CONNECTION_HISTORY_PATH)
+            os.path.dirname(self.CONNECTION_HISTORY_PATH),
+            os.path.dirname(self.INPUT_TEXT_FILE_NAME)
+
         ]
         
         for directory in set(directories):
