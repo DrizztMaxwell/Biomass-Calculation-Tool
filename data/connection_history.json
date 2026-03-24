@@ -2,6 +2,10 @@
   {
     "server": "DESKTOP-EJ33BVS\\SQLEXPRESS",
     "database": "gypsppgp",
+<<<<<<< HEAD
     "last_used": "2026-03-24 12:36"
+=======
+    "last_used": "2026-03-23 12:48"
+>>>>>>> 86feff1736be1803160fdf9b18c7c4b2a70faffa
   }
 ]

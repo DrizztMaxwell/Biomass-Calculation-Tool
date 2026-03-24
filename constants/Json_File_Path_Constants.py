@@ -28,13 +28,20 @@ class Json_File_Path_Constants:
         self.TREE_PARAMS_PATH = os.path.join(self.base_path, "data/treeparameters.json")
         self.OUTPUT_TEXT_PATH = os.path.join(self.base_path, "storage/output.txt")
         self.CONNECTION_HISTORY_PATH = os.path.join(self.base_path, "data/connection_history.json")
+<<<<<<< HEAD
         self.INPUT_TEXT_FILE_NAME = os.path.join(self.base_path, "data/input_text_file_name.json")
+=======
+        
+>>>>>>> 86feff1736be1803160fdf9b18c7c4b2a70faffa
         # Print paths for debugging
         print(f"📂 Development mode - Files stored in: {self.base_path}")
         print(f"   Data folder: {os.path.join(self.base_path, 'data')}")
         print(f"   Storage folder: {os.path.join(self.base_path, 'storage')}")
         print(f"   Connection history file: {self.CONNECTION_HISTORY_PATH}")
+<<<<<<< HEAD
         print(f"   Input text file name: {self.INPUT_TEXT_FILE_NAME}")
+=======
+>>>>>>> 86feff1736be1803160fdf9b18c7c4b2a70faffa
         # Create necessary directories
         self._create_directories()
     
@@ -83,9 +90,13 @@ class Json_File_Path_Constants:
             os.path.dirname(self.BIOMASS_RESULTS_PATH),
             os.path.dirname(self.TREE_PARAMS_PATH),
             os.path.dirname(self.OUTPUT_TEXT_PATH),
+<<<<<<< HEAD
             os.path.dirname(self.CONNECTION_HISTORY_PATH),
             os.path.dirname(self.INPUT_TEXT_FILE_NAME)
 
+=======
+            os.path.dirname(self.CONNECTION_HISTORY_PATH)
+>>>>>>> 86feff1736be1803160fdf9b18c7c4b2a70faffa
         ]
         
         for directory in set(directories):

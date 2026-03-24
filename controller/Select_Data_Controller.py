@@ -124,11 +124,15 @@ class Select_Data_Controller:
                 with open(json_paths.SELECTED_DATABASE_PATH, "w") as f:
                     f.write("{}")
                 self.data_imported_callback(True)
+<<<<<<< HEAD
             # writ eto a json file called input_text_file_name
             with open(json_paths.INPUT_TEXT_FILE_NAME, "w") as f:
                 json.dump({"input_text_file_name": os.path.basename(self.selected_file_path)}, f, indent=4)
             
             
+=======
+
+>>>>>>> 86feff1736be1803160fdf9b18c7c4b2a70faffa
             Custom_Alert_Dialog(
                 self.page,
                 title_icon=ft.Icons.CHECK_CIRCLE,
@@ -158,7 +162,10 @@ class Select_Data_Controller:
             with open(json_paths.INPUT_TEXT_FILE_NAME, "w") as f:
                 f.write("{}")
             self.page.update()
+<<<<<<< HEAD
             
+=======
+>>>>>>> 86feff1736be1803160fdf9b18c7c4b2a70faffa
         finally:
             # Delete the .parquet file created alongside the .txt file (if it exists)
             if self.selected_file_path:
@@ -246,7 +253,10 @@ class Select_Data_Controller:
                 "server": server, "database": database,
                 "driver": driver,
                 "data_folder_path": get_mssql_data_path(),
+<<<<<<< HEAD
                 "table_name": "tCalcBiomassInput",
+=======
+>>>>>>> 86feff1736be1803160fdf9b18c7c4b2a70faffa
             }
             with open(json_paths.SELECTED_DATABASE_PATH, "w") as f:
                 json.dump(db_config, f, indent=4)
