@@ -216,6 +216,7 @@ class Results_Table:
     def _build_card(self) -> ft.Container:
         display_data  = self._page_data
         total_records = len(self._all_data)
+        print("Display data for page 1:", display_data[0].keys())  # Debug log
         headers       = list(display_data[0].keys()) if display_data else []
 
         # Initial table

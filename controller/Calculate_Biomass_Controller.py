@@ -374,14 +374,18 @@ class Calculate_Biomass_Controller:
             data.at[index, 'Wood (KG)']    = round(bh(wood_p1,   wood_p2,   wood_p3),   4)
         if "Bark"    in self.selected_components:
             data.at[index, 'Bark (KG)']    = round(bh(bark_p1,   bark_p2,   bark_p3),   4)
-        if "Branch"  in self.selected_components:
-            data.at[index, 'Branch (KG)']  = round(bh(branch_p1, branch_p2, branch_p3), 4)
+       
         if "Foliage" in self.selected_components:
             data.at[index, 'Foliage (KG)'] = round(bh(foliage_p1,foliage_p2,foliage_p3),4)
-        if "Stem"    in self.selected_components:
-            data.at[index, 'Stem (KG)']    = round(bh(wood_p1,wood_p2,wood_p3) + bh(bark_p1,bark_p2,bark_p3), 4)
+        if "Branch"  in self.selected_components:
+            data.at[index, 'Branch (KG)']  = round(bh(branch_p1, branch_p2, branch_p3), 4)
+        
         if "Crown"   in self.selected_components:
             data.at[index, 'Crown (KG)']   = round(bh(foliage_p1,foliage_p2,foliage_p3) + bh(branch_p1,branch_p2,branch_p3), 4)
+        
+        if "Stem"    in self.selected_components:
+            data.at[index, 'Stem (KG)']    = round(bh(wood_p1,wood_p2,wood_p3) + bh(bark_p1,bark_p2,bark_p3), 4)
+        
         if "Total"   in self.selected_components:
             data.at[index, 'Total (KG)']   = round(
                 bh(wood_p1,wood_p2,wood_p3) + bh(bark_p1,bark_p2,bark_p3) +
@@ -537,10 +541,13 @@ class Calculate_Biomass_Controller:
                 Height            DECIMAL(4,2)      NULL,
                 Wood_kg           NUMERIC(10,1),
                 Bark_kg           NUMERIC(10,1),
-                Foliage_kg        NUMERIC(10,1),
-                Branch_kg         NUMERIC(10,1),
+                
+                 Foliage_kg        NUMERIC(10,1),
+               Branch_kg         NUMERIC(10,1),
                 Crown_kg          NUMERIC(10,1),
-                Stem_kg           NUMERIC(10,1),
+                 Stem_kg           NUMERIC(10,1),
+               
+               
                 Total_kg          NUMERIC(10,1),
                 CoefficientSource VARCHAR(100)      NULL,
                 processed_at      DATETIMEOFFSET    NOT NULL DEFAULT SYSUTCDATETIME()
@@ -570,10 +577,12 @@ class Calculate_Biomass_Controller:
                     r["dbh"], r["height"],
                     _to_one_decimal(r["wood_kg"]),
                     _to_one_decimal(r["bark_kg"]),
-                    _to_one_decimal(r["foliage_kg"]),
-                    _to_one_decimal(r["branch_kg"]),
-                    _to_one_decimal(r["crown_kg"]),
+                     _to_one_decimal(r["foliage_kg"]),
+                     _to_one_decimal(r["branch_kg"]),
+                     _to_one_decimal(r["crown_kg"]),
                     _to_one_decimal(r["stem_kg"]),
+                  
+        
                     _to_one_decimal(r["total_kg"]),
                     r.get("coefficient_source"),
                 )

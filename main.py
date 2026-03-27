@@ -47,7 +47,7 @@ def initialize_json_files():
     fresh_files = {
         "storage/localstorage.json": {},
         "data/treeparameters.json": 
-            [
+         [
     {
         "SpecCommon": "Alpine fir",
         "SpeciesCode": "",
@@ -373,8 +373,58 @@ def initialize_json_files():
         "bhfoliage3": -1.4955
     },
     {
-        "SpecCommon": "Hickory",
-        "SpeciesCode": 183,
+        "SpecCommon": "Sweet Pignut Hickory",
+        "SpeciesCode": 89,
+
+        "bwood1": 0.2116,
+        "bwood2": 2.2013,
+        "bbark1": 0.0365,
+        "bbark2": 2.1133,
+        "bbranches1": 0.0087,
+        "bbranches2": 2.8927,
+        "bfoliage1": 0.0173,
+        "bfoliage2": 1.9830,
+        "bhwood1": 0.0139,
+        "bhwood2": 1.5913,
+        "bhwood3": 1.508,
+        "bhbark1": 0.0081,
+        "bhbark2": 1.4943,
+        "bhbark3": 1.1324,
+        "bhbranches1": 0.005,
+        "bhbranches2": 3.0463,
+        "bhbranches3": 0.0,
+        "bhfoliage1": 0.0121,
+        "bhfoliage2": 2.0865,
+        "bhfoliage3": 0.0
+    },
+    {
+        "SpecCommon": "Shagbark Hickory",
+        "SpeciesCode": 124,
+
+        "bwood1": 0.2116,
+        "bwood2": 2.2013,
+        "bbark1": 0.0365,
+        "bbark2": 2.1133,
+        "bbranches1": 0.0087,
+        "bbranches2": 2.8927,
+        "bfoliage1": 0.0173,
+        "bfoliage2": 1.9830,
+        "bhwood1": 0.0139,
+        "bhwood2": 1.5913,
+        "bhwood3": 1.508,
+        "bhbark1": 0.0081,
+        "bhbark2": 1.4943,
+        "bhbark3": 1.1324,
+        "bhbranches1": 0.005,
+        "bhbranches2": 3.0463,
+        "bhbranches3": 0.0,
+        "bhfoliage1": 0.0121,
+        "bhfoliage2": 2.0865,
+        "bhfoliage3": 0.0
+    },
+    {
+        "SpecCommon": "Bitternut Hickory",
+        "SpeciesCode": 123,
 
         "bwood1": 0.2116,
         "bwood2": 2.2013,
@@ -948,7 +998,8 @@ def initialize_json_files():
     }
     
 ]
-            }
+
+         }
     created_files = []
     for file_path, default_content in fresh_files.items():
         user_file_path = get_user_data_path(file_path)

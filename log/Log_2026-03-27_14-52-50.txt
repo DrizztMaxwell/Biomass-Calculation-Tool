@@ -1,0 +1,70 @@
+[14:52:50] --- Log Session Started ---
+[14:52:52] Running as script — data: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\app_data
+[14:52:52] Initializing JSON files...
+[14:52:52]    Created/Updated: storage/localstorage.json
+[14:52:52]    Created/Updated: data/treeparameters.json
+[14:52:52]    Preserved existing: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/create_species.json
+[14:52:52]    Preserved existing: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/selected_database.json
+[14:52:52]    Preserved existing: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/connection_history.json
+[14:52:52] Initialized 2 JSON files
+[14:52:52] Application starting...
+[14:52:52] Page configured
+[14:52:52] Splash screen displayed
+[14:52:54] Splash cleared — proceeding to EULA
+[14:52:54] EULA view displayed
+[14:52:56] User agreed to EULA — proceeding
+[14:52:56] User navigated to Select Data page
+[14:52:59] Successfully connected to gypsppgp on DESKTOP-EJ33BVS\SQLEXPRESS
+[14:52:59] Database connection info saved: {'server': 'DESKTOP-EJ33BVS\\SQLEXPRESS', 'database': 'gypsppgp', 'driver': 'ODBC Driver 17 for SQL Server', 'data_folder_path': 'C:\\Program Files\\Microsoft SQL Server\\MSSQL16.SQLEXPRESS\\MSSQL\\DATA', 'table_name': 'tCalcBiomassInput'}
+[14:52:59] Database import successful with 10251 records.
+[14:52:59] Database import process completed for gypsppgp
+[14:53:01] User navigated to Calculate Biomass page
+[14:53:03] Calculate biomass button clicked
+[14:53:09] Calculate biomass button clicked
+[14:53:21] Calculate biomass button clicked
+[14:53:33] Write to database operation success: True
+[14:53:37] Calculate biomass button clicked
+[14:53:44] Write to database operation success: True
+[14:54:51] User navigated to Create Species page
+[14:54:52] User navigated to Calculate Biomass page
+[14:54:54] Calculate biomass button clicked
+[14:55:02] Write to database operation success: True
+[14:55:28] User navigated to Select Data page
+[14:55:30] Import text file dialog opened
+[14:55:35] Selected file for import: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\Test_Todd_comment.txt
+[14:55:36] Text file imported successfully with 11 records and 0 errors.
+[14:55:36] Deleted temporary parquet file: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\Test_Todd_comment.parquet
+[14:55:40] User navigated to Calculate Biomass page
+[14:55:42] Calculate biomass button clicked
+[14:56:12] Calculate biomass button clicked
+[14:56:17] Calculate biomass button clicked
+[14:58:20] User navigated to Select Data page
+[14:58:24] Successfully connected to gypsppgp on DESKTOP-EJ33BVS\SQLEXPRESS
+[14:58:24] Database connection info saved: {'server': 'DESKTOP-EJ33BVS\\SQLEXPRESS', 'database': 'gypsppgp', 'driver': 'ODBC Driver 17 for SQL Server', 'data_folder_path': 'C:\\Program Files\\Microsoft SQL Server\\MSSQL16.SQLEXPRESS\\MSSQL\\DATA', 'table_name': 'tCalcBiomassInput'}
+[14:58:24] Database import successful with 10251 records.
+[14:58:24] Database import process completed for gypsppgp
+[14:58:26] User navigated to Calculate Biomass page
+[14:58:27] Calculate biomass button clicked
+[14:58:35] Calculate biomass button clicked
+[14:58:41] User navigated to Select Data page
+[14:58:43] Import text file dialog opened
+[14:58:50] Selected file for import: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data_set.txt
+[14:58:51] Text file imported successfully with 12 records and 2 errors.
+[14:58:51] Deleted temporary parquet file: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data_set.parquet
+[14:58:54] User navigated to Calculate Biomass page
+[14:58:55] Calculate biomass button clicked
+[14:59:04] Calculate biomass button clicked
+[14:59:10] User navigated to Select Data page
+[14:59:11] Import text file dialog opened
+[14:59:15] Selected file for import: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\todd_final.txt
+[14:59:17] Text file imported successfully with 2 records and 0 errors.
+[14:59:17] Deleted temporary parquet file: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\todd_final.parquet
+[14:59:19] User navigated to Calculate Biomass page
+[14:59:20] Calculate biomass button clicked
+[14:59:43] User navigated to Select Data page
+[14:59:44] Import text file dialog opened
+[14:59:51] Selected file for import: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data_set.txt
+[14:59:52] Text file imported successfully with 12 records and 2 errors.
+[14:59:52] Deleted temporary parquet file: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data_set.parquet
+[14:59:55] User navigated to Calculate Biomass page
+[14:59:56] Calculate biomass button clicked

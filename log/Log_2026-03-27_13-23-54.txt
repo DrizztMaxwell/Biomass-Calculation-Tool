@@ -1,0 +1,24 @@
+[13:23:54] --- Log Session Started ---
+[13:24:03] Running as script — data: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\app_data
+[13:24:03] Initializing JSON files...
+[13:24:03]    Created/Updated: storage/localstorage.json
+[13:24:03]    Created/Updated: data/treeparameters.json
+[13:24:03]    Preserved existing: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/create_species.json
+[13:24:03]    Preserved existing: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/selected_database.json
+[13:24:03]    Preserved existing: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/connection_history.json
+[13:24:03] Initialized 2 JSON files
+[13:24:03] Application starting...
+[13:24:03] Page configured
+[13:24:03] Splash screen displayed
+[13:24:06] Splash cleared — proceeding to EULA
+[13:24:06] EULA view displayed
+[13:24:08] User agreed to EULA — proceeding
+[13:24:08] User navigated to Select Data page
+[13:24:12] Successfully connected to gypsppgp on DESKTOP-EJ33BVS\SQLEXPRESS
+[13:24:12] Database connection info saved: {'server': 'DESKTOP-EJ33BVS\\SQLEXPRESS', 'database': 'gypsppgp', 'driver': 'ODBC Driver 17 for SQL Server', 'data_folder_path': 'C:\\Program Files\\Microsoft SQL Server\\MSSQL16.SQLEXPRESS\\MSSQL\\DATA', 'table_name': 'tCalcBiomassInput'}
+[13:24:13] Database import successful with 10251 records.
+[13:24:13] Database import process completed for gypsppgp
+[13:24:14] User navigated to Calculate Biomass page
+[13:24:16] Calculate biomass button clicked
+[13:24:25] Write to database operation success: True
+[13:26:17] Write to database operation success: True
