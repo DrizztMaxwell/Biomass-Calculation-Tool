@@ -13,6 +13,16 @@ class Results_Table:
         "Stem (KG)", "Crown (KG)", "Total (KG)"
     }
 
+    _COLUMN_ORDER = [
+    "Wood (KG)",
+    "Bark (KG)",
+    "Foliage (KG)",
+    "Branch (KG)",
+    "Crown (KG)",
+    "Stem (KG)",
+    "Total (KG)",
+    ]
+
     def __init__(self, controller, page: ft.Page,
                  results_loader: Results_Data_Loader,
                  file_exporter_handler: File_Exporter_Handler):
@@ -113,7 +123,17 @@ class Results_Table:
     def _update_table(self):
         display_data  = self._page_data
         total_records = len(self._all_data)
-        headers       = list(display_data[0].keys()) if display_data else []
+
+        headers = []
+
+        if display_data:
+            first_row = display_data[0]
+
+            # Keep columns in desired order
+            headers = [h for h in self._COLUMN_ORDER if h in first_row]
+
+            # Add any extra columns not in _COLUMN_ORDER
+            headers += [h for h in first_row.keys() if h not in headers]
 
         # Rebuild table rows
         columns = [
