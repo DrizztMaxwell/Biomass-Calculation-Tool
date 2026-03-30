@@ -16,10 +16,10 @@ class Results_Table:
     _COLUMN_ORDER = [
     "Wood (KG)",
     "Bark (KG)",
-    "Foliage (KG)",
     "Branch (KG)",
-    "Crown (KG)",
+    "Foliage (KG)",
     "Stem (KG)",
+    "Crown (KG)",
     "Total (KG)",
     ]
 
