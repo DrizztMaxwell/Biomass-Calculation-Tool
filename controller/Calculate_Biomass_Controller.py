@@ -522,7 +522,18 @@ class Calculate_Biomass_Controller:
             table_name = _resolve_table_name(self.get_equation_type())
             # e.g. "tCalcBiomassOutputD" or "tCalcBiomassOutputDH"
             # ─────────────────────────────────────────────────────────────────
-
+            # Drop table if it exists, then recreate fresh
+            drop_table_sql = f"""
+            IF EXISTS (
+                SELECT 1 FROM sys.tables t
+                JOIN sys.schemas s ON t.schema_id = s.schema_id
+                WHERE t.name = '{table_name}' AND s.name = 'dbo'
+            )
+            DROP TABLE dbo.{table_name};
+            """
+            cursor.execute(drop_table_sql)
+            conn.commit()
+ 
             create_table_sql = f"""
             IF NOT EXISTS (
                 SELECT 1 FROM sys.tables t

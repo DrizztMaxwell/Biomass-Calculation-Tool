@@ -1,0 +1,58 @@
+[19:27:23] --- Log Session Started ---
+[19:27:30] Running as script — data: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\app_data
+[19:27:30] Initializing JSON files...
+[19:27:30]    Created/Updated: storage/localstorage.json
+[19:27:30]    Created/Updated: data/treeparameters.json
+[19:27:30]    Preserved existing: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/create_species.json
+[19:27:30]    Preserved existing: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/selected_database.json
+[19:27:30]    Preserved existing: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/connection_history.json
+[19:27:30] Initialized 2 JSON files
+[19:27:30] Application starting...
+[19:27:30] Page configured
+[19:27:30] Splash screen displayed
+[19:27:32] Splash cleared — proceeding to EULA
+[19:27:32] EULA view displayed
+[19:27:33] User agreed to EULA — proceeding
+[19:27:33] User navigated to Select Data page
+[19:27:53] Error connecting to database: ('08001', '[08001] [Microsoft][ODBC Driver 17 for SQL Server]SQL Server Network Interfaces: Error Locating Server/Instance Specified [xFFFFFFFF].  (-1) (SQLDriverConnect); [08001] [Microsoft][ODBC Driver 17 for SQL Server]Login timeout expired (0); [08001] [Microsoft][ODBC Driver 17 for SQL Server]Invalid connection string attribute (0); [08001] [Microsoft][ODBC Driver 17 for SQL Server]A network-related or instance-specific error has occurred while establishing a connection to SQL Server. Server is not found or not accessible. Check if instance name is correct and if SQL Server is configured to allow remote connections. For more information see SQL Server Books Online. (-1)')
+[19:27:53] Database connection failed for gypsppgp
+[19:28:15] Error connecting to database: ('08001', '[08001] [Microsoft][ODBC Driver 17 for SQL Server]SQL Server Network Interfaces: Error Locating Server/Instance Specified [xFFFFFFFF].  (-1) (SQLDriverConnect); [08001] [Microsoft][ODBC Driver 17 for SQL Server]Login timeout expired (0); [08001] [Microsoft][ODBC Driver 17 for SQL Server]Invalid connection string attribute (0); [08001] [Microsoft][ODBC Driver 17 for SQL Server]A network-related or instance-specific error has occurred while establishing a connection to SQL Server. Server is not found or not accessible. Check if instance name is correct and if SQL Server is configured to allow remote connections. For more information see SQL Server Books Online. (-1)')
+[19:28:15] Database connection failed for gypsppgp
+[19:28:25] Successfully connected to gypsppgp on DESKTOP-EJ33BVS\SQLEXPRESS
+[19:28:25] Database connection info saved: {'server': 'DESKTOP-EJ33BVS\\SQLEXPRESS', 'database': 'gypsppgp', 'driver': 'ODBC Driver 17 for SQL Server', 'data_folder_path': 'C:\\Program Files\\Microsoft SQL Server\\MSSQL16.SQLEXPRESS\\MSSQL\\DATA', 'table_name': 'tCalcBiomassInput'}
+[19:28:25] Database import successful with 10251 records.
+[19:28:25] Database import process completed for gypsppgp
+[19:28:27] User navigated to Calculate Biomass page
+[19:28:29] Calculate biomass button clicked
+[19:28:36] View Chart button clicked
+[19:28:37] Biomass chart displayed
+[19:28:41] User navigated to Create Species page
+[19:28:42] User navigated to Modify Species page
+[19:28:42] Species data loaded successfully.
+[19:28:45] User navigated to Create Species page
+[19:28:49] User navigated to Calculate Biomass page
+[19:28:51] User navigated to Select Data page
+[19:28:52] User navigated to Settings page
+[19:28:54] User navigated to Modify Species page
+[19:28:54] Species data loaded successfully.
+[19:28:56] User navigated to Create Species page
+[19:28:58] User navigated to Select Data page
+[19:29:00] User navigated to Modify Species page
+[19:29:00] Species data loaded successfully.
+[19:29:02] Confirming deletion: 123
+[19:29:03] Confirming deletion: 123
+[19:29:03] Species data saved successfully.
+[19:29:03] Species '123' deleted successfully.
+[19:29:05] Confirming deletion: 
+[19:29:05] Confirming deletion: 
+[19:29:05] Species data saved successfully.
+[19:29:05] Species 'kok' deleted successfully.
+[19:29:08] Confirming deletion: 
+[19:29:08] Confirming deletion: 
+[19:29:08] Species data saved successfully.
+[19:29:08] Species 'Todd' deleted successfully.
+[19:29:11] User navigated to Create Species page
+[19:29:25] Checking if species name Alpine fir exists in C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/treeparameters.json
+[19:29:25] Species code or name 'Alpine fir' already exists in treeparameters.json
+[21:50:22] User navigated to Calculate Biomass page
+[21:50:23] Calculate biomass button clicked

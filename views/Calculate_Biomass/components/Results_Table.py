@@ -14,13 +14,13 @@ class Results_Table:
     }
 
     _COLUMN_ORDER = [
-    "Wood (KG)",
-    "Bark (KG)",
-    "Branch (KG)",
-    "Foliage (KG)",
-    "Stem (KG)",
-    "Crown (KG)",
-    "Total (KG)",
+        "Wood (KG)",
+        "Bark (KG)",
+        "Branch (KG)",
+        "Foliage (KG)",
+        "Stem (KG)",
+        "Crown (KG)",
+        "Total (KG)",
     ]
 
     def __init__(self, controller, page: ft.Page,
@@ -127,13 +127,13 @@ class Results_Table:
         headers = []
 
         if display_data:
-            first_row = display_data[0]
+            # Non-biomass columns first (in natural order), then biomass in desired order
+            first_row   = display_data[0]
+            non_biomass = [h for h in first_row.keys() if h not in self._BIOMASS_COLUMNS]
+            biomass     = [h for h in self._COLUMN_ORDER if h in first_row]
+            headers     = non_biomass + biomass
 
-            # Keep columns in desired order
-            headers = [h for h in self._COLUMN_ORDER if h in first_row]
-
-            # Add any extra columns not in _COLUMN_ORDER
-            headers += [h for h in first_row.keys() if h not in headers]
+            # Add any extra columns not accounted for
 
         # Rebuild table rows
         columns = [
@@ -236,8 +236,11 @@ class Results_Table:
     def _build_card(self) -> ft.Container:
         display_data  = self._page_data
         total_records = len(self._all_data)
-        print("Display data for page 1:", display_data[0].keys())  # Debug log
-        headers       = list(display_data[0].keys()) if display_data else []
+        # Non-biomass columns first (in natural order), then biomass in desired order
+        first_row = display_data[0] if display_data else {}
+        non_biomass = [h for h in first_row.keys() if h not in self._BIOMASS_COLUMNS]
+        biomass     = [h for h in self._COLUMN_ORDER if h in first_row]
+        headers     = non_biomass + biomass
 
         # Initial table
         columns = [

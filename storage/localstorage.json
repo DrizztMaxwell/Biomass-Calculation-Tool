@@ -2,110 +2,6 @@
     {
         "Plot": "1246201PIP",
         "Year": 2007,
-        "Species": 38,
-        "Tree_number": 35,
-        "DBH": 11.2,
-        "Height": 15.3
-    },
-    {
-        "Plot": "1246201PIP",
-        "Year": 2007,
-        "Species": 20,
-        "Tree_number": 37,
-        "DBH": 2.5,
-        "Height": 2.8
-    },
-    {
-        "Plot": "1246201PIP",
-        "Year": 2007,
-        "Species": 20,
-        "Tree_number": 38,
-        "DBH": 3.9,
-        "Height": 4.0
-    },
-    {
-        "Plot": "1246201PIP",
-        "Year": 2007,
-        "Species": 38,
-        "Tree_number": 39,
-        "DBH": 11.3,
-        "Height": 15.4
-    },
-    {
-        "Plot": "1246201PIP",
-        "Year": 2007,
-        "Species": 38,
-        "Tree_number": 40,
-        "DBH": 13.5,
-        "Height": 16.5
-    },
-    {
-        "Plot": "1246201PIP",
-        "Year": 2007,
-        "Species": 38,
-        "Tree_number": 44,
-        "DBH": 14.8,
-        "Height": 17.0
-    },
-    {
-        "Plot": "1246201PIP",
-        "Year": 2007,
-        "Species": 12,
-        "Tree_number": 45,
-        "DBH": 11.7,
-        "Height": 10.2
-    },
-    {
-        "Plot": "1246201PIP",
-        "Year": 2007,
-        "Species": 13,
-        "Tree_number": 47,
-        "DBH": 5.1,
-        "Height": 5.1
-    },
-    {
-        "Plot": "1246201PIP",
-        "Year": 2007,
-        "Species": 20,
-        "Tree_number": 49,
-        "DBH": 2.9,
-        "Height": 3.2
-    },
-    {
-        "Plot": "1246201PIP",
-        "Year": 2007,
-        "Species": 38,
-        "Tree_number": 50,
-        "DBH": 16.8,
-        "Height": 17.7
-    },
-    {
-        "Plot": "1246201PIP",
-        "Year": 2007,
-        "Species": 20,
-        "Tree_number": 51,
-        "DBH": 4.0,
-        "Height": 4.1
-    },
-    {
-        "Plot": "1246201PIP",
-        "Year": 2007,
-        "Species": 20,
-        "Tree_number": 52,
-        "DBH": 3.2,
-        "Height": 3.4
-    },
-    {
-        "Plot": "1246201PIP",
-        "Year": 2007,
-        "Species": 38,
-        "Tree_number": 53,
-        "DBH": 9.5,
-        "Height": 14.2
-    },
-    {
-        "Plot": "1246201PIP",
-        "Year": 2007,
         "Species": 20,
         "Tree_number": 54,
         "DBH": 3.9,
@@ -259,46 +155,6 @@
         "Plot": "1246201PIP",
         "Year": 2007,
         "Species": 20,
-        "Tree_number": 34,
-        "DBH": 10.6,
-        "Height": 9.4
-    },
-    {
-        "Plot": "1246201PIP",
-        "Year": 2007,
-        "Species": 20,
-        "Tree_number": 33,
-        "DBH": 4.7,
-        "Height": 4.7
-    },
-    {
-        "Plot": "1246201PIP",
-        "Year": 2007,
-        "Species": 20,
-        "Tree_number": 32,
-        "DBH": 2.7,
-        "Height": 3.0
-    },
-    {
-        "Plot": "1246201PIP",
-        "Year": 2007,
-        "Species": 20,
-        "Tree_number": 31,
-        "DBH": 6.0,
-        "Height": 5.9
-    },
-    {
-        "Plot": "1246201PIP",
-        "Year": 2007,
-        "Species": 20,
-        "Tree_number": 30,
-        "DBH": 6.1,
-        "Height": 6.0
-    },
-    {
-        "Plot": "1246201PIP",
-        "Year": 2007,
-        "Species": 20,
         "Tree_number": 24,
         "DBH": 4.8,
         "Height": 4.8
@@ -398,6 +254,150 @@
         "Tree_number": 8,
         "DBH": 4.5,
         "Height": 4.6
+    },
+    {
+        "Plot": "1246201PIP",
+        "Year": 2007,
+        "Species": 38,
+        "Tree_number": 53,
+        "DBH": 9.5,
+        "Height": 14.2
+    },
+    {
+        "Plot": "1246201PIP",
+        "Year": 2007,
+        "Species": 20,
+        "Tree_number": 52,
+        "DBH": 3.2,
+        "Height": 3.4
+    },
+    {
+        "Plot": "1246201PIP",
+        "Year": 2007,
+        "Species": 20,
+        "Tree_number": 51,
+        "DBH": 4.0,
+        "Height": 4.1
+    },
+    {
+        "Plot": "1246201PIP",
+        "Year": 2007,
+        "Species": 38,
+        "Tree_number": 50,
+        "DBH": 16.8,
+        "Height": 17.7
+    },
+    {
+        "Plot": "1246201PIP",
+        "Year": 2007,
+        "Species": 20,
+        "Tree_number": 49,
+        "DBH": 2.9,
+        "Height": 3.2
+    },
+    {
+        "Plot": "1246201PIP",
+        "Year": 2007,
+        "Species": 13,
+        "Tree_number": 47,
+        "DBH": 5.1,
+        "Height": 5.1
+    },
+    {
+        "Plot": "1246201PIP",
+        "Year": 2007,
+        "Species": 12,
+        "Tree_number": 45,
+        "DBH": 11.7,
+        "Height": 10.2
+    },
+    {
+        "Plot": "1246201PIP",
+        "Year": 2007,
+        "Species": 38,
+        "Tree_number": 44,
+        "DBH": 14.8,
+        "Height": 17.0
+    },
+    {
+        "Plot": "1246201PIP",
+        "Year": 2007,
+        "Species": 38,
+        "Tree_number": 40,
+        "DBH": 13.5,
+        "Height": 16.5
+    },
+    {
+        "Plot": "1246201PIP",
+        "Year": 2007,
+        "Species": 38,
+        "Tree_number": 39,
+        "DBH": 11.3,
+        "Height": 15.4
+    },
+    {
+        "Plot": "1246201PIP",
+        "Year": 2007,
+        "Species": 20,
+        "Tree_number": 38,
+        "DBH": 3.9,
+        "Height": 4.0
+    },
+    {
+        "Plot": "1246201PIP",
+        "Year": 2007,
+        "Species": 20,
+        "Tree_number": 37,
+        "DBH": 2.5,
+        "Height": 2.8
+    },
+    {
+        "Plot": "1246201PIP",
+        "Year": 2007,
+        "Species": 38,
+        "Tree_number": 35,
+        "DBH": 11.2,
+        "Height": 15.3
+    },
+    {
+        "Plot": "1246201PIP",
+        "Year": 2007,
+        "Species": 20,
+        "Tree_number": 34,
+        "DBH": 10.6,
+        "Height": 9.4
+    },
+    {
+        "Plot": "1246201PIP",
+        "Year": 2007,
+        "Species": 20,
+        "Tree_number": 33,
+        "DBH": 4.7,
+        "Height": 4.7
+    },
+    {
+        "Plot": "1246201PIP",
+        "Year": 2007,
+        "Species": 20,
+        "Tree_number": 32,
+        "DBH": 2.7,
+        "Height": 3.0
+    },
+    {
+        "Plot": "1246201PIP",
+        "Year": 2007,
+        "Species": 20,
+        "Tree_number": 31,
+        "DBH": 6.0,
+        "Height": 5.9
+    },
+    {
+        "Plot": "1246201PIP",
+        "Year": 2007,
+        "Species": 20,
+        "Tree_number": 30,
+        "DBH": 6.1,
+        "Height": 6.0
     },
     {
         "Plot": "1246201PIP",
@@ -17091,54 +17091,6 @@
         "Plot": "1259811PIP",
         "Year": 2008,
         "Species": 13,
-        "Tree_number": 77,
-        "DBH": 7.4,
-        "Height": 6.7
-    },
-    {
-        "Plot": "1259811PIP",
-        "Year": 2008,
-        "Species": 13,
-        "Tree_number": 78,
-        "DBH": 6.2,
-        "Height": 5.8
-    },
-    {
-        "Plot": "1259811PIP",
-        "Year": 2008,
-        "Species": 13,
-        "Tree_number": 79,
-        "DBH": 3.0,
-        "Height": 3.3
-    },
-    {
-        "Plot": "1259811PIP",
-        "Year": 2008,
-        "Species": 13,
-        "Tree_number": 80,
-        "DBH": 2.9,
-        "Height": 3.2
-    },
-    {
-        "Plot": "1259811PIP",
-        "Year": 2008,
-        "Species": 13,
-        "Tree_number": 81,
-        "DBH": 7.2,
-        "Height": 6.6
-    },
-    {
-        "Plot": "1259811PIP",
-        "Year": 2008,
-        "Species": 13,
-        "Tree_number": 82,
-        "DBH": 2.9,
-        "Height": 3.2
-    },
-    {
-        "Plot": "1259811PIP",
-        "Year": 2008,
-        "Species": 13,
         "Tree_number": 83,
         "DBH": 5.1,
         "Height": 4.9
@@ -17347,6 +17299,110 @@
         "Plot": "1259811PIP",
         "Year": 2008,
         "Species": 13,
+        "Tree_number": 109,
+        "DBH": 2.9,
+        "Height": 3.2
+    },
+    {
+        "Plot": "1259811PIP",
+        "Year": 2008,
+        "Species": 13,
+        "Tree_number": 110,
+        "DBH": 4.0,
+        "Height": 4.1
+    },
+    {
+        "Plot": "1259811PIP",
+        "Year": 2008,
+        "Species": 13,
+        "Tree_number": 111,
+        "DBH": 2.7,
+        "Height": 3.0
+    },
+    {
+        "Plot": "1259811PIP",
+        "Year": 2008,
+        "Species": 13,
+        "Tree_number": 112,
+        "DBH": 6.2,
+        "Height": 5.8
+    },
+    {
+        "Plot": "1259811PIP",
+        "Year": 2008,
+        "Species": 13,
+        "Tree_number": 113,
+        "DBH": 6.0,
+        "Height": 5.6
+    },
+    {
+        "Plot": "1259811PIP",
+        "Year": 2008,
+        "Species": 13,
+        "Tree_number": 114,
+        "DBH": 4.7,
+        "Height": 4.6
+    },
+    {
+        "Plot": "1259811PIP",
+        "Year": 2008,
+        "Species": 13,
+        "Tree_number": 115,
+        "DBH": 2.5,
+        "Height": 2.9
+    },
+    {
+        "Plot": "1259811PIP",
+        "Year": 2008,
+        "Species": 13,
+        "Tree_number": 82,
+        "DBH": 2.9,
+        "Height": 3.2
+    },
+    {
+        "Plot": "1259811PIP",
+        "Year": 2008,
+        "Species": 13,
+        "Tree_number": 81,
+        "DBH": 7.2,
+        "Height": 6.6
+    },
+    {
+        "Plot": "1259811PIP",
+        "Year": 2008,
+        "Species": 13,
+        "Tree_number": 80,
+        "DBH": 2.9,
+        "Height": 3.2
+    },
+    {
+        "Plot": "1259811PIP",
+        "Year": 2008,
+        "Species": 13,
+        "Tree_number": 79,
+        "DBH": 3.0,
+        "Height": 3.3
+    },
+    {
+        "Plot": "1259811PIP",
+        "Year": 2008,
+        "Species": 13,
+        "Tree_number": 78,
+        "DBH": 6.2,
+        "Height": 5.8
+    },
+    {
+        "Plot": "1259811PIP",
+        "Year": 2008,
+        "Species": 13,
+        "Tree_number": 77,
+        "DBH": 7.4,
+        "Height": 6.7
+    },
+    {
+        "Plot": "1259811PIP",
+        "Year": 2008,
+        "Species": 13,
         "Tree_number": 76,
         "DBH": 3.7,
         "Height": 3.8
@@ -17486,62 +17542,6 @@
         "Tree_number": 58,
         "DBH": 5.2,
         "Height": 5.0
-    },
-    {
-        "Plot": "1259811PIP",
-        "Year": 2008,
-        "Species": 13,
-        "Tree_number": 109,
-        "DBH": 2.9,
-        "Height": 3.2
-    },
-    {
-        "Plot": "1259811PIP",
-        "Year": 2008,
-        "Species": 13,
-        "Tree_number": 110,
-        "DBH": 4.0,
-        "Height": 4.1
-    },
-    {
-        "Plot": "1259811PIP",
-        "Year": 2008,
-        "Species": 13,
-        "Tree_number": 111,
-        "DBH": 2.7,
-        "Height": 3.0
-    },
-    {
-        "Plot": "1259811PIP",
-        "Year": 2008,
-        "Species": 13,
-        "Tree_number": 112,
-        "DBH": 6.2,
-        "Height": 5.8
-    },
-    {
-        "Plot": "1259811PIP",
-        "Year": 2008,
-        "Species": 13,
-        "Tree_number": 113,
-        "DBH": 6.0,
-        "Height": 5.6
-    },
-    {
-        "Plot": "1259811PIP",
-        "Year": 2008,
-        "Species": 13,
-        "Tree_number": 114,
-        "DBH": 4.7,
-        "Height": 4.6
-    },
-    {
-        "Plot": "1259811PIP",
-        "Year": 2008,
-        "Species": 13,
-        "Tree_number": 115,
-        "DBH": 2.5,
-        "Height": 2.9
     },
     {
         "Plot": "1259811PIP",
@@ -32387,198 +32387,6 @@
         "Plot": "1294276PIP",
         "Year": 2008,
         "Species": 3,
-        "Tree_number": 3,
-        "DBH": 2.5,
-        "Height": 3.5
-    },
-    {
-        "Plot": "1294276PIP",
-        "Year": 2008,
-        "Species": 3,
-        "Tree_number": 4,
-        "DBH": 2.5,
-        "Height": 3.5
-    },
-    {
-        "Plot": "1294276PIP",
-        "Year": 2008,
-        "Species": 3,
-        "Tree_number": 5,
-        "DBH": 3.0,
-        "Height": 3.8
-    },
-    {
-        "Plot": "1294276PIP",
-        "Year": 2008,
-        "Species": 3,
-        "Tree_number": 6,
-        "DBH": 4.3,
-        "Height": 4.5
-    },
-    {
-        "Plot": "1294276PIP",
-        "Year": 2008,
-        "Species": 3,
-        "Tree_number": 7,
-        "DBH": 3.8,
-        "Height": 4.2
-    },
-    {
-        "Plot": "1294276PIP",
-        "Year": 2008,
-        "Species": 3,
-        "Tree_number": 8,
-        "DBH": 4.5,
-        "Height": 4.5
-    },
-    {
-        "Plot": "1294276PIP",
-        "Year": 2008,
-        "Species": 3,
-        "Tree_number": 9,
-        "DBH": 3.5,
-        "Height": 4.1
-    },
-    {
-        "Plot": "1294276PIP",
-        "Year": 2008,
-        "Species": 3,
-        "Tree_number": 10,
-        "DBH": 3.4,
-        "Height": 4.0
-    },
-    {
-        "Plot": "1294276PIP",
-        "Year": 2008,
-        "Species": 3,
-        "Tree_number": 11,
-        "DBH": 3.2,
-        "Height": 3.9
-    },
-    {
-        "Plot": "1294276PIP",
-        "Year": 2008,
-        "Species": 3,
-        "Tree_number": 12,
-        "DBH": 4.1,
-        "Height": 4.4
-    },
-    {
-        "Plot": "1294276PIP",
-        "Year": 2008,
-        "Species": 3,
-        "Tree_number": 13,
-        "DBH": 3.1,
-        "Height": 3.9
-    },
-    {
-        "Plot": "1294276PIP",
-        "Year": 2008,
-        "Species": 3,
-        "Tree_number": 14,
-        "DBH": 3.3,
-        "Height": 4.0
-    },
-    {
-        "Plot": "1294276PIP",
-        "Year": 2008,
-        "Species": 3,
-        "Tree_number": 15,
-        "DBH": 3.0,
-        "Height": 3.8
-    },
-    {
-        "Plot": "1294276PIP",
-        "Year": 2008,
-        "Species": 3,
-        "Tree_number": 16,
-        "DBH": 4.8,
-        "Height": 4.6
-    },
-    {
-        "Plot": "1294276PIP",
-        "Year": 2008,
-        "Species": 3,
-        "Tree_number": 17,
-        "DBH": 4.1,
-        "Height": 4.4
-    },
-    {
-        "Plot": "1294276PIP",
-        "Year": 2008,
-        "Species": 3,
-        "Tree_number": 18,
-        "DBH": 3.0,
-        "Height": 3.8
-    },
-    {
-        "Plot": "1294276PIP",
-        "Year": 2008,
-        "Species": 3,
-        "Tree_number": 19,
-        "DBH": 2.7,
-        "Height": 3.6
-    },
-    {
-        "Plot": "1294276PIP",
-        "Year": 2008,
-        "Species": 3,
-        "Tree_number": 20,
-        "DBH": 5.7,
-        "Height": 4.9
-    },
-    {
-        "Plot": "1294276PIP",
-        "Year": 2008,
-        "Species": 3,
-        "Tree_number": 21,
-        "DBH": 3.6,
-        "Height": 4.1
-    },
-    {
-        "Plot": "1294276PIP",
-        "Year": 2008,
-        "Species": 3,
-        "Tree_number": 22,
-        "DBH": 2.9,
-        "Height": 3.8
-    },
-    {
-        "Plot": "1294276PIP",
-        "Year": 2008,
-        "Species": 3,
-        "Tree_number": 23,
-        "DBH": 3.8,
-        "Height": 4.2
-    },
-    {
-        "Plot": "1294276PIP",
-        "Year": 2008,
-        "Species": 3,
-        "Tree_number": 24,
-        "DBH": 3.0,
-        "Height": 3.8
-    },
-    {
-        "Plot": "1294276PIP",
-        "Year": 2008,
-        "Species": 3,
-        "Tree_number": 26,
-        "DBH": 3.8,
-        "Height": 4.2
-    },
-    {
-        "Plot": "1294276PIP",
-        "Year": 2008,
-        "Species": 3,
-        "Tree_number": 27,
-        "DBH": 3.4,
-        "Height": 4.0
-    },
-    {
-        "Plot": "1294276PIP",
-        "Year": 2008,
-        "Species": 3,
         "Tree_number": 28,
         "DBH": 2.6,
         "Height": 3.6
@@ -32838,6 +32646,198 @@
         "Tree_number": 61,
         "DBH": 3.8,
         "Height": 4.2
+    },
+    {
+        "Plot": "1294276PIP",
+        "Year": 2008,
+        "Species": 3,
+        "Tree_number": 27,
+        "DBH": 3.4,
+        "Height": 4.0
+    },
+    {
+        "Plot": "1294276PIP",
+        "Year": 2008,
+        "Species": 3,
+        "Tree_number": 26,
+        "DBH": 3.8,
+        "Height": 4.2
+    },
+    {
+        "Plot": "1294276PIP",
+        "Year": 2008,
+        "Species": 3,
+        "Tree_number": 24,
+        "DBH": 3.0,
+        "Height": 3.8
+    },
+    {
+        "Plot": "1294276PIP",
+        "Year": 2008,
+        "Species": 3,
+        "Tree_number": 23,
+        "DBH": 3.8,
+        "Height": 4.2
+    },
+    {
+        "Plot": "1294276PIP",
+        "Year": 2008,
+        "Species": 3,
+        "Tree_number": 22,
+        "DBH": 2.9,
+        "Height": 3.8
+    },
+    {
+        "Plot": "1294276PIP",
+        "Year": 2008,
+        "Species": 3,
+        "Tree_number": 21,
+        "DBH": 3.6,
+        "Height": 4.1
+    },
+    {
+        "Plot": "1294276PIP",
+        "Year": 2008,
+        "Species": 3,
+        "Tree_number": 20,
+        "DBH": 5.7,
+        "Height": 4.9
+    },
+    {
+        "Plot": "1294276PIP",
+        "Year": 2008,
+        "Species": 3,
+        "Tree_number": 19,
+        "DBH": 2.7,
+        "Height": 3.6
+    },
+    {
+        "Plot": "1294276PIP",
+        "Year": 2008,
+        "Species": 3,
+        "Tree_number": 18,
+        "DBH": 3.0,
+        "Height": 3.8
+    },
+    {
+        "Plot": "1294276PIP",
+        "Year": 2008,
+        "Species": 3,
+        "Tree_number": 17,
+        "DBH": 4.1,
+        "Height": 4.4
+    },
+    {
+        "Plot": "1294276PIP",
+        "Year": 2008,
+        "Species": 3,
+        "Tree_number": 16,
+        "DBH": 4.8,
+        "Height": 4.6
+    },
+    {
+        "Plot": "1294276PIP",
+        "Year": 2008,
+        "Species": 3,
+        "Tree_number": 15,
+        "DBH": 3.0,
+        "Height": 3.8
+    },
+    {
+        "Plot": "1294276PIP",
+        "Year": 2008,
+        "Species": 3,
+        "Tree_number": 14,
+        "DBH": 3.3,
+        "Height": 4.0
+    },
+    {
+        "Plot": "1294276PIP",
+        "Year": 2008,
+        "Species": 3,
+        "Tree_number": 13,
+        "DBH": 3.1,
+        "Height": 3.9
+    },
+    {
+        "Plot": "1294276PIP",
+        "Year": 2008,
+        "Species": 3,
+        "Tree_number": 12,
+        "DBH": 4.1,
+        "Height": 4.4
+    },
+    {
+        "Plot": "1294276PIP",
+        "Year": 2008,
+        "Species": 3,
+        "Tree_number": 11,
+        "DBH": 3.2,
+        "Height": 3.9
+    },
+    {
+        "Plot": "1294276PIP",
+        "Year": 2008,
+        "Species": 3,
+        "Tree_number": 10,
+        "DBH": 3.4,
+        "Height": 4.0
+    },
+    {
+        "Plot": "1294276PIP",
+        "Year": 2008,
+        "Species": 3,
+        "Tree_number": 9,
+        "DBH": 3.5,
+        "Height": 4.1
+    },
+    {
+        "Plot": "1294276PIP",
+        "Year": 2008,
+        "Species": 3,
+        "Tree_number": 8,
+        "DBH": 4.5,
+        "Height": 4.5
+    },
+    {
+        "Plot": "1294276PIP",
+        "Year": 2008,
+        "Species": 3,
+        "Tree_number": 7,
+        "DBH": 3.8,
+        "Height": 4.2
+    },
+    {
+        "Plot": "1294276PIP",
+        "Year": 2008,
+        "Species": 3,
+        "Tree_number": 6,
+        "DBH": 4.3,
+        "Height": 4.5
+    },
+    {
+        "Plot": "1294276PIP",
+        "Year": 2008,
+        "Species": 3,
+        "Tree_number": 5,
+        "DBH": 3.0,
+        "Height": 3.8
+    },
+    {
+        "Plot": "1294276PIP",
+        "Year": 2008,
+        "Species": 3,
+        "Tree_number": 4,
+        "DBH": 2.5,
+        "Height": 3.5
+    },
+    {
+        "Plot": "1294276PIP",
+        "Year": 2008,
+        "Species": 3,
+        "Tree_number": 3,
+        "DBH": 2.5,
+        "Height": 3.5
     },
     {
         "Plot": "1294276PIP",
@@ -36683,6 +36683,166 @@
         "Plot": "1301161PIP",
         "Year": 2008,
         "Species": 13,
+        "Tree_number": 152,
+        "DBH": 3.8,
+        "Height": 4.0
+    },
+    {
+        "Plot": "1301161PIP",
+        "Year": 2008,
+        "Species": 13,
+        "Tree_number": 153,
+        "DBH": 10.0,
+        "Height": 9.0
+    },
+    {
+        "Plot": "1301161PIP",
+        "Year": 2008,
+        "Species": 13,
+        "Tree_number": 154,
+        "DBH": 2.8,
+        "Height": 3.2
+    },
+    {
+        "Plot": "1301161PIP",
+        "Year": 2008,
+        "Species": 13,
+        "Tree_number": 155,
+        "DBH": 8.1,
+        "Height": 7.6
+    },
+    {
+        "Plot": "1301161PIP",
+        "Year": 2008,
+        "Species": 13,
+        "Tree_number": 156,
+        "DBH": 14.9,
+        "Height": 12.4
+    },
+    {
+        "Plot": "1301161PIP",
+        "Year": 2008,
+        "Species": 13,
+        "Tree_number": 157,
+        "DBH": 7.0,
+        "Height": 6.7
+    },
+    {
+        "Plot": "1301161PIP",
+        "Year": 2008,
+        "Species": 13,
+        "Tree_number": 158,
+        "DBH": 9.4,
+        "Height": 8.6
+    },
+    {
+        "Plot": "1301161PIP",
+        "Year": 2008,
+        "Species": 13,
+        "Tree_number": 159,
+        "DBH": 8.3,
+        "Height": 7.7
+    },
+    {
+        "Plot": "1301161PIP",
+        "Year": 2008,
+        "Species": 13,
+        "Tree_number": 160,
+        "DBH": 9.3,
+        "Height": 8.5
+    },
+    {
+        "Plot": "1301161PIP",
+        "Year": 2008,
+        "Species": 13,
+        "Tree_number": 161,
+        "DBH": 9.8,
+        "Height": 8.9
+    },
+    {
+        "Plot": "1301161PIP",
+        "Year": 2008,
+        "Species": 13,
+        "Tree_number": 163,
+        "DBH": 8.7,
+        "Height": 8.0
+    },
+    {
+        "Plot": "1301161PIP",
+        "Year": 2008,
+        "Species": 13,
+        "Tree_number": 164,
+        "DBH": 12.6,
+        "Height": 10.9
+    },
+    {
+        "Plot": "1301161PIP",
+        "Year": 2008,
+        "Species": 13,
+        "Tree_number": 165,
+        "DBH": 10.6,
+        "Height": 9.5
+    },
+    {
+        "Plot": "1301161PIP",
+        "Year": 2008,
+        "Species": 13,
+        "Tree_number": 166,
+        "DBH": 12.8,
+        "Height": 11.0
+    },
+    {
+        "Plot": "1301161PIP",
+        "Year": 2008,
+        "Species": 13,
+        "Tree_number": 167,
+        "DBH": 2.8,
+        "Height": 3.2
+    },
+    {
+        "Plot": "1301161PIP",
+        "Year": 2008,
+        "Species": 13,
+        "Tree_number": 168,
+        "DBH": 5.6,
+        "Height": 5.5
+    },
+    {
+        "Plot": "1301161PIP",
+        "Year": 2008,
+        "Species": 13,
+        "Tree_number": 169,
+        "DBH": 6.8,
+        "Height": 6.5
+    },
+    {
+        "Plot": "1301161PIP",
+        "Year": 2008,
+        "Species": 13,
+        "Tree_number": 170,
+        "DBH": 17.4,
+        "Height": 13.8
+    },
+    {
+        "Plot": "1301161PIP",
+        "Year": 2008,
+        "Species": 13,
+        "Tree_number": 172,
+        "DBH": 14.9,
+        "Height": 12.4
+    },
+    {
+        "Plot": "1301161PIP",
+        "Year": 2008,
+        "Species": 13,
+        "Tree_number": 173,
+        "DBH": 4.1,
+        "Height": 4.3
+    },
+    {
+        "Plot": "1301161PIP",
+        "Year": 2008,
+        "Species": 13,
         "Tree_number": 174,
         "DBH": 8.2,
         "Height": 7.6
@@ -36840,52 +37000,84 @@
         "Height": 3.6
     },
     {
-        "Plot": "1301161PIP",
+        "Plot": "1308026PIP",
         "Year": 2008,
-        "Species": 13,
-        "Tree_number": 173,
-        "DBH": 4.1,
-        "Height": 4.3
+        "Species": 20,
+        "Tree_number": 1,
+        "DBH": 11.2,
+        "Height": 10.0
     },
     {
-        "Plot": "1301161PIP",
+        "Plot": "1308026PIP",
         "Year": 2008,
-        "Species": 13,
-        "Tree_number": 172,
-        "DBH": 14.9,
-        "Height": 12.4
+        "Species": 20,
+        "Tree_number": 3,
+        "DBH": 7.5,
+        "Height": 7.2
     },
     {
-        "Plot": "1301161PIP",
+        "Plot": "1308026PIP",
         "Year": 2008,
-        "Species": 13,
-        "Tree_number": 170,
-        "DBH": 17.4,
-        "Height": 13.8
+        "Species": 20,
+        "Tree_number": 4,
+        "DBH": 9.5,
+        "Height": 8.8
     },
     {
-        "Plot": "1301161PIP",
+        "Plot": "1308026PIP",
         "Year": 2008,
-        "Species": 13,
-        "Tree_number": 169,
-        "DBH": 6.8,
-        "Height": 6.5
-    },
-    {
-        "Plot": "1301161PIP",
-        "Year": 2008,
-        "Species": 13,
-        "Tree_number": 168,
-        "DBH": 5.6,
-        "Height": 5.5
-    },
-    {
-        "Plot": "1301161PIP",
-        "Year": 2008,
-        "Species": 13,
-        "Tree_number": 167,
+        "Species": 38,
+        "Tree_number": 5,
         "DBH": 2.8,
+        "Height": 5.2
+    },
+    {
+        "Plot": "1308026PIP",
+        "Year": 2008,
+        "Species": 20,
+        "Tree_number": 6,
+        "DBH": 9.3,
+        "Height": 8.6
+    },
+    {
+        "Plot": "1308026PIP",
+        "Year": 2008,
+        "Species": 20,
+        "Tree_number": 7,
+        "DBH": 4.1,
+        "Height": 4.2
+    },
+    {
+        "Plot": "1308026PIP",
+        "Year": 2008,
+        "Species": 13,
+        "Tree_number": 9,
+        "DBH": 15.4,
+        "Height": 14.7
+    },
+    {
+        "Plot": "1308026PIP",
+        "Year": 2008,
+        "Species": 20,
+        "Tree_number": 14,
+        "DBH": 2.6,
+        "Height": 2.9
+    },
+    {
+        "Plot": "1308026PIP",
+        "Year": 2008,
+        "Species": 20,
+        "Tree_number": 15,
+        "DBH": 2.9,
         "Height": 3.2
+    },
+    {
+        "Plot": "1308026PIP",
+        "Year": 2008,
+        "Species": 13,
+        "Tree_number": 16,
+        "DBH": 16.9,
+        "Height": 15.7
     },
     {
         "Plot": "1308026PIP",
@@ -37142,198 +37334,6 @@
         "Tree_number": 56,
         "DBH": 7.9,
         "Height": 7.5
-    },
-    {
-        "Plot": "1301161PIP",
-        "Year": 2008,
-        "Species": 13,
-        "Tree_number": 166,
-        "DBH": 12.8,
-        "Height": 11.0
-    },
-    {
-        "Plot": "1301161PIP",
-        "Year": 2008,
-        "Species": 13,
-        "Tree_number": 165,
-        "DBH": 10.6,
-        "Height": 9.5
-    },
-    {
-        "Plot": "1301161PIP",
-        "Year": 2008,
-        "Species": 13,
-        "Tree_number": 164,
-        "DBH": 12.6,
-        "Height": 10.9
-    },
-    {
-        "Plot": "1301161PIP",
-        "Year": 2008,
-        "Species": 13,
-        "Tree_number": 163,
-        "DBH": 8.7,
-        "Height": 8.0
-    },
-    {
-        "Plot": "1301161PIP",
-        "Year": 2008,
-        "Species": 13,
-        "Tree_number": 161,
-        "DBH": 9.8,
-        "Height": 8.9
-    },
-    {
-        "Plot": "1301161PIP",
-        "Year": 2008,
-        "Species": 13,
-        "Tree_number": 160,
-        "DBH": 9.3,
-        "Height": 8.5
-    },
-    {
-        "Plot": "1301161PIP",
-        "Year": 2008,
-        "Species": 13,
-        "Tree_number": 159,
-        "DBH": 8.3,
-        "Height": 7.7
-    },
-    {
-        "Plot": "1301161PIP",
-        "Year": 2008,
-        "Species": 13,
-        "Tree_number": 158,
-        "DBH": 9.4,
-        "Height": 8.6
-    },
-    {
-        "Plot": "1301161PIP",
-        "Year": 2008,
-        "Species": 13,
-        "Tree_number": 157,
-        "DBH": 7.0,
-        "Height": 6.7
-    },
-    {
-        "Plot": "1301161PIP",
-        "Year": 2008,
-        "Species": 13,
-        "Tree_number": 156,
-        "DBH": 14.9,
-        "Height": 12.4
-    },
-    {
-        "Plot": "1301161PIP",
-        "Year": 2008,
-        "Species": 13,
-        "Tree_number": 155,
-        "DBH": 8.1,
-        "Height": 7.6
-    },
-    {
-        "Plot": "1301161PIP",
-        "Year": 2008,
-        "Species": 13,
-        "Tree_number": 154,
-        "DBH": 2.8,
-        "Height": 3.2
-    },
-    {
-        "Plot": "1301161PIP",
-        "Year": 2008,
-        "Species": 13,
-        "Tree_number": 153,
-        "DBH": 10.0,
-        "Height": 9.0
-    },
-    {
-        "Plot": "1301161PIP",
-        "Year": 2008,
-        "Species": 13,
-        "Tree_number": 152,
-        "DBH": 3.8,
-        "Height": 4.0
-    },
-    {
-        "Plot": "1308026PIP",
-        "Year": 2008,
-        "Species": 20,
-        "Tree_number": 6,
-        "DBH": 9.3,
-        "Height": 8.6
-    },
-    {
-        "Plot": "1308026PIP",
-        "Year": 2008,
-        "Species": 38,
-        "Tree_number": 5,
-        "DBH": 2.8,
-        "Height": 5.2
-    },
-    {
-        "Plot": "1308026PIP",
-        "Year": 2008,
-        "Species": 20,
-        "Tree_number": 4,
-        "DBH": 9.5,
-        "Height": 8.8
-    },
-    {
-        "Plot": "1308026PIP",
-        "Year": 2008,
-        "Species": 20,
-        "Tree_number": 3,
-        "DBH": 7.5,
-        "Height": 7.2
-    },
-    {
-        "Plot": "1308026PIP",
-        "Year": 2008,
-        "Species": 20,
-        "Tree_number": 1,
-        "DBH": 11.2,
-        "Height": 10.0
-    },
-    {
-        "Plot": "1308026PIP",
-        "Year": 2008,
-        "Species": 20,
-        "Tree_number": 7,
-        "DBH": 4.1,
-        "Height": 4.2
-    },
-    {
-        "Plot": "1308026PIP",
-        "Year": 2008,
-        "Species": 13,
-        "Tree_number": 9,
-        "DBH": 15.4,
-        "Height": 14.7
-    },
-    {
-        "Plot": "1308026PIP",
-        "Year": 2008,
-        "Species": 20,
-        "Tree_number": 14,
-        "DBH": 2.6,
-        "Height": 2.9
-    },
-    {
-        "Plot": "1308026PIP",
-        "Year": 2008,
-        "Species": 20,
-        "Tree_number": 15,
-        "DBH": 2.9,
-        "Height": 3.2
-    },
-    {
-        "Plot": "1308026PIP",
-        "Year": 2008,
-        "Species": 13,
-        "Tree_number": 16,
-        "DBH": 16.9,
-        "Height": 15.7
     },
     {
         "Plot": "1308026PIP",
@@ -40147,6 +40147,198 @@
         "Plot": "1314921PIP",
         "Year": 2008,
         "Species": 13,
+        "Tree_number": 363,
+        "DBH": 8.4,
+        "Height": 8.3
+    },
+    {
+        "Plot": "1314921PIP",
+        "Year": 2008,
+        "Species": 13,
+        "Tree_number": 364,
+        "DBH": 4.3,
+        "Height": 4.7
+    },
+    {
+        "Plot": "1314921PIP",
+        "Year": 2008,
+        "Species": 13,
+        "Tree_number": 365,
+        "DBH": 9.8,
+        "Height": 9.4
+    },
+    {
+        "Plot": "1314921PIP",
+        "Year": 2008,
+        "Species": 13,
+        "Tree_number": 367,
+        "DBH": 3.9,
+        "Height": 4.3
+    },
+    {
+        "Plot": "1314921PIP",
+        "Year": 2008,
+        "Species": 13,
+        "Tree_number": 368,
+        "DBH": 7.7,
+        "Height": 7.7
+    },
+    {
+        "Plot": "1314921PIP",
+        "Year": 2008,
+        "Species": 13,
+        "Tree_number": 369,
+        "DBH": 4.4,
+        "Height": 4.8
+    },
+    {
+        "Plot": "1314921PIP",
+        "Year": 2008,
+        "Species": 13,
+        "Tree_number": 370,
+        "DBH": 9.1,
+        "Height": 8.8
+    },
+    {
+        "Plot": "1314921PIP",
+        "Year": 2008,
+        "Species": 13,
+        "Tree_number": 371,
+        "DBH": 3.6,
+        "Height": 4.0
+    },
+    {
+        "Plot": "1314921PIP",
+        "Year": 2008,
+        "Species": 13,
+        "Tree_number": 372,
+        "DBH": 10.0,
+        "Height": 9.6
+    },
+    {
+        "Plot": "1314921PIP",
+        "Year": 2008,
+        "Species": 13,
+        "Tree_number": 373,
+        "DBH": 9.3,
+        "Height": 9.0
+    },
+    {
+        "Plot": "1314921PIP",
+        "Year": 2008,
+        "Species": 13,
+        "Tree_number": 374,
+        "DBH": 5.2,
+        "Height": 5.5
+    },
+    {
+        "Plot": "1314921PIP",
+        "Year": 2008,
+        "Species": 13,
+        "Tree_number": 375,
+        "DBH": 4.3,
+        "Height": 4.7
+    },
+    {
+        "Plot": "1314921PIP",
+        "Year": 2008,
+        "Species": 13,
+        "Tree_number": 376,
+        "DBH": 11.1,
+        "Height": 10.4
+    },
+    {
+        "Plot": "1314921PIP",
+        "Year": 2008,
+        "Species": 13,
+        "Tree_number": 377,
+        "DBH": 6.1,
+        "Height": 6.3
+    },
+    {
+        "Plot": "1314921PIP",
+        "Year": 2008,
+        "Species": 13,
+        "Tree_number": 378,
+        "DBH": 7.6,
+        "Height": 7.6
+    },
+    {
+        "Plot": "1314921PIP",
+        "Year": 2008,
+        "Species": 13,
+        "Tree_number": 379,
+        "DBH": 5.2,
+        "Height": 5.5
+    },
+    {
+        "Plot": "1314921PIP",
+        "Year": 2008,
+        "Species": 13,
+        "Tree_number": 380,
+        "DBH": 9.8,
+        "Height": 9.4
+    },
+    {
+        "Plot": "1314921PIP",
+        "Year": 2008,
+        "Species": 13,
+        "Tree_number": 381,
+        "DBH": 6.6,
+        "Height": 6.7
+    },
+    {
+        "Plot": "1314921PIP",
+        "Year": 2008,
+        "Species": 13,
+        "Tree_number": 382,
+        "DBH": 4.2,
+        "Height": 4.6
+    },
+    {
+        "Plot": "1314921PIP",
+        "Year": 2008,
+        "Species": 13,
+        "Tree_number": 383,
+        "DBH": 6.5,
+        "Height": 6.6
+    },
+    {
+        "Plot": "1314921PIP",
+        "Year": 2008,
+        "Species": 13,
+        "Tree_number": 384,
+        "DBH": 9.9,
+        "Height": 9.5
+    },
+    {
+        "Plot": "1314921PIP",
+        "Year": 2008,
+        "Species": 13,
+        "Tree_number": 385,
+        "DBH": 4.8,
+        "Height": 5.1
+    },
+    {
+        "Plot": "1314921PIP",
+        "Year": 2008,
+        "Species": 13,
+        "Tree_number": 386,
+        "DBH": 7.0,
+        "Height": 7.1
+    },
+    {
+        "Plot": "1314921PIP",
+        "Year": 2008,
+        "Species": 13,
+        "Tree_number": 387,
+        "DBH": 5.2,
+        "Height": 5.5
+    },
+    {
+        "Plot": "1314921PIP",
+        "Year": 2008,
+        "Species": 13,
         "Tree_number": 388,
         "DBH": 4.7,
         "Height": 5.0
@@ -40406,198 +40598,6 @@
         "Tree_number": 425,
         "DBH": 6.1,
         "Height": 8.0
-    },
-    {
-        "Plot": "1314921PIP",
-        "Year": 2008,
-        "Species": 13,
-        "Tree_number": 387,
-        "DBH": 5.2,
-        "Height": 5.5
-    },
-    {
-        "Plot": "1314921PIP",
-        "Year": 2008,
-        "Species": 13,
-        "Tree_number": 386,
-        "DBH": 7.0,
-        "Height": 7.1
-    },
-    {
-        "Plot": "1314921PIP",
-        "Year": 2008,
-        "Species": 13,
-        "Tree_number": 385,
-        "DBH": 4.8,
-        "Height": 5.1
-    },
-    {
-        "Plot": "1314921PIP",
-        "Year": 2008,
-        "Species": 13,
-        "Tree_number": 384,
-        "DBH": 9.9,
-        "Height": 9.5
-    },
-    {
-        "Plot": "1314921PIP",
-        "Year": 2008,
-        "Species": 13,
-        "Tree_number": 383,
-        "DBH": 6.5,
-        "Height": 6.6
-    },
-    {
-        "Plot": "1314921PIP",
-        "Year": 2008,
-        "Species": 13,
-        "Tree_number": 382,
-        "DBH": 4.2,
-        "Height": 4.6
-    },
-    {
-        "Plot": "1314921PIP",
-        "Year": 2008,
-        "Species": 13,
-        "Tree_number": 381,
-        "DBH": 6.6,
-        "Height": 6.7
-    },
-    {
-        "Plot": "1314921PIP",
-        "Year": 2008,
-        "Species": 13,
-        "Tree_number": 380,
-        "DBH": 9.8,
-        "Height": 9.4
-    },
-    {
-        "Plot": "1314921PIP",
-        "Year": 2008,
-        "Species": 13,
-        "Tree_number": 379,
-        "DBH": 5.2,
-        "Height": 5.5
-    },
-    {
-        "Plot": "1314921PIP",
-        "Year": 2008,
-        "Species": 13,
-        "Tree_number": 378,
-        "DBH": 7.6,
-        "Height": 7.6
-    },
-    {
-        "Plot": "1314921PIP",
-        "Year": 2008,
-        "Species": 13,
-        "Tree_number": 377,
-        "DBH": 6.1,
-        "Height": 6.3
-    },
-    {
-        "Plot": "1314921PIP",
-        "Year": 2008,
-        "Species": 13,
-        "Tree_number": 376,
-        "DBH": 11.1,
-        "Height": 10.4
-    },
-    {
-        "Plot": "1314921PIP",
-        "Year": 2008,
-        "Species": 13,
-        "Tree_number": 375,
-        "DBH": 4.3,
-        "Height": 4.7
-    },
-    {
-        "Plot": "1314921PIP",
-        "Year": 2008,
-        "Species": 13,
-        "Tree_number": 374,
-        "DBH": 5.2,
-        "Height": 5.5
-    },
-    {
-        "Plot": "1314921PIP",
-        "Year": 2008,
-        "Species": 13,
-        "Tree_number": 373,
-        "DBH": 9.3,
-        "Height": 9.0
-    },
-    {
-        "Plot": "1314921PIP",
-        "Year": 2008,
-        "Species": 13,
-        "Tree_number": 372,
-        "DBH": 10.0,
-        "Height": 9.6
-    },
-    {
-        "Plot": "1314921PIP",
-        "Year": 2008,
-        "Species": 13,
-        "Tree_number": 371,
-        "DBH": 3.6,
-        "Height": 4.0
-    },
-    {
-        "Plot": "1314921PIP",
-        "Year": 2008,
-        "Species": 13,
-        "Tree_number": 370,
-        "DBH": 9.1,
-        "Height": 8.8
-    },
-    {
-        "Plot": "1314921PIP",
-        "Year": 2008,
-        "Species": 13,
-        "Tree_number": 369,
-        "DBH": 4.4,
-        "Height": 4.8
-    },
-    {
-        "Plot": "1314921PIP",
-        "Year": 2008,
-        "Species": 13,
-        "Tree_number": 368,
-        "DBH": 7.7,
-        "Height": 7.7
-    },
-    {
-        "Plot": "1314921PIP",
-        "Year": 2008,
-        "Species": 13,
-        "Tree_number": 367,
-        "DBH": 3.9,
-        "Height": 4.3
-    },
-    {
-        "Plot": "1314921PIP",
-        "Year": 2008,
-        "Species": 13,
-        "Tree_number": 365,
-        "DBH": 9.8,
-        "Height": 9.4
-    },
-    {
-        "Plot": "1314921PIP",
-        "Year": 2008,
-        "Species": 13,
-        "Tree_number": 364,
-        "DBH": 4.3,
-        "Height": 4.7
-    },
-    {
-        "Plot": "1314921PIP",
-        "Year": 2008,
-        "Species": 13,
-        "Tree_number": 363,
-        "DBH": 8.4,
-        "Height": 8.3
     },
     {
         "Plot": "1314921PIP",
@@ -46226,6 +46226,46 @@
     {
         "Plot": "1225496PIP",
         "Year": 2011,
+        "Species": 13,
+        "Tree_number": 43,
+        "DBH": 11.8,
+        "Height": 11.1
+    },
+    {
+        "Plot": "1225496PIP",
+        "Year": 2011,
+        "Species": 74,
+        "Tree_number": 45,
+        "DBH": 2.9,
+        "Height": 6.2
+    },
+    {
+        "Plot": "1225496PIP",
+        "Year": 2011,
+        "Species": 74,
+        "Tree_number": 47,
+        "DBH": 20.7,
+        "Height": 19.1
+    },
+    {
+        "Plot": "1225496PIP",
+        "Year": 2011,
+        "Species": 74,
+        "Tree_number": 48,
+        "DBH": 17.8,
+        "Height": 18.3
+    },
+    {
+        "Plot": "1225496PIP",
+        "Year": 2011,
+        "Species": 74,
+        "Tree_number": 49,
+        "DBH": 25.8,
+        "Height": 20.0
+    },
+    {
+        "Plot": "1225496PIP",
+        "Year": 2011,
         "Species": 38,
         "Tree_number": 50,
         "DBH": 3.0,
@@ -46314,6 +46354,14 @@
     {
         "Plot": "1225496PIP",
         "Year": 2011,
+        "Species": 20,
+        "Tree_number": 64,
+        "DBH": 3.5,
+        "Height": 3.9
+    },
+    {
+        "Plot": "1225496PIP",
+        "Year": 2011,
         "Species": 38,
         "Tree_number": 65,
         "DBH": 3.1,
@@ -46331,9 +46379,25 @@
         "Plot": "1225496PIP",
         "Year": 2011,
         "Species": 13,
+        "Tree_number": 67,
+        "DBH": 18.0,
+        "Height": 15.3
+    },
+    {
+        "Plot": "1225496PIP",
+        "Year": 2011,
+        "Species": 13,
         "Tree_number": 68,
         "DBH": 19.3,
         "Height": 16.0
+    },
+    {
+        "Plot": "1225496PIP",
+        "Year": 2011,
+        "Species": 74,
+        "Tree_number": 69,
+        "DBH": 12.3,
+        "Height": 15.8
     },
     {
         "Plot": "1225496PIP",
@@ -46342,6 +46406,22 @@
         "Tree_number": 70,
         "DBH": 4.0,
         "Height": 4.5
+    },
+    {
+        "Plot": "1266666PIP",
+        "Year": 2011,
+        "Species": 3,
+        "Tree_number": 1,
+        "DBH": 6.6,
+        "Height": 8.9
+    },
+    {
+        "Plot": "1266666PIP",
+        "Year": 2011,
+        "Species": 13,
+        "Tree_number": 2,
+        "DBH": 2.7,
+        "Height": 3.3
     },
     {
         "Plot": "1266666PIP",
@@ -46790,86 +46870,6 @@
         "Tree_number": 16,
         "DBH": 10.9,
         "Height": 11.2
-    },
-    {
-        "Plot": "1266666PIP",
-        "Year": 2011,
-        "Species": 13,
-        "Tree_number": 2,
-        "DBH": 2.7,
-        "Height": 3.3
-    },
-    {
-        "Plot": "1266666PIP",
-        "Year": 2011,
-        "Species": 3,
-        "Tree_number": 1,
-        "DBH": 6.6,
-        "Height": 8.9
-    },
-    {
-        "Plot": "1225496PIP",
-        "Year": 2011,
-        "Species": 74,
-        "Tree_number": 69,
-        "DBH": 12.3,
-        "Height": 15.8
-    },
-    {
-        "Plot": "1225496PIP",
-        "Year": 2011,
-        "Species": 13,
-        "Tree_number": 67,
-        "DBH": 18.0,
-        "Height": 15.3
-    },
-    {
-        "Plot": "1225496PIP",
-        "Year": 2011,
-        "Species": 20,
-        "Tree_number": 64,
-        "DBH": 3.5,
-        "Height": 3.9
-    },
-    {
-        "Plot": "1225496PIP",
-        "Year": 2011,
-        "Species": 74,
-        "Tree_number": 49,
-        "DBH": 25.8,
-        "Height": 20.0
-    },
-    {
-        "Plot": "1225496PIP",
-        "Year": 2011,
-        "Species": 74,
-        "Tree_number": 48,
-        "DBH": 17.8,
-        "Height": 18.3
-    },
-    {
-        "Plot": "1225496PIP",
-        "Year": 2011,
-        "Species": 74,
-        "Tree_number": 47,
-        "DBH": 20.7,
-        "Height": 19.1
-    },
-    {
-        "Plot": "1225496PIP",
-        "Year": 2011,
-        "Species": 74,
-        "Tree_number": 45,
-        "DBH": 2.9,
-        "Height": 6.2
-    },
-    {
-        "Plot": "1225496PIP",
-        "Year": 2011,
-        "Species": 13,
-        "Tree_number": 43,
-        "DBH": 11.8,
-        "Height": 11.1
     },
     {
         "Plot": "1266666PIP",
@@ -49003,25 +49003,9 @@
         "Plot": "1184166PIP",
         "Year": 2011,
         "Species": 13,
-        "Tree_number": 18,
-        "DBH": 14.9,
-        "Height": 12.7
-    },
-    {
-        "Plot": "1184166PIP",
-        "Year": 2011,
-        "Species": 13,
         "Tree_number": 19,
         "DBH": 10.1,
         "Height": 9.3
-    },
-    {
-        "Plot": "1184166PIP",
-        "Year": 2011,
-        "Species": 13,
-        "Tree_number": 20,
-        "DBH": 16.9,
-        "Height": 13.9
     },
     {
         "Plot": "1184166PIP",
@@ -49211,6 +49195,94 @@
         "Plot": "1184166PIP",
         "Year": 2011,
         "Species": 13,
+        "Tree_number": 45,
+        "DBH": 7.3,
+        "Height": 7.1
+    },
+    {
+        "Plot": "1184166PIP",
+        "Year": 2011,
+        "Species": 13,
+        "Tree_number": 46,
+        "DBH": 3.6,
+        "Height": 3.9
+    },
+    {
+        "Plot": "1184166PIP",
+        "Year": 2011,
+        "Species": 13,
+        "Tree_number": 47,
+        "DBH": 12.5,
+        "Height": 11.1
+    },
+    {
+        "Plot": "1184166PIP",
+        "Year": 2011,
+        "Species": 13,
+        "Tree_number": 48,
+        "DBH": 15.8,
+        "Height": 13.3
+    },
+    {
+        "Plot": "1184166PIP",
+        "Year": 2011,
+        "Species": 25,
+        "Tree_number": 49,
+        "DBH": 6.5,
+        "Height": 9.0
+    },
+    {
+        "Plot": "1184166PIP",
+        "Year": 2011,
+        "Species": 13,
+        "Tree_number": 50,
+        "DBH": 11.0,
+        "Height": 10.0
+    },
+    {
+        "Plot": "1184166PIP",
+        "Year": 2011,
+        "Species": 13,
+        "Tree_number": 51,
+        "DBH": 6.7,
+        "Height": 6.6
+    },
+    {
+        "Plot": "1184166PIP",
+        "Year": 2011,
+        "Species": 13,
+        "Tree_number": 52,
+        "DBH": 4.1,
+        "Height": 4.4
+    },
+    {
+        "Plot": "1184166PIP",
+        "Year": 2011,
+        "Species": 13,
+        "Tree_number": 53,
+        "DBH": 11.5,
+        "Height": 10.4
+    },
+    {
+        "Plot": "1184166PIP",
+        "Year": 2011,
+        "Species": 13,
+        "Tree_number": 20,
+        "DBH": 16.9,
+        "Height": 13.9
+    },
+    {
+        "Plot": "1184166PIP",
+        "Year": 2011,
+        "Species": 13,
+        "Tree_number": 18,
+        "DBH": 14.9,
+        "Height": 12.7
+    },
+    {
+        "Plot": "1184166PIP",
+        "Year": 2011,
+        "Species": 13,
         "Tree_number": 11,
         "DBH": 3.9,
         "Height": 4.2
@@ -49286,78 +49358,6 @@
         "Tree_number": 21,
         "DBH": 14.5,
         "Height": 13.5
-    },
-    {
-        "Plot": "1184166PIP",
-        "Year": 2011,
-        "Species": 13,
-        "Tree_number": 45,
-        "DBH": 7.3,
-        "Height": 7.1
-    },
-    {
-        "Plot": "1184166PIP",
-        "Year": 2011,
-        "Species": 13,
-        "Tree_number": 46,
-        "DBH": 3.6,
-        "Height": 3.9
-    },
-    {
-        "Plot": "1184166PIP",
-        "Year": 2011,
-        "Species": 13,
-        "Tree_number": 47,
-        "DBH": 12.5,
-        "Height": 11.1
-    },
-    {
-        "Plot": "1184166PIP",
-        "Year": 2011,
-        "Species": 13,
-        "Tree_number": 48,
-        "DBH": 15.8,
-        "Height": 13.3
-    },
-    {
-        "Plot": "1184166PIP",
-        "Year": 2011,
-        "Species": 25,
-        "Tree_number": 49,
-        "DBH": 6.5,
-        "Height": 9.0
-    },
-    {
-        "Plot": "1184166PIP",
-        "Year": 2011,
-        "Species": 13,
-        "Tree_number": 50,
-        "DBH": 11.0,
-        "Height": 10.0
-    },
-    {
-        "Plot": "1184166PIP",
-        "Year": 2011,
-        "Species": 13,
-        "Tree_number": 51,
-        "DBH": 6.7,
-        "Height": 6.6
-    },
-    {
-        "Plot": "1184166PIP",
-        "Year": 2011,
-        "Species": 13,
-        "Tree_number": 52,
-        "DBH": 4.1,
-        "Height": 4.4
-    },
-    {
-        "Plot": "1184166PIP",
-        "Year": 2011,
-        "Species": 13,
-        "Tree_number": 53,
-        "DBH": 11.5,
-        "Height": 10.4
     },
     {
         "Plot": "1184166PIP",
@@ -61387,54 +61387,6 @@
         "Plot": "1191031PIP",
         "Year": 2011,
         "Species": 13,
-        "Tree_number": 29,
-        "DBH": 4.8,
-        "Height": 4.8
-    },
-    {
-        "Plot": "1191031PIP",
-        "Year": 2011,
-        "Species": 13,
-        "Tree_number": 30,
-        "DBH": 3.9,
-        "Height": 4.1
-    },
-    {
-        "Plot": "1191031PIP",
-        "Year": 2011,
-        "Species": 13,
-        "Tree_number": 31,
-        "DBH": 2.5,
-        "Height": 2.9
-    },
-    {
-        "Plot": "1191031PIP",
-        "Year": 2011,
-        "Species": 13,
-        "Tree_number": 32,
-        "DBH": 2.6,
-        "Height": 3.0
-    },
-    {
-        "Plot": "1191031PIP",
-        "Year": 2011,
-        "Species": 13,
-        "Tree_number": 33,
-        "DBH": 2.6,
-        "Height": 3.0
-    },
-    {
-        "Plot": "1191031PIP",
-        "Year": 2011,
-        "Species": 13,
-        "Tree_number": 34,
-        "DBH": 2.5,
-        "Height": 2.9
-    },
-    {
-        "Plot": "1191031PIP",
-        "Year": 2011,
-        "Species": 13,
         "Tree_number": 35,
         "DBH": 9.0,
         "Height": 8.1
@@ -61462,30 +61414,6 @@
         "Tree_number": 40,
         "DBH": 3.5,
         "Height": 3.7
-    },
-    {
-        "Plot": "1191031PIP",
-        "Year": 2011,
-        "Species": 3,
-        "Tree_number": 41,
-        "DBH": 3.4,
-        "Height": 7.2
-    },
-    {
-        "Plot": "1191031PIP",
-        "Year": 2011,
-        "Species": 3,
-        "Tree_number": 42,
-        "DBH": 3.7,
-        "Height": 7.6
-    },
-    {
-        "Plot": "1191031PIP",
-        "Year": 2011,
-        "Species": 3,
-        "Tree_number": 43,
-        "DBH": 3.8,
-        "Height": 7.8
     },
     {
         "Plot": "1191031PIP",
@@ -61534,54 +61462,6 @@
         "Tree_number": 51,
         "DBH": 10.1,
         "Height": 9.0
-    },
-    {
-        "Plot": "1191031PIP",
-        "Year": 2011,
-        "Species": 13,
-        "Tree_number": 54,
-        "DBH": 3.2,
-        "Height": 3.5
-    },
-    {
-        "Plot": "1191031PIP",
-        "Year": 2011,
-        "Species": 13,
-        "Tree_number": 55,
-        "DBH": 2.9,
-        "Height": 3.2
-    },
-    {
-        "Plot": "1191031PIP",
-        "Year": 2011,
-        "Species": 13,
-        "Tree_number": 56,
-        "DBH": 5.8,
-        "Height": 5.6
-    },
-    {
-        "Plot": "1191031PIP",
-        "Year": 2011,
-        "Species": 13,
-        "Tree_number": 57,
-        "DBH": 2.8,
-        "Height": 3.2
-    },
-    {
-        "Plot": "1191031PIP",
-        "Year": 2011,
-        "Species": 13,
-        "Tree_number": 58,
-        "DBH": 2.9,
-        "Height": 3.2
-    },
-    {
-        "Plot": "1191031PIP",
-        "Year": 2011,
-        "Species": 3,
-        "Tree_number": 59,
-        "DBH": 3.1,
-        "Height": 6.8
     },
     {
         "Plot": "1191031PIP",
@@ -61838,6 +61718,126 @@
         "Tree_number": 93,
         "DBH": 2.9,
         "Height": 3.2
+    },
+    {
+        "Plot": "1191031PIP",
+        "Year": 2011,
+        "Species": 3,
+        "Tree_number": 59,
+        "DBH": 3.1,
+        "Height": 6.8
+    },
+    {
+        "Plot": "1191031PIP",
+        "Year": 2011,
+        "Species": 13,
+        "Tree_number": 58,
+        "DBH": 2.9,
+        "Height": 3.2
+    },
+    {
+        "Plot": "1191031PIP",
+        "Year": 2011,
+        "Species": 13,
+        "Tree_number": 57,
+        "DBH": 2.8,
+        "Height": 3.2
+    },
+    {
+        "Plot": "1191031PIP",
+        "Year": 2011,
+        "Species": 13,
+        "Tree_number": 56,
+        "DBH": 5.8,
+        "Height": 5.6
+    },
+    {
+        "Plot": "1191031PIP",
+        "Year": 2011,
+        "Species": 13,
+        "Tree_number": 55,
+        "DBH": 2.9,
+        "Height": 3.2
+    },
+    {
+        "Plot": "1191031PIP",
+        "Year": 2011,
+        "Species": 13,
+        "Tree_number": 54,
+        "DBH": 3.2,
+        "Height": 3.5
+    },
+    {
+        "Plot": "1191031PIP",
+        "Year": 2011,
+        "Species": 3,
+        "Tree_number": 43,
+        "DBH": 3.8,
+        "Height": 7.8
+    },
+    {
+        "Plot": "1191031PIP",
+        "Year": 2011,
+        "Species": 3,
+        "Tree_number": 42,
+        "DBH": 3.7,
+        "Height": 7.6
+    },
+    {
+        "Plot": "1191031PIP",
+        "Year": 2011,
+        "Species": 3,
+        "Tree_number": 41,
+        "DBH": 3.4,
+        "Height": 7.2
+    },
+    {
+        "Plot": "1191031PIP",
+        "Year": 2011,
+        "Species": 13,
+        "Tree_number": 34,
+        "DBH": 2.5,
+        "Height": 2.9
+    },
+    {
+        "Plot": "1191031PIP",
+        "Year": 2011,
+        "Species": 13,
+        "Tree_number": 33,
+        "DBH": 2.6,
+        "Height": 3.0
+    },
+    {
+        "Plot": "1191031PIP",
+        "Year": 2011,
+        "Species": 13,
+        "Tree_number": 32,
+        "DBH": 2.6,
+        "Height": 3.0
+    },
+    {
+        "Plot": "1191031PIP",
+        "Year": 2011,
+        "Species": 13,
+        "Tree_number": 31,
+        "DBH": 2.5,
+        "Height": 2.9
+    },
+    {
+        "Plot": "1191031PIP",
+        "Year": 2011,
+        "Species": 13,
+        "Tree_number": 30,
+        "DBH": 3.9,
+        "Height": 4.1
+    },
+    {
+        "Plot": "1191031PIP",
+        "Year": 2011,
+        "Species": 13,
+        "Tree_number": 29,
+        "DBH": 4.8,
+        "Height": 4.8
     },
     {
         "Plot": "1191031PIP",
@@ -63882,38 +63882,6 @@
     {
         "Plot": "1321756PIP",
         "Year": 2011,
-        "Species": 13,
-        "Tree_number": 51,
-        "DBH": 4.7,
-        "Height": 4.5
-    },
-    {
-        "Plot": "1321756PIP",
-        "Year": 2011,
-        "Species": 13,
-        "Tree_number": 52,
-        "DBH": 2.6,
-        "Height": 2.9
-    },
-    {
-        "Plot": "1321756PIP",
-        "Year": 2011,
-        "Species": 13,
-        "Tree_number": 53,
-        "DBH": 10.9,
-        "Height": 9.1
-    },
-    {
-        "Plot": "1321756PIP",
-        "Year": 2011,
-        "Species": 13,
-        "Tree_number": 54,
-        "DBH": 4.8,
-        "Height": 4.6
-    },
-    {
-        "Plot": "1321756PIP",
-        "Year": 2011,
         "Species": 38,
         "Tree_number": 56,
         "DBH": 9.0,
@@ -64118,14 +64086,6 @@
         "Tree_number": 22,
         "DBH": 4.6,
         "Height": 5.7
-    },
-    {
-        "Plot": "1314891PIP",
-        "Year": 2011,
-        "Species": 13,
-        "Tree_number": 23,
-        "DBH": 2.9,
-        "Height": 3.9
     },
     {
         "Plot": "1308016PIP",
@@ -64382,6 +64342,46 @@
         "Tree_number": 36,
         "DBH": 7.2,
         "Height": 7.7
+    },
+    {
+        "Plot": "1314891PIP",
+        "Year": 2011,
+        "Species": 13,
+        "Tree_number": 23,
+        "DBH": 2.9,
+        "Height": 3.9
+    },
+    {
+        "Plot": "1321756PIP",
+        "Year": 2011,
+        "Species": 13,
+        "Tree_number": 54,
+        "DBH": 4.8,
+        "Height": 4.6
+    },
+    {
+        "Plot": "1321756PIP",
+        "Year": 2011,
+        "Species": 13,
+        "Tree_number": 53,
+        "DBH": 10.9,
+        "Height": 9.1
+    },
+    {
+        "Plot": "1321756PIP",
+        "Year": 2011,
+        "Species": 13,
+        "Tree_number": 52,
+        "DBH": 2.6,
+        "Height": 2.9
+    },
+    {
+        "Plot": "1321756PIP",
+        "Year": 2011,
+        "Species": 13,
+        "Tree_number": 51,
+        "DBH": 4.7,
+        "Height": 4.5
     },
     {
         "Plot": "1308016PIP",
@@ -66307,6 +66307,54 @@
         "Plot": "1246111PIP",
         "Year": 2011,
         "Species": 13,
+        "Tree_number": 13,
+        "DBH": 12.0,
+        "Height": 10.9
+    },
+    {
+        "Plot": "1246111PIP",
+        "Year": 2011,
+        "Species": 13,
+        "Tree_number": 14,
+        "DBH": 18.4,
+        "Height": 15.0
+    },
+    {
+        "Plot": "1246111PIP",
+        "Year": 2011,
+        "Species": 13,
+        "Tree_number": 15,
+        "DBH": 6.8,
+        "Height": 6.8
+    },
+    {
+        "Plot": "1246111PIP",
+        "Year": 2011,
+        "Species": 38,
+        "Tree_number": 16,
+        "DBH": 7.1,
+        "Height": 9.8
+    },
+    {
+        "Plot": "1246111PIP",
+        "Year": 2011,
+        "Species": 13,
+        "Tree_number": 19,
+        "DBH": 5.1,
+        "Height": 5.3
+    },
+    {
+        "Plot": "1246111PIP",
+        "Year": 2011,
+        "Species": 13,
+        "Tree_number": 20,
+        "DBH": 15.4,
+        "Height": 13.2
+    },
+    {
+        "Plot": "1246111PIP",
+        "Year": 2011,
+        "Species": 13,
         "Tree_number": 22,
         "DBH": 4.2,
         "Height": 4.5
@@ -66558,54 +66606,6 @@
         "Tree_number": 58,
         "DBH": 4.3,
         "Height": 4.6
-    },
-    {
-        "Plot": "1246111PIP",
-        "Year": 2011,
-        "Species": 13,
-        "Tree_number": 20,
-        "DBH": 15.4,
-        "Height": 13.2
-    },
-    {
-        "Plot": "1246111PIP",
-        "Year": 2011,
-        "Species": 13,
-        "Tree_number": 19,
-        "DBH": 5.1,
-        "Height": 5.3
-    },
-    {
-        "Plot": "1246111PIP",
-        "Year": 2011,
-        "Species": 38,
-        "Tree_number": 16,
-        "DBH": 7.1,
-        "Height": 9.8
-    },
-    {
-        "Plot": "1246111PIP",
-        "Year": 2011,
-        "Species": 13,
-        "Tree_number": 15,
-        "DBH": 6.8,
-        "Height": 6.8
-    },
-    {
-        "Plot": "1246111PIP",
-        "Year": 2011,
-        "Species": 13,
-        "Tree_number": 14,
-        "DBH": 18.4,
-        "Height": 15.0
-    },
-    {
-        "Plot": "1246111PIP",
-        "Year": 2011,
-        "Species": 13,
-        "Tree_number": 13,
-        "DBH": 12.0,
-        "Height": 10.9
     },
     {
         "Plot": "1246111PIP",
@@ -79998,5 +79998,2013 @@
         "Tree_number": 247,
         "DBH": 3.5,
         "Height": 3.7
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 13,
+        "DBH": 15.4,
+        "Height": 11.3
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 20,
+        "Tree_number": 25,
+        "DBH": 16.4,
+        "Height": 13.9
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 20,
+        "Tree_number": 232,
+        "DBH": 18.0,
+        "Height": 14.6
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 22,
+        "Tree_number": 207,
+        "DBH": 11.4,
+        "Height": 7.9
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 38,
+        "Tree_number": 209,
+        "DBH": 7.5,
+        "Height": 9.6
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 38,
+        "Tree_number": 210,
+        "DBH": 5.4,
+        "Height": 7.8
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 38,
+        "Tree_number": 213,
+        "DBH": 4.2,
+        "Height": 6.6
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 38,
+        "Tree_number": 216,
+        "DBH": 3.3,
+        "Height": 5.6
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 38,
+        "Tree_number": 217,
+        "DBH": 7.4,
+        "Height": 9.5
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 38,
+        "Tree_number": 222,
+        "DBH": 9.6,
+        "Height": 11.1
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 38,
+        "Tree_number": 223,
+        "DBH": 4.3,
+        "Height": 6.7
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 38,
+        "Tree_number": 224,
+        "DBH": 3.2,
+        "Height": 5.5
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 38,
+        "Tree_number": 220,
+        "DBH": 3.7,
+        "Height": 6.0
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 74,
+        "Tree_number": 22,
+        "DBH": 11.9,
+        "Height": 14.2
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 74,
+        "Tree_number": 17,
+        "DBH": 19.2,
+        "Height": 17.0
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 74,
+        "Tree_number": 16,
+        "DBH": 20.1,
+        "Height": 17.2
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 74,
+        "Tree_number": 19,
+        "DBH": 19.2,
+        "Height": 17.0
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 74,
+        "Tree_number": 201,
+        "DBH": 21.4,
+        "Height": 17.5
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 74,
+        "Tree_number": 225,
+        "DBH": 12.3,
+        "Height": 14.4
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 74,
+        "Tree_number": 226,
+        "DBH": 7.2,
+        "Height": 10.7
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 74,
+        "Tree_number": 218,
+        "DBH": 20.7,
+        "Height": 17.4
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 74,
+        "Tree_number": 214,
+        "DBH": 9.3,
+        "Height": 12.5
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 74,
+        "Tree_number": 211,
+        "DBH": 18.7,
+        "Height": 16.9
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 74,
+        "Tree_number": 212,
+        "DBH": 4.3,
+        "Height": 7.6
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 74,
+        "Tree_number": 205,
+        "DBH": 5.7,
+        "Height": 9.2
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 74,
+        "Tree_number": 10,
+        "DBH": 23.0,
+        "Height": 17.8
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 74,
+        "Tree_number": 7,
+        "DBH": 23.8,
+        "Height": 17.9
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 74,
+        "Tree_number": 221,
+        "DBH": 18.2,
+        "Height": 16.7
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 3,
+        "DBH": 18.4,
+        "Height": 12.8
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 23,
+        "DBH": 18.7,
+        "Height": 13.0
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 26,
+        "DBH": 18.5,
+        "Height": 12.9
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 219,
+        "DBH": 9.6,
+        "Height": 7.9
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 33,
+        "DBH": 14.8,
+        "Height": 11.0
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 36,
+        "DBH": 13.1,
+        "Height": 10.1
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 39,
+        "DBH": 15.7,
+        "Height": 11.5
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 236,
+        "DBH": 11.4,
+        "Height": 9.0
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 235,
+        "DBH": 14.0,
+        "Height": 10.6
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 234,
+        "DBH": 4.9,
+        "Height": 4.5
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 233,
+        "DBH": 8.8,
+        "Height": 7.3
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 231,
+        "DBH": 12.2,
+        "Height": 9.5
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 230,
+        "DBH": 8.1,
+        "Height": 6.8
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 229,
+        "DBH": 8.9,
+        "Height": 7.4
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 208,
+        "DBH": 10.6,
+        "Height": 8.5
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 206,
+        "DBH": 7.8,
+        "Height": 6.6
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 204,
+        "DBH": 10.2,
+        "Height": 8.3
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 18,
+        "DBH": 15.2,
+        "Height": 11.2
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 21,
+        "DBH": 14.4,
+        "Height": 10.8
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 24,
+        "DBH": 15.1,
+        "Height": 11.2
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 9,
+        "DBH": 15.0,
+        "Height": 11.1
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 11,
+        "DBH": 12.8,
+        "Height": 9.9
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 12,
+        "DBH": 14.8,
+        "Height": 11.0
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 34,
+        "DBH": 20.5,
+        "Height": 14.1
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 35,
+        "DBH": 16.0,
+        "Height": 11.7
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 920,
+        "DBH": 14.9,
+        "Height": 11.3
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 916,
+        "DBH": 18.6,
+        "Height": 13.2
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 37,
+        "DBH": 15.9,
+        "Height": 11.6
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 919,
+        "DBH": 16.5,
+        "Height": 12.2
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 65,
+        "DBH": 17.5,
+        "Height": 12.7
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 915,
+        "DBH": 17.0,
+        "Height": 12.4
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 918,
+        "DBH": 19.2,
+        "Height": 13.5
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 24,
+        "DBH": 16.3,
+        "Height": 12.1
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 1,
+        "DBH": 14.7,
+        "Height": 11.2
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 60,
+        "DBH": 10.3,
+        "Height": 8.5
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 62,
+        "DBH": 14.8,
+        "Height": 11.3
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 64,
+        "DBH": 13.0,
+        "Height": 10.2
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 15,
+        "DBH": 16.8,
+        "Height": 12.3
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 48,
+        "DBH": 14.5,
+        "Height": 11.1
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 44,
+        "DBH": 14.5,
+        "Height": 11.1
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 39,
+        "DBH": 12.2,
+        "Height": 9.7
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 36,
+        "DBH": 18.7,
+        "Height": 13.3
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 35,
+        "DBH": 14.4,
+        "Height": 11.0
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 33,
+        "DBH": 12.8,
+        "Height": 10.1
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 30,
+        "DBH": 14.9,
+        "Height": 11.3
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 27,
+        "DBH": 23.1,
+        "Height": 15.1
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 21,
+        "DBH": 14.9,
+        "Height": 11.3
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 46,
+        "DBH": 15.0,
+        "Height": 11.4
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 47,
+        "DBH": 14.3,
+        "Height": 11.0
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 19,
+        "DBH": 10.8,
+        "Height": 8.8
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 22,
+        "DBH": 17.3,
+        "Height": 12.6
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 28,
+        "DBH": 13.1,
+        "Height": 10.3
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 29,
+        "DBH": 12.4,
+        "Height": 9.8
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 7,
+        "DBH": 12.4,
+        "Height": 9.8
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 10,
+        "DBH": 11.1,
+        "Height": 9.0
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 11,
+        "DBH": 8.8,
+        "Height": 7.5
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 12,
+        "DBH": 16.5,
+        "Height": 12.2
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 16,
+        "DBH": 13.1,
+        "Height": 10.3
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 13,
+        "DBH": 16.5,
+        "Height": 12.2
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 9,
+        "DBH": 12.9,
+        "Height": 10.2
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 38,
+        "DBH": 18.8,
+        "Height": 13.0
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 40,
+        "DBH": 18.3,
+        "Height": 12.8
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 41,
+        "DBH": 19.3,
+        "Height": 13.2
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 42,
+        "DBH": 15.0,
+        "Height": 11.1
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 43,
+        "DBH": 15.2,
+        "Height": 11.2
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 44,
+        "DBH": 16.4,
+        "Height": 11.9
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 4,
+        "DBH": 12.5,
+        "Height": 9.7
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 27,
+        "DBH": 10.1,
+        "Height": 8.2
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 28,
+        "DBH": 16.5,
+        "Height": 11.9
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 29,
+        "DBH": 9.8,
+        "Height": 8.0
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 31,
+        "DBH": 13.8,
+        "Height": 10.5
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 32,
+        "DBH": 10.3,
+        "Height": 8.3
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 34,
+        "DBH": 13.7,
+        "Height": 10.4
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 30,
+        "DBH": 16.3,
+        "Height": 11.8
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 5,
+        "DBH": 17.7,
+        "Height": 12.5
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 12,
+        "Tree_number": 1,
+        "DBH": 28.0,
+        "Height": 16.7
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 20,
+        "Tree_number": 913,
+        "DBH": 24.0,
+        "Height": 16.7
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 12,
+        "Tree_number": 42,
+        "DBH": 10.0,
+        "Height": 9.4
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 43,
+        "DBH": 15.5,
+        "Height": 11.6
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 59,
+        "DBH": 16.2,
+        "Height": 12.0
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 911,
+        "DBH": 19.0,
+        "Height": 13.1
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 910,
+        "DBH": 18.2,
+        "Height": 12.7
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 912,
+        "DBH": 19.1,
+        "Height": 13.2
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 12,
+        "Tree_number": 227,
+        "DBH": 21.6,
+        "Height": 14.6
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 210,
+        "DBH": 9.5,
+        "Height": 8.0
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 226,
+        "DBH": 6.1,
+        "Height": 5.5
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 239,
+        "DBH": 6.6,
+        "Height": 5.9
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 240,
+        "DBH": 8.4,
+        "Height": 7.2
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 241,
+        "DBH": 7.6,
+        "Height": 6.6
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 242,
+        "DBH": 10.3,
+        "Height": 8.5
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 20,
+        "Tree_number": 17,
+        "DBH": 22.3,
+        "Height": 16.5
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 20,
+        "Tree_number": 917,
+        "DBH": 21.1,
+        "Height": 16.1
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 20,
+        "Tree_number": 18,
+        "DBH": 21.3,
+        "Height": 16.2
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 20,
+        "Tree_number": 3,
+        "DBH": 18.2,
+        "Height": 14.9
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 20,
+        "Tree_number": 25,
+        "DBH": 16.2,
+        "Height": 14.0
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 20,
+        "Tree_number": 52,
+        "DBH": 16.5,
+        "Height": 14.1
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 20,
+        "Tree_number": 6,
+        "DBH": 18.9,
+        "Height": 15.2
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 20,
+        "Tree_number": 41,
+        "DBH": 17.2,
+        "Height": 14.5
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 20,
+        "Tree_number": 45,
+        "DBH": 12.5,
+        "Height": 11.8
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 20,
+        "Tree_number": 231,
+        "DBH": 12.6,
+        "Height": 11.8
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 20,
+        "Tree_number": 234,
+        "DBH": 13.3,
+        "Height": 12.3
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 20,
+        "Tree_number": 228,
+        "DBH": 8.4,
+        "Height": 8.6
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 20,
+        "Tree_number": 229,
+        "DBH": 10.0,
+        "Height": 9.9
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 20,
+        "Tree_number": 214,
+        "DBH": 3.3,
+        "Height": 3.7
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 20,
+        "Tree_number": 58,
+        "DBH": 18.1,
+        "Height": 14.9
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 20,
+        "Tree_number": 209,
+        "DBH": 8.7,
+        "Height": 8.8
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 20,
+        "Tree_number": 204,
+        "DBH": 3.8,
+        "Height": 4.2
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 20,
+        "Tree_number": 237,
+        "DBH": 8.9,
+        "Height": 9.0
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 38,
+        "Tree_number": 213,
+        "DBH": 12.7,
+        "Height": 12.7
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 74,
+        "Tree_number": 2,
+        "DBH": 11.3,
+        "Height": 13.9
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 74,
+        "Tree_number": 14,
+        "DBH": 18.9,
+        "Height": 17.1
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 74,
+        "Tree_number": 53,
+        "DBH": 21.1,
+        "Height": 17.6
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 74,
+        "Tree_number": 200,
+        "DBH": 9.6,
+        "Height": 12.8
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 74,
+        "Tree_number": 201,
+        "DBH": 4.6,
+        "Height": 8.0
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 74,
+        "Tree_number": 202,
+        "DBH": 6.9,
+        "Height": 10.5
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 74,
+        "Tree_number": 54,
+        "DBH": 14.3,
+        "Height": 15.5
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 74,
+        "Tree_number": 57,
+        "DBH": 13.8,
+        "Height": 15.3
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 74,
+        "Tree_number": 205,
+        "DBH": 10.4,
+        "Height": 13.4
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 74,
+        "Tree_number": 206,
+        "DBH": 10.3,
+        "Height": 13.3
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 74,
+        "Tree_number": 207,
+        "DBH": 8.7,
+        "Height": 12.1
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 74,
+        "Tree_number": 208,
+        "DBH": 8.7,
+        "Height": 12.1
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 74,
+        "Tree_number": 219,
+        "DBH": 10.5,
+        "Height": 13.4
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 74,
+        "Tree_number": 220,
+        "DBH": 13.6,
+        "Height": 15.2
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 74,
+        "Tree_number": 221,
+        "DBH": 15.5,
+        "Height": 16.0
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 74,
+        "Tree_number": 222,
+        "DBH": 11.1,
+        "Height": 13.8
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 74,
+        "Tree_number": 223,
+        "DBH": 16.3,
+        "Height": 16.3
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 74,
+        "Tree_number": 225,
+        "DBH": 12.1,
+        "Height": 14.4
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 74,
+        "Tree_number": 215,
+        "DBH": 10.0,
+        "Height": 13.1
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 74,
+        "Tree_number": 212,
+        "DBH": 9.6,
+        "Height": 12.8
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 74,
+        "Tree_number": 230,
+        "DBH": 9.1,
+        "Height": 12.4
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 74,
+        "Tree_number": 227,
+        "DBH": 13.8,
+        "Height": 15.3
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 74,
+        "Tree_number": 235,
+        "DBH": 9.2,
+        "Height": 12.5
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 74,
+        "Tree_number": 236,
+        "DBH": 9.6,
+        "Height": 12.8
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 74,
+        "Tree_number": 232,
+        "DBH": 13.9,
+        "Height": 15.3
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 74,
+        "Tree_number": 233,
+        "DBH": 11.2,
+        "Height": 13.9
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 927,
+        "DBH": 18.1,
+        "Height": 13.4
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 69,
+        "DBH": 12.0,
+        "Height": 9.9
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 37,
+        "DBH": 12.8,
+        "Height": 10.4
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 36,
+        "DBH": 11.2,
+        "Height": 9.4
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 85,
+        "DBH": 12.9,
+        "Height": 10.5
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 87,
+        "DBH": 8.2,
+        "Height": 7.3
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 86,
+        "DBH": 11.6,
+        "Height": 9.7
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 74,
+        "DBH": 14.4,
+        "Height": 11.4
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 73,
+        "DBH": 12.5,
+        "Height": 10.3
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 67,
+        "DBH": 8.8,
+        "Height": 7.7
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 64,
+        "DBH": 10.7,
+        "Height": 9.1
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 45,
+        "DBH": 12.5,
+        "Height": 10.3
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 89,
+        "DBH": 17.3,
+        "Height": 13.0
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 47,
+        "DBH": 17.0,
+        "Height": 12.9
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 46,
+        "DBH": 13.6,
+        "Height": 10.9
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 44,
+        "DBH": 16.7,
+        "Height": 12.7
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 43,
+        "DBH": 16.3,
+        "Height": 12.5
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 42,
+        "DBH": 15.7,
+        "Height": 12.2
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 22,
+        "DBH": 13.1,
+        "Height": 10.6
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 21,
+        "DBH": 16.0,
+        "Height": 12.3
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 20,
+        "DBH": 13.3,
+        "Height": 10.8
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 19,
+        "DBH": 14.4,
+        "Height": 11.4
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 17,
+        "DBH": 15.9,
+        "Height": 12.3
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 10,
+        "DBH": 15.1,
+        "Height": 11.8
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 9,
+        "DBH": 13.4,
+        "Height": 10.8
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 6,
+        "DBH": 15.3,
+        "Height": 11.9
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 5,
+        "DBH": 11.6,
+        "Height": 9.7
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 4,
+        "DBH": 12.4,
+        "Height": 10.2
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 40,
+        "DBH": 19.6,
+        "Height": 14.2
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 39,
+        "DBH": 14.8,
+        "Height": 11.7
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 307,
+        "DBH": 6.3,
+        "Height": 5.8
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 28,
+        "DBH": 13.5,
+        "Height": 10.9
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 312,
+        "DBH": 3.1,
+        "Height": 3.3
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 313,
+        "DBH": 9.4,
+        "Height": 8.2
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 13,
+        "Tree_number": 316,
+        "DBH": 12.6,
+        "Height": 10.3
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 20,
+        "Tree_number": 38,
+        "DBH": 19.5,
+        "Height": 15.9
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 20,
+        "Tree_number": 3,
+        "DBH": 19.3,
+        "Height": 15.8
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 20,
+        "Tree_number": 59,
+        "DBH": 14.3,
+        "Height": 13.3
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 20,
+        "Tree_number": 27,
+        "DBH": 19.7,
+        "Height": 16.0
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 20,
+        "Tree_number": 88,
+        "DBH": 13.7,
+        "Height": 12.9
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 20,
+        "Tree_number": 32,
+        "DBH": 14.8,
+        "Height": 13.6
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 20,
+        "Tree_number": 922,
+        "DBH": 16.4,
+        "Height": 14.5
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 20,
+        "Tree_number": 29,
+        "DBH": 17.5,
+        "Height": 15.0
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 20,
+        "Tree_number": 72,
+        "DBH": 16.4,
+        "Height": 14.5
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 20,
+        "Tree_number": 57,
+        "DBH": 14.0,
+        "Height": 13.1
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 20,
+        "Tree_number": 56,
+        "DBH": 11.1,
+        "Height": 11.1
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 20,
+        "Tree_number": 54,
+        "DBH": 8.2,
+        "Height": 8.6
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 20,
+        "Tree_number": 53,
+        "DBH": 15.9,
+        "Height": 14.2
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 20,
+        "Tree_number": 52,
+        "DBH": 16.9,
+        "Height": 14.7
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 20,
+        "Tree_number": 62,
+        "DBH": 16.5,
+        "Height": 14.5
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 20,
+        "Tree_number": 82,
+        "DBH": 8.8,
+        "Height": 9.2
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 20,
+        "Tree_number": 78,
+        "DBH": 16.3,
+        "Height": 14.4
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 20,
+        "Tree_number": 83,
+        "DBH": 11.7,
+        "Height": 11.5
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 20,
+        "Tree_number": 81,
+        "DBH": 8.6,
+        "Height": 9.0
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 20,
+        "Tree_number": 80,
+        "DBH": 14.7,
+        "Height": 13.5
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 20,
+        "Tree_number": 41,
+        "DBH": 17.1,
+        "Height": 14.8
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 20,
+        "Tree_number": 16,
+        "DBH": 16.6,
+        "Height": 14.6
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 20,
+        "Tree_number": 14,
+        "DBH": 9.0,
+        "Height": 9.3
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 20,
+        "Tree_number": 318,
+        "DBH": 3.6,
+        "Height": 4.1
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 20,
+        "Tree_number": 329,
+        "DBH": 8.5,
+        "Height": 8.9
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 20,
+        "Tree_number": 327,
+        "DBH": 13.8,
+        "Height": 13.0
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 20,
+        "Tree_number": 315,
+        "DBH": 9.8,
+        "Height": 10.0
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 38,
+        "Tree_number": 322,
+        "DBH": 7.0,
+        "Height": 9.2
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 38,
+        "Tree_number": 323,
+        "DBH": 3.9,
+        "Height": 6.3
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 38,
+        "Tree_number": 303,
+        "DBH": 7.6,
+        "Height": 9.7
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 74,
+        "Tree_number": 55,
+        "DBH": 16.0,
+        "Height": 15.4
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 74,
+        "Tree_number": 48,
+        "DBH": 16.7,
+        "Height": 15.6
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 74,
+        "Tree_number": 304,
+        "DBH": 6.4,
+        "Height": 9.6
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 74,
+        "Tree_number": 305,
+        "DBH": 12.3,
+        "Height": 13.8
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 74,
+        "Tree_number": 306,
+        "DBH": 10.1,
+        "Height": 12.5
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 74,
+        "Tree_number": 308,
+        "DBH": 10.4,
+        "Height": 12.7
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 74,
+        "Tree_number": 309,
+        "DBH": 6.1,
+        "Height": 9.3
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 74,
+        "Tree_number": 310,
+        "DBH": 10.0,
+        "Height": 12.4
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 74,
+        "Tree_number": 311,
+        "DBH": 13.7,
+        "Height": 14.5
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 74,
+        "Tree_number": 319,
+        "DBH": 13.1,
+        "Height": 14.2
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 74,
+        "Tree_number": 321,
+        "DBH": 8.6,
+        "Height": 11.5
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 74,
+        "Tree_number": 317,
+        "DBH": 14.2,
+        "Height": 14.7
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 74,
+        "Tree_number": 314,
+        "DBH": 7.6,
+        "Height": 10.6
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 74,
+        "Tree_number": 324,
+        "DBH": 10.6,
+        "Height": 12.8
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 74,
+        "Tree_number": 325,
+        "DBH": 17.9,
+        "Height": 16.0
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 74,
+        "Tree_number": 326,
+        "DBH": 8.7,
+        "Height": 11.5
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 74,
+        "Tree_number": 330,
+        "DBH": 10.3,
+        "Height": 12.6
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 74,
+        "Tree_number": 331,
+        "DBH": 13.9,
+        "Height": 14.6
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 74,
+        "Tree_number": 332,
+        "DBH": 11.0,
+        "Height": 13.1
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 74,
+        "Tree_number": 333,
+        "DBH": 9.8,
+        "Height": 12.3
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 74,
+        "Tree_number": 328,
+        "DBH": 10.2,
+        "Height": 12.6
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 74,
+        "Tree_number": 301,
+        "DBH": 12.5,
+        "Height": 13.9
+    },
+    {
+        "Plot": "SH1994021PSP",
+        "Year": 2025,
+        "Species": 74,
+        "Tree_number": 302,
+        "DBH": 5.9,
+        "Height": 9.1
     }
 ]
