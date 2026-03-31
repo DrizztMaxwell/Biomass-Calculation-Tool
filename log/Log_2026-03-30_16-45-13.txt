@@ -1,0 +1,36 @@
+[16:45:13] --- Log Session Started ---
+[16:45:16] Running as script — data: C:\Users\sid\Desktop\biomass calc\Biomass-Calculation-Tool\app_data
+[16:45:16] Initializing JSON files...
+[16:45:16]    Created/Updated: storage/localstorage.json
+[16:45:16]    Created/Updated: data/treeparameters.json
+[16:45:16]    Preserved existing: C:\Users\sid\Desktop\biomass calc\Biomass-Calculation-Tool\data/create_species.json
+[16:45:16]    Preserved existing: C:\Users\sid\Desktop\biomass calc\Biomass-Calculation-Tool\data/selected_database.json
+[16:45:16]    Preserved existing: C:\Users\sid\Desktop\biomass calc\Biomass-Calculation-Tool\data/connection_history.json
+[16:45:16] Initialized 2 JSON files
+[16:45:16] Application starting...
+[16:45:16] Page configured
+[16:45:16] Splash screen displayed
+[16:45:18] Splash cleared — proceeding to EULA
+[16:45:18] EULA view displayed
+[16:45:28] User agreed to EULA — proceeding
+[16:45:28] User navigated to Select Data page
+[16:45:34] Successfully connected to gypsppgp on DESKTOP-CJK2P4D\SQLEXPRESS
+[16:45:34] Database connection info saved: {'server': 'DESKTOP-CJK2P4D\\SQLEXPRESS', 'database': 'gypsppgp', 'driver': 'ODBC Driver 18 for SQL Server', 'data_folder_path': 'C:\\Program Files\\Microsoft SQL Server\\MSSQL17.SQLEXPRESS\\MSSQL\\DATA', 'table_name': 'tCalcBiomassInput'}
+[16:45:35] Database import successful with 10000 records.
+[16:45:35] Database import process completed for gypsppgp
+[16:45:36] User navigated to Calculate Biomass page
+[16:45:38] Calculate biomass button clicked
+[16:45:53] Write to database operation success: True
+[16:45:58] User navigated to Create Species page
+[16:46:11] Checking if species name kok exists in C:\Users\sid\Desktop\biomass calc\Biomass-Calculation-Tool\data/treeparameters.json
+[16:46:11] Checking if species name kok exists in C:\Users\sid\Desktop\biomass calc\Biomass-Calculation-Tool\data/create_species.json
+[16:46:12] Selected components for creation: ['Wood']
+[16:46:12] Current equation type is DBH-based
+[16:46:12] Species kok created successfully and added to create_species.json
+[16:46:16] User navigated to Modify Species page
+[16:46:16] Species data loaded successfully.
+[16:46:19] User navigated to Settings page
+[16:46:19] User chose to exit the application
+[16:46:21] Theme toggled to: ThemeMode.DARK
+[16:46:22] Theme toggled to: ThemeMode.LIGHT
+[16:46:22] User chose to exit the application

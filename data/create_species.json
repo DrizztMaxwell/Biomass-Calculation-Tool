@@ -14,5 +14,12 @@
         "EquationType": "DBH-based",
         "bwoodb1": 1.0,
         "bwoodb2": 2.0
+    },
+    {
+        "SpecCommon": "kok",
+        "Origin": "Natural Stand",
+        "EquationType": "DBH-based",
+        "bwoodb1": 2.0,
+        "bwoodb2": 3.0
     }
 ]
