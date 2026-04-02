@@ -1,0 +1,81 @@
+[02:10:31] --- Log Session Started ---
+[02:10:37] Running as script — data: C:\Users\sid\Desktop\biomass calc\Biomass-Calculation-Tool\app_data
+[02:10:37] Initializing JSON files...
+[02:10:37]    Created/Updated: storage/localstorage.json
+[02:10:37]    Created/Updated: data/treeparameters.json
+[02:10:37]    Preserved existing: C:\Users\sid\Desktop\biomass calc\Biomass-Calculation-Tool\data/create_species.json
+[02:10:37]    Preserved existing: C:\Users\sid\Desktop\biomass calc\Biomass-Calculation-Tool\data/selected_database.json
+[02:10:37]    Preserved existing: C:\Users\sid\Desktop\biomass calc\Biomass-Calculation-Tool\data/connection_history.json
+[02:10:37] Initialized 2 JSON files
+[02:10:37] Application starting...
+[02:10:37] Page configured
+[02:10:37] Splash screen displayed
+[02:10:39] Splash cleared — proceeding to EULA
+[02:10:39] EULA view displayed
+[02:10:41] User agreed to EULA — proceeding
+[02:10:41] User navigated to Select Data page
+[02:10:42] User navigated to Create Species page
+[02:10:42] User navigated to Modify Species page
+[02:10:42] Species data loaded successfully.
+[02:13:39] User navigated to Create Species page
+[02:13:54] Checking if species name pepper pot exists in C:\Users\sid\Desktop\biomass calc\Biomass-Calculation-Tool\data/treeparameters.json
+[02:13:55] Selected components for creation: ['Wood', 'Bark', 'Branch', 'Foliage']
+[02:13:55] Current equation type is DBH-based
+[02:13:55] Species pepper pot created successfully and added to create_species.json
+[02:13:57] User navigated to Modify Species page
+[02:13:57] Species data loaded successfully.
+[02:14:02] Species exported successfully to C:\Users\sid\Desktop\biomass calc\Biomass-Calculation-Tool\species.species
+[02:14:03] Confirming deletion: 
+[02:14:04] Confirming deletion: 
+[02:14:04] Species data saved successfully.
+[02:14:04] Species 'pepper pot' deleted successfully.
+[02:14:08] Species data saved successfully.
+[02:14:08] Species imported successfully from C:\Users\sid\Desktop\biomass calc\Biomass-Calculation-Tool\species.species
+[02:15:52] User navigated to Create Species page
+[02:16:14] Checking if species name fire pot exists in C:\Users\sid\Desktop\biomass calc\Biomass-Calculation-Tool\data/treeparameters.json
+[02:16:14] Checking if species name fire pot exists in C:\Users\sid\Desktop\biomass calc\Biomass-Calculation-Tool\data/create_species.json
+[02:16:15] Selected components for creation: ['Wood', 'Bark', 'Branch', 'Foliage']
+[02:16:15] Species fire pot created successfully and added to create_species.json
+[02:16:17] User navigated to Modify Species page
+[02:16:17] Species data loaded successfully.
+[02:16:18] Confirming deletion: 
+[02:16:19] Confirming deletion: 
+[02:16:19] Species data saved successfully.
+[02:16:19] Species 'pepper pot' deleted successfully.
+[02:16:21] Confirming deletion: 
+[02:16:24] Confirming deletion: 
+[02:16:24] Species data saved successfully.
+[02:16:24] Species 'fire pot' deleted successfully.
+[02:16:27] Species data saved successfully.
+[02:16:27] Species imported successfully from C:\Users\sid\Desktop\biomass calc\Biomass-Calculation-Tool\species.species
+[02:16:30] User navigated to Create Species page
+[02:16:51] Checking if species name fire pot exists in C:\Users\sid\Desktop\biomass calc\Biomass-Calculation-Tool\data/treeparameters.json
+[02:16:51] Checking if species name fire pot exists in C:\Users\sid\Desktop\biomass calc\Biomass-Calculation-Tool\data/create_species.json
+[02:16:52] Selected components for creation: ['Wood', 'Bark', 'Branch', 'Foliage']
+[02:16:52] Species fire pot created successfully and added to create_species.json
+[02:16:54] User navigated to Modify Species page
+[02:16:54] Species data loaded successfully.
+[02:16:55] User navigated to Settings page
+[02:16:56] User navigated to Modify Species page
+[02:16:56] Species data loaded successfully.
+[02:17:01] Species exported successfully to C:\Users\sid\Desktop\biomass calc\Biomass-Calculation-Tool\species.species
+[02:17:03] Confirming deletion: 
+[02:17:04] Confirming deletion: 
+[02:17:04] Species data saved successfully.
+[02:17:04] Species 'pepper pot' deleted successfully.
+[02:17:05] Confirming deletion: 
+[02:17:06] Confirming deletion: 
+[02:17:06] Species data saved successfully.
+[02:17:06] Species 'fire pot' deleted successfully.
+[02:17:10] Species data saved successfully.
+[02:17:10] Species imported successfully from C:\Users\sid\Desktop\biomass calc\Biomass-Calculation-Tool\species.species
+[02:17:13] Confirming deletion: 
+[02:17:13] Confirming deletion: 
+[02:17:13] Species data saved successfully.
+[02:17:13] Species 'fire pot' deleted successfully.
+[02:17:15] Confirming deletion: 
+[02:17:15] Confirming deletion: 
+[02:17:15] Species data saved successfully.
+[02:17:15] Species 'pepper pot' deleted successfully.
+[02:17:17] User navigated to Create Species page
+[02:17:18] User navigated to Select Data page

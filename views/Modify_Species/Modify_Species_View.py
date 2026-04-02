@@ -1,3 +1,5 @@
+#modify species view
+
 import flet as ft
 from widgets.TitleTextWidget import TitleTextWidget
 from widgets.Custom_Alert_Dialog import Custom_Alert_Dialog
@@ -52,6 +54,68 @@ class Modify_Species_View:
         self.pagination_controls.next_button.on_click = self.next_page
 
         self.filtered_species = self.__controller.get_species_data().copy()
+
+        # File Pickers
+        self.save_file_picker = ft.FilePicker(on_result=self.on_save_file_result)
+        self.load_file_picker = ft.FilePicker(on_result=self.on_load_file_result)
+
+        self.page.overlay.append(self.save_file_picker)
+        self.page.overlay.append(self.load_file_picker)
+
+    # ─────────────────────────────────────────────────────────────
+    # Save species button handler
+    # ─────────────────────────────────────────────────────────────
+    def save_species_to_file(self, e):
+        self.save_file_picker.save_file(
+            dialog_title="Save Species File",
+            file_name="species.species",
+            allowed_extensions=["species"]
+        )
+
+    def on_save_file_result(self, e: ft.FilePickerResultEvent):
+        if e.path:
+            success = self.__controller.export_species_file(e.path)
+            if success:
+                self.page.snack_bar = ft.SnackBar(
+                    ft.Text("Species exported successfully."),
+                    bgcolor=ft.Colors.GREEN
+                )
+            else:
+                self.page.snack_bar = ft.SnackBar(
+                    ft.Text("Error exporting species."),
+                    bgcolor=ft.Colors.RED
+                )
+            self.page.snack_bar.open = True
+            self.page.update()
+
+    # ─────────────────────────────────────────────────────────────
+    # Load species button handler
+    # ─────────────────────────────────────────────────────────────
+    def load_species_from_file(self, e):
+        self.load_file_picker.pick_files(
+            dialog_title="Load Species File",
+            allowed_extensions=["species"]
+        )
+
+    def on_load_file_result(self, e: ft.FilePickerResultEvent):
+        if e.files:
+            file_path = e.files[0].path
+            success = self.__controller.import_species_file(file_path)
+
+            if success:
+                self.refresh_data_table()
+                self.page.snack_bar = ft.SnackBar(
+                    ft.Text("Species imported successfully."),
+                    bgcolor=ft.Colors.GREEN
+                )
+            else:
+                self.page.snack_bar = ft.SnackBar(
+                    ft.Text("Error importing species."),
+                    bgcolor=ft.Colors.RED
+                )
+
+            self.page.snack_bar.open = True
+            self.page.update()
 
     # ── Theme helpers ─────────────────────────────────────────────────────────
 
@@ -324,14 +388,31 @@ class Modify_Species_View:
                         width=44, height=44,
                         alignment=ft.alignment.center,
                     ),
+
                     ft.Column([
                         ft.Text("Modify Species", size=18,
                                 weight=ft.FontWeight.W_700,
                                 color=self._text_primary()),
-                        ft.Text("Manage your created species — edit or delete as needed.",
+                        ft.Text("Manage your created species — edit, delete, import or export.",
                                 size=12, color=self._text_sec()),
                     ], spacing=2, expand=True),
-                ], spacing=14, vertical_alignment=ft.CrossAxisAlignment.CENTER),
+
+                    # NEW BUTTONS
+                    ft.Row([
+                        ft.ElevatedButton(
+                            "Load Species",
+                            icon=ft.Icons.UPLOAD_FILE,
+                            on_click=self.load_species_from_file,
+                        ),
+                        ft.ElevatedButton(
+                            "Save Species",
+                            icon=ft.Icons.DOWNLOAD,
+                            on_click=self.save_species_to_file,
+                        ),
+                    ], spacing=10),
+                ],
+                
+                spacing=14, vertical_alignment=ft.CrossAxisAlignment.CENTER),
                 ft.Container(height=1, bgcolor=self._border(),
                              margin=ft.margin.only(top=14)),
             ], spacing=0),
