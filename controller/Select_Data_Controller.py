@@ -111,6 +111,8 @@ class Select_Data_Controller:
 
                 records = json.loads(original_dataframe.to_json(orient='records'))
                 dm = DataManager()
+                print("Final records to import:")
+                print(records [:5])  # Print first 5 records for verification
                 dm.set_all(records)
 
             await spinner.simulate_progressive_loading(0.8, 1.0, 0.1, "Completed successfully...")

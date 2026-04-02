@@ -1,0 +1,36 @@
+[07:34:34] --- Log Session Started ---
+[07:34:36] Running as script — data: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\app_data
+[07:34:36] Initializing JSON files...
+[07:34:36]    Created/Updated: storage/localstorage.json
+[07:34:36]    Created/Updated: data/treeparameters.json
+[07:34:36]    Preserved existing: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/create_species.json
+[07:34:36]    Preserved existing: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/selected_database.json
+[07:34:36]    Preserved existing: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/connection_history.json
+[07:34:36] Initialized 2 JSON files
+[07:34:36] Application starting...
+[07:34:36] Page configured
+[07:34:36] Splash screen displayed
+[07:34:39] Splash cleared — proceeding to EULA
+[07:34:39] EULA view displayed
+[07:34:39] User agreed to EULA — proceeding
+[07:34:39] User navigated to Select Data page
+[07:34:43] Successfully connected to gypsppgp on DESKTOP-EJ33BVS\SQLEXPRESS
+[07:34:43] Database connection info saved: {'server': 'DESKTOP-EJ33BVS\\SQLEXPRESS', 'database': 'gypsppgp', 'driver': 'ODBC Driver 17 for SQL Server', 'data_folder_path': 'C:\\Program Files\\Microsoft SQL Server\\MSSQL16.SQLEXPRESS\\MSSQL\\DATA', 'table_name': 'tCalcBiomassInput'}
+[07:34:43] Database import successful with 10251 records.
+[07:34:43] Database import process completed for gypsppgp
+[07:34:45] User navigated to Calculate Biomass page
+[07:34:46] Calculate biomass button clicked
+[07:34:50] Generated default export filename: Output_Biomass_Results_20260331_073450.txt
+[07:34:50] Export file dialog opened
+[07:34:54] Data exported successfully to C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\Output_Biomass_Results_20260331_073450.txt
+[07:35:08] User navigated to Select Data page
+[07:35:09] Import text file dialog opened
+[07:35:13] Selected file for import: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data_set.txt
+[07:35:14] Text file imported successfully with 12 records and 2 errors.
+[07:35:14] Deleted temporary parquet file: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data_set.parquet
+[07:35:17] User navigated to Calculate Biomass page
+[07:35:21] Calculate biomass button clicked
+[07:35:22] Error saving to text file: cannot convert float NaN to integer
+[07:35:24] Generated default export filename: Output_Biomass_Results_20260331_073524.txt
+[07:35:24] Export file dialog opened
+[07:35:26] Data exported successfully to C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\Output_Biomass_Results_20260331_073524.txt

@@ -1,0 +1,12 @@
+[06:17:04] --- Log Session Started ---
+[06:17:10] Running as script — data: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\app_data
+[06:17:10] Initializing JSON files...
+[06:17:10]    Created/Updated: storage/localstorage.json
+[06:17:10]    Created/Updated: data/treeparameters.json
+[06:17:10]    Preserved existing: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/create_species.json
+[06:17:10]    Preserved existing: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/selected_database.json
+[06:17:10]    Preserved existing: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/connection_history.json
+[06:17:10] Initialized 2 JSON files
+[06:17:10] Application starting...
+[06:17:10] Page configured
+[06:17:10] Splash screen displayed

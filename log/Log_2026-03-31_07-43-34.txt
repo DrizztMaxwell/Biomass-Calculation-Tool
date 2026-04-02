@@ -1,0 +1,29 @@
+[07:43:34] --- Log Session Started ---
+[07:43:36] Running as script — data: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\app_data
+[07:43:36] Initializing JSON files...
+[07:43:36]    Created/Updated: storage/localstorage.json
+[07:43:36]    Created/Updated: data/treeparameters.json
+[07:43:36]    Preserved existing: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/create_species.json
+[07:43:36]    Preserved existing: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/selected_database.json
+[07:43:36]    Preserved existing: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/connection_history.json
+[07:43:36] Initialized 2 JSON files
+[07:43:36] Application starting...
+[07:43:36] Page configured
+[07:43:36] Splash screen displayed
+[07:43:38] Splash cleared — proceeding to EULA
+[07:43:38] EULA view displayed
+[07:43:39] User agreed to EULA — proceeding
+[07:43:39] User navigated to Select Data page
+[07:43:46] Successfully connected to gypsppgp on DESKTOP-EJ33BVS\SQLEXPRESS
+[07:43:46] Database connection info saved: {'server': 'DESKTOP-EJ33BVS\\SQLEXPRESS', 'database': 'gypsppgp', 'driver': 'ODBC Driver 17 for SQL Server', 'data_folder_path': 'C:\\Program Files\\Microsoft SQL Server\\MSSQL16.SQLEXPRESS\\MSSQL\\DATA', 'table_name': 'tCalcBiomassInput'}
+[07:43:46] Database import successful with 10251 records.
+[07:43:46] Database import process completed for gypsppgp
+[07:43:48] User navigated to Calculate Biomass page
+[07:43:49] Calculate biomass button clicked
+[07:43:59] Write to database operation success: True
+[07:44:01] Generated default export filename: Output_Biomass_Results_20260331_074401.txt
+[07:44:01] Export file dialog opened
+[07:44:04] Export cancelled by user
+[07:44:05] Generated default export filename: Output_Biomass_Results_20260331_074405.txt
+[07:44:05] Export file dialog opened
+[07:44:08] Data exported successfully to C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\Output_Biomass_Results_20260331_074405.txt

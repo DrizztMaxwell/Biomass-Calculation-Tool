@@ -9,7 +9,7 @@ def export_to_text_file(file_path) -> bool:
             import json
             with open(Biomass_Config.BIOMASS_RESULTS_PATH, 'r') as f:
                 data = json.load(f)
-                print(f"Data loaded for export: {data}")
+              
                 
             import datetime
             with open(file_path, 'w') as file:
