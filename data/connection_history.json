@@ -1,12 +1,12 @@
 [
   {
+    "server": "DESKTOP-CJK2P4D\\SQLEXPRESS",
+    "database": "gypsppgp",
+    "last_used": "2026-03-31 11:04"
+  },
+  {
     "server": "DESKTOP-EJ33BVS\\SQLEXPRESS",
     "database": "gypsppgp",
     "last_used": "2026-03-30 22:14"
-  },
-  {
-    "server": "DESKTOP-CJK2P4D\\SQLEXPRESS",
-    "database": "gypsppgp",
-    "last_used": "2026-03-30 19:28"
   }
 ]

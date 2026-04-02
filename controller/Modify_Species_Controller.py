@@ -1,4 +1,8 @@
+#modify species controller
+
 import json
+import shutil
+import os
 from widgets.LogFileTxt import logger
 from constants.Json_File_Path_Constants import json_paths
 class Modify_Species_Controller:
@@ -35,4 +39,37 @@ class Modify_Species_Controller:
             return True
         except Exception as e:
             logger.write(f"Error saving data: {e}")
+            return False
+
+    # ─────────────────────────────────────────────────────────────
+    # Export species to .species file
+    # ─────────────────────────────────────────────────────────────
+    def export_species_file(self, file_path):
+        """Save current species list to a .species file"""
+        try:
+            with open(file_path, "w") as f:
+                json.dump(self.get_species_data(), f, indent=4)
+
+            logger.write(f"Species exported successfully to {file_path}")
+            return True
+        except Exception as e:
+            logger.write(f"Error exporting species file: {e}")
+            return False
+
+    # ─────────────────────────────────────────────────────────────
+    # Import species from .species file
+    # ─────────────────────────────────────────────────────────────
+    def import_species_file(self, file_path):
+        """Load species list from a .species file and overwrite JSON"""
+        try:
+            with open(file_path, "r") as f:
+                imported_data = json.load(f)
+
+            self.set_species_data(imported_data)
+            self.save_species_data()  # overwrite JSON file
+
+            logger.write(f"Species imported successfully from {file_path}")
+            return True
+        except Exception as e:
+            logger.write(f"Error importing species file: {e}")
             return False
