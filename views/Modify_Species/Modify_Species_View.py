@@ -401,13 +401,29 @@ class Modify_Species_View:
                     ft.Row([
                         ft.ElevatedButton(
                             "Load Species",
+                            bgcolor=ft.Colors.PURPLE_800 if self._is_dark else ft.Colors.ORANGE_600,
+                            color=ft.Colors.WHITE,
+                            
+                             style=ft.ButtonStyle(
+                                 padding=ft.padding.symmetric(horizontal=14, vertical=6),
+                                 
+                shape=ft.RoundedRectangleBorder(radius=5)  # Set radius here
+            ),
                             icon=ft.Icons.UPLOAD_FILE,
                             on_click=self.load_species_from_file,
+                            
                         ),
                         ft.ElevatedButton(
                             "Save Species",
+                            bgcolor=ft.Colors.GREEN_700 if self._is_dark else ft.Colors.BLUE_600,
+                            color=ft.Colors.WHITE,
                             icon=ft.Icons.DOWNLOAD,
                             on_click=self.save_species_to_file,
+                               style=ft.ButtonStyle(
+                                 padding=ft.padding.symmetric(horizontal=14, vertical=6),
+                                 
+                shape=ft.RoundedRectangleBorder(radius=5)  # Set radius here
+            ),
                         ),
                     ], spacing=10),
                 ],

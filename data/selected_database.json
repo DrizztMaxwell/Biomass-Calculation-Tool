@@ -1,7 +1,7 @@
 {
-    "server": "DESKTOP-CJK2P4D\\SQLEXPRESS",
+    "server": "DESKTOP-EJ33BVS\\SQLEXPRESS",
     "database": "gypsppgp",
-    "driver": "ODBC Driver 18 for SQL Server",
-    "data_folder_path": "C:\\Program Files\\Microsoft SQL Server\\MSSQL17.SQLEXPRESS\\MSSQL\\DATA",
+    "driver": "ODBC Driver 17 for SQL Server",
+    "data_folder_path": "C:\\Program Files\\Microsoft SQL Server\\MSSQL16.SQLEXPRESS\\MSSQL\\DATA",
     "table_name": "tCalcBiomassInput"
 }
