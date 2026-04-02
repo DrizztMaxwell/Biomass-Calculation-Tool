@@ -1,0 +1,47 @@
+[07:12:21] --- Log Session Started ---
+[07:12:23] Running as script — data: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\app_data
+[07:12:23] Initializing JSON files...
+[07:12:23]    Created/Updated: storage/localstorage.json
+[07:12:23]    Created/Updated: data/treeparameters.json
+[07:12:23]    Preserved existing: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/create_species.json
+[07:12:23]    Preserved existing: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/selected_database.json
+[07:12:23]    Preserved existing: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/connection_history.json
+[07:12:23] Initialized 2 JSON files
+[07:12:23] Application starting...
+[07:12:23] Page configured
+[07:12:23] Splash screen displayed
+[07:12:26] Splash cleared — proceeding to EULA
+[07:12:26] EULA view displayed
+[07:12:26] User agreed to EULA — proceeding
+[07:12:26] User navigated to Select Data page
+[07:12:31] Successfully connected to gypsppgp on DESKTOP-EJ33BVS\SQLEXPRESS
+[07:12:31] Database connection info saved: {'server': 'DESKTOP-EJ33BVS\\SQLEXPRESS', 'database': 'gypsppgp', 'driver': 'ODBC Driver 17 for SQL Server', 'data_folder_path': 'C:\\Program Files\\Microsoft SQL Server\\MSSQL16.SQLEXPRESS\\MSSQL\\DATA', 'table_name': 'tCalcBiomassInput'}
+[07:12:31] Database import successful with 10251 records.
+[07:12:31] Database import process completed for gypsppgp
+[07:12:33] User navigated to Calculate Biomass page
+[07:12:34] Calculate biomass button clicked
+[07:12:47] Generated default export filename: Output_Biomass_Results_20260402_071247.txt
+[07:12:47] Export file dialog opened
+[07:12:49] Data exported successfully to C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\Output_Biomass_Results_20260402_071247.txt
+[07:13:25] User navigated to Select Data page
+[07:13:26] Import text file dialog opened
+[07:13:30] Selected file for import: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\testingnewdataset.txt
+[07:13:30] Text file imported successfully with 2 records and 2 errors.
+[07:13:30] Deleted temporary parquet file: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\testingnewdataset.parquet
+[07:13:34] User navigated to Calculate Biomass page
+[07:13:35] Calculate biomass button clicked
+[07:13:40] User navigated to Select Data page
+[07:13:40] Import text file dialog opened
+[07:13:44] Selected file for import: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\BCT.txt
+[07:13:44] Text file imported successfully with 5 records and 0 errors.
+[07:13:44] Deleted temporary parquet file: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\BCT.parquet
+[07:13:46] User navigated to Calculate Biomass page
+[07:13:47] Calculate biomass button clicked
+[07:13:52] Generated default export filename: Output_Biomass_Results_20260402_071352.txt
+[07:13:52] Export file dialog opened
+[07:13:53] Data exported successfully to C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\Output_Biomass_Results_20260402_071352.txt
+[07:15:03] Calculate biomass button clicked
+[07:15:07] Generated default export filename: Output_Biomass_Results_20260402_071507.txt
+[07:15:07] Export file dialog opened
+[07:15:09] Data exported successfully to C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\Output_Biomass_Results_20260402_071507.txt
+[07:15:56] Calculate biomass button clicked

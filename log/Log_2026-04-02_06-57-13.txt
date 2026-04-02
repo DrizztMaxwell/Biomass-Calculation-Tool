@@ -1,0 +1,45 @@
+[06:57:13] --- Log Session Started ---
+[06:57:14] Running as script — data: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\app_data
+[06:57:14] Initializing JSON files...
+[06:57:14]    Created/Updated: storage/localstorage.json
+[06:57:14]    Created/Updated: data/treeparameters.json
+[06:57:14]    Preserved existing: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/create_species.json
+[06:57:14]    Preserved existing: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/selected_database.json
+[06:57:14]    Preserved existing: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\data/connection_history.json
+[06:57:14] Initialized 2 JSON files
+[06:57:14] Application starting...
+[06:57:14] Page configured
+[06:57:14] Splash screen displayed
+[06:57:17] Splash cleared — proceeding to EULA
+[06:57:17] EULA view displayed
+[06:57:20] User agreed to EULA — proceeding
+[06:57:20] User navigated to Select Data page
+[06:57:24] User navigated to Settings page
+[06:57:25] User navigated to Modify Species page
+[06:57:25] Species data loaded successfully.
+[06:57:26] User navigated to Create Species page
+[06:57:33] User navigated to Select Data page
+[06:57:40] User navigated to Create Species page
+[06:57:41] User navigated to Settings page
+[06:57:42] User navigated to Modify Species page
+[06:57:42] Species data loaded successfully.
+[06:57:50] User navigated to Select Data page
+[06:57:52] Import text file dialog opened
+[06:57:56] Selected file for import: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\testingnewdataset.txt
+[06:57:57] Text file imported successfully with 2 records and 2 errors.
+[06:57:57] Deleted temporary parquet file: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\testingnewdataset.parquet
+[06:58:01] User navigated to Calculate Biomass page
+[06:58:03] Calculate biomass button clicked
+[06:58:06] User navigated to Select Data page
+[06:58:09] Import text file dialog opened
+[06:58:13] Selected file for import: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\All_Sp_Data_Test_BCT_Dec - Copy.txt
+[06:58:14] Text file imported successfully with 2062 records and 72 errors.
+[06:58:14] Deleted temporary parquet file: C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\All_Sp_Data_Test_BCT_Dec - Copy.parquet
+[06:58:17] User navigated to Calculate Biomass page
+[06:58:19] Calculate biomass button clicked
+[06:58:36] Generated default export filename: Output_Biomass_Results_20260402_065836.txt
+[06:58:36] Export file dialog opened
+[06:58:38] Data exported successfully to C:\Users\mohib\Desktop\Biomass Final\Biomass-Calculation-Tool\Output_Biomass_Results_20260402_065836.txt
+[07:01:20] User navigated to Select Data page
+[07:01:31] User navigated to Calculate Biomass page
+[07:06:47] Calculate biomass button clicked
