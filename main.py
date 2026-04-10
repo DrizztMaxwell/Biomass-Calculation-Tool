@@ -1134,25 +1134,7 @@ def _build_splash(page: ft.Page) -> ft.Container:
                 ),
                 ft.Container(height=48),
 
-                # ── Footer strip ────────────────────────────────────────────
-                ft.Container(
-                    content=ft.Row([
-                        ft.Container(
-                            content=ft.Icon(ft.Icons.ANALYTICS_OUTLINED,
-                                            size=12, color=txt_s),
-                            margin=ft.margin.only(right=6),
-                        ),
-                        ft.Text(
-                            "Lambert et al. 2005 · National Biomass Equations",
-                            size=11,
-                            color=txt_s,
-                        ),
-                    ], spacing=0, tight=True),
-                    padding=ft.padding.symmetric(horizontal=20, vertical=10),
-                    bgcolor=surface,
-                    border=ft.border.all(1, border),
-                    border_radius=ft.border_radius.all(20),
-                ),
+              
             ],
         ),
     )
