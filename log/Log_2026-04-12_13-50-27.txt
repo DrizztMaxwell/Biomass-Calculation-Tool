@@ -1,0 +1,43 @@
+[13:50:27] --- Log Session Started ---
+[13:50:28] Running as script — data: C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\app_data
+[13:50:28] Initializing JSON files...
+[13:50:28]    Created/Updated: storage/localstorage.json
+[13:50:28]    Created/Updated: data/treeparameters.json
+[13:50:28]    Preserved existing: C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\data/create_species.json
+[13:50:28]    Preserved existing: C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\data/selected_database.json
+[13:50:28]    Preserved existing: C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\data/connection_history.json
+[13:50:28] Initialized 2 JSON files
+[13:50:28] Application starting...
+[13:50:28] Page configured
+[13:50:28] Splash screen displayed
+[13:50:30] Splash cleared — proceeding to EULA
+[13:50:30] EULA view displayed
+[13:50:31] User agreed to EULA — proceeding
+[13:50:31] User navigated to Select Data page
+[13:50:36] Import text file dialog opened
+[13:50:43] Selected file for import: C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\testing_dataset\Case_Insensitive_Test.txt
+[13:50:44] Text file imported successfully with 72 records and 0 errors.
+[13:50:44] Deleted temporary parquet file: C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\testing_dataset\Case_Insensitive_Test.parquet
+[13:50:46] User navigated to Calculate Biomass page
+[13:50:47] Calculate biomass button clicked
+[13:50:51] Calculate biomass button clicked
+[13:51:02] User navigated to Create Species page
+[13:51:03] User navigated to Modify Species page
+[13:51:03] Species data loaded successfully.
+[13:51:05] User navigated to Settings page
+[13:51:07] Theme toggled to: ThemeMode.DARK
+[13:51:08] User navigated to Modify Species page
+[13:51:08] Species data loaded successfully.
+[13:51:13] Loaded species data from C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\data/treeparameters.json successfully.
+[13:51:19] User navigated to Settings page
+[13:51:25] User navigated to Create Species page
+[13:51:26] User navigated to Calculate Biomass page
+[13:51:27] User navigated to Select Data page
+[13:51:28] User navigated to Settings page
+[13:51:30] Theme toggled to: ThemeMode.LIGHT
+[13:51:31] User navigated to Modify Species page
+[13:51:31] Species data loaded successfully.
+[13:51:32] User navigated to Create Species page
+[13:51:34] User navigated to Calculate Biomass page
+[13:51:34] User navigated to Select Data page
+[13:51:40] User navigated to Calculate Biomass page
