@@ -11,14 +11,15 @@ import os
 from pathlib import Path
 import json
 from constants.Json_File_Path_Constants import json_paths
+from helper_functions.Is_Program_Running_As_Executable import is_program_running_as_executable
 
 def get_base_path():
-    if getattr(sys, 'frozen', False):
+    if is_program_running_as_executable():
         return sys._MEIPASS
     return os.path.dirname(os.path.abspath(__file__))
 
 def get_app_data_path():
-    if getattr(sys, 'frozen', False):
+    if is_program_running_as_executable():
         if os.name == 'nt':
             app_data = os.environ.get('APPDATA', '') or os.path.expanduser('~')
             data_path = os.path.join(app_data, 'BiomassCalculationTool')
@@ -31,7 +32,12 @@ def get_app_data_path():
 
 def get_resource_path(relative_path):
     try:
-        base_path = sys._MEIPASS
+        if is_program_running_as_executable():
+            print("Running as executable, using _MEIPASS for resources")
+            base_path = sys._MEIPASS
+        else:
+            print("Not an executable, using script directory for resources")
+            base_path = os.path.dirname(os.path.abspath(__file__))
     except Exception:
         base_path = os.path.abspath(".")
     return os.path.join(base_path, relative_path)
@@ -44,10 +50,10 @@ def get_user_data_path(relative_path):
 
 def initialize_json_files():
     logger.write("Initializing JSON files...")
-    tree_params_data = open(get_resource_path("data/treeparameters.json"), 'r', encoding='utf-8').read()
+   
     fresh_files = {
         "storage/localstorage.json": {},
-        "data/treeparameters.json": json.loads(tree_params_data)
+        "data/treeparameters.json": json.loads(open(get_resource_path("data/treeparameters.json"), 'r', encoding='utf-8').read())
          
           }
     created_files = []
@@ -84,7 +90,7 @@ def initialize_json_files():
 
 
 def setup_paths():
-    if getattr(sys, 'frozen', False):
+    if is_program_running_as_executable():
         project_root  = Path(sys._MEIPASS)
         app_data_path = get_app_data_path()
         logger.write(f"Running as compiled executable — data: {app_data_path}")
@@ -196,7 +202,6 @@ def main(page: ft.Page):
         project_root, app_data_path = setup_paths()
         logger.write("Application starting...")
         AppConfig(page).configure_page()
-        logger.write("Page configured")
 
         async def show_splash_and_proceed():
             try:
