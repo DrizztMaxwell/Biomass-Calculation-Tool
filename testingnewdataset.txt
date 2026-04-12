@@ -1,3 +1,0 @@
-Plot	Year	Tree Number	Species	DBH	Height
-asdfafd20261 1233    Todd1         13.2     14
-asdfafd20261    1233    Todd    21         13.2     14

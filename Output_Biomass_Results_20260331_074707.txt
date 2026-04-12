@@ -1,7 +1,0 @@
-BIOMASS CALCULATION RESULTS
-Generated on: 2026-03-31 07:47:13
-Total records: 2
-
-plot	year	species	dbh	height	Wood (KG)	Bark (KG)	Branch (KG)	Foliage (KG)	Stem (KG)	Crown (KG)	Total (KG)	tree number
-asdfafd20261	1233	Todd	12	12.20	31.5	5.7	7.9	2.2	37.1	10.1	47.3	2
-asdfafd20261	1233	Todd	12	12.20	31.5	5.7	7.9	2.2	37.1	10.1	47.3	2
