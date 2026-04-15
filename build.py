@@ -1,6 +1,6 @@
 """
 Biomass Calculation Tool - Build Script
-Creates a single executable (.exe) with all dependencies and assets bundled inside
+Pre-downloads Flet client and bundles it with SSL certificates
 """
 
 import os
@@ -9,6 +9,9 @@ import sys
 import shutil
 from pathlib import Path
 import re
+import urllib.request
+import certifi
+import ssl
 
 # ============================================================================
 # CONFIGURATION
@@ -17,360 +20,201 @@ ENTRY_POINT = "main.py"
 APP_NAME = "BiomassCalculationTool"
 DIST_DIR = "dist"
 BUILD_DIR = "build"
-SPEC_FILE = f"{APP_NAME}.spec"
-
-# Directories to exclude from the build
-EXCLUDE_DIRS = {
-    DIST_DIR, BUILD_DIR, "__pycache__", ".git", ".github", 
-    ".vscode", ".idea", "venv", "env", ".pytest_cache",
-    "screenshots", "testing_dataset", "app_data"  # Exclude app_data as it's created at runtime
-}
-
-# CRITICAL: These folders will be BUNDLED INSIDE the executable
-# They will be available at runtime via sys._MEIPASS
-ASSETS_TO_BUNDLE = {
-    "assets": "assets",  # Bundle entire assets folder
-    "manual": "manual",  # Bundle entire manual folder
-}
-
-# Specific files that will be CREATED at runtime in AppData
-# These should NOT be bundled - they'll be created on first run
-RUNTIME_FILES = [
-    "storage/localstorage.json",
-    "data/create_species.json",
-    "data/selected_database.json",
-    "data/treeparameters.json",
-]
-
-# Python packages that must be included
-REQUIRED_PACKAGES = [
-    "views",
-    "views.EULA",
-    "controller",
-    "config",
-    "widgets",
-    "data",
-]
+FLET_CLIENT_DIR = "flet_client_cache"
 
 # ============================================================================
-# HELPER FUNCTIONS
+# PRE-DOWNLOAD FLET CLIENT
 # ============================================================================
 
-def clean_build_artifacts():
-    """Remove previous build artifacts"""
-    print("🧹 Cleaning previous build artifacts...")
+def download_flet_client():
+    """Pre-download the Flet client to bundle with the executable"""
+    print("📥 Pre-downloading Flet client...")
     
-    dirs_to_clean = [DIST_DIR, BUILD_DIR]
-    for dir_name in dirs_to_clean:
-        if os.path.exists(dir_name):
-            shutil.rmtree(dir_name)
-            print(f"   Removed: {dir_name}")
+    # Create SSL context with certifi certificates
+    ssl_context = ssl.create_default_context(cafile=certifi.where())
     
-    if os.path.exists(SPEC_FILE):
-        os.remove(SPEC_FILE)
-        print(f"   Removed: {SPEC_FILE}")
-
-
-def check_entry_point():
-    """Verify the entry point exists"""
-    if not os.path.exists(ENTRY_POINT):
-        print(f"❌ ERROR: Entry point '{ENTRY_POINT}' not found!")
-        print(f"   Current directory: {os.getcwd()}")
-        sys.exit(1)
-    print(f"✅ Entry point found: {ENTRY_POINT}")
-
-
-def is_valid_package_name(name):
-    """Check if a string is a valid Python package name"""
-    if not name:
+    # Flet client download URL (adjust version as needed)
+    import flet
+    flet_version = "0.28.3"
+    
+    # Determine platform
+    if sys.platform == "win32":
+        platform = "windows"
+        file_ext = "zip"
+    elif sys.platform == "darwin":
+        platform = "macos"
+        file_ext = "zip"
+    else:
+        platform = "linux"
+        file_ext = "tar.gz"
+    
+    download_url = f"https://github.com/flet-dev/flet/releases/download/v{flet_version}/flet_client-{platform}.{file_ext}"
+    
+    # Create cache directory
+    os.makedirs(FLET_CLIENT_DIR, exist_ok=True)
+    
+    # Download client
+    client_path = os.path.join(FLET_CLIENT_DIR, f"flet_client.{file_ext}")
+    
+    try:
+        if not os.path.exists(client_path):
+            print(f"   Downloading from: {download_url}")
+            req = urllib.request.Request(download_url, headers={'User-Agent': 'Mozilla/5.0'})
+            with urllib.request.urlopen(req, context=ssl_context) as response:
+                with open(client_path, 'wb') as f:
+                    f.write(response.read())
+            print(f"   ✅ Downloaded to: {client_path}")
+        
+        # Extract the client
+        if file_ext == "zip":
+            import zipfile
+            with zipfile.ZipFile(client_path, 'r') as zip_ref:
+                zip_ref.extractall(FLET_CLIENT_DIR)
+        else:
+            import tarfile
+            with tarfile.open(client_path, 'r:gz') as tar_ref:
+                tar_ref.extractall(FLET_CLIENT_DIR)
+        
+        print(f"   ✅ Extracted Flet client to: {FLET_CLIENT_DIR}")
+        return True
+    except Exception as e:
+        print(f"   ⚠️ Could not pre-download Flet client: {e}")
         return False
-    pattern = r'^[a-zA-Z0-9_\-\.]+$'
-    return bool(re.match(pattern, name)) and len(name) < 100
 
+# ============================================================================
+# SSL FIX FOR MAIN.PY
+# ============================================================================
 
-def verify_assets_for_bundling():
-    """Verify that assets exist and will be bundled inside the executable"""
-    print("🔍 Verifying assets for bundling...")
+def create_ssl_fixed_main():
+    """Create a temporary main file with SSL fix"""
+    print("🔧 Creating SSL-fixed main file...")
     
-    all_assets_found = True
-    
-    for asset_folder, _ in ASSETS_TO_BUNDLE.items():
-        if os.path.exists(asset_folder) and os.path.isdir(asset_folder):
-            # Count all files in asset folder
-            total_files = sum([len(files) for _, _, files in os.walk(asset_folder)])
-            print(f"   ✅ Found '{asset_folder}/' - will be BUNDLED inside executable ({total_files} files)")
-            
-            # Check for subfolders in assets
-            if asset_folder == "assets":
-                images_path = os.path.join(asset_folder, "images")
-                fonts_path = os.path.join(asset_folder, "fonts")
-                
-                if os.path.exists(images_path):
-                    img_count = len([f for f in os.listdir(images_path) if os.path.isfile(os.path.join(images_path, f))])
-                    print(f"      📷 images/ subfolder found ({img_count} files)")
-                
-                if os.path.exists(fonts_path):
-                    font_count = len([f for f in os.listdir(fonts_path) if os.path.isfile(os.path.join(fonts_path, f))])
-                    print(f"      🔤 fonts/ subfolder found ({font_count} files)")
-            
-            # Check manual folder contents
-            if asset_folder == "manual":
-                pdf_files = [f for f in os.listdir(asset_folder) if f.endswith('.pdf')]
-                print(f"      📄 PDF files found: {', '.join(pdf_files)}")
-        else:
-            print(f"   ⚠️  Warning: '{asset_folder}/' not found - will not be bundled")
-            all_assets_found = False
-    
-    if not all_assets_found:
-        print("\n⚠️  Some asset folders are missing. The executable will still work,")
-        print("   but may lack icons, images, fonts, or manuals.")
-    
-    return all_assets_found
+    ssl_fix_code = '''
+# SSL FIX FOR PACKAGED APPLICATION
+import os
+import sys
+import ssl
 
-
-def verify_runtime_files():
-    """Verify runtime files structure (these will be created at runtime, not bundled)"""
-    print("🔍 Checking runtime files structure...")
-    print("   📝 The following files will be CREATED at runtime in %APPDATA%:")
-    for file_path in RUNTIME_FILES:
-        print(f"      - {file_path}")
-    print("   ✅ No need to bundle these - they'll be created on first run")
-
-
-def collect_bundle_files(base_dir):
-    """
-    Collect files that need to be BUNDLED INSIDE the executable.
-    Returns a list of tuples: (source_path, destination_path)
-    This version recursively collects ALL files in assets and manual, preserving folder structure.
-    """
-    print("📦 Collecting files to BUNDLE inside executable...")
-    
-    data_files = []
-    base_path = Path(base_dir)
-    
-    # Bundle assets and manual folders recursively
-    print("   Bundling folders INSIDE executable:")
-    for src_folder, dest_folder in ASSETS_TO_BUNDLE.items():
-        full_src_path = base_path / src_folder
-        if full_src_path.exists() and full_src_path.is_dir():
-            # Walk through all files recursively
-            file_count = 0
-            for file_path in full_src_path.rglob("*"):
-                if file_path.is_file():
-                    # Relative path inside project for destination
-                    rel_path = file_path.relative_to(base_path).parent
-                    data_files.append((str(file_path), str(rel_path)))
-                    file_count += 1
-                    if file_count <= 5:  # Show first 5 files as examples
-                        print(f"      ✔ {file_path.relative_to(base_path)}")
-            if file_count > 5:
-                print(f"      ... and {file_count - 5} more files in {src_folder}/")
-            print(f"      📦 Total: {file_count} files in {src_folder}/")
-        else:
-            print(f"   ⚠️  Warning: '{src_folder}/' not found - will not be bundled")
-    
-    # Bundle Python packages
-    print("\n   Bundling Python packages:")
-    for package in REQUIRED_PACKAGES:
-        package_path = base_path / Path(package.replace('.', os.sep))
-        if package_path.exists() and package_path.is_dir():
-            py_files = list(package_path.rglob("*.py"))
-            if py_files:
-                data_files.append((str(package_path), package))
-                print(f"      ✅ Bundled package: {package}/ ({len(py_files)} files)")
-    
-    # Also add important root files
-    print("\n   Bundling root files:")
-    important_root_files = ["requirements.txt", ".gitignore"]
-    for filename in important_root_files:
-        filepath = base_path / filename
-        if filepath.exists() and filepath.is_file():
-            data_files.append((str(filepath), "."))
-            print(f"      ✅ Bundled file: {filename}")
-    
-    print(f"\n   📊 Total items bundled inside executable: {len(data_files)}")
-    return data_files
-
-
-def collect_hidden_imports(base_dir):
-    """
-    Collect Python packages that should be explicitly imported.
-    This ensures all modules are found by PyInstaller.
-    """
-    print("🔍 Detecting Python packages for import...")
-    
-    hidden_imports = set()
-    
-    # Add required packages explicitly
-    for package in REQUIRED_PACKAGES:
-        hidden_imports.add(package)
-        print(f"   Added required package: {package}")
-    
-    # Add common dependencies
-    common_imports = [
-        "flet", 
-        "flet_core", 
-        "flet_runtime",
-        "pandas", 
-        "numpy", 
-        "openpyxl",
-        "pyodbc",
-        "matplotlib", 
-        "seaborn", 
-        "plotly",
-        "PIL", 
-        "Pillow",
-        "json",
-        "asyncio",
-    ]
-    
-    for imp in common_imports:
-        if is_valid_package_name(imp):
-            hidden_imports.add(imp)
-    
-    return list(hidden_imports)
-
-
-def get_requirements_from_file():
-    """Parse requirements.txt"""
-    hidden_imports = set()
-    
-    if os.path.exists("requirements.txt"):
-        print(f"📋 Reading requirements.txt...")
+# Fix SSL certificate verification
+if hasattr(sys, '_MEIPASS'):
+    # Running from PyInstaller bundle
+    cert_path = os.path.join(sys._MEIPASS, 'certifi', 'cacert.pem')
+    if os.path.exists(cert_path):
+        os.environ['SSL_CERT_FILE'] = cert_path
+        os.environ['REQUESTS_CA_BUNDLE'] = cert_path
+        os.environ['CURL_CA_BUNDLE'] = cert_path
+        
+        # For Python's ssl module
         try:
-            with open("requirements.txt", 'r', encoding='utf-8') as f:
-                for line in f:
-                    line = line.strip()
-                    if not line or line.startswith('#'):
-                        continue
-                    
-                    package = line.split('==')[0].split('>=')[0].split('<=')[0].split('[')[0].strip()
-                    
-                    if is_valid_package_name(package):
-                        hidden_imports.add(package)
-                        print(f"   Added from requirements: {package}")
-        except Exception as e:
-            print(f"   Warning: Could not read requirements.txt: {e}")
-    
-    return list(hidden_imports)
+            ssl._create_default_https_context = ssl.create_default_context
+        except:
+            pass
+        
+        print(f"SSL certificates loaded from: {cert_path}")
+    else:
+        # Try alternative path
+        alt_cert = os.path.join(sys._MEIPASS, 'cacert.pem')
+        if os.path.exists(alt_cert):
+            os.environ['SSL_CERT_FILE'] = alt_cert
+            print(f"SSL certificates loaded from: {alt_cert}")
 
-
-def build_pyinstaller_command(data_files, hidden_imports):
-    """Construct the PyInstaller command with all arguments"""
+# Import your actual main module
+if __name__ == "__main__":
+    # Import and run your real main
+    import main as real_main
+    if hasattr(real_main, 'main'):
+        import flet as ft
+        ft.app(target=real_main.main)
+    else:
+        print("ERROR: main function not found")
+'''
     
-    separator = ";" if os.name == "nt" else ":"
+    # Write temporary SSL wrapper
+    with open("ssl_fixed_main.py", "w") as f:
+        f.write(ssl_fix_code)
     
-    cmd = [
-        sys.executable, "-m", "PyInstaller",
-        "--onefile",                    # Single executable file
-        "--windowed",                   # No console window (GUI app)
-        "--name", APP_NAME,             # Name of the executable
-        "--clean",                      # Clean PyInstaller cache
-        "--noconfirm",                  # Replace output directory without asking
-        "--upx-dir", "upx",             # Enable UPX compression
-    ]
-    
-    # Add data files to bundle inside executable
-    for src, dest in data_files:
-        cmd.extend(["--add-data", f"{src}{separator}{dest}"])
-    
-    # Add hidden imports
-    for module in hidden_imports:
-        if is_valid_package_name(module):
-            cmd.extend(["--hidden-import", module])
-    
-    # Add icon if it exists
-    icon_files = ["icon.ico", "app.ico", "logo.ico"]
-    for icon in icon_files:
-        if os.path.exists(icon):
-            cmd.extend(["--icon", icon])
-            print(f"📷 Using icon: {icon}")
-            break
-    
-    # Add the entry point
-    cmd.append(ENTRY_POINT)
-    
-    return cmd
-
+    print("   ✅ Created ssl_fixed_main.py wrapper")
+    return "ssl_fixed_main.py"
 
 # ============================================================================
 # MAIN BUILD PROCESS
 # ============================================================================
 
 def main():
-    """Main build process"""
+    """Main build process with SSL fix"""
     
     print("=" * 70)
-    print(f"  Building {APP_NAME} with ASSETS AND MANUAL BUNDLED INSIDE")
+    print(f"  Building {APP_NAME} with FLET CLIENT PRE-DOWNLOAD")
     print("=" * 70)
     print()
     
-    # Step 1: Check if PyInstaller is installed
-    try:
-        import PyInstaller
-        print(f"✅ PyInstaller version: {PyInstaller.__version__}")
-    except ImportError:
-        print("❌ PyInstaller is not installed!")
-        print("   Installing PyInstaller...")
-        subprocess.run([sys.executable, "-m", "pip", "install", "pyinstaller"], check=True)
-        print("✅ PyInstaller installed successfully")
+    # Step 1: Install required packages
+    required_packages = ['certifi', 'flet', 'pyinstaller']
+    for package in required_packages:
+        try:
+            __import__(package)
+            print(f"✅ {package} is installed")
+        except ImportError:
+            print(f"📦 Installing {package}...")
+            subprocess.run([sys.executable, "-m", "pip", "install", package], check=True)
     
     print()
     
-    # Step 2: Verify entry point
-    check_entry_point()
+    # Step 2: Pre-download Flet client
+    download_flet_client()
     print()
     
-    # Step 3: Verify assets for bundling
-    verify_assets_for_bundling()
-    print()
+    # Step 3: Create SSL-fixed main file
+    entry_point = create_ssl_fixed_main()
     
-    # Step 4: Check runtime files (these will be created at runtime)
-    verify_runtime_files()
-    print()
+    # Step 4: Build with PyInstaller
+    print("🚀 Building with PyInstaller...")
     
-    # Step 5: Clean previous builds
-    clean_build_artifacts()
-    print()
+    separator = ";" if os.name == "nt" else ":"
     
-    # Step 6: Get current directory
-    project_dir = os.path.dirname(os.path.abspath(__file__))
-    os.chdir(project_dir)
-    print(f"📂 Working directory: {project_dir}")
-    print()
+    # Get certifi path
+    import certifi
+    cert_path = certifi.where()
     
-    # Step 7: Collect files to bundle inside executable
-    data_files = collect_bundle_files(project_dir)
-    print(f"\n   Total items bundled inside executable: {len(data_files)}")
-    print()
+    # Build command
+    cmd = [
+        sys.executable, "-m", "PyInstaller",
+        "--onefile",
+        "--windowed",
+        "--name", APP_NAME,
+        "--clean",
+        "--noconfirm",
+        "--add-data", f"{cert_path}{separator}certifi",
+    ]
     
-    # Step 8: Collect hidden imports
-    hidden_imports = collect_hidden_imports(project_dir)
-    requirements_imports = get_requirements_from_file()
+    # Add data folders if they exist
+    for folder in ["assets", "manual", "data"]:
+        if os.path.exists(folder):
+            cmd.extend(["--add-data", f"{folder}{separator}{folder}"])
+            print(f"   Added folder: {folder}")
     
-    all_imports = list(set(hidden_imports + requirements_imports))
-    all_imports = [imp for imp in all_imports if is_valid_package_name(imp)]
+    # Add Flet client cache if exists
+    if os.path.exists(FLET_CLIENT_DIR):
+        cmd.extend(["--add-data", f"{FLET_CLIENT_DIR}{separator}{FLET_CLIENT_DIR}"])
+        print(f"   Added Flet client cache")
     
-    print(f"   Total hidden imports: {len(all_imports)}")
-    print()
+    # Add hidden imports
+    hidden_imports = [
+        "flet", "flet_core", "flet_runtime", "certifi", "ssl",
+        "views", "views.EULA", "controller", "config", "widgets", "data"
+    ]
     
-    # Step 9: Build the command
-    cmd = build_pyinstaller_command(data_files, all_imports)
+    for module in hidden_imports:
+        cmd.extend(["--hidden-import", module])
     
-    # Step 10: Display and run the command
-    print("=" * 70)
-    print("🚀 Running PyInstaller...")
-    print("=" * 70)
-    print()
-    print("📦 ASSETS AND MANUAL ARE BEING BUNDLED INSIDE THE EXECUTABLE")
-    print("   They will be extracted to a temp folder at runtime")
-    print()
-    print(f"   Bundling {len(data_files)} data folders/files")
-    print(f"   Including {len(all_imports)} hidden imports")
-    print()
-    print("This may take several minutes...")
-    print()
+    # Add icon
+    if os.path.exists("icon.ico"):
+        cmd.extend(["--icon", "icon.ico"])
     
+    # Add entry point
+    cmd.append(entry_point)
+    
+    # Run PyInstaller
     try:
         subprocess.run(cmd, check=True)
         print()
@@ -378,55 +222,19 @@ def main():
         print("✅ BUILD SUCCESSFUL!")
         print("=" * 70)
         print()
-        print(f"📦 Your executable is ready: {DIST_DIR}\\{APP_NAME}.exe")
-        print(f"   Location: {os.path.join(project_dir, DIST_DIR)}")
+        print(f"📦 Executable: {DIST_DIR}\\{APP_NAME}.exe")
         print()
-        print("🎯 BUNDLED INSIDE THE EXECUTABLE:")
-        for asset_folder in ASSETS_TO_BUNDLE.keys():
-            print(f"   - {asset_folder}/ (entire folder)")
-        
-        # Show manual files specifically
-        manual_path = os.path.join(project_dir, "manual")
-        if os.path.exists(manual_path):
-            pdf_files = [f for f in os.listdir(manual_path) if f.endswith('.pdf')]
-            if pdf_files:
-                print(f"\n   📄 Manual PDFs bundled:")
-                for pdf in pdf_files:
-                    print(f"      - {pdf}")
-        
-        print("\n📝 RUNTIME FILES (created on first run in %APPDATA%):")
-        for file_path in RUNTIME_FILES[:3]:  # Show first 3
-            print(f"   - {file_path}")
-        if len(RUNTIME_FILES) > 3:
-            print(f"   - ... and {len(RUNTIME_FILES)-3} more")
-        
+        print("🔧 SSL CERTIFICATES INCLUDED")
+        print("📦 FLET CLIENT INCLUDED")
         print()
-        print("✨ You can now distribute this single .exe file anywhere!")
-        print("   The executable contains ALL assets AND manuals inside it.")
-        print("   User data will be stored in %APPDATA%/BiomassCalculationTool/")
-        print()
+        
+        # Clean up temporary file
+        if os.path.exists("ssl_fixed_main.py"):
+            os.remove("ssl_fixed_main.py")
         
     except subprocess.CalledProcessError as e:
-        print()
-        print("=" * 70)
-        print("❌ BUILD FAILED!")
-        print("=" * 70)
-        print()
-        print(f"Error: {e}")
-        print()
-        print("Troubleshooting tips:")
-        print("1. Make sure all dependencies are installed: pip install -r requirements.txt")
-        print("2. Check that main.py exists and runs without errors")
-        print("3. Look at the error messages above for specific issues")
-        print("4. Try running with administrator privileges")
-        print()
+        print(f"❌ Build failed: {e}")
         sys.exit(1)
-    
-    except KeyboardInterrupt:
-        print()
-        print("❌ Build cancelled by user")
-        sys.exit(1)
-
 
 if __name__ == "__main__":
     main()
