@@ -1,0 +1,30 @@
+[13:00:13] --- Log Session Started ---
+[13:00:14] Running as script — data: C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\app_data
+[13:00:14] Initializing JSON files...
+[13:00:14] Loading treeparameters.json from: C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\data/treeparameters.json
+[13:00:14] Successfully loaded 38 tree species
+[13:00:14]    Created/Updated: storage/localstorage.json
+[13:00:14]    Created/Updated: data/treeparameters.json
+[13:00:14]    Preserved existing: C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\data/create_species.json
+[13:00:14]    Preserved existing: C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\data/selected_database.json
+[13:00:14]    Preserved existing: C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\data/connection_history.json
+[13:00:14] Initialized 2 JSON files
+[13:00:14] Application starting...
+[13:00:14] Splash screen displayed
+[13:00:17] Splash cleared — proceeding to EULA
+[13:00:17] EULA view displayed
+[13:00:21] User agreed to EULA — proceeding
+[13:00:21] User navigated to Select Data page
+[13:00:23] User navigated to Modify Species page
+[13:00:23] Species data loaded successfully.
+[13:00:28] Duplicate found - SpecCommon 'qw' already exists. Skipping import.
+[13:00:28] Duplicate found - SpecCommon '13b' already exists. Skipping import.
+[13:00:28] Duplicate found - SpecCommon '13a' already exists. Skipping import.
+[13:00:28] Duplicate found - SpecCommon 'Mint Leaves' already exists. Skipping import.
+[13:00:28] Duplicate found - SpecCommon 'Black Walnut' already exists. Skipping import.
+[13:00:28] No new unique species found in C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\testing_dataset\species.species. All 5 items were duplicates.
+[13:00:35] User navigated to Create Species page
+[13:00:36] User navigated to Modify Species page
+[13:00:36] Species data loaded successfully.
+[13:00:39] All species data cleared successfully.
+[13:00:45] User manual saved successfully to: C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\testing_dataset\Biomass_Calculation_Tool_Manual_2026.pdf

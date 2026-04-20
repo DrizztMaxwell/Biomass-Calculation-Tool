@@ -1,0 +1,35 @@
+[11:56:44] --- Log Session Started ---
+[11:56:48] Running as script — data: C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\app_data
+[11:56:48] Initializing JSON files...
+[11:56:48] Loading treeparameters.json from: C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\data/treeparameters.json
+[11:56:48] Successfully loaded 38 tree species
+[11:56:48]    Created/Updated: storage/localstorage.json
+[11:56:48]    Created/Updated: data/treeparameters.json
+[11:56:48]    Preserved existing: C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\data/create_species.json
+[11:56:48]    Preserved existing: C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\data/selected_database.json
+[11:56:48]    Preserved existing: C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\data/connection_history.json
+[11:56:48] Initialized 2 JSON files
+[11:56:48] Application starting...
+[11:56:48] Splash screen displayed
+[11:56:51] Splash cleared — proceeding to EULA
+[11:56:51] EULA view displayed
+[11:56:52] User agreed to EULA — proceeding
+[11:56:52] User navigated to Select Data page
+[11:56:53] User navigated to Modify Species page
+[11:56:53] Species data loaded successfully.
+[11:58:25] All species data cleared successfully.
+[12:00:29] Species data appended successfully.
+[12:00:29] Imported 4 new unique species from C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\testing_dataset\species.species. Skipped 0 duplicates.
+[12:03:26] Duplicate found - SpecCommon 'qw' already exists. Skipping import.
+[12:03:26] Duplicate found - SpecCommon '13b' already exists. Skipping import.
+[12:03:26] Duplicate found - SpecCommon '13a' already exists. Skipping import.
+[12:03:26] Duplicate found - SpecCommon 'Mint Leaves' already exists. Skipping import.
+[12:03:26] No new unique species found in C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\testing_dataset\species.species. All 4 items were duplicates.
+[12:23:26] Duplicate found - SpecCommon 'qw' already exists. Skipping import.
+[12:23:26] Duplicate found - SpecCommon '13b' already exists. Skipping import.
+[12:23:26] Duplicate found - SpecCommon '13a' already exists. Skipping import.
+[12:23:26] Duplicate found - SpecCommon 'Mint Leaves' already exists. Skipping import.
+[12:23:26] Species data appended successfully.
+[12:23:26] Imported 1 new unique species from C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\testing_dataset\species.species. Skipped 4 duplicates.
+[12:26:17] Error importing species file: Expecting ',' delimiter: line 36 column 3 (char 793)
+[12:35:47] Species exported successfully to C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\testing_dataset\saved

@@ -1,0 +1,43 @@
+[10:01:26] --- Log Session Started ---
+[10:01:27] Running as script — data: C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\app_data
+[10:01:27] Initializing JSON files...
+[10:01:27] Loading treeparameters.json from: C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\data/treeparameters.json
+[10:01:27] Successfully loaded 38 tree species
+[10:01:27]    Created/Updated: storage/localstorage.json
+[10:01:27]    Created/Updated: data/treeparameters.json
+[10:01:27]    Preserved existing: C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\data/create_species.json
+[10:01:27]    Preserved existing: C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\data/selected_database.json
+[10:01:27]    Preserved existing: C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\data/connection_history.json
+[10:01:27] Initialized 2 JSON files
+[10:01:27] Application starting...
+[10:01:27] Splash screen displayed
+[10:01:30] Splash cleared — proceeding to EULA
+[10:01:30] EULA view displayed
+[10:01:31] User agreed to EULA — proceeding
+[10:01:31] User navigated to Select Data page
+[10:01:32] User navigated to Modify Species page
+[10:01:32] Species data loaded successfully.
+[10:06:13] All species data cleared successfully.
+[10:06:38] All species data cleared successfully.
+[10:07:00] Species exported successfully to C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\testing_dataset\s
+[10:07:09] Species data appended successfully.
+[10:07:09] Imported 4 new unique species from C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\testing_dataset\species.species. Skipped 0 duplicates.
+[10:09:02] Error importing species file: Illegal trailing comma before end of array: line 26 column 6 (char 576)
+[10:09:10] Error importing species file: Illegal trailing comma before end of array: line 26 column 6 (char 576)
+[10:09:23] Duplicate found - SpecCommon 'qw' already exists. Skipping import.
+[10:09:23] Duplicate found - SpecCommon '13b' already exists. Skipping import.
+[10:09:23] Duplicate found - SpecCommon '13a' already exists. Skipping import.
+[10:09:23] No new unique species found in C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\testing_dataset\species.species. All 3 items were duplicates.
+[10:09:28] All species data cleared successfully.
+[10:09:37] Species data appended successfully.
+[10:09:37] Imported 3 new unique species from C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\testing_dataset\species.species. Skipped 0 duplicates.
+[10:10:45] Duplicate found - SpecCommon 'qw' already exists. Skipping import.
+[10:10:45] Duplicate found - SpecCommon '13b' already exists. Skipping import.
+[10:10:45] Duplicate found - SpecCommon '13a' already exists. Skipping import.
+[10:10:45] No new unique species found in C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\testing_dataset\species.species. All 3 items were duplicates.
+[10:14:48] Duplicate found - SpecCommon 'qw' already exists. Skipping import.
+[10:14:48] Duplicate found - SpecCommon '13b' already exists. Skipping import.
+[10:14:48] Duplicate found - SpecCommon '13a' already exists. Skipping import.
+[10:14:48] Species data appended successfully.
+[10:14:48] Imported 1 new unique species from C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\testing_dataset\species.species. Skipped 3 duplicates.
+[10:16:29] All species data cleared successfully.
