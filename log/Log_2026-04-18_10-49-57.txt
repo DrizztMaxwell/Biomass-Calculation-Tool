@@ -1,0 +1,353 @@
+[10:49:57] --- Log Session Started ---
+[10:50:01] Running as script — data: C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\app_data
+[10:50:01] Initializing JSON files...
+[10:50:01] Loading treeparameters.json from: C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\data/treeparameters.json
+[10:50:01] Successfully loaded 38 tree species
+[10:50:01]    Created/Updated: storage/localstorage.json
+[10:50:01]    Created/Updated: data/treeparameters.json
+[10:50:01]    Preserved existing: C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\data/create_species.json
+[10:50:01]    Preserved existing: C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\data/selected_database.json
+[10:50:01]    Preserved existing: C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\data/connection_history.json
+[10:50:01] Initialized 2 JSON files
+[10:50:01] Application starting...
+[10:50:01] Splash screen displayed
+[10:50:03] Splash cleared — proceeding to EULA
+[10:50:03] EULA view displayed
+[10:50:05] User agreed to EULA — proceeding
+[10:50:05] User navigated to Select Data page
+[10:50:27] Import text file dialog opened
+[10:50:31] Selected file for import: C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\testing_dataset\Data_Test_BCT(in)(in).txt
+[10:50:31] Error importing text file: Missing required columns: ['species']
+Available columns: ['Plot', 'PlotKey', 'Year', 'Origin', 'TrEe Status', 'Tree Number', 'SpecCode', 'DBH', 'Height']
+[10:50:31] Deleted temporary parquet file: C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\testing_dataset\Data_Test_BCT(in)(in).parquet
+[10:50:37] Import text file dialog opened
+[10:50:41] Selected file for import: C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\testing_dataset\Case_Insensitive_Test.txt
+[10:50:42] Text file imported successfully with 72 records and 0 errors.
+[10:50:42] Deleted temporary parquet file: C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\testing_dataset\Case_Insensitive_Test.parquet
+[10:50:44] User navigated to Calculate Biomass page
+[10:50:57] Calculate biomass button clicked
+[10:51:40] View Chart button clicked
+[10:51:40] Biomass chart displayed
+[10:52:48] User navigated to Select Data page
+[10:52:52] Error connecting to database: No SQL Server ODBC drivers found.
+[10:52:52] Database connection failed for gypsppgp
+[10:52:53] Import text file dialog opened
+[10:52:54] File selection cancelled by user
+[10:52:59] Error connecting to database: No SQL Server ODBC drivers found.
+[10:52:59] Database connection failed for gypsppgp
+[10:53:05] Import text file dialog opened
+[10:53:07] Selected file for import: C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\testing_dataset\data_set_final.txt
+[10:53:07] Error importing text file: Missing required columns: ['plot', 'year', 'species', 'tree number', 'height']
+Available columns: ['PlotName', 'PlotKey', 'FieldSeasonYear', 'StandOriginCode', 'TreeStatusCode', 'TreeNum', 'SpecCode', 'DBH', 'HtTot']
+[10:53:07] Deleted temporary parquet file: C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\testing_dataset\data_set_final.parquet
+[10:53:09] Import text file dialog opened
+[10:53:11] Selected file for import: C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\testing_dataset\BCT.txt
+[10:53:11] Text file imported successfully with 5 records and 0 errors.
+[10:53:11] Deleted temporary parquet file: C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\testing_dataset\BCT.parquet
+[10:53:13] User navigated to Calculate Biomass page
+[10:53:15] User navigated to Create Species page
+[10:53:30] Loaded species data from C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\data/treeparameters.json successfully.
+[10:54:12] Checking if species name qw exists in C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\data/treeparameters.json
+[10:54:12] Checking if species name qw exists in C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\data/create_species.json
+[10:54:13] Selected components for creation: ['Wood']
+[10:54:13] Current equation type is DBH-based
+[10:54:13] Species qw created successfully and added to create_species.json
+[10:54:15] User navigated to Modify Species page
+[10:54:15] Species data loaded successfully.
+[10:54:21] User navigated to Select Data page
+[10:54:23] User navigated to Calculate Biomass page
+[10:54:25] User navigated to Create Species page
+[10:54:27] User navigated to Calculate Biomass page
+[10:54:28] User navigated to Select Data page
+[10:54:30] Import text file dialog opened
+[10:54:45] Selected file for import: C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\testing_dataset\Client_Testing_Files\BCT-test.txt
+[10:54:47] Text file imported successfully with 9634 records and 1204 errors.
+[10:54:47] Deleted temporary parquet file: C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\testing_dataset\Client_Testing_Files\BCT-test.parquet
+[10:55:15] User navigated to Calculate Biomass page
+[10:55:16] Calculate biomass button clicked
+[10:55:40] User navigated to Create Species page
+[10:55:42] User navigated to Modify Species page
+[10:55:42] Species data loaded successfully.
+[10:55:46] Viewing species: 
+[10:55:50] Editing species: 
+[10:55:53] Confirming deletion: 
+[10:55:54] Confirming deletion: 
+[10:55:54] Species data saved successfully.
+[10:55:54] Species 'pepper pot' deleted successfully.
+[10:56:00] Species exported successfully to C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\testing_dataset\Client_Testing_Files\species.species
+[10:56:03] Species data saved successfully.
+[10:56:03] Species imported successfully from C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\testing_dataset\Client_Testing_Files\species.species
+[10:56:05] Confirming deletion: 
+[10:56:06] Confirming deletion: 
+[10:56:06] Species data saved successfully.
+[10:56:06] Species 'qw' deleted successfully.
+[10:56:07] Confirming deletion: 
+[10:56:08] Confirming deletion: 
+[10:56:08] Species data saved successfully.
+[10:56:08] Species 'fire pot' deleted successfully.
+[10:56:11] Species data saved successfully.
+[10:56:11] Species imported successfully from C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\testing_dataset\Client_Testing_Files\species.species
+[10:56:13] User navigated to Settings page
+[10:56:16] Theme toggled to: ThemeMode.DARK
+[10:56:17] User navigated to Modify Species page
+[10:56:17] Species data loaded successfully.
+[10:56:18] User navigated to Create Species page
+[10:56:18] User navigated to Calculate Biomass page
+[10:56:20] User navigated to Select Data page
+[10:56:20] User navigated to Modify Species page
+[10:56:20] Species data loaded successfully.
+[10:56:22] User navigated to Settings page
+[10:56:24] Theme toggled to: ThemeMode.LIGHT
+[10:56:30] Loaded species data from C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\data/treeparameters.json successfully.
+[10:56:32] User navigated to Select Data page
+[10:58:08] Import text file dialog opened
+[10:58:11] Selected file for import: C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\testing_dataset\Client_Testing_Files\All_Sp_Data_Test_BCT_Jan.txt
+[10:58:12] Text file imported successfully with 1991 records and 1 errors.
+[10:58:12] Deleted temporary parquet file: C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\testing_dataset\Client_Testing_Files\All_Sp_Data_Test_BCT_Jan.parquet
+[10:58:17] User navigated to Calculate Biomass page
+[10:58:28] Calculate biomass button clicked
+[10:58:44] View Chart button clicked
+[10:58:45] Biomass chart displayed
+[10:59:08] User navigated to Create Species page
+[10:59:23] Loaded species data from C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\data/treeparameters.json successfully.
+[11:00:02] Checking if species name pepper exists in C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\data/treeparameters.json
+[11:00:02] Checking if species name pepper exists in C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\data/create_species.json
+[11:00:07] User navigated to Select Data page
+[11:01:44] Import text file dialog opened
+[11:01:55] Selected file for import: C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\testing_dataset\data_set.txt
+[11:01:57] Text file imported successfully with 12 records and 2 errors.
+[11:01:57] Deleted temporary parquet file: C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\testing_dataset\data_set.parquet
+[11:02:00] User navigated to Calculate Biomass page
+[11:02:01] Calculate biomass button clicked
+[11:02:14] User navigated to Create Species page
+[11:02:15] User navigated to Modify Species page
+[11:02:15] Species data loaded successfully.
+[11:02:16] User navigated to Select Data page
+[11:02:23] User navigated to Modify Species page
+[11:02:23] Species data loaded successfully.
+[11:02:26] User navigated to Create Species page
+[11:04:54] User navigated to Modify Species page
+[11:04:54] Species data loaded successfully.
+[11:04:55] User navigated to Create Species page
+[11:04:55] User navigated to Calculate Biomass page
+[11:04:59] User navigated to Select Data page
+[11:05:22] User navigated to Calculate Biomass page
+[11:06:12] Calculate biomass button clicked
+[11:06:19] Loaded species data from C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\data/treeparameters.json successfully.
+[11:06:31] User navigated to Create Species page
+[11:06:32] User navigated to Calculate Biomass page
+[11:06:33] Calculate biomass button clicked
+[11:06:57] User navigated to Create Species page
+[11:07:12] Checking if species name 13a exists in C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\data/treeparameters.json
+[11:07:12] Checking if species name 13a exists in C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\data/create_species.json
+[11:07:13] Selected components for creation: ['Wood', 'Bark']
+[11:07:13] Current equation type is DBH-based
+[11:07:13] Species 13a created successfully and added to create_species.json
+[11:07:15] User navigated to Calculate Biomass page
+[11:07:16] Calculate biomass button clicked
+[11:07:22] User navigated to Modify Species page
+[11:07:22] Species data loaded successfully.
+[11:07:25] Viewing species: 
+[11:07:29] Editing species: 
+[11:07:33] Confirming deletion: 
+[11:07:34] User navigated to Calculate Biomass page
+[11:07:36] Calculate biomass button clicked
+[11:07:54] User navigated to Modify Species page
+[11:07:54] Species data loaded successfully.
+[11:07:55] User navigated to Create Species page
+[11:08:03] Checking if species code 251 exists in C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\data/treeparameters.json
+[11:08:04] Selected components for creation: ['Wood', 'Bark']
+[11:08:04] Current equation type is DBH-based
+[11:08:04] Species 251 created successfully and added to create_species.json
+[11:08:06] User navigated to Calculate Biomass page
+[11:08:07] Calculate biomass button clicked
+[11:08:14] User navigated to Create Species page
+[11:08:14] User navigated to Modify Species page
+[11:08:14] Species data loaded successfully.
+[11:08:16] User navigated to Create Species page
+[11:08:27] User navigated to Modify Species page
+[11:08:27] Species data loaded successfully.
+[11:10:54] Species exported successfully to C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\testing_dataset\species.species
+[11:10:55] Confirming deletion: 
+[11:10:56] Confirming deletion: 
+[11:10:56] Species data saved successfully.
+[11:10:56] Species 'fire pot' deleted successfully.
+[11:10:58] User navigated to Create Species page
+[11:11:05] Checking if species name ds exists in C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\data/treeparameters.json
+[11:11:05] Checking if species name ds exists in C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\data/create_species.json
+[11:11:06] Selected components for creation: ['Wood', 'Bark']
+[11:11:06] Current equation type is DBH-based
+[11:11:06] Species ds created successfully and added to create_species.json
+[11:11:08] User navigated to Modify Species page
+[11:11:08] Species data loaded successfully.
+[11:11:13] Species data saved successfully.
+[11:11:13] Species imported successfully from C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\testing_dataset\species.species
+[08:55:57] User navigated to Select Data page
+[08:56:38] Import text file dialog opened
+[08:56:46] Selected file for import: C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\testing_dataset\data_set.txt
+[08:56:48] Text file imported successfully with 12 records and 2 errors.
+[08:56:48] Deleted temporary parquet file: C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\testing_dataset\data_set.parquet
+[08:57:33] User navigated to Calculate Biomass page
+[08:57:48] Calculate biomass button clicked
+[08:58:00] View Chart button clicked
+[08:58:00] Biomass chart displayed
+[08:58:23] User navigated to Create Species page
+[08:58:24] User navigated to Select Data page
+[08:58:27] User navigated to Create Species page
+[08:58:29] User navigated to Calculate Biomass page
+[08:58:32] Calculate biomass button clicked
+[08:58:39] User navigated to Modify Species page
+[08:58:39] Species data loaded successfully.
+[08:58:42] Confirming deletion: 251
+[08:58:43] Confirming deletion: 251
+[08:58:43] Species data saved successfully.
+[08:58:43] Species '251' deleted successfully.
+[08:58:45] User navigated to Calculate Biomass page
+[08:58:46] Calculate biomass button clicked
+[08:59:35] User navigated to Create Species page
+[08:59:57] User navigated to Calculate Biomass page
+[08:59:59] Calculate biomass button clicked
+[09:00:14] Calculate biomass button clicked
+[09:00:44] User navigated to Create Species page
+[09:01:15] User navigated to Modify Species page
+[09:01:15] Species data loaded successfully.
+[09:01:28] Confirming deletion: 
+[09:01:29] Confirming deletion: 
+[09:01:29] Species data saved successfully.
+[09:01:29] Species 'fire pot' deleted successfully.
+[09:01:31] Editing species: 
+[09:01:33] Viewing species: 
+[09:01:51] Species exported successfully to C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\testing_dataset\species.species
+[09:01:55] Species data saved successfully.
+[09:01:55] Species imported successfully from C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\testing_dataset\species.species
+[09:01:58] User navigated to Settings page
+[09:01:59] Theme toggled to: ThemeMode.DARK
+[09:02:00] Theme toggled to: ThemeMode.LIGHT
+[09:02:04] Loaded species data from C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\data/treeparameters.json successfully.
+[09:02:16] User navigated to Create Species page
+[09:02:19] User navigated to Calculate Biomass page
+[09:02:19] User navigated to Select Data page
+[09:02:59] Import text file dialog opened
+[09:03:03] Selected file for import: C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\testing_dataset\data_set.txt
+[09:03:05] Text file imported successfully with 12 records and 2 errors.
+[09:03:05] Deleted temporary parquet file: C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\testing_dataset\data_set.parquet
+[09:03:33] User navigated to Calculate Biomass page
+[09:03:35] Calculate biomass button clicked
+[09:03:44] Loaded species data from C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\data/treeparameters.json successfully.
+[09:04:07] Calculate biomass button clicked
+[09:04:19] User navigated to Create Species page
+[09:04:31] Checking if species code 251 exists in C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\data/treeparameters.json
+[09:04:32] Selected components for creation: ['Wood']
+[09:04:32] Current equation type is DBH-based
+[09:04:32] Species 251 created successfully and added to create_species.json
+[09:04:34] User navigated to Calculate Biomass page
+[09:04:36] Calculate biomass button clicked
+[09:04:42] User navigated to Create Species page
+[09:04:44] User navigated to Modify Species page
+[09:04:44] Species data loaded successfully.
+[09:04:48] Viewing species: 
+[09:04:54] Editing species: 
+[09:05:08] Species data saved successfully.
+[09:05:08] Species '' updated successfully.
+[09:05:10] Viewing species: 
+[09:05:13] Confirming deletion: 
+[09:05:14] Confirming deletion: 
+[09:05:14] Species data saved successfully.
+[09:05:14] Species 'qw' deleted successfully.
+[09:05:27] Species data saved successfully.
+[09:05:27] Species imported successfully from C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\testing_dataset\species.species
+[09:05:31] User navigated to Settings page
+[09:05:33] Theme toggled to: ThemeMode.DARK
+[09:05:35] Theme toggled to: ThemeMode.LIGHT
+[09:05:37] Theme toggled to: ThemeMode.DARK
+[09:05:38] User navigated to Modify Species page
+[09:05:38] Species data loaded successfully.
+[09:05:39] User navigated to Create Species page
+[09:05:40] User navigated to Calculate Biomass page
+[09:05:40] User navigated to Select Data page
+[09:05:41] User navigated to Settings page
+[09:05:43] Theme toggled to: ThemeMode.LIGHT
+[09:05:44] User chose to exit the application
+[09:05:54] Loaded species data from C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\data/treeparameters.json successfully.
+[09:06:02] User navigated to Select Data page
+[09:07:33] Import text file dialog opened
+[09:07:36] Selected file for import: C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\testing_dataset\data_set.txt
+[09:07:38] Text file imported successfully with 12 records and 2 errors.
+[09:07:38] Deleted temporary parquet file: C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\testing_dataset\data_set.parquet
+[09:07:42] Import text file dialog opened
+[09:07:44] Selected file for import: C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\testing_dataset\data_set.txt
+[09:07:46] Text file imported successfully with 12 records and 2 errors.
+[09:07:46] Deleted temporary parquet file: C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\testing_dataset\data_set.parquet
+[09:08:15] User navigated to Calculate Biomass page
+[09:08:21] Calculate biomass button clicked
+[09:08:29] Loaded species data from C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\data/treeparameters.json successfully.
+[09:08:34] Calculate biomass button clicked
+[09:08:51] User navigated to Create Species page
+[09:08:55] User navigated to Calculate Biomass page
+[09:08:56] Calculate biomass button clicked
+[09:09:05] User navigated to Create Species page
+[09:09:13] User navigated to Calculate Biomass page
+[09:09:13] User navigated to Create Species page
+[09:09:19] Checking if species code 251 exists in C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\data/treeparameters.json
+[09:09:20] Selected components for creation: ['Wood']
+[09:09:20] Current equation type is DBH-based
+[09:09:20] Species 251 created successfully and added to create_species.json
+[09:09:22] User navigated to Calculate Biomass page
+[09:09:25] Calculate biomass button clicked
+[09:09:34] User navigated to Modify Species page
+[09:09:34] Species data loaded successfully.
+[09:09:35] User navigated to Create Species page
+[09:09:37] User navigated to Modify Species page
+[09:09:37] Species data loaded successfully.
+[09:09:49] User navigated to Settings page
+[09:09:51] Theme toggled to: ThemeMode.DARK
+[09:09:52] Theme toggled to: ThemeMode.LIGHT
+[09:09:53] User navigated to Modify Species page
+[09:09:53] Species data loaded successfully.
+[09:09:58] User navigated to Create Species page
+[09:09:59] User navigated to Select Data page
+[09:10:06] User navigated to Calculate Biomass page
+[09:10:25] Calculate biomass button clicked
+[09:10:45] User navigated to Create Species page
+[09:10:46] User navigated to Modify Species page
+[09:10:46] Species data loaded successfully.
+[09:10:46] User navigated to Settings page
+[09:10:50] Loaded species data from C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\data/treeparameters.json successfully.
+[09:11:44] User navigated to Select Data page
+[09:12:15] Import text file dialog opened
+[09:12:19] Selected file for import: C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\testing_dataset\data_set.txt
+[09:12:22] Text file imported successfully with 12 records and 2 errors.
+[09:12:22] Deleted temporary parquet file: C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\testing_dataset\data_set.parquet
+[09:12:50] User navigated to Calculate Biomass page
+[09:13:00] Calculate biomass button clicked
+[09:17:36] User navigated to Select Data page
+[09:18:11] Import text file dialog opened
+[09:18:13] Selected file for import: C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\testing_dataset\data_set.txt
+[09:18:16] Text file imported successfully with 12 records and 2 errors.
+[09:18:16] Deleted temporary parquet file: C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\testing_dataset\data_set.parquet
+[09:18:35] User navigated to Calculate Biomass page
+[09:18:39] Calculate biomass button clicked
+[09:18:51] View Chart button clicked
+[09:18:52] Biomass chart displayed
+[09:19:01] View Chart button clicked
+[09:19:03] Biomass chart displayed
+[09:19:16] Generated default export filename: Output_Biomass_Results_20260419_091916.txt
+[09:19:16] Export file dialog opened
+[09:19:18] Export cancelled by user
+[09:19:19] User navigated to Create Species page
+[09:19:50] User navigated to Modify Species page
+[09:19:50] Species data loaded successfully.
+[09:20:12] Loaded species data from C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\data/treeparameters.json successfully.
+[09:54:44] User navigated to Select Data page
+[16:31:38] User navigated to Calculate Biomass page
+[16:31:40] User navigated to Create Species page
+[16:31:42] User navigated to Modify Species page
+[16:31:42] Species data loaded successfully.
+[16:31:44] User navigated to Settings page
+[16:31:54] User navigated to Modify Species page
+[16:31:54] Species data loaded successfully.
+[16:31:56] User navigated to Select Data page
+[16:32:05] User navigated to Calculate Biomass page
+[16:32:11] User navigated to Modify Species page
+[16:32:11] Species data loaded successfully.
+[16:32:13] User navigated to Settings page

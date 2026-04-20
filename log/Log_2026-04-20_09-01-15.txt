@@ -1,0 +1,33 @@
+[09:01:15] --- Log Session Started ---
+[09:01:16] Running as script — data: C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\app_data
+[09:01:16] Initializing JSON files...
+[09:01:16] Loading treeparameters.json from: C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\data/treeparameters.json
+[09:01:16] Successfully loaded 38 tree species
+[09:01:16]    Created/Updated: storage/localstorage.json
+[09:01:16]    Created/Updated: data/treeparameters.json
+[09:01:16]    Preserved existing: C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\data/create_species.json
+[09:01:16]    Preserved existing: C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\data/selected_database.json
+[09:01:16]    Preserved existing: C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\data/connection_history.json
+[09:01:16] Initialized 2 JSON files
+[09:01:16] Application starting...
+[09:01:16] Splash screen displayed
+[09:01:19] Splash cleared — proceeding to EULA
+[09:01:19] EULA view displayed
+[09:01:20] User agreed to EULA — proceeding
+[09:01:20] User navigated to Select Data page
+[09:01:21] User navigated to Modify Species page
+[09:01:21] Species data loaded successfully.
+[09:01:27] Species data appended successfully.
+[09:01:27] Species imported successfully from C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\testing_dataset\species.species
+[09:01:58] User navigated to Create Species page
+[09:01:58] User navigated to Modify Species page
+[09:01:58] Species data loaded successfully.
+[09:02:08] Species data appended successfully.
+[09:02:08] Species imported successfully from C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\testing_dataset\species.species
+[09:02:11] Species data appended successfully.
+[09:02:11] Species imported successfully from C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\testing_dataset\species.species
+[09:02:13] User navigated to Create Species page
+[09:02:13] User navigated to Modify Species page
+[09:02:13] Species data loaded successfully.
+[09:03:32] Species data appended successfully.
+[09:03:32] Species imported successfully from C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\testing_dataset\species.species

@@ -1,0 +1,35 @@
+[09:08:27] --- Log Session Started ---
+[09:08:28] Running as script — data: C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\app_data
+[09:08:28] Initializing JSON files...
+[09:08:28] Loading treeparameters.json from: C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\data/treeparameters.json
+[09:08:28] Successfully loaded 38 tree species
+[09:08:28]    Created/Updated: storage/localstorage.json
+[09:08:28]    Created/Updated: data/treeparameters.json
+[09:08:28]    Preserved existing: C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\data/create_species.json
+[09:08:28]    Preserved existing: C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\data/selected_database.json
+[09:08:28]    Preserved existing: C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\data/connection_history.json
+[09:08:28] Initialized 2 JSON files
+[09:08:28] Application starting...
+[09:08:28] Splash screen displayed
+[09:08:31] Splash cleared — proceeding to EULA
+[09:08:31] EULA view displayed
+[09:08:31] User agreed to EULA — proceeding
+[09:08:31] User navigated to Select Data page
+[09:08:38] User navigated to Modify Species page
+[09:08:38] Species data loaded successfully.
+[09:08:38] Species data loaded successfully.
+[09:08:41] Species data appended successfully.
+[09:08:41] Species imported successfully from C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\testing_dataset\species.species
+[09:08:41] Species data loaded successfully.
+[09:08:49] Species exported successfully to C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\testing_dataset\species.species
+[09:10:10] User navigated to Create Species page
+[09:10:16] Checking if species code 222 exists in C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\data/treeparameters.json
+[09:10:17] Selected components for creation: ['Wood']
+[09:10:17] Current equation type is DBH-based
+[09:10:17] Species 222 created successfully and added to create_species.json
+[09:10:19] User navigated to Modify Species page
+[09:10:19] Species data loaded successfully.
+[09:10:19] Species data loaded successfully.
+[09:10:21] Species data loaded successfully.
+[09:10:22] Species data loaded successfully.
+[09:10:22] Species data loaded successfully.

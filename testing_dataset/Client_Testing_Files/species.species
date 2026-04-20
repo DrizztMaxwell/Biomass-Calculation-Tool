@@ -1,0 +1,26 @@
+[
+    {
+        "SpecCommon": "fire pot",
+        "Origin": "Plantation",
+        "EquationType": "DBH + Height-based",
+        "bhwoodb1": 1.0,
+        "bhwoodb2": 2.0,
+        "bhwoodb3": 3.0,
+        "bhbarkb1": 1.0,
+        "bhbarkb2": 2.0,
+        "bhbarkb3": 3.0,
+        "bhbranchesb1": 1.0,
+        "bhbranchesb2": 2.0,
+        "bhbranchesb3": 3.0,
+        "bhfoliageb1": 1.0,
+        "bhfoliageb2": 2.0,
+        "bhfoliageb3": 3.0
+    },
+    {
+        "SpecCommon": "qw",
+        "Origin": "Natural Stand",
+        "EquationType": "DBH-based",
+        "bwoodb1": 5.0,
+        "bwoodb2": 2.0
+    }
+]

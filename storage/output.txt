@@ -1,7 +1,7 @@
 plot	subplot	year	origin	tree status	species	tree number	dbh	height	Wood (KG)	Bark (KG)	Foliage (KG)	Branch (KG)	Crown (KG)	Stem (KG)	Total (KG)
 1108656	1	2005a	Natural Stand	L 	13a	1a	19.5a	1a7.07	nan	nan	nan	nan	nan	nan	nan
-1108656	1	2005	Natural Stand	L 	251	2	18.3	14.48	nan	nan	nan	nan	nan	nan	nan
-1108656	1	2005	Natural Stand	L 	251	3	17	13.84	nan	nan	nan	nan	nan	nan	nan
+1108656	1	2005	Natural Stand	L 	251	2	18.3	14.48	0.0	0.0	0.0	0.0	nan	nan	nan
+1108656	1	2005	Natural Stand	L 	251	3	17	13.84	0.0	0.0	0.0	0.0	nan	nan	nan
 1108656	1	2005	Natural Stand	L 	13	4	17.8	13.82	66.5196	9.7557	9.67	11.2149	20.8849	76.2753	97.1602
 1108656	1	2005	Natural Stand	L 	13	5	15.7	13.81	48.5118	7.3616	8.0969	8.6334	16.7303	55.8734	72.6037
 1108656	1	2005	Natural Stand	L 	13	6	18.2	13.64	70.3428	10.2543	9.9788	11.7465	21.7252	80.5971	102.3224

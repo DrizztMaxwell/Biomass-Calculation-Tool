@@ -1,0 +1,30 @@
+[09:04:47] --- Log Session Started ---
+[09:04:48] Running as script — data: C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\app_data
+[09:04:48] Initializing JSON files...
+[09:04:48] Loading treeparameters.json from: C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\data/treeparameters.json
+[09:04:48] Successfully loaded 38 tree species
+[09:04:48]    Created/Updated: storage/localstorage.json
+[09:04:48]    Created/Updated: data/treeparameters.json
+[09:04:48]    Preserved existing: C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\data/create_species.json
+[09:04:48]    Preserved existing: C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\data/selected_database.json
+[09:04:48]    Preserved existing: C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\data/connection_history.json
+[09:04:48] Initialized 2 JSON files
+[09:04:48] Application starting...
+[09:04:48] Splash screen displayed
+[09:04:51] Splash cleared — proceeding to EULA
+[09:04:51] EULA view displayed
+[09:04:52] User agreed to EULA — proceeding
+[09:04:52] User navigated to Select Data page
+[09:04:56] User navigated to Modify Species page
+[09:04:56] Species data loaded successfully.
+[09:04:56] Species data loaded successfully.
+[09:04:58] Species data loaded successfully.
+[09:05:02] Species data appended successfully.
+[09:05:02] Species imported successfully from C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\testing_dataset\species.species
+[09:05:02] Species data loaded successfully.
+[09:05:04] Species data loaded successfully.
+[09:05:07] Species data loaded successfully.
+[09:05:19] Species data appended successfully.
+[09:05:19] Species imported successfully from C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\testing_dataset\species.species
+[09:05:19] Species data loaded successfully.
+[09:05:31] Species exported successfully to C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\testing_dataset\species.species

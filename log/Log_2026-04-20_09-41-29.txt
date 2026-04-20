@@ -1,0 +1,108 @@
+[09:41:29] --- Log Session Started ---
+[09:41:31] Running as script — data: C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\app_data
+[09:41:31] Initializing JSON files...
+[09:41:31] Loading treeparameters.json from: C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\data/treeparameters.json
+[09:41:31] Successfully loaded 38 tree species
+[09:41:31]    Created/Updated: storage/localstorage.json
+[09:41:31]    Created/Updated: data/treeparameters.json
+[09:41:31]    Preserved existing: C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\data/create_species.json
+[09:41:31]    Preserved existing: C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\data/selected_database.json
+[09:41:31]    Preserved existing: C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\data/connection_history.json
+[09:41:31] Initialized 2 JSON files
+[09:41:31] Application starting...
+[09:41:31] Splash screen displayed
+[09:41:33] Splash cleared — proceeding to EULA
+[09:41:33] EULA view displayed
+[09:41:34] User agreed to EULA — proceeding
+[09:41:34] User navigated to Select Data page
+[09:41:36] User navigated to Create Species page
+[09:41:37] User navigated to Modify Species page
+[09:41:37] Species data loaded successfully.
+[09:41:48] All species data cleared successfully.
+[09:41:51] Duplicate found - SpecCommon '13a' already exists. Skipping import.
+[09:41:51] Duplicate found - SpecCommon 'qwc' already exists. Skipping import.
+[09:41:51] Duplicate found - SpecCommon '13a' already exists. Skipping import.
+[09:41:51] Duplicate found - SpecCommon 'qw' already exists. Skipping import.
+[09:41:51] Duplicate found - SpecCommon '13a' already exists. Skipping import.
+[09:41:51] Duplicate found - SpecCommon 'qw' already exists. Skipping import.
+[09:41:51] Duplicate found - SpecCommon '13a' already exists. Skipping import.
+[09:41:51] Duplicate found - SpecCommon 'qw' already exists. Skipping import.
+[09:41:51] Duplicate found - SpecCommon '13a' already exists. Skipping import.
+[09:41:51] Duplicate found - SpecCommon 'qw' already exists. Skipping import.
+[09:41:51] Duplicate found - SpecCommon '13a' already exists. Skipping import.
+[09:41:51] Duplicate found - SpecCommon 'qw' already exists. Skipping import.
+[09:41:51] Duplicate found - SpecCommon '13a' already exists. Skipping import.
+[09:41:51] Duplicate found - SpecCommon 'qw' already exists. Skipping import.
+[09:41:51] Duplicate found - SpecCommon '13a' already exists. Skipping import.
+[09:41:51] Duplicate found - SpecCommon 'qw' already exists. Skipping import.
+[09:41:51] Duplicate found - SpecCommon '13a' already exists. Skipping import.
+[09:41:51] Duplicate found - SpecCommon 'qw' already exists. Skipping import.
+[09:41:51] Duplicate found - SpecCommon '13a' already exists. Skipping import.
+[09:41:51] Duplicate found - SpecCommon 'qw' already exists. Skipping import.
+[09:41:51] Duplicate found - SpecCommon '13a' already exists. Skipping import.
+[09:41:51] Duplicate found - SpecCommon 'qw' already exists. Skipping import.
+[09:41:51] Duplicate found - SpecCommon '13a' already exists. Skipping import.
+[09:41:51] Duplicate found - SpecCommon 'qw' already exists. Skipping import.
+[09:41:51] Duplicate found - SpecCommon '13a' already exists. Skipping import.
+[09:41:51] Duplicate found - SpecCommon 'qw' already exists. Skipping import.
+[09:41:51] Duplicate found - SpecCommon '13a' already exists. Skipping import.
+[09:41:51] Duplicate found - SpecCommon 'qw' already exists. Skipping import.
+[09:41:51] Duplicate found - SpecCommon '13a' already exists. Skipping import.
+[09:41:51] Duplicate found - SpecCommon 'qw' already exists. Skipping import.
+[09:41:51] Duplicate found - SpecCommon '13a' already exists. Skipping import.
+[09:41:51] Duplicate found - SpecCommon 'qw' already exists. Skipping import.
+[09:41:51] Duplicate found - SpecCommon '13a' already exists. Skipping import.
+[09:41:51] Duplicate found - SpecCommon 'qw' already exists. Skipping import.
+[09:41:51] Duplicate found - SpecCommon '13a' already exists. Skipping import.
+[09:41:51] Duplicate found - SpecCommon 'qw' already exists. Skipping import.
+[09:41:51] Duplicate found - SpecCommon '13a' already exists. Skipping import.
+[09:41:51] Duplicate found - SpecCommon 'qw' already exists. Skipping import.
+[09:41:51] Duplicate found - SpecCommon '13a' already exists. Skipping import.
+[09:41:51] Duplicate found - SpecCommon 'qw' already exists. Skipping import.
+[09:41:51] Duplicate found - SpecCommon '13a' already exists. Skipping import.
+[09:41:51] Duplicate found - SpecCommon 'qw' already exists. Skipping import.
+[09:41:51] Duplicate found - SpecCommon '13a' already exists. Skipping import.
+[09:41:51] Duplicate found - SpecCommon 'qw' already exists. Skipping import.
+[09:41:51] Duplicate found - SpecCommon '13a' already exists. Skipping import.
+[09:41:51] Duplicate found - SpecCommon 'qw' already exists. Skipping import.
+[09:41:51] Duplicate found - SpecCommon '13a' already exists. Skipping import.
+[09:41:51] Duplicate found - SpecCommon 'qw' already exists. Skipping import.
+[09:41:51] Duplicate found - SpecCommon '13a' already exists. Skipping import.
+[09:41:51] Duplicate found - SpecCommon 'qw' already exists. Skipping import.
+[09:41:51] Duplicate found - SpecCommon '13a' already exists. Skipping import.
+[09:41:51] Duplicate found - SpecCommon 'qw' already exists. Skipping import.
+[09:41:51] Duplicate found - SpecCommon '13a' already exists. Skipping import.
+[09:41:51] Duplicate found - SpecCommon 'qw' already exists. Skipping import.
+[09:41:51] Duplicate found - SpecCommon '13a' already exists. Skipping import.
+[09:41:51] Duplicate found - SpecCommon 'qw' already exists. Skipping import.
+[09:41:51] Duplicate found - SpecCommon '13a' already exists. Skipping import.
+[09:41:51] Duplicate found - SpecCommon 'qw' already exists. Skipping import.
+[09:41:51] Duplicate found - SpecCommon '13a' already exists. Skipping import.
+[09:41:51] Duplicate found - SpecCommon 'qw' already exists. Skipping import.
+[09:41:51] Duplicate found - SpecCommon '13a' already exists. Skipping import.
+[09:41:51] Duplicate found - SpecCommon 'qw' already exists. Skipping import.
+[09:41:51] Duplicate found - SpecCommon '13a' already exists. Skipping import.
+[09:41:51] Duplicate found - SpecCommon 'qw' already exists. Skipping import.
+[09:41:51] Duplicate found - SpecCommon '13a' already exists. Skipping import.
+[09:41:51] Duplicate found - SpecCommon 'qw' already exists. Skipping import.
+[09:41:51] Duplicate found - SpecCommon '13a' already exists. Skipping import.
+[09:41:51] Duplicate found - SpecCommon 'qw' already exists. Skipping import.
+[09:41:51] Duplicate found - SpecCommon '13a' already exists. Skipping import.
+[09:41:51] Duplicate found - SpecCommon 'qw' already exists. Skipping import.
+[09:41:51] Duplicate found - SpecCommon '13a' already exists. Skipping import.
+[09:41:51] Duplicate found - SpecCommon 'qw' already exists. Skipping import.
+[09:41:51] Duplicate found - SpecCommon '13a' already exists. Skipping import.
+[09:41:51] Duplicate found - SpecCommon 'qw' already exists. Skipping import.
+[09:41:51] Duplicate found - SpecCommon '13a' already exists. Skipping import.
+[09:41:51] Duplicate found - SpecCommon 'qw' already exists. Skipping import.
+[09:41:51] Duplicate found - SpecCommon '13a' already exists. Skipping import.
+[09:41:51] Duplicate found - SpecCommon 'qw' already exists. Skipping import.
+[09:41:51] Duplicate found - SpecCommon '13a' already exists. Skipping import.
+[09:41:51] Species data appended successfully.
+[09:41:51] Imported 4 new unique species from C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\testing_dataset\species.species. Skipped 79 duplicates.
+[09:41:58] Species exported successfully to C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\testing_dataset\species.species
+[09:42:01] Duplicate found - SpecCommon 'qw' already exists. Skipping import.
+[09:42:01] Duplicate found - SpecCommon '13b' already exists. Skipping import.
+[09:42:01] Duplicate found - SpecCommon '13a' already exists. Skipping import.
+[09:42:01] Duplicate found - SpecCommon 'qwc' already exists. Skipping import.
+[09:42:01] No new unique species found in C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\testing_dataset\species.species. All 4 items were duplicates.

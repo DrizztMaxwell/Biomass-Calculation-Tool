@@ -1,0 +1,21 @@
+[09:16:32] --- Log Session Started ---
+[09:16:33] Running as script — data: C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\app_data
+[09:16:33] Initializing JSON files...
+[09:16:33] Loading treeparameters.json from: C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\data/treeparameters.json
+[09:16:33] Successfully loaded 38 tree species
+[09:16:33]    Created/Updated: storage/localstorage.json
+[09:16:33]    Created/Updated: data/treeparameters.json
+[09:16:33]    Preserved existing: C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\data/create_species.json
+[09:16:33]    Preserved existing: C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\data/selected_database.json
+[09:16:33]    Preserved existing: C:\Users\mohib\OneDrive\Documents\Biomass Calculator\Biomass-Calculation-Tool\data/connection_history.json
+[09:16:33] Initialized 2 JSON files
+[09:16:33] Application starting...
+[09:16:33] Splash screen displayed
+[09:16:36] Splash cleared — proceeding to EULA
+[09:16:36] EULA view displayed
+[09:16:37] User agreed to EULA — proceeding
+[09:16:37] User navigated to Select Data page
+[09:16:39] User navigated to Modify Species page
+[09:16:39] Species data loaded successfully.
+[09:16:39] Species data loaded successfully.
+[09:16:41] Error importing species file: 'int' object has no attribute 'lower'

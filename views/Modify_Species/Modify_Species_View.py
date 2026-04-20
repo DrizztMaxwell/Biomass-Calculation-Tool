@@ -1,6 +1,7 @@
 #modify species view
 
 import flet as ft
+from matplotlib.pyplot import title
 from widgets.TitleTextWidget import TitleTextWidget
 from widgets.Custom_Alert_Dialog import Custom_Alert_Dialog
 from widgets.DescriptionText import DescriptionText
@@ -76,16 +77,28 @@ class Modify_Species_View:
         if e.path:
             success = self.__controller.export_species_file(e.path)
             if success:
-                self.page.snack_bar = ft.SnackBar(
-                    ft.Text("Species exported successfully."),
-                    bgcolor=ft.Colors.GREEN
-                )
+                Custom_Alert_Dialog(
+                    page=self.page,
+                    title_icon=ft.Icons.CHECK_CIRCLE_OUTLINE,
+                    title_color=ft.Colors.GREEN,
+                    title_icon_color=ft.Colors.GREEN,
+                    title="Save Successful",
+                    message="Species saved successfully.",
+                    solution="",
+                    button_text="I Understand",
+                ).show()
+
             else:
-                self.page.snack_bar = ft.SnackBar(
-                    ft.Text("Error exporting species."),
-                    bgcolor=ft.Colors.RED
-                )
-            self.page.snack_bar.open = True
+                Custom_Alert_Dialog(
+                    page=self.page,
+                    title_icon=ft.Icons.ERROR,
+                    title_color=ft.Colors.RED,
+                    title_icon_color=ft.Colors.RED,
+                    title="Save Failed",
+                    message="Error saving species.",
+                    solution="",
+                    button_text="I Understand",
+                ).show()
             self.page.update()
 
     # ─────────────────────────────────────────────────────────────
@@ -100,21 +113,54 @@ class Modify_Species_View:
     def on_load_file_result(self, e: ft.FilePickerResultEvent):
         if e.files:
             file_path = e.files[0].path
-            success = self.__controller.import_species_file(file_path)
+            success, appended_count, duplicate_count = self.__controller.import_species_file(file_path)
 
             if success:
                 self.refresh_data_table()
-                self.page.snack_bar = ft.SnackBar(
-                    ft.Text("Species imported successfully."),
-                    bgcolor=ft.Colors.GREEN
-                )
+                
+                # Show appropriate message based on what was imported
+                if appended_count > 0:
+                    message = f"Successfully imported {appended_count} new species.\n"
+                    if duplicate_count > 0:
+                        message += f"Skipped {duplicate_count} duplicate species."
+                    else:
+                        message += "All species were new."
+                    
+                    dialog = Custom_Alert_Dialog(
+                        page=self.page,
+                        title_icon=ft.Icons.CHECK_CIRCLE_OUTLINE,
+                        title_color=ft.Colors.GREEN,
+                        title_icon_color=ft.Colors.GREEN,
+                        title="Import Successful",
+                        message=message,
+                        solution="",
+                        button_text="I Understand",
+                    )
+                else:
+                    dialog = Custom_Alert_Dialog(
+                        page=self.page,
+                        title_icon=ft.Icons.INFO_OUTLINE,
+                        title_color=ft.Colors.ORANGE,
+                        title_icon_color=ft.Colors.ORANGE,
+                        title="No New Species",
+                        message=f"No new species were imported. All {duplicate_count} species already exist in the database.",
+                        solution="Try importing a different file with new species.",
+                        button_text="I Understand",
+                    )
+                dialog.show()
             else:
-                self.page.snack_bar = ft.SnackBar(
-                    ft.Text("Error importing species."),
-                    bgcolor=ft.Colors.RED
+                dialog = Custom_Alert_Dialog(
+                    page=self.page,
+                    title_icon=ft.Icons.ERROR,
+                    title_color=ft.Colors.RED,
+                    title_icon_color=ft.Colors.RED,
+                    title="Import Failed",
+                    message="Error importing species.",
+                    solution="Please check the file format and try again.",
+                    button_text="I Understand",
                 )
-
-            self.page.snack_bar.open = True
+                dialog.show()
+        
             self.page.update()
 
     # ── Theme helpers ─────────────────────────────────────────────────────────
@@ -399,6 +445,17 @@ class Modify_Species_View:
 
                     # NEW BUTTONS
                     ft.Row([
+                         ft.ElevatedButton(
+                        "Clear Data",
+                        bgcolor=ft.Colors.RED_700,
+                        color=ft.Colors.WHITE,
+                        icon=ft.Icons.DELETE_SWEEP,
+                        style=ft.ButtonStyle(
+                            padding=ft.padding.symmetric(horizontal=14, vertical=6),
+                            shape=ft.RoundedRectangleBorder(radius=5)
+                        ),
+                        on_click=self.clear_all_species_data,
+                    ),
                         ft.ElevatedButton(
                             "Load Species",
                             bgcolor=ft.Colors.PURPLE_800 if self._is_dark else ft.Colors.ORANGE_600,
@@ -490,6 +547,173 @@ class Modify_Species_View:
 
         self.populate_initial_table()
         return content
-
+    
     def populate_initial_table(self):
         self.refresh_data_table()
+
+    def clear_all_species_data(self, e):
+        """Clear all species data from the database"""
+
+        def show_confirmation():
+            is_dark = self.page.theme_mode == ft.ThemeMode.DARK
+            bg       = "#1A1A1A" if is_dark else "#FFFFFF"
+            surface  = "#222222" if is_dark else "#F8FAFC"
+            border   = "#2E2E2E" if is_dark else "#E2E8F0"
+            text_pri = "#F5F5F5" if is_dark else "#0F172A"
+            text_sec = "#888888" if is_dark else "#64748B"
+            icon_color = ft.Colors.RED_700
+
+            # ── Icon badge ────────────────────────────────────────────
+            icon_badge = ft.Container(
+                content=ft.Icon(ft.Icons.DELETE_SWEEP, size=22, color=icon_color),
+                bgcolor=ft.Colors.with_opacity(0.12, icon_color),
+                border_radius=ft.border_radius.all(10),
+                width=44, height=44,
+                alignment=ft.alignment.center,
+            )
+
+            # ── Header ────────────────────────────────────────────────
+            header = ft.Container(
+                content=ft.Row([
+                    icon_badge,
+                    ft.Column([
+                        ft.Text("Clear All Data", size=16,
+                                weight=ft.FontWeight.W_700, color=text_pri),
+                    ], spacing=0, tight=True, expand=True),
+                    ft.Container(
+                        content=ft.Icon(ft.Icons.CLOSE_ROUNDED, size=15, color=text_sec),
+                        on_click=lambda e: close_dialog(),
+                        bgcolor=ft.Colors.with_opacity(
+                            0.06, ft.Colors.WHITE if is_dark else ft.Colors.BLACK
+                        ),
+                        border_radius=ft.border_radius.all(7),
+                        padding=ft.padding.all(5),
+                        ink=True,
+                        tooltip="Close",
+                    ),
+                ], spacing=12, vertical_alignment=ft.CrossAxisAlignment.CENTER),
+                padding=ft.padding.only(left=20, right=20, top=18, bottom=14),
+                bgcolor=surface,
+                border_radius=ft.border_radius.only(top_left=12, top_right=12),
+            )
+
+            # ── Body ──────────────────────────────────────────────────
+            body = ft.Container(
+                content=ft.Column([
+                    ft.Text(
+                        "Are you sure you want to clear ALL species data?",
+                        size=13, color=text_sec,
+                    ),
+                    ft.Container(height=8),
+                    ft.Container(
+                        content=ft.Row([
+                            ft.Icon(ft.Icons.WARNING_AMBER_ROUNDED, size=13,
+                                    color=icon_color),
+                            ft.Text(
+                                "This action cannot be undone and will permanently delete all species.",
+                                size=12, weight=ft.FontWeight.W_500,
+                                color=text_sec, expand=True,
+                            ),
+                        ], spacing=8),
+                        bgcolor=ft.Colors.with_opacity(0.07, icon_color),
+                        border=ft.border.all(1, ft.Colors.with_opacity(0.15, icon_color)),
+                        border_radius=ft.border_radius.all(8),
+                        padding=ft.padding.symmetric(horizontal=12, vertical=8),
+                    ),
+                ], spacing=0, tight=True),
+                padding=ft.padding.symmetric(horizontal=20, vertical=14),
+                bgcolor=bg,
+            )
+
+            # ── Actions ───────────────────────────────────────────────
+            actions = ft.Container(
+                content=ft.Row([
+                    ft.Container(expand=True),
+                    # Cancel button
+                    ft.Container(
+                        content=ft.Row([
+                            ft.Icon(ft.Icons.CLOSE_ROUNDED, size=14,
+                                    color=text_sec),
+                            ft.Text("Cancel", size=13,
+                                    weight=ft.FontWeight.W_600, color=text_sec),
+                        ], spacing=6, tight=True),
+                        on_click=lambda e: close_dialog(),
+                        bgcolor=ft.Colors.with_opacity(
+                            0.06, ft.Colors.WHITE if is_dark else ft.Colors.BLACK
+                        ),
+                        border_radius=ft.border_radius.all(8),
+                        padding=ft.padding.symmetric(horizontal=16, vertical=9),
+                        ink=True,
+                    ),
+                    ft.Container(width=8),
+                    # Confirm button
+                    ft.Container(
+                        content=ft.Row([
+                            ft.Icon(ft.Icons.DELETE_ROUNDED, size=14, color="#FFFFFF"),
+                            ft.Text("Clear Data", size=13,
+                                    weight=ft.FontWeight.W_600, color="#FFFFFF"),
+                        ], spacing=6, tight=True),
+                        on_click=lambda e: confirm_clear(),
+                        bgcolor=icon_color,
+                        border_radius=ft.border_radius.all(8),
+                        padding=ft.padding.symmetric(horizontal=18, vertical=9),
+                        ink=True,
+                    ),
+                ]),
+                padding=ft.padding.only(left=20, right=20, top=12, bottom=16),
+                bgcolor=bg,
+                border=ft.border.only(top=ft.BorderSide(1, border)),
+            )
+
+            # ── Assemble ──────────────────────────────────────────────
+            main = ft.Container(
+                content=ft.Column([
+                    header,
+                    ft.Container(height=1, bgcolor=border),
+                    body,
+                    actions,
+                ], spacing=0, tight=True),
+                width=420,
+                bgcolor=bg,
+                border_radius=ft.border_radius.all(12),
+                clip_behavior=ft.ClipBehavior.HARD_EDGE,
+                shadow=ft.BoxShadow(
+                    blur_radius=24, spread_radius=0,
+                    color=ft.Colors.with_opacity(0.18, ft.Colors.BLACK),
+                    offset=ft.Offset(0, 6),
+                ),
+            )
+
+            confirm_dialog = ft.AlertDialog(
+                modal=True,
+                content=main,
+                content_padding=ft.padding.all(0),
+                shape=ft.RoundedRectangleBorder(radius=12),
+                bgcolor=ft.Colors.TRANSPARENT,
+                inset_padding=ft.padding.symmetric(horizontal=40, vertical=20),
+                alignment=ft.alignment.center,
+            )
+
+            def close_dialog():
+                self.page.close(confirm_dialog)
+                self.page.update()
+
+            def confirm_clear():
+                self.__controller.clear_species_data()
+                self.refresh_data_table()
+                self.page.close(confirm_dialog)
+                Custom_Alert_Dialog(
+                    page=self.page,
+                    title_icon=ft.Icons.CHECK_CIRCLE_OUTLINE,
+                    title_color=ft.Colors.GREEN,
+                    title_icon_color=ft.Colors.GREEN,
+                    title="Data Cleared",
+                    message="All species data has been successfully cleared.",
+                    solution="",
+                    button_text="I Understand",
+                ).show()
+                self.page.update()
+
+            self.page.open(confirm_dialog)
+
+        show_confirmation()
